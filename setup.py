@@ -40,7 +40,7 @@ setup(
     entry_points={'console_scripts': ['grip = grip.command:main']},
     platforms='any',
     install_requires=[
-        'flask>=0.8',
+        'flask>=0.9',
         'jinja2>=2.6',
         'requests>=0.14',
     ],
