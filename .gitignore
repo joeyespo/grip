@@ -1,9 +1,9 @@
 # Environment-specific files such as configuration, logs, and setup
 build/
-temp/
-local_config.py
+dist/
 *.pyc
 *.egg-info
+local_config.py
 
 # Misc and OS files
 Desktop.ini             # Directory atttributes in Windows.
