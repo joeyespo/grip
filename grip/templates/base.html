@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>{% block title %}Grip{% endblock %}</title>
+  {% block styles %}{% endblock %}
+  {% block priority_scripts %}{% endblock %}
+</head>
+<body>
+  <div class="page">
+    {% block page %}{% endblock %}
+  </div>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
