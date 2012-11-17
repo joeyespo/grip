@@ -14,8 +14,7 @@ Grip is a server written in Python that uses the Github
 to render a local readme. The styles also come directly
 from Github, so you'll know exactly how it will appear.
 
-The package includes both a command-line interface
-and a Python API.
+The package includes both a command-line interface and a Python API.
 
 
 Motivation
@@ -28,11 +27,12 @@ result before committing and pushing to Github.
 Usage
 -----
 
-The command-line interface is simple. Visit the directory of your readme, then:
+The command-line interface is simple. To render the readme of a repository:
 
+    $ cd myrepo
     $ grip
 
-Now open a browser and visit [`localhost:5000`](http://localhost:5000/)
+Now open a browser and visit [http://localhost:5000](http://localhost:5000/)
 
 
 Python API
