@@ -6,8 +6,8 @@ Render local readme files before sending off to Github.
 [http://github.com/joeyespo/grip](http://github.com/joeyespo/grip)
 
 
-What is this?
--------------
+Description
+-----------
 
 Grip is a server written in Python that uses the Github
 [markup API](http://developer.github.com/v3/markdown/)
@@ -18,8 +18,8 @@ The package includes both a command-line interface
 and a Python API.
 
 
-Why do you need it?
--------------------
+Motivation
+----------
 
 Sometimes you just want to see the exact readme
 result before committing and pushing to Github.
@@ -35,8 +35,8 @@ The command-line interface is simple. Visit the directory of your readme, then:
 Now open a browser and visit [`localhost:5000`](http://localhost:5000/)
 
 
-API
----
+Python API
+----------
 
 You can access the API directly with Python, using it in your own projects:
 
