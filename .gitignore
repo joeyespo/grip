@@ -1,0 +1,11 @@
+# Environment-specific files such as configuration, logs, and setup
+build/
+temp/
+local_config.py
+*.pyc
+*.egg-info
+
+# Misc and OS files
+Desktop.ini             # Directory atttributes in Windows.
+Thumbs.db               # Picture thumbnail cache in Windows 98.
+.DS_Store               # Directory attributes in Mac OS X.
