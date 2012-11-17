@@ -19,7 +19,7 @@ Grip is easy to set up
 Links
 `````
 
-* `website <http://github.com/joeyespo/grip/>`_
+* `Website <http://github.com/joeyespo/grip/>`_
 """
 
 from setuptools import setup, find_packages
