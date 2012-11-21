@@ -26,6 +26,12 @@ from setuptools import setup, find_packages
 import grip as package
 
 
+def read(fname):
+    import os
+    with open(os.path.join(os.path.dirname(__file__), fname)) as f:
+        return f.read()
+
+
 setup(
     name=package.__name__,
     author='Joe Esposito',
@@ -39,9 +45,5 @@ setup(
     packages=find_packages(),
     package_data={package.__name__: ['LICENSE', 'static/*', 'templates/*']},
     entry_points={'console_scripts': ['grip = grip.command:main']},
-    install_requires=[
-        'flask>=0.9',
-        'jinja2>=2.6',
-        'requests>=0.14',
-    ],
+    install_requires=read('requirements.txt'),
 )
