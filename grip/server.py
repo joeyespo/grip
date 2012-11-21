@@ -3,7 +3,7 @@ from .renderer import render_page
 from .watcher import find_readme, read_file
 
 
-def serve(directory='.', readme_file='README'):
+def serve(directory='.', readme_file='README', port=None):
     """Starts a server to render the readme from the specified directory."""
 
     # Get the README filename
@@ -15,6 +15,10 @@ def serve(directory='.', readme_file='README'):
     app = Flask('grip')
     app.config.from_pyfile('config.py')
     app.config.from_pyfile('local_config.py', silent=True)
+
+    # Set overridden config values
+    if port is not None:
+        app.config['PORT'] = port
 
     # Views
     @app.route('/')
