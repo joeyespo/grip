@@ -1,27 +1,3 @@
-"""\
-Grip
-----
-
-Render local readme files before sending off to Github.
-
-
-Grip is easy to set up
-``````````````````````
-
-::
-
-    $ pip install grip
-    $ cd myproject
-    $ grip
-     * Running on http://localhost:5000/
-
-
-Links
-`````
-
-* `Website <http://github.com/joeyespo/grip/>`_
-"""
-
 from setuptools import setup, find_packages
 import grip as package
 
@@ -40,7 +16,7 @@ setup(
     license='MIT',
     version=package.__version__,
     description=package.__description__,
-    long_description=__doc__,
+    long_description=package.__doc__,
     platforms='any',
     packages=find_packages(),
     package_data={package.__name__: ['LICENSE', 'static/*', 'templates/*']},
