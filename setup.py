@@ -37,7 +37,7 @@ setup(
     long_description=__doc__,
     platforms='any',
     packages=find_packages(),
-    package_data={package.__name__: ['static/*', 'templates/*']},
+    package_data={package.__name__: ['LICENSE', 'static/*', 'templates/*']},
     entry_points={'console_scripts': ['grip = grip.command:main']},
     install_requires=[
         'flask>=0.9',
