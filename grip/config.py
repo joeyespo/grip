@@ -10,6 +10,6 @@ PORT = 5000
 DEBUG = True
 
 STYLE_URLS = [
-    'https://a248.e.akamai.net/assets.github.com/assets/github-26581c8456a7088e423db87d6ed68794e9042e29.css',
-    'https://a248.e.akamai.net/assets.github.com/assets/github2-38ac9c88be26119b09e2a8dbf21887c7e34791e1.css',
+    'https://a248.e.akamai.net/assets.github.com/assets/github-ca4b92fb3c82a44dad191edddb200e77ea292bba.css',
+    'https://a248.e.akamai.net/assets.github.com/assets/github2-e32cf731b09f22ce8beee0954b580b5d8084ff25.css',
 ]
