@@ -1,7 +1,7 @@
 """\
-Configuration
+Default Configuration
 
-Do NOT override the values here.
+Do NOT change the values here for risk of accidentally committing them.
 Override them using command-line arguments or with a local_config.py instead.
 """
 
