@@ -26,4 +26,4 @@ def serve(directory='.', readme_file='README', port=None):
         return render_page(read_file(filename), filename)
 
     # Run local server
-    app.run(app.config['HOST'], app.config['PORT'], debug=app.config['DEBUG'], use_reloader=app.config.get('DEBUG_GRIP', False))
+    app.run(app.config['HOST'], app.config['PORT'], debug=app.config['DEBUG'], use_reloader=app.config['DEBUG_GRIP'])
