@@ -13,7 +13,7 @@ def serve(directory='.', readme_file='README', port=None):
 
     # Flask application
     app = Flask('grip')
-    app.config.from_pyfile('config.py')
+    app.config.from_pyfile('default_config.py')
     app.config.from_pyfile('local_config.py', silent=True)
 
     # Set overridden config values
