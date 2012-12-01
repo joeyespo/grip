@@ -3,7 +3,7 @@ from .server import serve
 
 
 def main():
-    """The entry point of the command-line interface."""
+    """The entry point of the application."""
 
     # TODO: more advanced argument processing
 
