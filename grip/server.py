@@ -38,7 +38,7 @@ def serve(directory='.', readme_file='README', port=None):
         return render_page(read_file(filename), filename, app.config['STYLE_URLS'])
 
     # Run local server
-    app.run(app.config['HOST'], app.config['PORT'], debug=app.config['DEBUG'], use_reloader=app.config['DEBUG_GRIP'])
+    app.run(app.config['HOST'], app.config['PORT'], debug=app.debug, use_reloader=app.config['DEBUG_GRIP'])
 
 
 def _get_styles(source_url, pattern):
