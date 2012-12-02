@@ -20,14 +20,20 @@ Links
 `````
 
 * `Website <http://github.com/joeyespo/grip/>`_
+
+:copyright: (c) 2012 by Joe Esposito.
+:license: MIT, see LICENSE for more details.
 """
 
-import command
+__title__ = 'grip'
+__version__ = '0.2'
+__author__ = 'Joe Esposito'
+__description__ = '\n\n'.join(__doc__.split('\n\n')[1:]).split('\n\n\n')[0]
+__copyright__ = 'Copyright 2012 Joe Esposito'
+__license__ = 'MIT'
+
+
+from . import command
 from .server import serve
 from .renderer import render_content, render_page
 from .watcher import find_readme
-
-__all__ = ['command', 'serve', 'render_content', 'render_page', 'find_readme']
-
-__version__ = '0.2'
-__description__ = '\n\n'.join(__doc__.split('\n\n')[1:]).split('\n\n\n')[0]
