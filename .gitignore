@@ -1,11 +1,15 @@
-# Environment-specific files such as configuration, logs, and setup
-build/
-dist/
-*.pyc
+# Deployment files
 *.egg-info
+dist
+
+# Environment files
+build
+env
+*.so
+*.py[cod]
 local_config.py
 
-# Misc and OS files
-Desktop.ini             # Directory atttributes in Windows.
-Thumbs.db               # Picture thumbnail cache in Windows 98.
-.DS_Store               # Directory attributes in Mac OS X.
+# OS-specific files
+.DS_Store
+Desktop.ini
+Thumbs.db
