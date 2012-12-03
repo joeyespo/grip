@@ -1,6 +1,13 @@
 Grip Changelog
 ==============
 
+Version 0.2.1 (2012-12-02)
+--------------------------
+
+- Issue #5: Fixed the installer to work in the case where
+  the requirements are not already installed.
+
+
 Version 0.2 (2012-12-01)
 --------------------------
 
