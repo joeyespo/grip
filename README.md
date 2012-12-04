@@ -3,18 +3,9 @@ Grip -- Github Readme Instant Preview
 
 Render local readme files before sending off to Github.
 
-[http://github.com/joeyespo/grip](http://github.com/joeyespo/grip)
-
-
-Description
------------
-
-Grip is a server written in Python that uses the Github
-[markup API](http://developer.github.com/v3/markdown/)
-to render a local readme. The styles also come directly
-from Github, so you'll know exactly how it will appear.
-
-The package includes both a command-line interface and a Python API.
+Grip is a command-line server application written in Python that uses the
+Github [markup API][markdown] to render a local readme file. The styles also
+come directly from Github, so you'll know exactly how it will appear.
 
 
 Motivation
@@ -57,3 +48,5 @@ You can access the API directly with Python, using it in your own projects:
     serve(directory='path-to-your-file', port=8080)
 
 Other functions include: `find_readme`, `render_content`, and `render_page`
+
+[markdown]: http://developer.github.com/v3/markdown/
