@@ -51,5 +51,15 @@ You can access the API directly with Python, using it in your own projects:
 
 Other functions include: `find_readme`, `render_content`, and `render_page`
 
+
+Contributing
+------------
+
+1. Check the open issues or open a new issue to start a discussion around
+   your feature idea or the bug you found
+2. Fork the repository
+3. Send a pull request
+
+
 [markdown]: http://developer.github.com/v3/markdown/
 [rdd]: http://tom.preston-werner.com/2010/08/23/readme-driven-development.html
