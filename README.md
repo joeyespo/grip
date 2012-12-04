@@ -36,8 +36,8 @@ The command-line interface is simple. To render the readme of a repository:
 Now open a browser and visit [http://localhost:5000](http://localhost:5000/).
 
 
-Python API
-----------
+API
+---
 
 You can access the API directly with Python, using it in your own projects:
 
