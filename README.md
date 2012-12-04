@@ -14,6 +14,8 @@ Motivation
 Sometimes you just want to see the exact readme
 result before committing and pushing to Github.
 
+Especially when doing [Readme-driven development][rdd].
+
 
 Installation
 ------------
@@ -50,3 +52,4 @@ You can access the API directly with Python, using it in your own projects:
 Other functions include: `find_readme`, `render_content`, and `render_page`
 
 [markdown]: http://developer.github.com/v3/markdown/
+[rdd]: http://tom.preston-werner.com/2010/08/23/readme-driven-development.html
