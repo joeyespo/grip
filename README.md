@@ -31,13 +31,9 @@ Usage
 The command-line interface is simple. To render the readme of a repository:
 
     $ cd myrepo
-    $ grip
+    $ grip [port]
 
 Now open a browser and visit [http://localhost:5000](http://localhost:5000/).
-
-You can also specify your own port:
-
-    $ grip 8080
 
 
 Python API
