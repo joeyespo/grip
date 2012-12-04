@@ -24,6 +24,14 @@ Sometimes you just want to see the exact readme
 result before committing and pushing to Github.
 
 
+Installation
+------------
+
+To install grip, simply:
+
+    $ pip install grip
+
+
 Usage
 -----
 
@@ -49,11 +57,3 @@ You can access the API directly with Python, using it in your own projects:
     serve(directory='path-to-your-file', port=8080)
 
 Other functions include: `find_readme`, `render_content`, and `render_page`
-
-
-Installation
-------------
-
-To install grip, simply:
-
-    $ pip install grip
