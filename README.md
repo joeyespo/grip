@@ -28,7 +28,7 @@ To install grip, simply:
 Usage
 -----
 
-The command-line interface is simple. To render the readme of a repository:
+To render the readme of a repository:
 
     $ cd myrepo
     $ grip [port]
