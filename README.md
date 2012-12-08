@@ -34,10 +34,38 @@ To render the readme of a repository:
 
 ```bash
 $ cd myrepo
-$ grip [port]
+$ grip
+ * Running on http://localhost:5000/
 ```
 
 Now open a browser and visit [http://localhost:5000](http://localhost:5000/).
+
+You can also specify a port:
+
+```bash
+$ grip 80
+ * Running on http://localhost:80/
+```
+
+Or an explicit file:
+
+```bash
+$ grip CHANGES.md
+ * Running on http://localhost:5000/
+```
+
+GitHub-Flavored Markdown is also supported:
+
+```bash
+$ grip --gfm --context=joeyespo/grip
+ * Running on http://localhost:5000/
+```
+
+For more details, see the help:
+
+```bash
+$ grip -h
+```
 
 
 API
