@@ -48,7 +48,7 @@ You can access the API directly with Python, using it in your own projects:
 ```python
 from grip import serve
 
-serve(directory='path-to-your-file', port=8080)
+serve(directory='path-to-your-file', readme_file='README', host='localhost', port=5000)
 ```
 
 Other functions include: `find_readme`, `render_content`, and `render_page`
