@@ -1,21 +1,20 @@
+import os
 import re
 import requests
 from flask import Flask
 from .renderer import render_page
-from .watcher import find_readme, read_file
 
 
-def serve(directory=None, readme_file=None, host=None, port=None, gfm=None, context=None):
-    """Starts a server to render the readme from the specified directory."""
-    if directory is None:
-        directory = '.'
-    if readme_file is None:
-        readme_file = 'README'
+default_filenames = ['README.md', 'README.markdown']
 
-    # Get the README filename
-    filename = find_readme(directory, readme_file)
-    if not filename:
-        raise ValueError('No %s file found at %s' % ('README' if readme_file == 'README' else repr(readme_file), repr(directory)))
+
+def serve(path=None, host=None, port=None, gfm=None, context=None):
+    """Starts a server to render the specified file or directory containing a README."""
+    if not path or os.path.isdir(path):
+        path = _find_file(path)
+
+    if not os.path.exists(path):
+        raise ValueError('File not found: ' + path)
 
     # Flask application
     app = Flask('grip')
@@ -41,7 +40,7 @@ def serve(directory=None, readme_file=None, host=None, port=None, gfm=None, cont
     # Views
     @app.route('/')
     def index():
-        return render_page(read_file(filename), filename, gfm, context, app.config['STYLE_URLS'])
+        return render_page(_read_file(path), os.path.split(path)[1], gfm, context, app.config['STYLE_URLS'])
 
     # Run local server
     app.run(app.config['HOST'], app.config['PORT'], debug=app.debug, use_reloader=app.config['DEBUG_GRIP'])
@@ -57,3 +56,20 @@ def _get_styles(source_url, pattern):
     except Exception, e:
         print ' * Error: could not retrieve styles:', str(e)
         return []
+
+
+def _find_file(path):
+    """Reads the contents of the specified file."""
+    if path is None:
+        path = '.'
+    for filename in default_filenames:
+        new_path = os.path.join(path, filename)
+        if os.path.exists(new_path):
+            return new_path
+    raise ValueError('No README found at ' + path)
+
+
+def _read_file(filename):
+    """Reads the contents of the specified file."""
+    with open(filename) as f:
+        return f.read()

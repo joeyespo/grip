@@ -19,7 +19,6 @@ Options:
   --context=<repo>  The repository context, only taken into account with --gfm
 """
 
-import os
 import sys
 from path_and_address import resolve, split_address
 from docopt import docopt
@@ -42,7 +41,6 @@ def main(initial_args=None):
     # Parse arguments
     path, address = resolve(args['<path>'], args['<address>'])
     host, port = split_address(address)
-    directory, filename = _split(path)
 
     # Validate address
     if address and not host and not port:
@@ -50,24 +48,8 @@ def main(initial_args=None):
 
     # Run server
     try:
-        serve(directory, filename, host, port, args['--gfm'], args['--context'])
+        serve(path, host, port, args['--gfm'], args['--context'])
+        return 0
     except ValueError, ex:
         print 'Error:', ex
         return 1
-
-    return 0
-
-
-def _split(path):
-    """Returns (directory, filename) from the specified path."""
-    if path is None:
-        return None, None
-
-    if path.endswith('.'):
-        path += os.path.sep
-
-    directory, filename = os.path.split(path)
-    if filename == '':
-        filename = None
-
-    return directory, filename

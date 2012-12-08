@@ -12,6 +12,5 @@ __version__ = '0.2.1'
 
 
 from . import command
-from .server import serve
+from .server import default_filenames, serve
 from .renderer import render_content, render_page
-from .watcher import find_readme
