@@ -5,7 +5,7 @@ from .renderer import render_page
 from .watcher import find_readme, read_file
 
 
-def serve(directory=None, readme_file=None, port=None):
+def serve(directory=None, readme_file=None, host=None, port=None):
     """Starts a server to render the readme from the specified directory."""
     if directory is None:
         directory = '.'
@@ -33,6 +33,8 @@ def serve(directory=None, readme_file=None, port=None):
             print ' * Retrieved %s style URL%s' % (len(styles), '' if len(styles) == 1 else 's')
 
     # Set overridden config values
+    if host is not None:
+        app.config['HOST'] = host
     if port is not None:
         app.config['PORT'] = port
 
