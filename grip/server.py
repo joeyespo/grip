@@ -5,7 +5,7 @@ from .renderer import render_page
 from .watcher import find_readme, read_file
 
 
-def serve(directory=None, readme_file=None, host=None, port=None):
+def serve(directory=None, readme_file=None, host=None, port=None, gfm=None, context=None):
     """Starts a server to render the readme from the specified directory."""
     if directory is None:
         directory = '.'
@@ -41,7 +41,7 @@ def serve(directory=None, readme_file=None, host=None, port=None):
     # Views
     @app.route('/')
     def index():
-        return render_page(read_file(filename), filename, app.config['STYLE_URLS'])
+        return render_page(read_file(filename), filename, gfm, context, app.config['STYLE_URLS'])
 
     # Run local server
     app.run(app.config['HOST'], app.config['PORT'], debug=app.debug, use_reloader=app.config['DEBUG_GRIP'])

@@ -13,6 +13,10 @@ Usage:
 Where:
   <path> is the path to the working directory of a content repository
   <address> is what to listen on, of the form <host>[:<port>], or just <port>
+
+Options:
+  --gfm             Use GitHub-Flavored Markdown, e.g. comments or issues
+  --context=<repo>  The repository context, only taken into account with --gfm
 """
 
 import os
@@ -46,7 +50,7 @@ def main(initial_args=None):
 
     # Run server
     try:
-        serve(directory, filename, host, port)
+        serve(directory, filename, host, port, args['--gfm'], args['--context'])
     except ValueError, ex:
         print 'Error:', ex
         return 1
