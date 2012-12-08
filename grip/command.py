@@ -11,7 +11,7 @@ Usage:
   grip --version
 
 Where:
-  <path> is the path to the working directory of a content repository
+  <path> is a file to render or a directory containing a README.md file
   <address> is what to listen on, of the form <host>[:<port>], or just <port>
 
 Options:
