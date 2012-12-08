@@ -5,8 +5,12 @@ from .renderer import render_page
 from .watcher import find_readme, read_file
 
 
-def serve(directory='.', readme_file='README', port=None):
+def serve(directory=None, readme_file=None, port=None):
     """Starts a server to render the readme from the specified directory."""
+    if directory is None:
+        directory = '.'
+    if readme_file is None:
+        readme_file = 'README'
 
     # Get the README filename
     filename = find_readme(directory, readme_file)
