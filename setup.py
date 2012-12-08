@@ -23,7 +23,7 @@ Links
 
 """
 
-__version__ = '0.2.1'
+__version__ = '1.0'
 __description__ = '\n\n'.join(__doc__.split('\n\n')[1:]).split('\n\n\n')[0]
 
 
