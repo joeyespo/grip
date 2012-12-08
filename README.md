@@ -79,7 +79,7 @@ from grip import serve
 serve(path='file-or-directory', host='localhost', port=5000, gfm=False, context=None)
 ```
 
-Other functions include: `find_readme`, `render_content`, and `render_page`
+Other functions include: `render_content` and `render_page`
 
 
 Contributing
