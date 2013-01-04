@@ -76,10 +76,9 @@ You can access the API directly with Python, using it in your own projects:
 ```python
 from grip import serve
 
-serve(path='file-or-directory', host='localhost', port=5000, gfm=False, context=None)
+serve(port=8080)
+ * Running on http://localhost:80/
 ```
-
-Other functions include: `render_content` and `render_page`
 
 
 Contributing
