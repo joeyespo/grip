@@ -128,6 +128,14 @@ render_page(text, filename=None, gfm=False, context=None, style_urls=[])
 - `style_urls`: A list of URLs that contain CSS to include in the
                 rendered page
 
+#### default_filenames
+
+This constant contains the names Grip looks for when no file is given to.
+
+```python
+default_filenames = ['README.md', 'README.markdown']
+```
+
 
 Contributing
 ------------
