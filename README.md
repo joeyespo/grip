@@ -84,6 +84,9 @@ serve(port=8080)
 
 #### serve
 
+Runs a local server and renders the Readme file located
+at `path` when visited in the browser.
+
 ```python
 serve(path='file-or-directory', host='localhost', port=5000, gfm=False, context=None)
 ```
