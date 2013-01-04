@@ -80,6 +80,21 @@ serve(port=8080)
  * Running on http://localhost:80/
 ```
 
+### Documentation
+
+#### serve
+
+```python
+serve(path='file-or-directory', host='localhost', port=5000, gfm=False, context=None)
+```
+
+- `path`: The filename to render, or the directory containing your Readme file
+- `host`: The host to serve on
+- `port`: The port to serve on
+- `gfm`: Whether to render using [GitHub Flavored Markdown][gfm]
+- `context`: The project context to use when `gfm` is true, which
+             takes the form of `username/project`
+
 
 Contributing
 ------------
@@ -92,3 +107,4 @@ Contributing
 
 [markdown]: http://developer.github.com/v3/markdown
 [rdd]: http://tom.preston-werner.com/2010/08/23/readme-driven-development.html
+[gfm]: http://github.github.com/github-flavored-markdown/
