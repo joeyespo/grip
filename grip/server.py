@@ -8,7 +8,7 @@ from .renderer import render_page
 default_filenames = ['README.md', 'README.markdown']
 
 
-def serve(path=None, host=None, port=None, gfm=None, context=None):
+def serve(path=None, host=None, port=None, gfm=False, context=None):
     """Starts a server to render the specified file or directory containing a README."""
     if not path or os.path.isdir(path):
         path = _find_file(path)
