@@ -99,6 +99,36 @@ serve(path='file-or-directory', host='localhost', port=5000, gfm=False, context=
              takes the form of `username/project`
 
 
+#### render_content
+
+Renders the specified markdown text.
+
+```python
+render_content(text, gfm=False, context=None)
+```
+
+- `text`: The content to render
+- `gfm`: Whether to render using [GitHub Flavored Markdown][gfm]
+- `context`: The project context to use when `gfm` is true, which
+             takes the form of `username/project`
+
+#### render_page
+
+Renders the specified markdown text and outputs an HTML page that resembles
+the GitHub Readme view.
+
+```python
+render_page(text, filename=None, gfm=False, context=None, style_urls=[])
+```
+
+- `text`: The content to render
+- `gfm`: Whether to render using [GitHub Flavored Markdown][gfm]
+- `context`: The project context to use when `gfm` is true, which
+             takes the form of `username/project`
+- `style_urls`: A list of URLs that contain CSS to include in the
+                rendered page
+
+
 Contributing
 ------------
 
