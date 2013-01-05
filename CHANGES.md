@@ -9,6 +9,14 @@ Version 1.0.1 (2013-01-05)
 - Use exact versions in requirements.
 
 
+Version 1.1 (2013-01-04)
+------------------------
+
+- Readme: Clarify and add examples.
+- Bugfix: Typo in requirements.
+- Clean up setup.py
+
+
 Version 1.0 (2012-12-08)
 ------------------------
 
