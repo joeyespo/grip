@@ -40,13 +40,13 @@ def serve(path=None, host=None, port=None, gfm=False, context=None):
     # Views
     @app.route('/')
     def index():
-        return render_page(_read_file(index_file), os.path.split(path)[1], gfm, context, app.config['STYLE_URLS'])
+        return render_page(_read_file(index_file), os.path.split(index_file)[1], gfm, context, app.config['STYLE_URLS'])
 
     @app.route('/<path:filename>')
     def other_files(filename):
         try:
             full_file = safe_join(path, filename)
-            return render_page(_read_file(full_file), os.path.split(path)[1], gfm, context, app.config['STYLE_URLS'])
+            return render_page(_read_file(full_file), os.path.split(filename)[1], gfm, context, app.config['STYLE_URLS'])
         except:
             abort(404)
 
