@@ -55,7 +55,7 @@ def serve(path=None, host=None, port=None, gfm=False, context=None):
                     raise
                 return abort(404)
         else:
-            text = _read_file(filename)
+            text = _read_file(path)
         return render_page(text, filename, gfm, context, app.config['STYLE_URLS'])
 
     # Run local server
