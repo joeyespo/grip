@@ -8,7 +8,7 @@ Render local readme files before sending off to Github.
 :license: MIT, see LICENSE for more details.
 """
 
-__version__ = '1.1.1'
+__version__ = '1.2.0'
 
 
 from . import command

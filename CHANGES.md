@@ -2,7 +2,15 @@ Grip Changelog
 ==============
 
 
-Version 1.0.1 (2013-01-05)
+Version 1.2.0 (2013-03-17)
+--------------------------
+
+- Add AUTHORS.md for attributing credit.
+- Feature: Can now click hyperlinks to render other files without re-running.
+- Update GitHub CSS regular expression.
+
+
+Version 1.1.1 (2013-01-05)
 --------------------------
 
 - Upgrade path-and-address.
