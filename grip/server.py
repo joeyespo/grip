@@ -9,7 +9,8 @@ from .renderer import render_page
 default_filenames = ['README.md', 'README.markdown']
 
 
-def serve(path=None, host=None, port=None, gfm=False, context=None):
+def serve(path=None, host=None, port=None, gfm=False, context=None,
+          render_offline=False):
     """Starts a server to render the specified file or directory containing a README."""
     if not path or os.path.isdir(path):
         path = _find_file(path)
@@ -56,7 +57,8 @@ def serve(path=None, host=None, port=None, gfm=False, context=None):
                 return abort(404)
         else:
             text = _read_file(path)
-        return render_page(text, filename, gfm, context, app.config['STYLE_URLS'])
+        return render_page(text, filename, gfm, context, render_offline,
+                           app.config['STYLE_URLS'])
 
     # Run local server
     app.run(app.config['HOST'], app.config['PORT'], debug=app.debug, use_reloader=app.config['DEBUG_GRIP'])
