@@ -3,5 +3,5 @@ requests==0.14
 docopt==0.5
 jinja2==2.6
 flask==0.9
-misaka==1.0.2
+Markdown==2.3.1
 Pygments==1.5
