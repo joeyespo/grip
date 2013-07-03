@@ -7,9 +7,26 @@
   <link rel="stylesheet" href="{{ style_url }}" />
   {% endfor %}
   <style>
-    .previewPage {
-      margin: 64px auto;
-      width: 920px;
+    @media screen {
+        .previewPage {
+          margin: 34px auto;
+          width: 920px;
+        }
+    }
+    @media print {
+        .previewPage {
+            margin: 0;
+            width: 100%;
+        }
+        #readme .markdown-body, #readme .plain {
+            border: 0;
+            padding: 0;
+        }
+        #readme {
+            background: none;
+            border: none;
+            padding: 0;
+        }
     }
   </style>
 {% endblock %}
