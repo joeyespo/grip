@@ -13,7 +13,6 @@ except ImportError:
 
 # Get jinja templates
 env = Environment(loader=PackageLoader('grip', 'templates'))
-# TODO Old Index
 
 
 def render_content(text, gfm=False, context=None):

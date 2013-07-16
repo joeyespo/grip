@@ -54,6 +54,14 @@ $ grip CHANGES.md
  * Running on http://localhost:5000/
 ```
 
+Or you can even export the file to a monolithic html:
+
+```bash
+$ grip --export CHANGES.md
+```
+
+will give you a monolithic Html with all stylesheets included
+
 GitHub-Flavored Markdown is also supported:
 
 ```bash
