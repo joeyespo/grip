@@ -41,13 +41,18 @@ def main(initial_args=None):
     # Parse options
     args = docopt(usage, argv=initial_args, version=version)
 
-    if '--context' in args:
-        try:
-            write_html(path)
-        
     # Parse arguments
     path, address = resolve(args['<path>'], args['<address>'])
     host, port = split_address(address)
+
+    if args['--export']:
+        try:
+            write_html(path)
+            return 0
+        except Exception as e:
+            print("Error: ", e)
+            return 1
+
 
     # Validate address
     if address and not host and not port:

@@ -3,7 +3,7 @@ import re
 import errno
 import requests
 from flask import Flask, safe_join, abort
-from renderer import render_page
+from .renderer import render_page
 
 
 default_filenames = ['README.md', 'README.markdown']
