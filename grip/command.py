@@ -17,12 +17,15 @@ Where:
 Options:
   --gfm             Use GitHub-Flavored Markdown, e.g. comments or issues
   --context=<repo>  The repository context, only taken into account with --gfm
+  --export          Exports to a given <path>.html if path is a filename, or README.html
+                    otherwise
 """
 
 import sys
 from path_and_address import resolve, split_address
 from docopt import docopt
 from .server import serve
+from .exporter import write_html
 from . import __version__
 
 
@@ -38,6 +41,10 @@ def main(initial_args=None):
     # Parse options
     args = docopt(usage, argv=initial_args, version=version)
 
+    if '--context' in args:
+        try:
+            write_html(path)
+        
     # Parse arguments
     path, address = resolve(args['<path>'], args['<address>'])
     host, port = split_address(address)

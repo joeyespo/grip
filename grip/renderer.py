@@ -13,7 +13,7 @@ except ImportError:
 
 # Get jinja templates
 env = Environment(loader=PackageLoader('grip', 'templates'))
-index_template = env.get_template('index.html')
+# TODO Old Index
 
 
 def render_content(text, gfm=False, context=None):
@@ -32,6 +32,13 @@ def render_content(text, gfm=False, context=None):
     return r.text
 
 
-def render_page(text, filename=None, gfm=False, context=None, style_urls=[]):
+def render_page(text, filename=None, gfm=False, context=None, style_urls=[], style_url_contents=None):
     """Renders the specified markup text to an HTML page."""
-    return index_template.render(content=render_content(text, gfm, context), filename=filename, style_urls=style_urls)
+    if style_url_contents:
+        index_template = env.get_template('index_export.html')
+    else:
+        index_template = env.get_template('index.html')
+        
+    return index_template.render(content=render_content(text, gfm, context),
+                                 filename=filename, style_urls=style_urls,
+                                 style_url_contents=style_url_contents)
