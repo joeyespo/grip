@@ -17,6 +17,7 @@ Where:
 Options:
   --gfm             Use GitHub-Flavored Markdown, e.g. comments or issues
   --context=<repo>  The repository context, only taken into account with --gfm
+  --render-offline  Render offline instead of via GitHub markdown API
 """
 
 import sys
@@ -48,7 +49,8 @@ def main(argv=None):
 
     # Run server
     try:
-        serve(path, host, port, args['--gfm'], args['--context'])
+        serve(path, host, port, args['--gfm'], args['--context'],
+              args['--render-offline'])
         return 0
     except ValueError, ex:
         print 'Error:', ex
