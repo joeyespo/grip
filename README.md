@@ -50,9 +50,12 @@ $ grip 80
 Or an explicit file:
 
 ```bash
-$ grip CHANGES.md
+$ grip AUTHORS.md
  * Running on http://localhost:5000/
 ```
+
+Alternatively, you could just run `grip` and visit [localhost:5000/AUTHORS.md][AUTHORS.md]
+since grip supports relative URLs.
 
 GitHub-Flavored Markdown is also supported:
 
@@ -148,4 +151,5 @@ Contributing
 
 [markdown]: http://developer.github.com/v3/markdown
 [rdd]: http://tom.preston-werner.com/2010/08/23/readme-driven-development.html
-[gfm]: http://github.github.com/github-flavored-markdown/
+[gfm]: http://github.github.com/github-flavored-markdown
+[authors.md]: AUTHORS.md
