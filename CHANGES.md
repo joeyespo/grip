@@ -6,7 +6,8 @@ Version 1.2.0 (2013-03-17)
 --------------------------
 
 - Add AUTHORS.md for attributing credit.
-- Feature: Can now click hyperlinks to render other files without re-running.
+- Feature: Can now click hyperlinks to render other files
+  without re-running (thanks, [@vladwing][]!)
 - Update GitHub CSS regular expression.
 
 
@@ -63,3 +64,6 @@ Version 0.1 (2012-11-19)
 ------------------------
 
 First public preview release.
+
+
+[@vladwing]: https://github.com/vladwing
