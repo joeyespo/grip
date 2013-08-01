@@ -1,5 +1,5 @@
 path-and-address==0.2.0
-requests==0.14
+requests==1.2.3
 docopt==0.5
 jinja2==2.6
 flask==0.9
