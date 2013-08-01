@@ -29,14 +29,14 @@ from . import __version__
 usage = '\n\n\n'.join(__doc__.split('\n\n\n')[1:])
 
 
-def main(initial_args=None):
+def main(argv=None):
     """The entry point of the application."""
-    if initial_args is None:
-        initial_args = sys.argv[1:]
+    if argv is None:
+        argv = sys.argv[1:]
     version = 'Grip ' + __version__
 
     # Parse options
-    args = docopt(usage, argv=initial_args, version=version)
+    args = docopt(usage, argv=argv, version=version)
 
     # Parse arguments
     path, address = resolve(args['<path>'], args['<address>'])
