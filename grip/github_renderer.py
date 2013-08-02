@@ -9,7 +9,7 @@ except ImportError:
     except ImportError:
         pass
 
-def render_content(text, gfm=False, context=None):
+def render_content(text, gfm=False, context=None, username=None, password=None):
     """Renders the specified markup."""
     if gfm:
         url = 'https://api.github.com/markdown'
@@ -21,5 +21,8 @@ def render_content(text, gfm=False, context=None):
         url = 'https://api.github.com/markdown/raw'
         data = text
     headers = {'content-type': 'text/plain'}
-    r = requests.post(url, headers=headers, data=data)
+    if username:
+        r = requests.post(url, headers=headers, data=data, auth=(username, password))
+    else:
+        r = requests.post(url, headers=headers, data=data)
     return r.text

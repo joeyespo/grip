@@ -10,7 +10,7 @@ default_filenames = ['README.md', 'README.markdown']
 
 
 def serve(path=None, host=None, port=None, gfm=False, context=None,
-          render_offline=False):
+          render_offline=False, username=None, password=None):
     """Starts a server to render the specified file or directory containing a README."""
     if not path or os.path.isdir(path):
         path = _find_file(path)
@@ -60,7 +60,7 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
         else:
             text = _read_file(path)
         return render_page(text, filename, gfm, context, render_offline,
-                           app.config['STYLE_URLS'])
+                           username, password, app.config['STYLE_URLS'])
 
     # Run local server
     app.run(app.config['HOST'], app.config['PORT'], debug=app.debug, use_reloader=app.config['DEBUG_GRIP'])
