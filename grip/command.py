@@ -18,6 +18,8 @@ Options:
   --gfm             Use GitHub-Flavored Markdown, e.g. comments or issues
   --context=<repo>  The repository context, only taken into account with --gfm
   --render-offline  Render offline instead of via GitHub markdown API
+  --user=<username> A GitHub username for API authentication
+  --pass=<password> A GitHub password for API authentication
 """
 
 import sys
@@ -50,7 +52,7 @@ def main(argv=None):
     # Run server
     try:
         serve(path, host, port, args['--gfm'], args['--context'],
-              args['--render-offline'])
+              args['--render-offline'], args['--user'], args['--pass'])
         return 0
     except ValueError, ex:
         print 'Error:', ex
