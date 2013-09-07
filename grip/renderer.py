@@ -2,14 +2,17 @@ from jinja2 import Environment, PackageLoader
 from .github_renderer import render_content as github_render
 from .offline_renderer import render_content as offline_render
 
+
 # Get jinja templates
 env = Environment(loader=PackageLoader('grip', 'templates'))
 index_template = env.get_template('index.html')
+
 
 def render_content(text, gfm=False, context=None, render_offline=False):
     if render_offline:
         return offline_render(text, gfm, context)
     return github_render(text, gfm, context)
+
 
 def render_page(text, filename=None, gfm=False, context=None,
                 render_offline=False, style_urls=[]):

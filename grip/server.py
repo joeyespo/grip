@@ -65,6 +65,7 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
     # Run local server
     app.run(app.config['HOST'], app.config['PORT'], debug=app.debug, use_reloader=app.config['DEBUG_GRIP'])
 
+
 def _get_styles(source_url, pattern, cache_dir):
     """Gets the specified resource and parses all styles in the form of the specified pattern."""
     try:
