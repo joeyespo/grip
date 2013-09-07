@@ -1,13 +1,6 @@
+from flask import json
 import requests
 
-json = None
-try:
-    import simplejson as json
-except ImportError:
-    try:
-        import json
-    except ImportError:
-        pass
 
 def render_content(text, gfm=False, context=None):
     """Renders the specified markup."""
