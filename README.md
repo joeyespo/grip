@@ -100,7 +100,7 @@ serve(path='file-or-directory', host='localhost', port=5000, gfm=False, context=
 - `gfm`: Whether to render using [GitHub Flavored Markdown][gfm]
 - `context`: The project context to use when `gfm` is true, which
              takes the form of `username/project`
-- `render_offline`: Whether to render locally using [Python-Markdown][Python-Markdown]
+- `render_offline`: Whether to render locally using [Python-Markdown][]
 
 
 #### render_content
@@ -115,7 +115,7 @@ render_content(text, gfm=False, context=None)
 - `gfm`: Whether to render using [GitHub Flavored Markdown][gfm]
 - `context`: The project context to use when `gfm` is true, which
              takes the form of `username/project`
-- `render_offline`: Whether to render locally using [Python-Markdown][Python-Markdown]
+- `render_offline`: Whether to render locally using [Python-Markdown][]
 
 #### render_page
 
@@ -130,7 +130,7 @@ render_page(text, filename=None, gfm=False, context=None, render_offline=False, 
 - `gfm`: Whether to render using [GitHub Flavored Markdown][gfm]
 - `context`: The project context to use when `gfm` is true, which
              takes the form of `username/project`
-- `render_offline`: Whether to render offline using [Python-Markdown][Python-Markdown]
+- `render_offline`: Whether to render offline using [Python-Markdown][]
 - `style_urls`: A list of URLs that contain CSS to include in the
                 rendered page
 
@@ -155,5 +155,5 @@ Contributing
 [markdown]: http://developer.github.com/v3/markdown
 [rdd]: http://tom.preston-werner.com/2010/08/23/readme-driven-development.html
 [gfm]: http://github.github.com/github-flavored-markdown
-[Python-Markdown]: https://github.com/waylan/Python-Markdown
+[python-markdown]: https://github.com/waylan/Python-Markdown
 [authors.md]: AUTHORS.md
