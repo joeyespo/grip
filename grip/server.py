@@ -21,7 +21,7 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
     directory = os.path.dirname(path)
 
     # Flask application
-    app = Flask('grip')
+    app = Flask(__name__)
     app.config.from_pyfile('default_config.py')
     app.config.from_pyfile('local_config.py', silent=True)
 
