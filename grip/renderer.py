@@ -16,8 +16,9 @@ def render_content(text, gfm=False, context=None, render_offline=False,
     return github_render(text, gfm, context, username, password)
 
 
-def render_page(text, filename=None, gfm=False, context=None,
-                render_offline=False, username=None, password=None, style_urls=[]):
+def render_page(text, filename=None, gfm=False, context=None, render_offline=False,
+                username=None, password=None, style_urls=[]):
     """Renders the specified markup text to an HTML page."""
     content = render_content(text, gfm, context, render_offline, username, password)
-    return index_template.render(content=content, filename=filename, style_urls=style_urls)
+    return index_template.render(content=content, filename=filename,
+                                 style_urls=style_urls)
