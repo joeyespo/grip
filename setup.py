@@ -48,6 +48,7 @@ setup(
     license='MIT',
     platforms='any',
     packages=find_packages(),
+    package_data={'grip': ['templates/*.html']},
     install_requires=read('requirements.txt'),
     zip_safe=False,
     entry_points={'console_scripts': ['grip = grip.command:main']},

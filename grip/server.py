@@ -11,7 +11,7 @@ default_filenames = ['README.md', 'README.markdown']
 
 
 def serve(path=None, host=None, port=None, gfm=False, context=None,
-          render_offline=False):
+          render_offline=False, username=None, password=None):
     """Starts a server to render the specified file or directory containing a README."""
     if not path or os.path.isdir(path):
         path = _find_file(path)
@@ -69,8 +69,8 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
                 return abort(404)
         else:
             text = _read_file(path)
-        return render_page(text, filename, gfm, context, render_offline, style_urls)
-
+        return render_page(text, filename, gfm, context, render_offline,
+                           username, password, style_urls)
     @app.route('/cache/<path:filename>')
     def render_cache(filename=None):
         return send_from_directory(style_cache_path, filename)
