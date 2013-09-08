@@ -39,13 +39,13 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
     @app.before_first_request
     def retrieve_styles():
         """Retrieves the style URLs from the source and caches them, if requested."""
-        if not app.config['STYLE_URL_SOURCE'] or not app.config['STYLE_URL_RE']:
+        if not app.config['STYLE_URLS_SOURCE'] or not app.config['STYLE_URLS_RE']:
             return
 
         # Fetch style URLs
         style_urls.extend(
-            _get_style_urls(app.config['STYLE_URL_SOURCE'],
-                app.config['STYLE_URL_RE'], style_cache_path))
+            _get_style_urls(app.config['STYLE_URLS_SOURCE'],
+                app.config['STYLE_URLS_RE'], style_cache_path))
 
     # Set overridden config values
     if host is not None:

@@ -12,6 +12,6 @@ DEBUG = True
 
 DEBUG_GRIP = False
 STYLE_URLS = []
-STYLE_URL_SOURCE = 'https://github.com/joeyespo/grip'
-STYLE_URL_RE = '<link.+href=[\'"]?([^\'" >]+)[\'"]?.+media=[\'"]?(?:screen|all)[\'"]?.+rel=[\'"]?stylesheet[\'"]?.+/>'
+STYLE_URLS_SOURCE = 'https://github.com/joeyespo/grip'
+STYLE_URLS_RE = '<link.+href=[\'"]?([^\'" >]+)[\'"]?.+media=[\'"]?(?:screen|all)[\'"]?.+rel=[\'"]?stylesheet[\'"]?.+/>'
 STYLE_CACHE_DIRECTORY = 'style-cache'
