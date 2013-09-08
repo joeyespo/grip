@@ -59,6 +59,9 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
     def render(filename=None):
         if filename is not None:
             filename = safe_join(directory, filename)
+            cwd = '.' + os.path.sep
+            if filename.startswith(cwd):
+                filename = filename[len(cwd):]
             if os.path.isdir(filename):
                 filename = _find_file(filename)
             try:
