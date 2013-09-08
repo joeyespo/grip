@@ -1,4 +1,4 @@
-from flask import json
+from flask import abort, json
 import requests
 
 
@@ -15,5 +15,15 @@ def render_content(text, gfm=False, context=None, username=None, password=None):
         data = text
     headers = {'content-type': 'text/plain'}
     auth = (username, password) if username else None
+
     r = requests.post(url, headers=headers, data=data, auth=auth)
+
+    # Relay HTTP errors
+    if r.status_code != 200:
+        try:
+            message = r.json()['message']
+        except:
+            message = r.text
+        abort(r.status_code, message)
+
     return r.text
