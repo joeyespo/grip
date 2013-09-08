@@ -1,9 +1,9 @@
 # Deployment files
-instance
 *.egg-info
 dist
 
 # Environment files
+instance
 build
 env
 *.so
