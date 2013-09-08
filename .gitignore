@@ -1,4 +1,5 @@
 # Deployment files
+instance
 *.egg-info
 dist
 
