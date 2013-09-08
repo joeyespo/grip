@@ -4,4 +4,4 @@ include *.md
 
 prune research
 
-global-exclude local_config.py
+global-exclude settings_local.py
