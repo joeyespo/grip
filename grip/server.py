@@ -60,7 +60,10 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
         if filename is not None:
             filename = safe_join(directory, filename)
             if os.path.isdir(filename):
-                filename = _find_file(filename)
+                try:
+                    filename = _find_file(filename)
+                except ValueError:
+                    abort(404)
             try:
                 text = _read_file(filename)
             except IOError as ex:
