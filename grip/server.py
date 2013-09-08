@@ -59,9 +59,6 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
     def render(filename=None):
         if filename is not None:
             filename = safe_join(directory, filename)
-            cwd = '.' + os.path.sep
-            if filename.startswith(cwd):
-                filename = filename[len(cwd):]
             if os.path.isdir(filename):
                 filename = _find_file(filename)
             try:
@@ -70,9 +67,11 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
                 if ex.errno != errno.ENOENT:
                     raise
                 return abort(404)
+            filename_display = _display_filename(filename)
         else:
             text = _read_file(path)
-        return render_page(text, filename, gfm, context, render_offline,
+            filename_display = _display_filename(path)
+        return render_page(text, filename_display, gfm, context, render_offline,
                            username, password, style_urls)
     @app.route('/cache/<path:filename>')
     def render_cache(filename=None):
@@ -150,3 +149,9 @@ def _cache_contents(urls, style_cache_path):
         contents = requests.get(url).text
         _write_file(filename, contents)
         print ' * Downloaded', url
+
+
+def _display_filename(filename):
+    """Normalizes the specified filename for display purposes."""
+    cwd = '.' + os.path.sep
+    return filename[len(cwd):] if filename.startswith(cwd) else filename

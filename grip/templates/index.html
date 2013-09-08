@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Grip{% if filename %} - {% endif %}{{ filename or '' }}{% endblock %}
+{% block title %}{% if filename %}{{ filename }} - {% endif %}Grip{% endblock %}
 
 {% block styles %}
   {% for style_url in style_urls %}
