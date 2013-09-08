@@ -23,8 +23,8 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
 
     # Flask application
     app = Flask(__name__)
-    app.config.from_pyfile('default_config.py')
-    app.config.from_pyfile('local_config.py', silent=True)
+    app.config.from_pyfile('settings.py')
+    app.config.from_pyfile('settings_local.py', silent=True)
 
     # Setup style cache
     style_urls = app.config['STYLE_URLS']

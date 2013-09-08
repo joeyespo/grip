@@ -8,7 +8,7 @@ build
 env
 *.so
 *.py[cod]
-local_config.py
+settings_local.py
 
 # OS-specific files
 .DS_Store
