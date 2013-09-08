@@ -8,7 +8,9 @@ env = Environment(loader=PackageLoader('grip', 'templates'))
 index_template = env.get_template('index.html')
 
 
-def render_content(text, gfm=False, context=None, render_offline=False, username=None, password=None):
+def render_content(text, gfm=False, context=None, render_offline=False,
+                   username=None, password=None):
+    """Renders the specified markup and returns the result."""
     if render_offline:
         return offline_render(text, gfm, context)
     return github_render(text, gfm, context, username, password)
