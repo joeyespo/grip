@@ -1,7 +1,7 @@
 path-and-address==0.2.0
 requests==1.2.3
-docopt==0.5
-jinja2==2.6
-flask==0.9
+docopt==0.6.1
+Jinja2==2.7.1
+Flask==0.10.1
 Markdown==2.3.1
-Pygments==1.5
+Pygments==1.6
