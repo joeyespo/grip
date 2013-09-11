@@ -65,16 +65,20 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
                     filename = _find_file(filename)
                 except ValueError:
                     abort(404)
+
+            # if we think this file is an image, we need to read it in
+            # binary mode and serve it as such
+            mimetype, _ = mimetypes.guess_type(filename)
+            is_image = mimetype.startswith("image/")
+
             try:
-                text = _read_file(filename)
+                text = _read_file(filename, is_image)
             except IOError as ex:
                 if ex.errno != errno.ENOENT:
                     raise
                 return abort(404)
 
-            # if we think this file is an image, serve it as such
-            mimetype, _ = mimetypes.guess_type(filename)
-            if mimetype.startswith("image/"):
+            if is_image:
                 return render_image(text, mimetype)
 
             filename_display = _display_filename(filename)
@@ -139,9 +143,10 @@ def _find_file(path):
     raise ValueError('No README found at ' + path)
 
 
-def _read_file(filename):
+def _read_file(filename, read_as_binary=False):
     """Reads the contents of the specified file."""
-    with open(filename) as f:
+    mode = "rb" if read_as_binary else "r"
+    with open(filename, mode) as f:
         return f.read()
 
 
