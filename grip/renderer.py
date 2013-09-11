@@ -1,6 +1,7 @@
 from jinja2 import Environment, PackageLoader
 from .github_renderer import render_content as github_render
 from .offline_renderer import render_content as offline_render
+from flask import make_response
 
 
 # Get jinja templates
@@ -22,3 +23,9 @@ def render_page(text, filename=None, gfm=False, context=None, render_offline=Fal
     content = render_content(text, gfm, context, render_offline, username, password)
     return index_template.render(content=content, filename=filename,
                                  style_urls=style_urls)
+
+def render_image(image_data, content_type):
+    """Renders the specified image data with the given Content-Type."""
+    response = make_response(image_data)
+    response.headers['Content-Type'] = content_type
+    return response

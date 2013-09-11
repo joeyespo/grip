@@ -2,9 +2,10 @@ import os
 import re
 import errno
 import requests
+import mimetypes
 from traceback import format_exc
 from flask import Flask, current_app, safe_join, abort, url_for, send_from_directory
-from .renderer import render_page
+from .renderer import render_page, render_image
 
 
 default_filenames = ['README.md', 'README.markdown']
@@ -70,6 +71,12 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
                 if ex.errno != errno.ENOENT:
                     raise
                 return abort(404)
+
+            # if we think this file is an image, serve it as such
+            mimetype, _ = mimetypes.guess_type(filename)
+            if mimetype.startswith("image/"):
+                return render_image(text, mimetype)
+
             filename_display = _display_filename(filename)
         else:
             text = _read_file(path)
