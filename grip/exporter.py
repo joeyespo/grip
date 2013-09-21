@@ -20,7 +20,8 @@ def write_html(path=None):
     if not path or os.path.isdir(path):
         path = _find_file(path)
 
-    style_urls = _get_style_urls(config['STYLE_URL_SOURCE'], config['STYLE_URL_RE'])
+    style_urls = _get_style_urls(config['STYLE_URLS_SOURCE'],
+                                 config['STYLE_URLS_RE'], None)
     style_url_contents = [urlopen(css).read().decode('utf-8') for css in style_urls]
 
     text = _read_file(path)
