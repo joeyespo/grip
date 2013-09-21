@@ -87,6 +87,7 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
             filename_display = _display_filename(path)
         return render_page(text, filename_display, gfm, context, render_offline,
                            username, password, style_urls)
+
     @app.route('/cache/<path:filename>')
     def render_cache(filename=None):
         return send_from_directory(style_cache_path, filename)

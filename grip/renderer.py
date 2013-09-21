@@ -29,6 +29,7 @@ def render_page(text, filename=None, gfm=False, context=None, render_offline=Fal
                                  style_urls=style_urls,
                                  style_url_contents=style_url_contents)
 
+
 def render_image(image_data, content_type):
     """Renders the specified image data with the given Content-Type."""
     response = make_response(image_data)

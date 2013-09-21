@@ -48,14 +48,14 @@ def main(argv=None):
     path, address = resolve(args['<path>'], args['<address>'])
     host, port = split_address(address)
 
+    # Export to a file instead of running a server
     if args['--export']:
         try:
             write_html(path)
             return 0
         except Exception as e:
-            print("Error: ", e)
+            print 'Error:', e
             return 1
-
 
     # Validate address
     if address and not host and not port:
