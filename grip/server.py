@@ -69,7 +69,7 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
             # if we think this file is an image, we need to read it in
             # binary mode and serve it as such
             mimetype, _ = mimetypes.guess_type(filename)
-            is_image = mimetype.startswith("image/")
+            is_image = mimetype.startswith('image/') if mimetype else False
 
             try:
                 text = _read_file(filename, is_image)
