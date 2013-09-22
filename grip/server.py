@@ -81,10 +81,10 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
             if is_image:
                 return render_image(text, mimetype)
 
-            filename_display = _display_filename(filename)
+            filename_display = os.path.normpath(filename)
         else:
             text = _read_file(path)
-            filename_display = _display_filename(path)
+            filename_display = os.path.normpath(path)
         return render_page(text, filename_display, gfm, context, render_offline,
                            username, password, style_urls)
 
@@ -165,9 +165,3 @@ def _cache_contents(urls, style_cache_path):
         contents = requests.get(url).text
         _write_file(filename, contents)
         print ' * Downloaded', url
-
-
-def _display_filename(filename):
-    """Normalizes the specified filename for display purposes."""
-    cwd = '.' + os.path.sep
-    return filename[len(cwd):] if filename.startswith(cwd) else filename
