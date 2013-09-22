@@ -4,7 +4,7 @@ import errno
 import requests
 import mimetypes
 from traceback import format_exc
-from flask import Flask, current_app, safe_join, abort, url_for, send_from_directory
+from flask import Flask, safe_join, abort, url_for, send_from_directory
 from .renderer import render_page, render_image
 
 
@@ -48,7 +48,8 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
         # Get style URLs from the source HTML page
         retrieved_urls = _get_style_urls(app.config['STYLE_URLS_SOURCE'],
                                          app.config['STYLE_URLS_RE'],
-                                         style_cache_path)
+                                         style_cache_path,
+                                         app.config['DEBUG_GRIP'])
         style_urls.extend(retrieved_urls)
 
     # Set overridden config values
@@ -100,7 +101,7 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
         use_reloader=app.config['DEBUG_GRIP'])
 
 
-def _get_style_urls(source_url, pattern, style_cache_path):
+def _get_style_urls(source_url, pattern, style_cache_path, debug=False):
     """Gets the specified resource and parses all style URLs in the form of the specified pattern."""
     try:
         # TODO: Add option to clear the cached styles
@@ -123,7 +124,7 @@ def _get_style_urls(source_url, pattern, style_cache_path):
 
         return urls
     except Exception as ex:
-        if current_app.config['DEBUG_GRIP']:
+        if debug:
             print format_exc()
         else:
             print ' * Error: could not retrieve styles:', str(ex)

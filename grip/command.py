@@ -28,7 +28,7 @@ import sys
 from path_and_address import resolve, split_address
 from docopt import docopt
 from .server import serve
-from .exporter import write_html
+from .exporter import export
 from . import __version__
 
 
@@ -51,7 +51,8 @@ def main(argv=None):
     # Export to a file instead of running a server
     if args['--export']:
         try:
-            write_html(path)
+            export(path, args['--gfm'], args['--context'],
+                  args['--render-offline'], args['--user'], args['--pass'])
             return 0
         except Exception as e:
             print 'Error:', e

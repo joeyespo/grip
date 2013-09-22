@@ -15,18 +15,33 @@ except ImportError:
     pass
 
 
-def write_html(path=None):
+def export(path=None, gfm=False, context=None, render_offline=False,
+           username=None, password=None):
     """Exports the rendered HTML to a file."""
     if not path or os.path.isdir(path):
         path = _find_file(path)
 
-    style_urls = _get_style_urls(config['STYLE_URLS_SOURCE'],
-                                 config['STYLE_URLS_RE'], None)
-    styles = [urlopen(css).read().decode('utf-8') for css in style_urls]
+    in_filename = os.path.normpath(path)
+    out_filename = os.path.splitext(in_filename)[0] + '.html'
+    print 'Exporting to', out_filename
 
-    text = _read_file(path)
-    outname = os.path.splitext(path)[0] + '.html'
-    page = render_page(text=text, styles=styles)
+    # TODO: Use the style cache
+    style_cache_path = None
 
-    with open(outname, 'w') as f:
-        f.write(page.encode('utf-8'))
+    # Get styles
+    style_urls = config['STYLE_URLS']
+    if config['STYLE_URLS_SOURCE'] and config['STYLE_URLS_RE']:
+        retrieved_urls = _get_style_urls(config['STYLE_URLS_SOURCE'],
+                                         config['STYLE_URLS_RE'],
+                                         style_cache_path,
+                                         config['DEBUG'])
+        style_urls.extend(retrieved_urls)
+    styles = [urlopen(url).read().decode('utf-8') for url in style_urls]
+
+    # Render content
+    text = _read_file(in_filename)
+    content = render_page(text, in_filename, gfm, context, render_offline,
+                          username, password, styles=styles)
+
+    with open(out_filename, 'w') as f:
+        f.write(content.encode('utf-8'))
