@@ -60,7 +60,7 @@ since grip supports relative URLs.
 You can even bypass the server and export to a single HTML:
 
 ```bash
-$ grip --export CHANGES.md
+$ grip --export AUTHORS.md
 ```
 
 GitHub-Flavored Markdown is also supported:
