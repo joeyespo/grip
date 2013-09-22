@@ -91,13 +91,31 @@ serve(port=8080)
 
 ### Documentation
 
+#### create_app
+
+Creates a Flask application used to render and serve the file.
+
+```python
+create_app(path='file-or-directory', gfm=False, context=None, username=None, password=None, render_offline=False, render_inline=False)
+```
+
+- `path`: The filename to render, or the directory containing your Readme file
+- `gfm`: Whether to render using [GitHub Flavored Markdown][gfm]
+- `context`: The project context to use when `gfm` is true, which
+             takes the form of `username/project`
+- `username`: The user to authenticate with GitHub to extend the API limit
+- `password`: The password to authenticate with GitHub to extend the API limit
+- `render_offline`: Whether to render locally using [Python-Markdown][]
+- `render_inline`: Whether to inline the styles within the HTML file
+
+
 #### serve
 
 Runs a local server and renders the Readme file located
 at `path` when visited in the browser.
 
 ```python
-serve(path='file-or-directory', host='localhost', port=5000, gfm=False, context=None, render_offline=False)
+serve(path='file-or-directory', host='localhost', port=5000, gfm=False, context=None, username=None, password=None, render_offline=False)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file
@@ -106,6 +124,8 @@ serve(path='file-or-directory', host='localhost', port=5000, gfm=False, context=
 - `gfm`: Whether to render using [GitHub Flavored Markdown][gfm]
 - `context`: The project context to use when `gfm` is true, which
              takes the form of `username/project`
+- `username`: The user to authenticate with GitHub to extend the API limit
+- `password`: The password to authenticate with GitHub to extend the API limit
 - `render_offline`: Whether to render locally using [Python-Markdown][]
 
 
@@ -114,14 +134,17 @@ serve(path='file-or-directory', host='localhost', port=5000, gfm=False, context=
 Renders the specified markdown text.
 
 ```python
-render_content(text, gfm=False, context=None)
+render_content(text, gfm=False, context=None, username=None, password=None, render_offline=False)
 ```
 
 - `text`: The content to render
 - `gfm`: Whether to render using [GitHub Flavored Markdown][gfm]
 - `context`: The project context to use when `gfm` is true, which
              takes the form of `username/project`
+- `username`: The user to authenticate with GitHub to extend the API limit
+- `password`: The password to authenticate with GitHub to extend the API limit
 - `render_offline`: Whether to render locally using [Python-Markdown][]
+
 
 #### render_page
 
@@ -129,16 +152,19 @@ Renders the specified markdown text and outputs an HTML page that resembles
 the GitHub Readme view.
 
 ```python
-render_page(text, filename=None, gfm=False, context=None, render_offline=False, style_urls=[])
+render_page(text, filename=None, gfm=False, context=None, username=None, password=None, render_offline=False, style_urls=[], styles=[])
 ```
 
 - `text`: The content to render
 - `gfm`: Whether to render using [GitHub Flavored Markdown][gfm]
 - `context`: The project context to use when `gfm` is true, which
              takes the form of `username/project`
+- `username`: The user to authenticate with GitHub to extend the API limit
+- `password`: The password to authenticate with GitHub to extend the API limit
 - `render_offline`: Whether to render offline using [Python-Markdown][]
-- `style_urls`: A list of URLs that contain CSS to include in the
-                rendered page
+- `style_urls`: A list of URLs that contain CSS to include in the rendered page
+- `styles`: A list of style content strings to inline in the rendered page
+
 
 #### default_filenames
 
