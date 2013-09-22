@@ -6,6 +6,13 @@
   {%- for style_url in style_urls -%}
   <link rel="stylesheet" href="{{ style_url }}" />
   {% endfor -%}
+  {%- if styles %}
+  <style>
+    {% for style in styles -%}
+    {{ style }}
+    {% endfor -%}
+  </style>
+  {% endif -%}
   <style>
     .previewPage {
       margin: 64px auto;

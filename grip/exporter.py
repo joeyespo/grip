@@ -22,11 +22,11 @@ def write_html(path=None):
 
     style_urls = _get_style_urls(config['STYLE_URLS_SOURCE'],
                                  config['STYLE_URLS_RE'], None)
-    style_url_contents = [urlopen(css).read().decode('utf-8') for css in style_urls]
+    styles = [urlopen(css).read().decode('utf-8') for css in style_urls]
 
     text = _read_file(path)
     outname = os.path.splitext(path)[0] + '.html'
-    page = render_page(text=text, style_url_contents=style_url_contents)
+    page = render_page(text=text, styles=styles)
 
     with open(outname, 'w') as f:
         f.write(page.encode('utf-8'))

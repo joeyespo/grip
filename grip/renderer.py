@@ -1,11 +1,12 @@
 from jinja2 import Environment, PackageLoader
+from flask import make_response
 from .github_renderer import render_content as github_render
 from .offline_renderer import render_content as offline_render
-from flask import make_response
 
 
 # Get jinja templates
 env = Environment(loader=PackageLoader('grip', 'templates'))
+index_template = env.get_template('index.html')
 
 
 def render_content(text, gfm=False, context=None, render_offline=False,
@@ -17,17 +18,11 @@ def render_content(text, gfm=False, context=None, render_offline=False,
 
 
 def render_page(text, filename=None, gfm=False, context=None, render_offline=False,
-                username=None, password=None, style_urls=[], style_url_contents=None):
+                username=None, password=None, style_urls=[], styles=None):
     """Renders the specified markup text to an HTML page."""
-    if style_url_contents:
-        index_template = env.get_template('index_export.html')
-    else:
-        index_template = env.get_template('index.html')
-        
     content = render_content(text, gfm, context, render_offline, username, password)
     return index_template.render(content=content, filename=filename,
-                                 style_urls=style_urls,
-                                 style_url_contents=style_url_contents)
+                                 style_urls=style_urls, styles=styles)
 
 
 def render_image(image_data, content_type):
