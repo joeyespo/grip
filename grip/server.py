@@ -28,13 +28,15 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
     app.config.from_pyfile('settings_local.py', silent=True)
 
     # Setup style cache
-    style_urls = app.config['STYLE_URLS']
     if app.config['STYLE_CACHE_DIRECTORY']:
         style_cache_path = os.path.join(app.instance_path, app.config['STYLE_CACHE_DIRECTORY'])
         if not os.path.exists(style_cache_path):
             os.makedirs(style_cache_path)
     else:
         style_cache_path = None
+
+    # Get initial styles
+    style_urls = list(app.config['STYLE_URLS'] or [])
 
     # Get styles from style source
     @app.before_first_request
@@ -43,10 +45,11 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
         if not app.config['STYLE_URLS_SOURCE'] or not app.config['STYLE_URLS_RE']:
             return
 
-        # Fetch style URLs
-        style_urls.extend(
-            _get_style_urls(app.config['STYLE_URLS_SOURCE'],
-                app.config['STYLE_URLS_RE'], style_cache_path))
+        # Get style URLs from the source HTML page
+        retrieved_urls = _get_style_urls(app.config['STYLE_URLS_SOURCE'],
+                                         app.config['STYLE_URLS_RE'],
+                                         style_cache_path)
+        style_urls.extend(retrieved_urls)
 
     # Set overridden config values
     if host is not None:
