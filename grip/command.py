@@ -17,11 +17,10 @@ Where:
 Options:
   --gfm             Use GitHub-Flavored Markdown, e.g. comments or issues
   --context=<repo>  The repository context, only taken into account with --gfm
-  --render-offline  Render offline instead of via GitHub markdown API
   --user=<username> A GitHub username for API authentication
   --pass=<password> A GitHub password for API authentication
-  --export          Exports to a given <path>.html if path is a filename, or README.html
-                    otherwise
+  --render-offline  Render offline instead of via GitHub markdown API
+  --export          Exports to <path>.html or README.md instead of serving
 """
 
 import sys
@@ -52,10 +51,10 @@ def main(argv=None):
     if args['--export']:
         try:
             export(path, args['--gfm'], args['--context'],
-                  args['--render-offline'], args['--user'], args['--pass'])
+                  args['--user'], args['--pass'], args['--render-offline'])
             return 0
-        except Exception as e:
-            print 'Error:', e
+        except ValueError as ex:
+            print 'Error:', ex
             return 1
 
     # Validate address
@@ -65,8 +64,8 @@ def main(argv=None):
     # Run server
     try:
         serve(path, host, port, args['--gfm'], args['--context'],
-              args['--render-offline'], args['--user'], args['--pass'])
+              args['--user'], args['--pass'], args['--render-offline'])
         return 0
-    except ValueError, ex:
+    except ValueError as ex:
         print 'Error:', ex
         return 1

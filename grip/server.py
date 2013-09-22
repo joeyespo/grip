@@ -1,8 +1,9 @@
 import os
 import re
 import errno
-import requests
 import mimetypes
+import requests
+from urlparse import urlparse
 from traceback import format_exc
 from flask import Flask, safe_join, abort, url_for, send_from_directory
 from .renderer import render_page, render_image
@@ -11,8 +12,8 @@ from .renderer import render_page, render_image
 default_filenames = ['README.md', 'README.markdown']
 
 
-def serve(path=None, host=None, port=None, gfm=False, context=None,
-          render_offline=False, username=None, password=None):
+def create_app(path=None, gfm=False, context=None, username=None, password=None,
+               render_offline=False, render_inline=False):
     """Starts a server to render the specified file or directory containing a README."""
     if not path or os.path.isdir(path):
         path = _find_file(path)
@@ -20,12 +21,11 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
     if not os.path.exists(path):
         raise ValueError('File not found: ' + path)
 
-    directory = os.path.dirname(path)
-
     # Flask application
     app = Flask(__name__)
     app.config.from_pyfile('settings.py')
     app.config.from_pyfile('settings_local.py', silent=True)
+    app.config['GRIP_FILE'] = os.path.normpath(path)
 
     # Setup style cache
     if app.config['STYLE_CACHE_DIRECTORY']:
@@ -37,6 +37,7 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
 
     # Get initial styles
     style_urls = list(app.config['STYLE_URLS'] or [])
+    styles = []
 
     # Get styles from style source
     @app.before_first_request
@@ -52,18 +53,16 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
                                          app.config['DEBUG_GRIP'])
         style_urls.extend(retrieved_urls)
 
-    # Set overridden config values
-    if host is not None:
-        app.config['HOST'] = host
-    if port is not None:
-        app.config['PORT'] = port
+        if render_inline:
+            styles.extend(_get_styles(app, style_urls))
+            style_urls[:] = []
 
     # Views
     @app.route('/')
     @app.route('/<path:filename>')
     def render(filename=None):
         if filename is not None:
-            filename = safe_join(directory, filename)
+            filename = safe_join(os.path.dirname(app.config['GRIP_FILE']), filename)
             if os.path.isdir(filename):
                 try:
                     filename = _find_file(filename)
@@ -84,17 +83,29 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
 
             if is_image:
                 return render_image(text, mimetype)
-
-            filename_display = os.path.normpath(filename)
         else:
-            text = _read_file(path)
-            filename_display = os.path.normpath(path)
-        return render_page(text, filename_display, gfm, context, render_offline,
-                           username, password, style_urls)
+            filename = app.config['GRIP_FILE']
+            text = _read_file(app.config['GRIP_FILE'])
+        return render_page(text, filename, gfm, context,
+                           username, password, render_offline, style_urls, styles)
 
     @app.route('/cache/<path:filename>')
     def render_cache(filename=None):
         return send_from_directory(style_cache_path, filename)
+
+    return app
+
+
+def serve(path=None, host=None, port=None, gfm=False, context=None,
+          username=None, password=None, render_offline=False):
+    """Starts a server to render the specified file or directory containing a README."""
+    app = create_app(path, gfm, context, username, password, render_offline)
+
+    # Set overridden config values
+    if host is not None:
+        app.config['HOST'] = host
+    if port is not None:
+        app.config['PORT'] = port
 
     # Run local server
     app.run(app.config['HOST'], app.config['PORT'], debug=app.debug,
@@ -129,6 +140,21 @@ def _get_style_urls(source_url, pattern, style_cache_path, debug=False):
         else:
             print ' * Error: could not retrieve styles:', str(ex)
         return []
+
+
+def _get_styles(app, style_urls):
+    """Gets the content of the given list of style URLs."""
+    styles = []
+    for style_url in style_urls:
+        if not urlparse(style_urls[0]).netloc:
+            with app.test_client() as c:
+                response = c.get(style_url)
+                encoding = response.charset
+                content = response.data.decode(encoding)
+        else:
+            content = requests.get(style_url).text
+        styles.append(content)
+    return styles
 
 
 def _get_cached_style_urls(style_cache_path):
