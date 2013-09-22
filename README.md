@@ -57,13 +57,11 @@ $ grip AUTHORS.md
 Alternatively, you could just run `grip` and visit [localhost:5000/AUTHORS.md][AUTHORS.md]
 since grip supports relative URLs.
 
-Or you can even export the file to a monolithic html:
+You can even bypass the server and export to a single HTML:
 
 ```bash
 $ grip --export CHANGES.md
 ```
-
-will give you a monolithic Html with all stylesheets included
 
 GitHub-Flavored Markdown is also supported:
 
