@@ -2,19 +2,19 @@
 
 {% block title %}{% if filename %}{{ filename }} - {% endif %}Grip{% endblock %}
 
-{% block styles %}
-  {% for style_url in style_urls %}
+{%- block styles -%}
+  {%- for style_url in style_urls -%}
   <link rel="stylesheet" href="{{ style_url }}" />
-  {% endfor %}
+  {% endfor -%}
   <style>
     .previewPage {
       margin: 64px auto;
       width: 920px;
     }
   </style>
-{% endblock %}
+{%- endblock -%}
 
-{% block page %}
+{%- block page -%}
   <div class="previewPage">
     <div id="readme" class="announce md">
       <article class="markdown-body entry-content">
@@ -24,4 +24,4 @@
   </div>
   
   <div>&nbsp;</div>
-{% endblock %}
+{%- endblock -%}
