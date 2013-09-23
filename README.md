@@ -86,7 +86,7 @@ You can access the API directly with Python, using it in your own projects:
 from grip import serve
 
 serve(port=8080)
- * Running on http://localhost:80/
+ * Running on http://localhost:8080/
 ```
 
 ### Documentation
