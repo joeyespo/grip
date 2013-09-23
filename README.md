@@ -63,7 +63,7 @@ You can even bypass the server and export to a single HTML:
 $ grip --export AUTHORS.md
 ```
 
-GitHub-Flavored Markdown is also supported:
+GitHub-Flavored Markdown is also supported, with an optional repository context for linking to issues:
 
 ```bash
 $ grip --gfm --context=joeyespo/grip
