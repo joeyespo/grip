@@ -9,6 +9,14 @@ env = Environment(loader=PackageLoader('grip', 'templates'))
 index_template = env.get_template('index.html')
 
 
+def render_app(app, route='/'):
+    """Renders the markup at the specified app route."""
+    with app.test_client() as c:
+        response = c.get('/')
+        encoding = response.charset
+        return response.data.decode(encoding)
+
+
 def render_content(text, gfm=False, context=None,
                    username=None, password=None, render_offline=False):
     """Renders the specified markup and returns the result."""
