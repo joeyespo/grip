@@ -19,6 +19,7 @@ Options:
   --context=<repo>  The repository context, only taken into account with --gfm
   --user=<username> A GitHub username for API authentication
   --pass=<password> A GitHub password for API authentication
+  --render-offline  Render offline instead of via GitHub markdown API
   --export          Exports to <path>.html or README.md instead of serving
 """
 
@@ -50,7 +51,7 @@ def main(argv=None):
     if args['--export']:
         try:
             export(path, args['--gfm'], args['--context'],
-                  args['--user'], args['--pass'], False)
+                  args['--user'], args['--pass'], args['--render-offline'])
             return 0
         except ValueError as ex:
             print 'Error:', ex
@@ -63,7 +64,7 @@ def main(argv=None):
     # Run server
     try:
         serve(path, host, port, args['--gfm'], args['--context'],
-              args['--user'], args['--pass'], False)
+              args['--user'], args['--pass'], args['--render-offline'])
         return 0
     except ValueError as ex:
         print 'Error:', ex

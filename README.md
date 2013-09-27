@@ -118,7 +118,7 @@ serve(path='file-or-directory', host='localhost', port=5000, gfm=False, context=
              takes the form of `username/project`
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
-- `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
+- `render_offline`: Whether to render locally using [Python-Markdown][]
 
 
 #### export
@@ -135,7 +135,7 @@ export(path='file-or-directory', gfm=False, context=None, username=None, passwor
              takes the form of `username/project`
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
-- `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
+- `render_offline`: Whether to render locally using [Python-Markdown][]
 - `out_filename`: The filename to write to, `<in_filename>.html` by default
 
 
@@ -155,7 +155,7 @@ create_app(path='file-or-directory', gfm=False, context=None, username=None, pas
              takes the form of `username/project`
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
-- `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
+- `render_offline`: Whether to render locally using [Python-Markdown][]
 - `render_inline`: Whether to inline the styles within the HTML file
 
 
@@ -183,7 +183,7 @@ render_content(text, gfm=False, context=None, username=None, password=None, rend
              takes the form of `username/project`
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
-- `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
+- `render_offline`: Whether to render locally using [Python-Markdown][]
 
 
 #### render_page
@@ -201,7 +201,7 @@ render_page(text, filename=None, gfm=False, context=None, username=None, passwor
              takes the form of `username/project`
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
-- `render_offline`: Whether to render offline using [Python-Markdown][] (Note: this is a work in progress)
+- `render_offline`: Whether to render offline using [Python-Markdown][]
 - `style_urls`: A list of URLs that contain CSS to include in the rendered page
 - `styles`: A list of style content strings to inline in the rendered page
 
