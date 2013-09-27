@@ -22,6 +22,7 @@ Options:
                     without the --pass option, an upcoming password
                     input will be necessary.
   --pass=<password> A GitHub password or auth token for API auth.
+  --render-offline  Render offline instead of via GitHub markdown API
   --wide            Renders wide, i.e. when the side nav is collapsed.
                     This only takes effect when --user-content is used.
   --clear           Clears the cached styles and assets and exits.
@@ -103,8 +104,8 @@ def main(argv=None, force_utf8=True, patch_svg=True):
     if args['--export']:
         try:
             export(args['<path>'], args['--user-content'], args['--context'],
-                   args['--user'], password, False, args['--wide'],
-                   not args['--no-inline'], args['<address>'],
+                   args['--user'], password, args['--render-offline'],
+                   args['--wide'], not args['--no-inline'], args['<address>'],
                    args['--api-url'], args['--title'])
             return 0
         except ReadmeNotFoundError as ex:
@@ -122,9 +123,10 @@ def main(argv=None, force_utf8=True, patch_svg=True):
     # Run server
     try:
         serve(path, host, port, args['--user-content'], args['--context'],
-              args['--user'], password, False, args['--wide'], False,
-              args['--api-url'], args['--title'], not args['--norefresh'],
-              args['--browser'], args['--quiet'], None)
+              args['--user'], password, args['--render-offline'],
+              args['--wide'], False, args['--api-url'], args['--title'],
+              not args['--norefresh'], args['--browser'], args['--quiet'],
+              None)
         return 0
     except ReadmeNotFoundError as ex:
         print('Error:', ex)
