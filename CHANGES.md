@@ -7,13 +7,13 @@ Version 2.0.0 (2013-09-26)
 
 - Feature: Styles are now cached (from the not-yet-released offline rendering) (thanks, [@isbadawi][]!)
 - Feature: Add user/pass options for GitHub auth (thanks, [@joelittlejohn][]!)
-- Feature: Add support for rendering images (thanks, [@jgallagher][]!)
 - Feature: Add export to single HTML file (thanks, [@iliggio][]!)
 - Enhancement: Better HTML titles by normalizing the path, always providing a title
 - Enhancement: Allow styles to be overridden, with examples in static directory
 - Enhancement: Relay GitHub API HTTP errors to browser for debuggability
 - Enhancement: Extract render_app and add create_app in API
 - Bugfix: Fix manual installs using setup.py (thanks, [@briancappello][]!)
+- Bugfix: Fix rendering rendering local images (thanks, [@jgallagher][]!)
 - Bugfix: Handle File Not Found errors as 404 when given a directory
 - Rename and re-arrange the configuration files
 - Update README.md with new features
