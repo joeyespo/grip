@@ -23,7 +23,7 @@ def create_app(path=None, gfm=False, context=None, username=None, password=None,
 
     # Flask application
     app = Flask(__name__)
-    app.config.from_pyfile('settings.py')
+    app.config.from_object('grip.settings')
     app.config.from_pyfile('settings_local.py', silent=True)
     app.config['GRIP_FILE'] = os.path.normpath(path)
 
