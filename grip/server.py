@@ -3,6 +3,7 @@ import re
 import errno
 import mimetypes
 import requests
+import codecs
 from urlparse import urlparse
 from traceback import format_exc
 from flask import Flask, safe_join, abort, url_for, send_from_directory
@@ -13,7 +14,7 @@ default_filenames = ['README.md', 'README.markdown']
 
 
 def create_app(path=None, gfm=False, context=None, username=None, password=None,
-               render_offline=False, render_inline=False):
+               render_offline=False, encoding=None, render_inline=False):
     """Starts a server to render the specified file or directory containing a README."""
     if not path or os.path.isdir(path):
         path = _find_file(path)
@@ -75,7 +76,7 @@ def create_app(path=None, gfm=False, context=None, username=None, password=None,
             is_image = mimetype.startswith('image/') if mimetype else False
 
             try:
-                text = _read_file(filename, is_image)
+                text = _read_file(filename, is_image, encoding)
             except IOError as ex:
                 if ex.errno != errno.ENOENT:
                     raise
@@ -97,9 +98,9 @@ def create_app(path=None, gfm=False, context=None, username=None, password=None,
 
 
 def serve(path=None, host=None, port=None, gfm=False, context=None,
-          username=None, password=None, render_offline=False):
+          username=None, password=None, render_offline=False, encoding=None):
     """Starts a server to render the specified file or directory containing a README."""
-    app = create_app(path, gfm, context, username, password, render_offline)
+    app = create_app(path, gfm, context, username, password, render_offline, encoding)
 
     # Set overridden config values
     if host is not None:
@@ -174,11 +175,22 @@ def _find_file(path):
     raise ValueError('No README found at ' + path)
 
 
-def _read_file(filename, read_as_binary=False):
+def _read_file(filename, read_as_binary=False, encoding='utf-8'):
     """Reads the contents of the specified file."""
-    mode = "rb" if read_as_binary else "r"
-    with open(filename, mode) as f:
-        return f.read()
+    data = ''
+    try:
+        # Downstream the Markdown python package needs a unicode string to be read in, but
+        # the flask module doesn't like the unicode strings, hence the two open routines here.
+        if read_as_binary or encoding == 'ascii':
+            f = open(filename, 'rb' if read_as_binary else 'r')
+        else:
+            f = codecs.open(filename, encoding='utf-8', mode='r')
+        data = f.read()
+        f.close()
+    except:
+        raise
+
+    return data
 
 
 def _write_file(filename, contents):

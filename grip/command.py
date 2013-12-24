@@ -15,11 +15,13 @@ Where:
   <address> is what to listen on, of the form <host>[:<port>], or just <port>
 
 Options:
-  --gfm             Use GitHub-Flavored Markdown, e.g. comments or issues
-  --context=<repo>  The repository context, only taken into account with --gfm
-  --user=<username> A GitHub username for API authentication
-  --pass=<password> A GitHub password for API authentication
-  --export          Exports to <path>.html or README.md instead of serving
+  --gfm                 Use GitHub-Flavored Markdown, e.g. comments or issues
+  --context=<repo>      The repository context, only taken into account with --gfm
+  --user=<username>     A GitHub username for API authentication
+  --pass=<password>     A GitHub password for API authentication
+  --export              Exports to <path>.html or README.md instead of serving
+  --offline             Uses the offline renderer.
+  --encoding=<utf-8>    Sets the encoding for files read in. Ignored without --offline.
 """
 
 import sys
@@ -41,6 +43,11 @@ def main(argv=None):
 
     # Parse options
     args = docopt(usage, argv=argv, version=version)
+    if not args['--offline']:
+        args['--encoding'] = 'ascii'
+    elif not args['--encoding']:
+        args['--encoding'] = 'utf-8'
+    print( args )
 
     # Parse arguments
     path, address = resolve(args['<path>'], args['<address>'])
@@ -50,7 +57,7 @@ def main(argv=None):
     if args['--export']:
         try:
             export(path, args['--gfm'], args['--context'],
-                  args['--user'], args['--pass'], False)
+                  args['--user'], args['--pass'], args['--offline'] )
             return 0
         except ValueError as ex:
             print 'Error:', ex
@@ -63,7 +70,7 @@ def main(argv=None):
     # Run server
     try:
         serve(path, host, port, args['--gfm'], args['--context'],
-              args['--user'], args['--pass'], False)
+              args['--user'], args['--pass'], args['--offline'] )
         return 0
     except ValueError as ex:
         print 'Error:', ex
