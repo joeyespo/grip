@@ -13,7 +13,7 @@ default_filenames = ['README.md', 'README.markdown']
 
 
 def create_app(path=None, gfm=False, context=None, username=None, password=None,
-               render_offline=False, render_inline=False):
+               app_dir=None, render_offline=False, render_inline=False):
     """Starts a server to render the specified file or directory containing a README."""
     if not path or os.path.isdir(path):
         path = _find_file(path)
@@ -21,8 +21,13 @@ def create_app(path=None, gfm=False, context=None, username=None, password=None,
     if not os.path.exists(path):
         raise ValueError('File not found: ' + path)
 
+    if app_dir is not None:
+        instance_path = os.path.abspath(app_dir)
+    else:
+        instance_path = os.path.expanduser("~/.cache/grip")
+
     # Flask application
-    app = Flask(__name__)
+    app = Flask(__name__, instance_path=instance_path)
     app.config.from_pyfile('settings.py')
     app.config.from_pyfile('settings_local.py', silent=True)
     app.config['GRIP_FILE'] = os.path.normpath(path)
@@ -97,9 +102,9 @@ def create_app(path=None, gfm=False, context=None, username=None, password=None,
 
 
 def serve(path=None, host=None, port=None, gfm=False, context=None,
-          username=None, password=None, render_offline=False):
+          username=None, password=None, app_dir=None, render_offline=False):
     """Starts a server to render the specified file or directory containing a README."""
-    app = create_app(path, gfm, context, username, password, render_offline)
+    app = create_app(path, gfm, context, username, password, app_dir, render_offline)
 
     # Set overridden config values
     if host is not None:
