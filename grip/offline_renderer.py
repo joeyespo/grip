@@ -1,5 +1,5 @@
 import markdown
-from mdx_urlize import UrlizeExtension
+from .mdx_urlize import UrlizeExtension
 
 
 def render_content(text, gfm=False, context=None):

@@ -1,7 +1,7 @@
 import io
 import os
-from server import create_app
-from renderer import render_app
+from .server import create_app
+from .renderer import render_app
 
 
 def export(path=None, gfm=False, context=None, username=None, password=None,
@@ -12,7 +12,7 @@ def export(path=None, gfm=False, context=None, username=None, password=None,
 
     if out_filename is None:
         out_filename = os.path.splitext(app.config['GRIP_FILE'])[0] + '.html'
-    print 'Exporting to', out_filename
+    print('Exporting to', out_filename)
 
     content = render_app(app)
     with io.open(out_filename, 'w', encoding='utf-8') as f:
