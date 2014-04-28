@@ -186,7 +186,7 @@ def _read_file(filename, read_as_binary=False):
 
 def _write_file(filename, contents):
     """Creates the specified file and writes the given contents to it."""
-    with open(filename, 'w') as f:
+    with open(filename, 'wb') as f:
         f.write(contents.encode('utf-8'))
 
 
