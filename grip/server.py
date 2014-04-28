@@ -3,7 +3,10 @@ import re
 import errno
 import mimetypes
 import requests
-from urlparse import urlparse
+try:
+    from urlparse import urlparse
+except ImportError:
+    from urllib.parse import urlparse
 from traceback import format_exc
 from flask import Flask, safe_join, abort, url_for, send_from_directory
 from .renderer import render_page, render_image
@@ -125,7 +128,7 @@ def _get_style_urls(source_url, pattern, style_cache_path, debug=False):
         # Find style URLs
         r = requests.get(source_url)
         if not 200 <= r.status_code < 300:
-            print ' * Warning: retrieving styles gave status code', r.status_code
+            print(' * Warning: retrieving styles gave status code', r.status_code)
         urls = re.findall(pattern, r.text)
 
         # Cache the styles
@@ -136,9 +139,9 @@ def _get_style_urls(source_url, pattern, style_cache_path, debug=False):
         return urls
     except Exception as ex:
         if debug:
-            print format_exc()
+            print(format_exc())
         else:
-            print ' * Error: could not retrieve styles:', str(ex)
+            print(' * Error: could not retrieve styles:', str(ex))
         return []
 
 
@@ -194,4 +197,4 @@ def _cache_contents(urls, style_cache_path):
         filename = os.path.join(style_cache_path, basename)
         contents = requests.get(url).text
         _write_file(filename, contents)
-        print ' * Downloaded', url
+        print(' * Downloaded', url)

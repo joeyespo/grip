@@ -53,12 +53,12 @@ def main(argv=None):
                   args['--user'], args['--pass'], False)
             return 0
         except ValueError as ex:
-            print 'Error:', ex
+            print('Error:', ex)
             return 1
 
     # Validate address
     if address and not host and not port:
-        print 'Error: Invalid address', repr(address)
+        print('Error: Invalid address', repr(address))
 
     # Run server
     try:
@@ -66,5 +66,5 @@ def main(argv=None):
               args['--user'], args['--pass'], False)
         return 0
     except ValueError as ex:
-        print 'Error:', ex
+        print('Error:', ex)
         return 1
