@@ -5,7 +5,6 @@ MarkupSafe==0.21
 Pygments==1.6
 Werkzeug==0.9.4
 docopt==0.6.1
-grip==2.0.0
 itsdangerous==0.24
 path-and-address==0.2.0
 requests==2.2.1
