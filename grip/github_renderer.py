@@ -1,22 +1,21 @@
-from flask import abort, json
+from flask import abort
 import requests
+from url_factory import UrlFactory
+from request_context_factory import RequestContextFactory
 
 
 def render_content(text, gfm=False, context=None, username=None, password=None):
     """Renders the specified markup using the GitHub API."""
-    if gfm:
-        url = 'https://api.github.com/markdown'
-        data = {'text': text, 'mode': 'gfm', 'context': context}
-        if context:
-            data['context'] = context
-        data = json.dumps(data)
-    else:
-        url = 'https://api.github.com/markdown/raw'
-        data = text
-    headers = {'content-type': 'text/plain'}
-    auth = (username, password) if username else None
+    url = UrlFactory().build_github_url(gfm)
 
-    r = requests.post(url, headers=headers, data=data, auth=auth)
+    request_context = RequestContextFactory().\
+        using_auth(username, password).\
+        use_github_markdown(gfm).\
+        from_text(text).\
+        from_context(context).\
+        build_json_context()
+
+    r = requests.post(url, **request_context)
 
     # Relay HTTP errors
     if r.status_code != 200:
