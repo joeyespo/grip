@@ -91,6 +91,12 @@ to unlock a much higher rate limit.
 $ grip --user <your-username> --pass <your-password>
 ```
 
+There's also a [work-in-progress branch][fix-render-offline] to provide
+**offline rendering**. Once this resembles GitHub more precisely, it'll
+be exposed in the CLI, and will ultimately be used as a seamless fallback
+engine for when the API can't be accessed.
+
+
 API
 ---
 
@@ -248,6 +254,7 @@ Contributing
 
 
 [markdown]: http://developer.github.com/v3/markdown
+[fix-render-offline]: http://github.com/joeyespo/grip/tree/fix-render-offline
 [rdd]: http://tom.preston-werner.com/2010/08/23/readme-driven-development.html
 [gfm]: http://github.github.com/github-flavored-markdown
 [python-markdown]: https://github.com/waylan/Python-Markdown
