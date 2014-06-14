@@ -19,7 +19,8 @@ Options:
   --context=<repo>  The repository context, only taken into account with --gfm
   --user=<username> A GitHub username for API authentication
   --pass=<password> A GitHub password for API authentication
-  --export          Exports to <path>.html or README.md instead of serving
+  --export          Exports to <path>.html or README.md instead of serving,
+                    with [<address>] optionally specifying the output file.
 """
 
 from __future__ import print_function
@@ -44,19 +45,19 @@ def main(argv=None):
     # Parse options
     args = docopt(usage, argv=argv, version=version)
 
-    # Parse arguments
-    path, address = resolve(args['<path>'], args['<address>'])
-    host, port = split_address(address)
-
     # Export to a file instead of running a server
     if args['--export']:
         try:
-            export(path, args['--gfm'], args['--context'],
-                  args['--user'], args['--pass'], False)
+            export(args['<path>'], args['--gfm'], args['--context'],
+                   args['--user'], args['--pass'], False, args['<address>'])
             return 0
         except ValueError as ex:
             print('Error:', ex)
             return 1
+
+    # Parse arguments
+    path, address = resolve(args['<path>'], args['<address>'])
+    host, port = split_address(address)
 
     # Validate address
     if address and not host and not port:
