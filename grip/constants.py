@@ -1,16 +1,5 @@
 # The supported extensions, as defined by https://github.com/github/markup
-supported_extensions = [
-    '.markdown', '.mdown', '.mkdn', '.md',
-    '.textile',
-    '.rdoc',
-    '.org',
-    '.creole',
-    '.mediawiki', '.wiki',
-    '.rst',
-    '.asciidoc', '.adoc', '.asc',
-    '.pod',
-]
-
+supported_extensions = ['.md', '.markdown']
 
 # The default filenames when no file is provided
 default_filenames = map(lambda ext: 'README' + ext, supported_extensions)
