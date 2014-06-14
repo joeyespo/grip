@@ -107,7 +107,7 @@ Runs a local server and renders the Readme file located
 at `path` when visited in the browser.
 
 ```python
-serve(path='file-or-directory', host='localhost', port=5000, gfm=False, context=None, username=None, password=None, render_offline=False)
+serve(path='file-or-directory', host='localhost', port=5000, gfm=False, context=None, username=None, password=None, app_dir=None, render_offline=False)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file
@@ -118,6 +118,7 @@ serve(path='file-or-directory', host='localhost', port=5000, gfm=False, context=
              takes the form of `username/project`
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
+- `app_dir`: The directory to hold the Flask app instance
 - `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
 
 
@@ -146,7 +147,7 @@ This is the same app used by `serve` and `export` and initializes the cache,
 using the cached styles when available.
 
 ```python
-create_app(path='file-or-directory', gfm=False, context=None, username=None, password=None, render_offline=False, render_inline=False)
+create_app(path='file-or-directory', gfm=False, context=None, username=None, password=None, app_dir=None, render_offline=False, render_inline=False)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file
@@ -155,6 +156,7 @@ create_app(path='file-or-directory', gfm=False, context=None, username=None, pas
              takes the form of `username/project`
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
+- `app_dir`: The directory to hold the Flask app instance
 - `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
 - `render_inline`: Whether to inline the styles within the HTML file
 

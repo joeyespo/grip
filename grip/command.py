@@ -19,6 +19,7 @@ Options:
   --context=<repo>  The repository context, only taken into account with --gfm
   --user=<username> A GitHub username for API authentication
   --pass=<password> A GitHub password for API authentication
+  --app-dir=<dir>   The path to the app instance (holds cached styles)
   --export          Exports to <path>.html or README.md instead of serving
 """
 
@@ -63,7 +64,7 @@ def main(argv=None):
     # Run server
     try:
         serve(path, host, port, args['--gfm'], args['--context'],
-              args['--user'], args['--pass'], False)
+              args['--user'], args['--pass'], args['--app-dir'], False)
         return 0
     except ValueError as ex:
         print('Error:', ex)

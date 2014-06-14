@@ -10,5 +10,6 @@ along with the following contributors:
 - Brian Cappello ([@briancappello](https://github.com/briancappello))
 - John Gallagher ([@jgallagher](https://github.com/jgallagher))
 - Ilya Rumyantsev ([@iliggio](https://github.com/iliggio))
+- Jacobo de Vera ([@jdevera](https://github.com/jdevera))
 
 [home]: README.md
