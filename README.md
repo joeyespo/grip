@@ -206,12 +206,21 @@ render_page(text, filename=None, gfm=False, context=None, username=None, passwor
 - `styles`: A list of style content strings to inline in the rendered page
 
 
-#### default_filenames
+#### supported_extensions
 
-This constant contains the names Grip looks for when no file is given to.
+The supported extensions, as defined by [GitHub][markdown].
 
 ```python
-default_filenames = ['README.md', 'README.markdown']
+supported_extensions = ['.md', '.markdown']
+```
+
+
+#### default_filenames
+
+This constant contains the names Grip looks for when no file is provided.
+
+```python
+default_filenames = map(lambda ext: 'README' + ext, supported_extensions)
 ```
 
 

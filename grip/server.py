@@ -9,10 +9,8 @@ except ImportError:
     from urllib.parse import urlparse
 from traceback import format_exc
 from flask import Flask, safe_join, abort, url_for, send_from_directory
+from .constants import default_filenames
 from .renderer import render_page, render_image
-
-
-default_filenames = ['README.md', 'README.markdown']
 
 
 def create_app(path=None, gfm=False, context=None, username=None, password=None,
