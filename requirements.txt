@@ -1,10 +1,10 @@
 Flask==0.10.1
-Jinja2==2.7.2
-Markdown==2.4
-MarkupSafe==0.21
+Jinja2==2.7.3
+Markdown==2.4.1
+MarkupSafe==0.23
 Pygments==1.6
-Werkzeug==0.9.4
+Werkzeug==0.9.6
 docopt==0.6.1
 itsdangerous==0.24
 path-and-address==0.2.0
-requests==2.2.1
+requests==2.3.0
