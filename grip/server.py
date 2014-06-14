@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import os
 import re
 import errno
@@ -139,7 +141,7 @@ def _get_style_urls(source_url, pattern, style_cache_path, debug=False):
         if debug:
             print(format_exc())
         else:
-            print(' * Error: could not retrieve styles:', str(ex))
+            print(' * Error: could not retrieve styles:', ex)
         return []
 
 

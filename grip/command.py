@@ -22,6 +22,8 @@ Options:
   --export          Exports to <path>.html or README.md instead of serving
 """
 
+from __future__ import print_function
+
 import sys
 from path_and_address import resolve, split_address
 from docopt import docopt
