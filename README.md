@@ -77,6 +77,20 @@ $ grip -h
 ```
 
 
+Access
+------
+
+Grip strives to be as close to GitHub as possible. To accomplish this, grip
+uses [GitHub's Markdown API][markdown] so that changes to their rendering
+engine are reflected immediately without requiring you to upgrade grip.
+However, because of this you may hit the API's hourly rate limit. If this
+happens, grip offers a way to access the API using your credentials
+to unlock a much higher rate limit.
+
+```bash
+$ grip --user <your-username> --pass <your-password>
+```
+
 API
 ---
 
