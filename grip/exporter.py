@@ -7,9 +7,10 @@ from .renderer import render_app
 
 
 def export(path=None, gfm=False, context=None, username=None, password=None,
-           render_offline=False, out_filename=None):
+           render_offline=False, render_wide=None, out_filename=None):
     """Exports the rendered HTML to a file."""
-    app = create_app(path, gfm, context, username, password, render_offline,
+    app = create_app(path, gfm, context, username, password,
+                     render_offline, render_wide,
                      render_inline=True)
 
     if out_filename is None:

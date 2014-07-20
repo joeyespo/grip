@@ -42,7 +42,7 @@
 {%- block page -%}
   <div class="previewPage">
     <div class="container">
-      <div class="repository-with-sidebar repo-container with-full-navigation">
+      <div class="repository-with-sidebar repo-container {{ 'with-full-navigation' if full_navigation }}">
         <div class="repository-content context-loader-container">
           <div id="readme" class="announce md">
             {% if render_title and filename %}

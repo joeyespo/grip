@@ -15,8 +15,9 @@ from .constants import default_filenames
 from .renderer import render_page, render_image
 
 
-def create_app(path=None, gfm=False, context=None, username=None, password=None,
-               render_offline=False, render_inline=False):
+def create_app(path=None, gfm=False, context=None,
+               username=None, password=None,
+               render_offline=False, render_wide=False, render_inline=False):
     """Starts a server to render the specified file or directory containing a README."""
     if not path or os.path.isdir(path):
         path = _find_file(path)
@@ -90,7 +91,9 @@ def create_app(path=None, gfm=False, context=None, username=None, password=None,
             filename = app.config['GRIP_FILE']
             text = _read_file(app.config['GRIP_FILE'])
         return render_page(text, filename, gfm, context,
-                           username, password, render_offline, style_urls, styles)
+                           username, password, render_offline,
+                           style_urls, styles,
+                           None, render_wide)
 
     @app.route('/cache/<path:filename>')
     def render_cache(filename=None):
@@ -100,9 +103,11 @@ def create_app(path=None, gfm=False, context=None, username=None, password=None,
 
 
 def serve(path=None, host=None, port=None, gfm=False, context=None,
-          username=None, password=None, render_offline=False):
+          username=None, password=None,
+          render_offline=False, render_wide=False):
     """Starts a server to render the specified file or directory containing a README."""
-    app = create_app(path, gfm, context, username, password, render_offline)
+    app = create_app(path, gfm, context, username, password,
+                     render_offline, render_wide)
 
     # Set overridden config values
     if host is not None:

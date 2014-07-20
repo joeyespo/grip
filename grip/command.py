@@ -21,6 +21,8 @@ Options:
   --pass=<password> A GitHub password for API authentication
   --export          Exports to <path>.html or README.md instead of serving,
                     with [<address>] optionally specifying the output file.
+  --wide            Render wide, i.e. when the side navigation is collapsed,
+                    has no effect with --gfm
 """
 
 from __future__ import print_function
@@ -49,7 +51,8 @@ def main(argv=None):
     if args['--export']:
         try:
             export(args['<path>'], args['--gfm'], args['--context'],
-                   args['--user'], args['--pass'], False, args['<address>'])
+                   args['--user'], args['--pass'], False, args['--wide'],
+                   args['<address>'])
             return 0
         except ValueError as ex:
             print('Error:', ex)
@@ -66,7 +69,7 @@ def main(argv=None):
     # Run server
     try:
         serve(path, host, port, args['--gfm'], args['--context'],
-              args['--user'], args['--pass'], False)
+              args['--user'], args['--pass'], False, args['--wide'])
         return 0
     except ValueError as ex:
         print('Error:', ex)

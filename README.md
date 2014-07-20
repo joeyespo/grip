@@ -70,7 +70,7 @@ $ grip --gfm --context=joeyespo/grip
  * Running on http://localhost:5000/
 ```
 
-For more details, see the help:
+For more details and additional options, see the help:
 
 ```bash
 $ grip -h
@@ -135,7 +135,7 @@ Runs a local server and renders the Readme file located
 at `path` when visited in the browser.
 
 ```python
-serve(path='file-or-directory', host='localhost', port=5000, gfm=False, context=None, username=None, password=None, render_offline=False)
+serve(path='file-or-directory', host='localhost', port=5000, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file
@@ -147,6 +147,7 @@ serve(path='file-or-directory', host='localhost', port=5000, gfm=False, context=
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
 - `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
+- `render_wide`: Whether to render a wide page, `False` by default (Note: this has no effect when used with `gfm`)
 
 
 #### export
@@ -174,7 +175,7 @@ This is the same app used by `serve` and `export` and initializes the cache,
 using the cached styles when available.
 
 ```python
-create_app(path='file-or-directory', gfm=False, context=None, username=None, password=None, render_offline=False, render_inline=False)
+create_app(path='file-or-directory', gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file
@@ -184,6 +185,7 @@ create_app(path='file-or-directory', gfm=False, context=None, username=None, pas
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
 - `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
+- `render_wide`: Whether to render a wide page, `False` by default (Note: this has no effect when used with `gfm`)
 - `render_inline`: Whether to inline the styles within the HTML file
 
 
@@ -220,7 +222,7 @@ Renders the specified markdown text without caching and outputs an HTML
 page that resembles the GitHub Readme view.
 
 ```python
-render_page(text, filename=None, gfm=False, context=None, username=None, password=None, render_offline=False, style_urls=[], styles=[], render_title=None)
+render_page(text, filename=None, gfm=False, context=None, username=None, password=None, render_offline=False, style_urls=[], styles=[], render_title=None, render_wide=False)
 ```
 
 - `text`: The content to render
@@ -234,6 +236,7 @@ render_page(text, filename=None, gfm=False, context=None, username=None, passwor
 - `style_urls`: A list of URLs that contain CSS to include in the rendered page
 - `styles`: A list of style content strings to inline in the rendered page
 - `render_title`: Whether to render the title section on the page, `not gfm` by default
+- `render_wide`: Whether to render a wide page, `False` by default (Note: this has no effect when used with `gfm`)
 
 
 #### supported_extensions
