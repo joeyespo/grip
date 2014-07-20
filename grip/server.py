@@ -26,7 +26,7 @@ def create_app(path=None, gfm=False, context=None,
         raise ValueError('File not found: ' + path)
 
     # Flask application
-    app = Flask(__name__)
+    app = Flask(__name__, instance_path=os.path.abspath(os.path.expanduser("~/.grip")))
     app.config.from_pyfile('settings.py')
     app.config.from_pyfile('settings_local.py', silent=True)
     app.config['GRIP_FILE'] = os.path.normpath(path)
