@@ -23,6 +23,7 @@ Options:
                     with [<address>] optionally specifying the output file.
   --wide            Render wide, i.e. when the side navigation is collapsed,
                     has no effect with --gfm
+                    Note: This is also the size of GitHub's old Readme page.
 """
 
 from __future__ import print_function
