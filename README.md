@@ -57,6 +57,13 @@ $ grip AUTHORS.md
 Alternatively, you could just run `grip` and visit [localhost:5000/AUTHORS.md][AUTHORS.md]
 since grip supports relative URLs.
 
+You can combine the previous examples. You can also specify a hostname instead of a port. Or provide both:
+
+```bash
+$ grip AUTHORS.md 0.0.0.0:80
+ * Running on http://0.0.0.0:80/
+```
+
 You can even bypass the server and export to a single HTML:
 
 ```bash
