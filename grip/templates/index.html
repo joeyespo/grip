@@ -45,6 +45,12 @@
       <div class="repository-with-sidebar repo-container with-full-navigation">
         <div class="repository-content context-loader-container">
           <div id="readme" class="announce md">
+            {% if render_title and filename %}
+              <span class="name">
+                <span class="octicon octicon-book"></span>
+                {{ filename }}
+              </span>
+            {% endif %}
             <article class="markdown-body entry-content">
               {{ content|safe }}
             </article>

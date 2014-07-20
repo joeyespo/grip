@@ -27,11 +27,15 @@ def render_content(text, gfm=False, context=None,
 
 def render_page(text, filename=None, gfm=False, context=None,
                 username=None, password=None, render_offline=False,
-                style_urls=[], styles=[]):
+                style_urls=[], styles=[], render_title=None):
     """Renders the specified markup text to an HTML page."""
-    content = render_content(text, gfm, context, username, password, render_offline)
+    content = render_content(text, gfm, context,
+                             username, password, render_offline)
+    if render_title is None:
+        render_title = not gfm
     return index_template.render(content=content, filename=filename,
-                                 style_urls=style_urls, styles=styles)
+                                 style_urls=style_urls, styles=styles,
+                                 render_title=render_title)
 
 
 def render_image(image_data, content_type):

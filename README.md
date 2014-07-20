@@ -220,10 +220,11 @@ Renders the specified markdown text without caching and outputs an HTML
 page that resembles the GitHub Readme view.
 
 ```python
-render_page(text, filename=None, gfm=False, context=None, username=None, password=None, render_offline=False, style_urls=[], styles=[])
+render_page(text, filename=None, gfm=False, context=None, username=None, password=None, render_offline=False, style_urls=[], styles=[], render_title=None)
 ```
 
 - `text`: The content to render
+- `filename`: The text to render at the top of the page and to use in the page's title, if provided
 - `gfm`: Whether to render using [GitHub Flavored Markdown][gfm]
 - `context`: The project context to use when `gfm` is true, which
              takes the form of `username/project`
@@ -232,6 +233,7 @@ render_page(text, filename=None, gfm=False, context=None, username=None, passwor
 - `render_offline`: Whether to render offline using [Python-Markdown][] (Note: this is a work in progress)
 - `style_urls`: A list of URLs that contain CSS to include in the rendered page
 - `styles`: A list of style content strings to inline in the rendered page
+- `render_title`: Whether to render the title section on the page, `not gfm` by default
 
 
 #### supported_extensions
