@@ -10,5 +10,7 @@ along with the following contributors:
 - Brian Cappello ([@briancappello](https://github.com/briancappello))
 - John Gallagher ([@jgallagher](https://github.com/jgallagher))
 - Ilya Rumyantsev ([@iliggio](https://github.com/iliggio))
+- Jon Chen ([@fly](https://github.com/fly))
+
 
 [home]: README.md

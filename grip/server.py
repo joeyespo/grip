@@ -1,19 +1,23 @@
+from __future__ import print_function
+
 import os
 import re
 import errno
 import mimetypes
 import requests
-from urlparse import urlparse
+try:
+    from urlparse import urlparse
+except ImportError:
+    from urllib.parse import urlparse
 from traceback import format_exc
 from flask import Flask, safe_join, abort, url_for, send_from_directory
+from .constants import default_filenames
 from .renderer import render_page, render_image
 
 
-default_filenames = ['README.md', 'README.markdown']
-
-
-def create_app(path=None, gfm=False, context=None, username=None, password=None,
-               render_offline=False, render_inline=False):
+def create_app(path=None, gfm=False, context=None,
+               username=None, password=None,
+               render_offline=False, render_wide=False, render_inline=False):
     """Starts a server to render the specified file or directory containing a README."""
     if not path or os.path.isdir(path):
         path = _find_file(path)
@@ -22,7 +26,7 @@ def create_app(path=None, gfm=False, context=None, username=None, password=None,
         raise ValueError('File not found: ' + path)
 
     # Flask application
-    app = Flask(__name__)
+    app = Flask(__name__, instance_path=os.path.abspath(os.path.expanduser("~/.grip")))
     app.config.from_object('grip.settings')
     app.config.from_pyfile('settings_local.py', silent=True)
     app.config['GRIP_FILE'] = os.path.normpath(path)
@@ -87,7 +91,9 @@ def create_app(path=None, gfm=False, context=None, username=None, password=None,
             filename = app.config['GRIP_FILE']
             text = _read_file(app.config['GRIP_FILE'])
         return render_page(text, filename, gfm, context,
-                           username, password, render_offline, style_urls, styles)
+                           username, password, render_offline,
+                           style_urls, styles,
+                           None, render_wide)
 
     @app.route('/cache/<path:filename>')
     def render_cache(filename=None):
@@ -97,9 +103,11 @@ def create_app(path=None, gfm=False, context=None, username=None, password=None,
 
 
 def serve(path=None, host=None, port=None, gfm=False, context=None,
-          username=None, password=None, render_offline=False):
+          username=None, password=None,
+          render_offline=False, render_wide=False):
     """Starts a server to render the specified file or directory containing a README."""
-    app = create_app(path, gfm, context, username, password, render_offline)
+    app = create_app(path, gfm, context, username, password,
+                     render_offline, render_wide)
 
     # Set overridden config values
     if host is not None:
@@ -125,7 +133,7 @@ def _get_style_urls(source_url, pattern, style_cache_path, debug=False):
         # Find style URLs
         r = requests.get(source_url)
         if not 200 <= r.status_code < 300:
-            print ' * Warning: retrieving styles gave status code', r.status_code
+            print(' * Warning: retrieving styles gave status code', r.status_code)
         urls = re.findall(pattern, r.text)
 
         # Cache the styles
@@ -136,9 +144,9 @@ def _get_style_urls(source_url, pattern, style_cache_path, debug=False):
         return urls
     except Exception as ex:
         if debug:
-            print format_exc()
+            print(format_exc())
         else:
-            print ' * Error: could not retrieve styles:', str(ex)
+            print(' * Error: could not retrieve styles:', ex)
         return []
 
 
@@ -183,7 +191,7 @@ def _read_file(filename, read_as_binary=False):
 
 def _write_file(filename, contents):
     """Creates the specified file and writes the given contents to it."""
-    with open(filename, 'w') as f:
+    with open(filename, 'wb') as f:
         f.write(contents.encode('utf-8'))
 
 
@@ -194,4 +202,4 @@ def _cache_contents(urls, style_cache_path):
         filename = os.path.join(style_cache_path, basename)
         contents = requests.get(url).text
         _write_file(filename, contents)
-        print ' * Downloaded', url
+        print(' * Downloaded', url)

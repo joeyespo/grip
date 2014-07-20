@@ -19,8 +19,14 @@ Options:
   --context=<repo>  The repository context, only taken into account with --gfm
   --user=<username> A GitHub username for API authentication
   --pass=<password> A GitHub password for API authentication
-  --export          Exports to <path>.html or README.md instead of serving
+  --export          Exports to <path>.html or README.md instead of serving,
+                    with [<address>] optionally specifying the output file.
+  --wide            Render wide, i.e. when the side navigation is collapsed,
+                    has no effect with --gfm
+                    Note: This is also the size of GitHub's old Readme page.
 """
+
+from __future__ import print_function
 
 import sys
 from path_and_address import resolve, split_address
@@ -42,29 +48,30 @@ def main(argv=None):
     # Parse options
     args = docopt(usage, argv=argv, version=version)
 
+    # Export to a file instead of running a server
+    if args['--export']:
+        try:
+            export(args['<path>'], args['--gfm'], args['--context'],
+                   args['--user'], args['--pass'], False, args['--wide'],
+                   args['<address>'])
+            return 0
+        except ValueError as ex:
+            print('Error:', ex)
+            return 1
+
     # Parse arguments
     path, address = resolve(args['<path>'], args['<address>'])
     host, port = split_address(address)
 
-    # Export to a file instead of running a server
-    if args['--export']:
-        try:
-            export(path, args['--gfm'], args['--context'],
-                  args['--user'], args['--pass'], False)
-            return 0
-        except ValueError as ex:
-            print 'Error:', ex
-            return 1
-
     # Validate address
     if address and not host and not port:
-        print 'Error: Invalid address', repr(address)
+        print('Error: Invalid address', repr(address))
 
     # Run server
     try:
         serve(path, host, port, args['--gfm'], args['--context'],
-              args['--user'], args['--pass'], False)
+              args['--user'], args['--pass'], False, args['--wide'])
         return 0
     except ValueError as ex:
-        print 'Error:', ex
+        print('Error:', ex)
         return 1

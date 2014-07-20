@@ -15,20 +15,49 @@
   {% endif -%}
   <style>
     .previewPage {
-      margin: 64px auto;
-      width: 920px;
+      margin-top: 64px;
     }
   </style>
 {%- endblock -%}
 
+{%- block scripts -%}
+  <script>
+    function scrollToHash() {
+      if (location.hash && !document.querySelector(":target")) {
+        var elements = document.getElementsByName('user-content-' + location.hash.slice(1));
+        if (elements.length > 0) {
+          elements[elements.length - 1].scrollIntoView();
+        }
+      }
+    }
+    window.onhashchange = function() {
+      scrollToHash();
+    }
+    window.onload = function() {
+      scrollToHash();
+    }
+  </script>
+{%- endblock -%}
+
 {%- block page -%}
   <div class="previewPage">
-    <div id="readme" class="announce md">
-      <article class="markdown-body entry-content">
-        {{ content|safe }}
-      </article>
+    <div class="container">
+      <div class="repository-with-sidebar repo-container {{ 'with-full-navigation' if full_navigation }}">
+        <div class="repository-content context-loader-container">
+          <div id="readme" class="announce md">
+            {% if render_title and filename %}
+              <span class="name">
+                <span class="octicon octicon-book"></span>
+                {{ filename }}
+              </span>
+            {% endif %}
+            <article class="markdown-body entry-content">
+              {{ content|safe }}
+            </article>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  
   <div>&nbsp;</div>
 {%- endblock -%}

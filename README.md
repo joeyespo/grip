@@ -57,24 +57,59 @@ $ grip AUTHORS.md
 Alternatively, you could just run `grip` and visit [localhost:5000/AUTHORS.md][AUTHORS.md]
 since grip supports relative URLs.
 
+You can combine the previous examples. You can also specify a hostname instead of a port. Or provide both:
+
+```bash
+$ grip AUTHORS.md 0.0.0.0:80
+ * Running on http://0.0.0.0:80/
+```
+
 You can even bypass the server and export to a single HTML:
 
 ```bash
-$ grip --export AUTHORS.md
+$ grip --export AUTHORS.md authors.html
 ```
 
-GitHub-Flavored Markdown is also supported, with an optional repository context for linking to issues:
+Comment / issue-style GFM is also supported, with an optional repository context for linking to issues:
 
 ```bash
 $ grip --gfm --context=joeyespo/grip
  * Running on http://localhost:5000/
 ```
 
-For more details, see the help:
+For more details and additional options, see the help:
 
 ```bash
 $ grip -h
 ```
+
+
+Access
+------
+
+Grip strives to be as close to GitHub as possible. To accomplish this, grip
+uses [GitHub's Markdown API][markdown] so that changes to their rendering
+engine are reflected immediately without requiring you to upgrade grip.
+However, because of this you may hit the API's hourly rate limit. If this
+happens, grip offers a way to access the API using your credentials
+to unlock a much higher rate limit.
+
+```bash
+$ grip --user <your-username> --pass <your-password>
+```
+
+There's also a [work-in-progress branch][fix-render-offline] to provide
+**offline rendering**. Once this resembles GitHub more precisely, it'll
+be exposed in the CLI, and will ultimately be used as a seamless fallback
+engine for when the API can't be accessed.
+
+
+Known issues
+------------
+
+- [ ] GitHub introduced read-only task lists to all Markdown documents in
+      repositories and wikis [back in April][task-lists], but
+      [the API][markdown] doesn't seem to respect this yet.
 
 
 API
@@ -107,7 +142,7 @@ Runs a local server and renders the Readme file located
 at `path` when visited in the browser.
 
 ```python
-serve(path='file-or-directory', host='localhost', port=5000, gfm=False, context=None, username=None, password=None, render_offline=False)
+serve(path='file-or-directory', host='localhost', port=5000, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file
@@ -119,6 +154,7 @@ serve(path='file-or-directory', host='localhost', port=5000, gfm=False, context=
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
 - `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
+- `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `gfm`)
 
 
 #### export
@@ -146,7 +182,7 @@ This is the same app used by `serve` and `export` and initializes the cache,
 using the cached styles when available.
 
 ```python
-create_app(path='file-or-directory', gfm=False, context=None, username=None, password=None, render_offline=False, render_inline=False)
+create_app(path='file-or-directory', gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file
@@ -156,6 +192,7 @@ create_app(path='file-or-directory', gfm=False, context=None, username=None, pas
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
 - `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
+- `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `gfm`)
 - `render_inline`: Whether to inline the styles within the HTML file
 
 
@@ -192,10 +229,11 @@ Renders the specified markdown text without caching and outputs an HTML
 page that resembles the GitHub Readme view.
 
 ```python
-render_page(text, filename=None, gfm=False, context=None, username=None, password=None, render_offline=False, style_urls=[], styles=[])
+render_page(text, filename=None, gfm=False, context=None, username=None, password=None, render_offline=False, style_urls=[], styles=[], render_title=None, render_wide=False)
 ```
 
 - `text`: The content to render
+- `filename`: The text to render at the top of the page and to use in the page's title, if provided
 - `gfm`: Whether to render using [GitHub Flavored Markdown][gfm]
 - `context`: The project context to use when `gfm` is true, which
              takes the form of `username/project`
@@ -204,14 +242,25 @@ render_page(text, filename=None, gfm=False, context=None, username=None, passwor
 - `render_offline`: Whether to render offline using [Python-Markdown][] (Note: this is a work in progress)
 - `style_urls`: A list of URLs that contain CSS to include in the rendered page
 - `styles`: A list of style content strings to inline in the rendered page
+- `render_title`: Whether to render the title section on the page, `not gfm` by default
+- `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `gfm`)
+
+
+#### supported_extensions
+
+The supported extensions, as defined by [GitHub][markdown].
+
+```python
+supported_extensions = ['.md', '.markdown']
+```
 
 
 #### default_filenames
 
-This constant contains the names Grip looks for when no file is given to.
+This constant contains the names Grip looks for when no file is provided.
 
 ```python
-default_filenames = ['README.md', 'README.markdown']
+default_filenames = map(lambda ext: 'README' + ext, supported_extensions)
 ```
 
 
@@ -225,6 +274,8 @@ Contributing
 
 
 [markdown]: http://developer.github.com/v3/markdown
+[fix-render-offline]: http://github.com/joeyespo/grip/tree/fix-render-offline
+[task-lists]: https://github.com/blog/1825-task-lists-in-all-markdown-documents
 [rdd]: http://tom.preston-werner.com/2010/08/23/readme-driven-development.html
 [gfm]: http://github.github.com/github-flavored-markdown
 [python-markdown]: https://github.com/waylan/Python-Markdown

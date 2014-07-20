@@ -2,6 +2,20 @@ Grip Changelog
 ==============
 
 
+Version 2.0.1 (2014-06-14)
+--------------------------
+
+- Enhancement: Add ability to export to a specific file using the CLI
+- Enhancement: Python 3 compatibility (thanks, [@fly][]!)
+- Bugfix: Fix issue styles weren't being downloaded properly (thanks, [@fly][]!)
+- Bugfix: Support anchoring to section headers like GitHub
+- Readme: Document rate limits and --user / --pass
+- Readme: Refer to the "offline rendering" work
+- Readme: Fix 'GitHub' spelling
+- Extract and expose constants
+- Update requirements
+
+
 Version 2.0.0 (2013-09-26)
 --------------------------
 
@@ -92,3 +106,4 @@ First public preview release.
 [@briancappello]: https://github.com/briancappello
 [@jgallagher]: https://github.com/jgallagher
 [@iliggio]: https://github.com/iliggio
+[@fly]: https://github.com/fly
