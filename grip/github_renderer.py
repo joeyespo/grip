@@ -2,11 +2,12 @@ from flask import abort, json
 import requests
 
 
-def render_content(text, gfm=False, context=None, username=None, password=None):
+def render_content(text, gfm=False, context=None,
+                   username=None, password=None):
     """Renders the specified markup using the GitHub API."""
     if gfm:
         url = 'https://api.github.com/markdown'
-        data = {'text': text, 'mode': 'gfm', 'context': context}
+        data = {'text': text, 'mode': 'gfm'}
         if context:
             data['context'] = context
         data = json.dumps(data)
