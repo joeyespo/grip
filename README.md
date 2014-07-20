@@ -147,7 +147,7 @@ serve(path='file-or-directory', host='localhost', port=5000, gfm=False, context=
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
 - `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
-- `render_wide`: Whether to render a wide page, `False` by default (Note: this has no effect when used with `gfm`)
+- `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `gfm`)
 
 
 #### export
@@ -185,7 +185,7 @@ create_app(path='file-or-directory', gfm=False, context=None, username=None, pas
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
 - `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
-- `render_wide`: Whether to render a wide page, `False` by default (Note: this has no effect when used with `gfm`)
+- `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `gfm`)
 - `render_inline`: Whether to inline the styles within the HTML file
 
 
@@ -236,7 +236,7 @@ render_page(text, filename=None, gfm=False, context=None, username=None, passwor
 - `style_urls`: A list of URLs that contain CSS to include in the rendered page
 - `styles`: A list of style content strings to inline in the rendered page
 - `render_title`: Whether to render the title section on the page, `not gfm` by default
-- `render_wide`: Whether to render a wide page, `False` by default (Note: this has no effect when used with `gfm`)
+- `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `gfm`)
 
 
 #### supported_extensions
