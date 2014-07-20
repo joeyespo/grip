@@ -97,6 +97,14 @@ be exposed in the CLI, and will ultimately be used as a seamless fallback
 engine for when the API can't be accessed.
 
 
+Known issues
+------------
+
+- [ ] GitHub introduced read-only task lists to all Markdown documents in
+      repositories and wikis [back in April][task-lists], but
+      [the API][markdown] doesn't seem to respect this yet.
+
+
 API
 ---
 
@@ -255,6 +263,7 @@ Contributing
 
 [markdown]: http://developer.github.com/v3/markdown
 [fix-render-offline]: http://github.com/joeyespo/grip/tree/fix-render-offline
+[task-lists]: https://github.com/blog/1825-task-lists-in-all-markdown-documents
 [rdd]: http://tom.preston-werner.com/2010/08/23/readme-driven-development.html
 [gfm]: http://github.github.com/github-flavored-markdown
 [python-markdown]: https://github.com/waylan/Python-Markdown
