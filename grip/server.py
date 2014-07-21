@@ -81,28 +81,16 @@ def create_app(path=None, gfm=False, context=None,
         if filename is not None:
             filename = safe_join(os.path.dirname(in_filename), filename)
             if os.path.isdir(filename):
-                try:
-                    filename = _find_file(filename)
-                except ValueError:
-                    abort(404)
-
-            # if we think this file is an image, we need to read it in
-            # binary mode and serve it as such
+                filename = _find_file_or_404(filename)
+            # Read and serve images as binary
             mimetype, _ = mimetypes.guess_type(filename)
-            is_image = mimetype.startswith('image/') if mimetype else False
-
-            try:
-                text = _read_file(filename, is_image)
-            except IOError as ex:
-                if ex.errno != errno.ENOENT:
-                    raise
-                return abort(404)
-
-            if is_image:
+            if mimetype and mimetype.startswith('image/'):
+                text = _read_file_or_404(filename, True)
                 return render_image(text, mimetype)
         else:
             filename = in_filename
-            text = _read_file(in_filename)
+
+        text = _read_file_or_404(filename)
         return render_page(text, filename, gfm, context,
                            username, password, render_offline,
                            style_urls, styles,
@@ -195,11 +183,24 @@ def _find_file(path):
     raise ValueError('No README found at ' + path)
 
 
-def _read_file(filename, read_as_binary=False):
-    """Reads the contents of the specified file."""
-    mode = "rb" if read_as_binary else "r"
-    with open(filename, mode) as f:
-        return f.read()
+def _find_file_or_404(path):
+    """Gets the full path and extension of the specified, or raises 404."""
+    try:
+        return _find_file(path)
+    except ValueError:
+        abort(404)
+
+
+def _read_file_or_404(filename, read_as_binary=False):
+    """Reads the contents of the specified file, or raise 404."""
+    mode = 'rb' if read_as_binary else 'r'
+    try:
+        with open(filename, mode) as f:
+            return f.read()
+    except IOError as ex:
+        if ex.errno != errno.ENOENT:
+            raise
+        abort(404)
 
 
 def _write_file(filename, contents):
