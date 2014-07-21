@@ -98,6 +98,8 @@ to unlock a much higher rate limit.
 $ grip --user <your-username> --pass <your-password>
 ```
 
+Or store this information [in a configuration variable](#configuration).
+
 There's also a [work-in-progress branch][fix-render-offline] to provide
 **offline rendering**. Once this resembles GitHub more precisely, it'll
 be exposed in the CLI, and will ultimately be used as a seamless fallback
@@ -110,6 +112,29 @@ Known issues
 - [ ] GitHub introduced read-only task lists to all Markdown documents in
       repositories and wikis [back in April][task-lists], but
       [the API][markdown] doesn't seem to respect this yet.
+
+
+Configuration
+-------------
+
+You can add the following variables to a settings file:
+
+- `HOST`: The host to use when not provided as a CLI argument, `localhost` by default
+- `PORT`: The port to use when not provided as a CLI argument, `5000` by default
+- `DEBUG`: Whether to use Flask's debugger when an error happens, `True` by default
+- `DEBUG_GRIP`: Prints extended information when an error happens, `False` by default
+- `USERNAME`: The username to use when not provided as a CLI argument, `None` by default
+- `PASSWORD`: The password to use when not provided as a CLI argument, `None` by default
+- `STYLE_URLS`: Additional URLs that will be added to the rendered page, `[]` by default <br />
+                See [grip/static/README.md][static-readme] for details.
+- `STYLE_URLS_SOURCE`: The URL to use to locate and download the styles from, `https://github.com/joeyespo/grip` by default
+- `STYLE_URLS_RE`: The regular expression to use to parse the styles from the source
+- `STYLE_CACHE_DIRECTORY`: The directory to place the cached styles (relative to `~/.grip`), `style-cache` by default
+
+Put these variables in either:
+
+1. `~/.grip/settings.py` (create this file if it doesn't already exist)
+2. `grip/settings_local.py` from your current Python installation's `site-packages`
 
 
 API
@@ -275,6 +300,7 @@ Contributing
 
 [markdown]: http://developer.github.com/v3/markdown
 [fix-render-offline]: http://github.com/joeyespo/grip/tree/fix-render-offline
+[static-readme]: grip/static/README.md
 [task-lists]: https://github.com/blog/1825-task-lists-in-all-markdown-documents
 [rdd]: http://tom.preston-werner.com/2010/08/23/readme-driven-development.html
 [gfm]: http://github.github.com/github-flavored-markdown
