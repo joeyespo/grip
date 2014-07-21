@@ -25,15 +25,21 @@ def create_app(path=None, gfm=False, context=None,
     if not os.path.exists(path):
         raise ValueError('File not found: ' + path)
 
+    # Paths
+    instance_path = os.path.abspath(os.path.expanduser('~/.grip'))
+    user_settings = os.path.join(instance_path, 'settings.py')
+
     # Flask application
-    app = Flask(__name__, instance_path=os.path.abspath(os.path.expanduser("~/.grip")))
+    app = Flask(__name__, instance_path=instance_path)
     app.config.from_object('grip.settings')
     app.config.from_pyfile('settings_local.py', silent=True)
+    app.config.from_pyfile(user_settings, silent=True)
     app.config['GRIP_FILE'] = os.path.normpath(path)
 
     # Setup style cache
     if app.config['STYLE_CACHE_DIRECTORY']:
-        style_cache_path = os.path.join(app.instance_path, app.config['STYLE_CACHE_DIRECTORY'])
+        style_cache_path = os.path.join(app.instance_path,
+                                        app.config['STYLE_CACHE_DIRECTORY'])
         if not os.path.exists(style_cache_path):
             os.makedirs(style_cache_path)
     else:
