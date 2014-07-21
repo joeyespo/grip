@@ -35,6 +35,13 @@ def create_app(path=None, gfm=False, context=None,
     app.config.from_object('grip.settings')
     app.config.from_pyfile('settings_local.py', silent=True)
     app.config.from_pyfile(user_settings, silent=True)
+    # Runtime config
+    username = username if username is not None else app.config.get('USERNAME')
+    password = password if password is not None else app.config.get('PASSWORD')
+
+    # Authentication message
+    if username:
+        print(' * Using credentials:', username)
 
     # Setup style cache
     if app.config['STYLE_CACHE_DIRECTORY']:
