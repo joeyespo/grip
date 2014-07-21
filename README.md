@@ -125,11 +125,14 @@ You can add the following variables to a settings file:
 - `DEBUG_GRIP`: Prints extended information when an error happens, `False` by default
 - `USERNAME`: The username to use when not provided as a CLI argument, `None` by default
 - `PASSWORD`: The password to use when not provided as a CLI argument, `None` by default
+- `CACHE_DIRECTORY`: The directory to place the cached styles and assets (relative to `~/.grip`), `cache` by default
+- `CACHE_URL`: The URL to serve cached styles and assets from
 - `STYLE_URLS`: Additional URLs that will be added to the rendered page, `[]` by default <br />
                 See [grip/static/README.md][static-readme] for details.
 - `STYLE_URLS_SOURCE`: The URL to use to locate and download the styles from, `https://github.com/joeyespo/grip` by default
 - `STYLE_URLS_RE`: The regular expression to use to parse the styles from the source
-- `STYLE_CACHE_DIRECTORY`: The directory to place the cached styles (relative to `~/.grip`), `style-cache` by default
+- `STYLE_ASSET_URLS_RE`: The regular expression to use to parse the assets from the styles
+- `STYLE_ASSET_URLS_SUB`: Replaces the above regular expression with a local URL, as saved in the cache
 
 Put these variables in either:
 

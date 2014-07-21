@@ -6,9 +6,9 @@ import errno
 import mimetypes
 import requests
 try:
-    from urlparse import urlparse
+    from urlparse import urlparse, urljoin
 except ImportError:
-    from urllib.parse import urlparse
+    from urllib.parse import urlparse, urljoin
 from traceback import format_exc
 from flask import Flask, safe_join, abort, url_for, send_from_directory
 from .constants import default_filenames
@@ -44,13 +44,14 @@ def create_app(path=None, gfm=False, context=None,
         print(' * Using credentials:', username)
 
     # Setup style cache
-    if app.config['STYLE_CACHE_DIRECTORY']:
-        style_cache_path = os.path.join(app.instance_path,
-                                        app.config['STYLE_CACHE_DIRECTORY'])
-        if not os.path.exists(style_cache_path):
-            os.makedirs(style_cache_path)
+    if app.config['CACHE_DIRECTORY']:
+        cache_path = os.path.join(app.instance_path,
+                                        app.config['CACHE_DIRECTORY'])
+        if not os.path.exists(cache_path):
+            os.makedirs(cache_path)
     else:
-        style_cache_path = None
+        cache_path = None
+    cache_url = app.config.get('CACHE_URL')
 
     # Get initial styles
     style_urls = list(app.config['STYLE_URLS'] or [])
@@ -59,14 +60,18 @@ def create_app(path=None, gfm=False, context=None,
     # Get styles from style source
     @app.before_first_request
     def retrieve_styles():
-        """Retrieves the style URLs from the source and caches them, if requested."""
-        if not app.config['STYLE_URLS_SOURCE'] or not app.config['STYLE_URLS_RE']:
+        """Retrieves the style URLs from the source and caches them."""
+        style_urls_source = app.config['STYLE_URLS_SOURCE']
+        style_urls_re = app.config['STYLE_URLS_RE']
+        if not style_urls_source or not style_urls_re:
             return
 
         # Get style URLs from the source HTML page
-        retrieved_urls = _get_style_urls(app.config['STYLE_URLS_SOURCE'],
-                                         app.config['STYLE_URLS_RE'],
-                                         style_cache_path,
+        retrieved_urls = _get_style_urls(style_urls_source,
+                                         style_urls_re,
+                                         app.config['STYLE_ASSET_URLS_RE'],
+                                         app.config['STYLE_ASSET_URLS_SUB'],
+                                         cache_path,
                                          app.config['DEBUG_GRIP'])
         style_urls.extend(retrieved_urls)
 
@@ -96,9 +101,9 @@ def create_app(path=None, gfm=False, context=None,
                            style_urls, styles,
                            None, render_wide)
 
-    @app.route('/cache/<path:filename>')
+    @app.route(cache_url + '/<path:filename>')
     def render_cache(filename=None):
-        return send_from_directory(style_cache_path, filename)
+        return send_from_directory(cache_path, filename)
 
     return app
 
@@ -121,26 +126,31 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
         use_reloader=app.config['DEBUG_GRIP'])
 
 
-def _get_style_urls(source_url, pattern, style_cache_path, debug=False):
-    """Gets the specified resource and parses all style URLs in the form of the specified pattern."""
+def _get_style_urls(source_url, style_pattern, asset_pattern,
+                    asset_pattern_sub, cache_path, debug=False):
+    """
+    Gets the specified resource and parses all style URLs and their assets
+    in the form of the specified patterns.
+    """
     try:
         # TODO: Add option to clear the cached styles
         # Skip fetching styles if there's any already cached
-        if style_cache_path:
-            cached = _get_cached_style_urls(style_cache_path)
+        if cache_path:
+            cached = _get_cached_style_urls(cache_path)
             if cached:
                 return cached
 
         # Find style URLs
         r = requests.get(source_url)
         if not 200 <= r.status_code < 300:
-            print(' * Warning: retrieving styles gave status code', r.status_code)
-        urls = re.findall(pattern, r.text)
+            print(' * Warning: retrieving styles gave status code',
+                  r.status_code)
+        urls = re.findall(style_pattern, r.text)
 
-        # Cache the styles
-        if style_cache_path:
-            _cache_contents(urls, style_cache_path)
-            urls = _get_cached_style_urls(style_cache_path)
+        # Cache the styles and their assets
+        if cache_path:
+            _cache_contents(urls, asset_pattern, asset_pattern_sub, cache_path)
+            urls = _get_cached_style_urls(cache_path)
 
         return urls
     except Exception as ex:
@@ -166,10 +176,19 @@ def _get_styles(app, style_urls):
     return styles
 
 
-def _get_cached_style_urls(style_cache_path):
+def _get_cached_style_urls(cache_path):
     """Gets the URLs of the cached styles."""
-    cached_styles = os.listdir(style_cache_path)
-    return [url_for('render_cache', filename=style) for style in cached_styles]
+    try:
+        cached_styles = os.listdir(cache_path)
+    except IOError as ex:
+        if ex.errno != errno.ENOENT and ex.errno != errno.ESRCH:
+            raise
+        return []
+    except OSError:
+        return []
+    return [url_for('render_cache', filename=style)
+        for style in cached_styles
+        if style.endswith('.css')]
 
 
 def _find_file(path):
@@ -205,15 +224,40 @@ def _read_file_or_404(filename, read_as_binary=False):
 
 def _write_file(filename, contents):
     """Creates the specified file and writes the given contents to it."""
+    write_path = os.path.dirname(filename)
+    if not os.path.exists(write_path):
+        os.makedirs(write_path)
     with open(filename, 'wb') as f:
         f.write(contents.encode('utf-8'))
 
 
-def _cache_contents(urls, style_cache_path):
-    """Fetches the given URLs and caches their contents in the given directory."""
-    for url in urls:
-        basename = url.rsplit('/', 1)[-1]
-        filename = os.path.join(style_cache_path, basename)
-        contents = requests.get(url).text
+def _cache_contents(style_urls, asset_pattern, asset_pattern_sub, cache_path):
+    """
+    Fetches the given URLs and caches their contents
+    and their assets in the given directory.
+    """
+    asset_urls = []
+    for style_url in style_urls:
+        filename = _cache_filename(style_url, cache_path)
+        contents = requests.get(style_url).text
+        # Find assets and replace their base URLs with /cached
+        asset_urls += map(lambda url: urljoin(style_url, url),
+                          re.findall(asset_pattern, contents))
+        contents = re.sub(asset_pattern, asset_pattern_sub, contents)
+        # Write file and show message
         _write_file(filename, contents)
-        print(' * Downloaded', url)
+        print(' * Cached', style_url, 'in', cache_path)
+
+    for asset_url in asset_urls:
+        filename = _cache_filename(asset_url, cache_path)
+        contents = requests.get(asset_url).text
+        # Write file and show message
+        _write_file(filename, contents)
+        print(' * Cached', asset_url, 'in', cache_path)
+
+
+def _cache_filename(url, cache_path):
+    base_url = url.rsplit('/', 1)[-1]
+    basename = base_url.rsplit('?', 1)[0].rsplit('#', 1)[0]
+    filename = os.path.join(cache_path, basename)
+    return filename

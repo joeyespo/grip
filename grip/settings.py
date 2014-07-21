@@ -18,7 +18,10 @@ USERNAME = None
 PASSWORD = None
 
 
+CACHE_DIRECTORY = 'cache'
+CACHE_URL = '/cache'
 STYLE_URLS = []
 STYLE_URLS_SOURCE = 'https://github.com/joeyespo/grip'
 STYLE_URLS_RE = '<link.+href=[\'"]?([^\'" >]+)[\'"]?.+media=[\'"]?(?:screen|all)[\'"]?.+rel=[\'"]?stylesheet[\'"]?.+/>'
-STYLE_CACHE_DIRECTORY = 'style-cache'
+STYLE_ASSET_URLS_RE = 'url\([\'"]?/assets/([^\'" \)]+)[\'"]?\)'
+STYLE_ASSET_URLS_SUB = 'url("{0}/\\1")'.format(CACHE_URL)
