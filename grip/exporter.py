@@ -14,7 +14,8 @@ def export(path=None, gfm=False, context=None, username=None, password=None,
                      render_inline=True)
 
     if out_filename is None:
-        out_filename = os.path.splitext(app.config['GRIP_FILE'])[0] + '.html'
+        out_filename = os.path.splitext(os.path.normpath(path))[0] + '.html'
+
     print('Exporting to', out_filename)
 
     content = render_app(app)

@@ -28,13 +28,13 @@ def create_app(path=None, gfm=False, context=None,
     # Paths
     instance_path = os.path.abspath(os.path.expanduser('~/.grip'))
     user_settings = os.path.join(instance_path, 'settings.py')
+    in_filename = os.path.normpath(path)
 
     # Flask application
     app = Flask(__name__, instance_path=instance_path)
     app.config.from_object('grip.settings')
     app.config.from_pyfile('settings_local.py', silent=True)
     app.config.from_pyfile(user_settings, silent=True)
-    app.config['GRIP_FILE'] = os.path.normpath(path)
 
     # Setup style cache
     if app.config['STYLE_CACHE_DIRECTORY']:
@@ -72,7 +72,7 @@ def create_app(path=None, gfm=False, context=None,
     @app.route('/<path:filename>')
     def render(filename=None):
         if filename is not None:
-            filename = safe_join(os.path.dirname(app.config['GRIP_FILE']), filename)
+            filename = safe_join(os.path.dirname(in_filename), filename)
             if os.path.isdir(filename):
                 try:
                     filename = _find_file(filename)
@@ -94,8 +94,8 @@ def create_app(path=None, gfm=False, context=None,
             if is_image:
                 return render_image(text, mimetype)
         else:
-            filename = app.config['GRIP_FILE']
-            text = _read_file(app.config['GRIP_FILE'])
+            filename = in_filename
+            text = _read_file(in_filename)
         return render_page(text, filename, gfm, context,
                            username, password, render_offline,
                            style_urls, styles,
