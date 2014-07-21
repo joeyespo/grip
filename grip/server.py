@@ -133,7 +133,6 @@ def _get_style_urls(source_url, style_pattern, asset_pattern,
     in the form of the specified patterns.
     """
     try:
-        # TODO: Add option to clear the cached styles
         # Skip fetching styles if there's any already cached
         if cache_path:
             cached = _get_cached_style_urls(cache_path)
