@@ -123,6 +123,7 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
 
 
 def clear_cache():
+    """Clears the cached styles and assets."""
     app = _create_flask()
     cache_path = os.path.join(app.instance_path, app.config['CACHE_DIRECTORY'])
     if os.path.exists(cache_path):

@@ -290,7 +290,7 @@ resolve_readme(path=None)
 
 #### clear_cache
 
-Clears the cached styles and assets and exits.
+Clears the cached styles and assets.
 
 ```python
 clear_cache()
