@@ -270,7 +270,7 @@ def _cache_contents(style_urls, asset_pattern, asset_pattern_sub, cache_path):
     for style_url in style_urls:
         filename = _cache_filename(style_url, cache_path)
         contents = requests.get(style_url).text
-        # Find assets and replace their base URLs with /cached
+        # Find assets and replace their base URLs with the cache directory
         asset_urls += map(lambda url: urljoin(style_url, url),
                           re.findall(asset_pattern, contents))
         contents = re.sub(asset_pattern, asset_pattern_sub, contents)
