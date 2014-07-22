@@ -274,6 +274,15 @@ render_page(text, filename=None, gfm=False, context=None, username=None, passwor
 - `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `gfm`)
 
 
+#### clear_cache
+
+Clears the cached styles and assets and exits.
+
+```python
+clear_cache()
+```
+
+
 #### supported_extensions
 
 The supported extensions, as defined by [GitHub][markdown].

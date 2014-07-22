@@ -3,6 +3,7 @@ from __future__ import print_function
 import os
 import re
 import errno
+import shutil
 import mimetypes
 import requests
 try:
@@ -21,20 +22,13 @@ def create_app(path=None, gfm=False, context=None,
     """Starts a server to render the specified file or directory containing a README."""
     if not path or os.path.isdir(path):
         path = _find_file(path)
-
     if not os.path.exists(path):
         raise ValueError('File not found: ' + path)
-
-    # Paths
-    instance_path = os.path.abspath(os.path.expanduser('~/.grip'))
-    user_settings = os.path.join(instance_path, 'settings.py')
     in_filename = os.path.normpath(path)
 
-    # Flask application
-    app = Flask(__name__, instance_path=instance_path)
-    app.config.from_object('grip.settings')
-    app.config.from_pyfile('settings_local.py', silent=True)
-    app.config.from_pyfile(user_settings, silent=True)
+    # Create Flask application
+    app = _create_flask()
+
     # Runtime config
     username = username if username is not None else app.config.get('USERNAME')
     password = password if password is not None else app.config.get('PASSWORD')
@@ -113,7 +107,7 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
           render_offline=False, render_wide=False):
     """Starts a server to render the specified file or directory containing a README."""
     app = create_app(path, gfm, context, username, password,
-                     render_offline, render_wide)
+                     render_offline, render_wide, False)
 
     # Set overridden config values
     if host is not None:
@@ -124,6 +118,27 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
     # Run local server
     app.run(app.config['HOST'], app.config['PORT'], debug=app.debug,
         use_reloader=app.config['DEBUG_GRIP'])
+
+
+def clear_cache():
+    app = _create_flask()
+    cache_path = os.path.join(app.instance_path, app.config['CACHE_DIRECTORY'])
+    if os.path.exists(cache_path):
+        shutil.rmtree(cache_path)
+    print('Cache cleared.')
+
+
+def _create_flask():
+    instance_path = os.path.abspath(os.path.expanduser('~/.grip'))
+    user_settings = os.path.join(instance_path, 'settings.py')
+
+    # Flask application
+    app = Flask(__name__, instance_path=instance_path)
+    app.config.from_object('grip.settings')
+    app.config.from_pyfile('settings_local.py', silent=True)
+    app.config.from_pyfile(user_settings, silent=True)
+
+    return app
 
 
 def _get_style_urls(source_url, style_pattern, asset_pattern,

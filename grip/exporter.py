@@ -10,8 +10,7 @@ def export(path=None, gfm=False, context=None, username=None, password=None,
            render_offline=False, render_wide=None, out_filename=None):
     """Exports the rendered HTML to a file."""
     app = create_app(path, gfm, context, username, password,
-                     render_offline, render_wide,
-                     render_inline=True)
+                     render_offline, render_wide, True)
 
     if out_filename is None:
         out_filename = os.path.splitext(os.path.normpath(path))[0] + '.html'

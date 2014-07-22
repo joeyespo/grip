@@ -20,6 +20,7 @@ Options:
   --user=<username> A GitHub username for API authentication
   --pass=<password> A GitHub password for API authentication
   --wide            Renders wide, i.e. when the side nav is collapsed
+  --clear           Clears the cached styles and assets and exits
   --export          Exports to <path>.html or README.md instead of serving,
                     with [<address>] optionally specifying the output file
 """
@@ -29,7 +30,7 @@ from __future__ import print_function
 import sys
 from path_and_address import resolve, split_address
 from docopt import docopt
-from .server import serve
+from .server import clear_cache, serve
 from .exporter import export
 from . import __version__
 
@@ -45,6 +46,15 @@ def main(argv=None):
 
     # Parse options
     args = docopt(usage, argv=argv, version=version)
+
+    # Clear the cache
+    if args['--clear']:
+        try:
+            clear_cache()
+            return 0
+        except ValueError as ex:
+            print('Error:', ex)
+            return 1
 
     # Export to a file instead of running a server
     if args['--export']:
