@@ -14,8 +14,18 @@
   </style>
   {% endif -%}
   <style>
+    /* Page tweaks */
     .previewPage {
       margin-top: 64px;
+    }
+
+    /* Discussion tweaks */
+    .discussion-timeline.wide {
+      width: 920px;
+    }
+    .timeline-comment-wrapper > .timeline-comment:after,
+    .timeline-comment-wrapper > .timeline-comment:before {
+      content: none;
     }
   </style>
 {%- endblock -%}
@@ -42,20 +52,38 @@
 {%- block page -%}
   <div class="previewPage">
     <div class="container">
-      <div class="repository-with-sidebar repo-container {{ 'with-full-navigation' if full_navigation }}">
-        <div class="repository-content context-loader-container">
-          <div id="readme" class="announce md">
-            {% if render_title and filename %}
-              <span class="name">
-                <span class="octicon octicon-book"></span>
-                {{ filename }}
-              </span>
-            {% endif %}
-            <article class="markdown-body entry-content">
-              {{ content|safe }}
-            </article>
+      <div class="repository-with-sidebar repo-container {{ 'with-full-navigation' if not render_wide }}">
+
+        {% if discussion %}
+          <div class="discussion-timeline {{ 'wide' if render_wide }}">
+            <div class="timeline-comment-wrapper">
+              <div class="timeline-comment">
+                <div class="comment">
+                  <div class="comment-content">
+                    <div class="comment-body markdown-body markdown-format">
+                      {{ content|safe }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        {% else %}
+          <div class="repository-content context-loader-container">
+            <div id="readme" class="announce md">
+              {% if render_title and filename %}
+                <span class="name">
+                  <span class="octicon octicon-book"></span>
+                  {{ filename }}
+                </span>
+              {% endif %}
+              <article class="markdown-body entry-content">
+                {{ content|safe }}
+              </article>
+            </div>
+          </div>
+        {% endif %}
+
       </div>
     </div>
   </div>

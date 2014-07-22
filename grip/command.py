@@ -19,11 +19,9 @@ Options:
   --context=<repo>  The repository context, only taken into account with --gfm
   --user=<username> A GitHub username for API authentication
   --pass=<password> A GitHub password for API authentication
+  --wide            Renders wide, i.e. when the side nav is collapsed
   --export          Exports to <path>.html or README.md instead of serving,
-                    with [<address>] optionally specifying the output file.
-  --wide            Render wide, i.e. when the side navigation is collapsed,
-                    has no effect with --gfm
-                    Note: This is also the size of GitHub's old Readme page.
+                    with [<address>] optionally specifying the output file
 """
 
 from __future__ import print_function
