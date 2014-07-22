@@ -4,6 +4,7 @@ import os
 import re
 import errno
 import shutil
+import base64
 import mimetypes
 import requests
 try:
@@ -69,7 +70,8 @@ def create_app(path=None, gfm=False, context=None,
         style_urls.extend(retrieved_urls)
 
         if render_inline:
-            styles.extend(_get_styles(app, style_urls))
+            styles.extend(_get_styles(app, style_urls,
+                                      app.config['STYLE_ASSET_URLS_INLINE']))
             style_urls[:] = []
 
     # Views
@@ -192,19 +194,31 @@ def _get_style_urls(source_url, style_pattern, asset_pattern,
         return []
 
 
-def _get_styles(app, style_urls):
-    """Gets the content of the given list of style URLs."""
+def _get_styles(app, style_urls, asset_pattern):
+    """Gets the content of the given list of style URLs and inlines assets."""
     styles = []
     for style_url in style_urls:
-        if not urlparse(style_urls[0]).netloc:
-            with app.test_client() as c:
-                response = c.get(style_url)
-                encoding = response.charset
-                content = response.data.decode(encoding)
-        else:
-            content = requests.get(style_url).text
+
+        def match_asset(match):
+            url = urljoin(style_url, _normalize_url(match.group(1)))
+            ext = os.path.splitext(url)[1][1:]
+            asset = _download(app, url)
+            asset64 = base64.b64encode(asset)
+            data_url = 'url(data:font/{0};base64,{1})'.format(ext, asset64)
+            return data_url
+
+        content = re.sub(asset_pattern, match_asset, _download(app, style_url))
         styles.append(content)
+
     return styles
+
+
+def _download(app, url):
+    if urlparse(url).netloc:
+        return requests.get(url).content
+
+    with app.test_client() as c:
+        return c.get(url).data
 
 
 def _get_cached_style_urls(cache_path):
@@ -287,8 +301,11 @@ def _cache_contents(style_urls, asset_pattern, asset_pattern_sub, cache_path):
         print(' * Cached', asset_url, 'in', cache_path)
 
 
+def _normalize_url(url):
+    return url.rsplit('?', 1)[0].rsplit('#', 1)[0]
+
+
 def _cache_filename(url, cache_path):
-    base_url = url.rsplit('/', 1)[-1]
-    basename = base_url.rsplit('?', 1)[0].rsplit('#', 1)[0]
+    basename = _normalize_url(url).rsplit('/', 1)[-1]
     filename = os.path.join(cache_path, basename)
     return filename

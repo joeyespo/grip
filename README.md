@@ -64,7 +64,7 @@ $ grip AUTHORS.md 0.0.0.0:80
  * Running on http://0.0.0.0:80/
 ```
 
-You can even bypass the server and export to a single HTML:
+You can even bypass the server and export to a single HTML, with all the styles and assets inlined:
 
 ```bash
 $ grip --export AUTHORS.md authors.html
@@ -128,11 +128,13 @@ You can add the following variables to a settings file:
 - `CACHE_DIRECTORY`: The directory to place the cached styles and assets (relative to `~/.grip`), `cache` by default
 - `CACHE_URL`: The URL to serve cached styles and assets from
 - `STYLE_URLS`: Additional URLs that will be added to the rendered page, `[]` by default <br />
-                See [grip/static/README.md][static-readme] for details.
+   See [grip/static/README.md][static-readme] for details.
 - `STYLE_URLS_SOURCE`: The URL to use to locate and download the styles from, `https://github.com/joeyespo/grip` by default
 - `STYLE_URLS_RE`: The regular expression to use to parse the styles from the source
 - `STYLE_ASSET_URLS_RE`: The regular expression to use to parse the assets from the styles
 - `STYLE_ASSET_URLS_SUB`: Replaces the above regular expression with a local URL, as saved in the cache
+- `STYLE_ASSET_URLS_INLINE`: The regular expression to use when inlining assets into the downloaded style
+   Note that this must include both the original and post-`STYLE_ASSET_URLS_SUB` patterns.
 
 Put these variables in either:
 
@@ -187,7 +189,7 @@ serve(path=None, host=None, port=None, gfm=False, context=None, username=None, p
 
 #### export
 
-Writes the specified Readme file to an HTML file with styles inlined.
+Writes the specified Readme file to an HTML file with styles and assets inlined.
 
 ```python
 export(path=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, out_filename=None)
