@@ -19,7 +19,10 @@ from .renderer import render_page, render_image
 def create_app(path=None, gfm=False, context=None,
                username=None, password=None,
                render_offline=False, render_wide=False, render_inline=False):
-    """Starts a server to render the specified file or directory containing a README."""
+    """
+    Creates an WSGI application that can serve the specified file or
+    directory containing a README.
+    """
     in_filename = resolve_readme(path)
 
     # Create Flask application
@@ -36,7 +39,7 @@ def create_app(path=None, gfm=False, context=None,
     # Setup style cache
     if app.config['CACHE_DIRECTORY']:
         cache_path = os.path.join(app.instance_path,
-                                        app.config['CACHE_DIRECTORY'])
+                                  app.config['CACHE_DIRECTORY'])
         if not os.path.exists(cache_path):
             os.makedirs(cache_path)
     else:
@@ -101,7 +104,10 @@ def create_app(path=None, gfm=False, context=None,
 def serve(path=None, host=None, port=None, gfm=False, context=None,
           username=None, password=None,
           render_offline=False, render_wide=False):
-    """Starts a server to render the specified file or directory containing a README."""
+    """
+    Starts a server to render the specified file
+    or directory containing a README.
+    """
     app = create_app(path, gfm, context, username, password,
                      render_offline, render_wide, False)
 
