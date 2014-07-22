@@ -170,12 +170,12 @@ Runs a local server and renders the Readme file located
 at `path` when visited in the browser.
 
 ```python
-serve(path='file-or-directory', host='localhost', port=5000, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False)
+serve(path=None, host=None, port=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False)
 ```
 
-- `path`: The filename to render, or the directory containing your Readme file
-- `host`: The host to serve on
-- `port`: The port to serve on
+- `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
+- `host`: The host to listen on, defaulting to the HOST configuration variable
+- `port`: The port to listen on, defaulting to the PORT configuration variable
 - `gfm`: Whether to render using [GitHub Flavored Markdown][gfm]
 - `context`: The project context to use when `gfm` is true, which
              takes the form of `username/project`
@@ -190,16 +190,17 @@ serve(path='file-or-directory', host='localhost', port=5000, gfm=False, context=
 Writes the specified Readme file to an HTML file with styles inlined.
 
 ```python
-export(path='file-or-directory', gfm=False, context=None, username=None, password=None, render_offline=False, out_filename=None)
+export(path=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, out_filename=None)
 ```
 
-- `path`: The filename to render, or the directory containing your Readme file
+- `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
 - `gfm`: Whether to render using [GitHub Flavored Markdown][gfm]
 - `context`: The project context to use when `gfm` is true, which
              takes the form of `username/project`
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
 - `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
+- `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `gfm`)
 - `out_filename`: The filename to write to, `<in_filename>.html` by default
 
 
@@ -210,10 +211,10 @@ This is the same app used by `serve` and `export` and initializes the cache,
 using the cached styles when available.
 
 ```python
-create_app(path='file-or-directory', gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False)
+create_app(path=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False)
 ```
 
-- `path`: The filename to render, or the directory containing your Readme file
+- `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
 - `gfm`: Whether to render using [GitHub Flavored Markdown][gfm]
 - `context`: The project context to use when `gfm` is true, which
              takes the form of `username/project`
