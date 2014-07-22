@@ -2,7 +2,7 @@ from __future__ import print_function
 
 import io
 import os
-from .server import create_app
+from .server import create_app, resolve_readme
 from .renderer import render_app
 
 
@@ -13,7 +13,8 @@ def export(path=None, gfm=False, context=None, username=None, password=None,
                      render_offline, render_wide, True)
 
     if out_filename is None:
-        out_filename = os.path.splitext(os.path.normpath(path))[0] + '.html'
+        in_filename = resolve_readme(path)
+        out_filename = os.path.splitext(in_filename)[0] + '.html'
 
     print('Exporting to', out_filename)
 

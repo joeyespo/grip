@@ -20,11 +20,7 @@ def create_app(path=None, gfm=False, context=None,
                username=None, password=None,
                render_offline=False, render_wide=False, render_inline=False):
     """Starts a server to render the specified file or directory containing a README."""
-    if not path or os.path.isdir(path):
-        path = _find_file(path)
-    if not os.path.exists(path):
-        raise ValueError('File not found: ' + path)
-    in_filename = os.path.normpath(path)
+    in_filename = resolve_readme(path)
 
     # Create Flask application
     app = _create_flask()
@@ -126,6 +122,20 @@ def clear_cache():
     if os.path.exists(cache_path):
         shutil.rmtree(cache_path)
     print('Cache cleared.')
+
+
+def resolve_readme(path=None):
+    """
+    Returns the path if it's a file; otherwise, looks for a compatible README
+    file in the directory specified by path. If path is None, the current
+    working directory is used. If no compatible README can be found,
+    a ValueError is raised.
+    """
+    if not path or os.path.isdir(path):
+        path = _find_file(path)
+    if not os.path.exists(path):
+        raise ValueError('File not found: ' + path)
+    return os.path.normpath(path)
 
 
 def _create_flask():

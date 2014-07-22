@@ -275,6 +275,19 @@ render_page(text, filename=None, gfm=False, context=None, username=None, passwor
 - `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `gfm`)
 
 
+#### resolve_readme
+
+Returns the path if it's a file; otherwise, looks for a compatible README file
+in the directory specified by path. If path is None, the current working
+directory is used. If no compatible README can be found, ValueError is raised.
+
+```python
+resolve_readme(path=None)
+```
+
+- `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
+
+
 #### clear_cache
 
 Clears the cached styles and assets and exits.
