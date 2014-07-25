@@ -98,7 +98,7 @@ to unlock a much higher rate limit.
 $ grip --user <your-username> --pass <your-password>
 ```
 
-Or store this information [in a configuration variable](#configuration).
+Or persist these options [in your local configuration](#configuration).
 
 There's also a [work-in-progress branch][fix-render-offline] to provide
 **offline rendering**. Once this resembles GitHub more precisely, it'll
@@ -117,7 +117,7 @@ Known issues
 Configuration
 -------------
 
-You can add the following variables to a settings file:
+To customize Grip, create `~/.grip/settings.py`, then add one or more of the following variables:
 
 - `HOST`: The host to use when not provided as a CLI argument, `localhost` by default
 - `PORT`: The port to use when not provided as a CLI argument, `5000` by default
@@ -135,10 +135,16 @@ You can add the following variables to a settings file:
 - `STYLE_ASSET_URLS_INLINE`: The regular expression to use when inlining assets into the downloaded style
    Note that this must include both the original and post-`STYLE_ASSET_URLS_SUB` patterns.
 
-Put these variables in either:
+#### Advanced
 
-1. `~/.grip/settings.py` (create this file if it doesn't already exist)
-2. `grip/settings_local.py` from your current Python installation's `site-packages`
+This file is a normal Python script, so you can add more advanced configuration.
+
+For example, to read a setting from the environment and provide a default value
+when it's not set:
+
+```python
+PORT = os.environ.get('GRIP_PORT', 8080)
+```
 
 
 API
