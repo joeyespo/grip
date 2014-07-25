@@ -127,8 +127,7 @@ You can add the following variables to a settings file:
 - `PASSWORD`: The password to use when not provided as a CLI argument, `None` by default
 - `CACHE_DIRECTORY`: The directory to place the cached styles and assets (relative to `~/.grip`), `cache` by default
 - `CACHE_URL`: The URL to serve cached styles and assets from
-- `STYLE_URLS`: Additional URLs that will be added to the rendered page, `[]` by default <br />
-   See [grip/static/README.md][static-readme] for details.
+- `STYLE_URLS`: Additional URLs that will be added to the rendered page, `[]` by default
 - `STYLE_URLS_SOURCE`: The URL to use to locate and download the styles from, `https://github.com/joeyespo/grip` by default
 - `STYLE_URLS_RE`: The regular expression to use to parse the styles from the source
 - `STYLE_ASSET_URLS_RE`: The regular expression to use to parse the assets from the styles
