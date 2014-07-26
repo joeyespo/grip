@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}GitHub rate limit reached - Grip{% endblock %}
+
+
+{%- block styles -%}
+  <style>
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.42em;
+    }
+    code {
+      font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+      background-color: #f8f8f8;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      font-size: 12px;
+      line-height: 19px;
+      overflow: auto;
+      padding: 2px 10px;
+    }
+    .error-page {
+      margin: 32px auto;
+      width: 500px;
+    }
+    .error-page.authenticated {
+      margin: 64px auto;
+      width: 600px;
+    }
+    .error-block {
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      padding: 16px 32px;
+    }
+    .error-description {
+      padding: 16px 32px;
+    }
+  </style>
+{%- endblock -%}
+
+
+{%- block scripts -%}
+  <script>
+    function scrollToHash() {
+      if (location.hash && !document.querySelector(":target")) {
+        var elements = document.getElementsByName('user-content-' + location.hash.slice(1));
+        if (elements.length > 0) {
+          elements[elements.length - 1].scrollIntoView();
+        }
+      }
+    }
+    window.onhashchange = function() {
+      scrollToHash();
+    }
+    window.onload = function() {
+      scrollToHash();
+    }
+  </script>
+{%- endblock -%}
+
+{%- block page -%}
+  <div class="error-page {{ 'authenticated' if is_authenticated }}">
+    <div class="error-block">
+      <h1>GitHub Rate Limit Reached</h1>
+      <p>
+        The <a href="https://developer.github.com/v3/#rate-limiting">GitHub API rate limit</a>
+        {% if is_authenticated %} for basic auth {% endif %}
+        has been reached for the hour.
+      </p>
+      {% if is_authenticated %}
+        <p>
+          Sorry for the inconvenience.
+        </p>
+      {% endif %}
+    </div>
+
+    {% if not is_authenticated %}
+      <div class="error-description">
+        <h2>What?</h2>
+        <p>
+          GitHub imposes a limit of <strong>60 requests/hour</strong> when using their API without authentication.
+        </p>
+
+        <h2>Why?</h2>
+        <p>
+          This prevents people from anonymously abusing GitHub's system.
+        </p>
+        <p>
+          As for Grip, it's built to appear as close to GitHub as possible. Using
+          GitHub's API allows Grip to immediately and accurately reflect any updates
+          from GitHub, without the delay of busy maintainers or requiring you to upgrade.
+        </p>
+
+        <h2>Ok, fine. Where do I go from here?</h2>
+        <p>
+          Until the <a href="https://github.com/joeyespo/grip/issues/35">offline renderer</a> is complete, you can run Grip using <br />
+          the <code>--user</code> and <code>--pass</code> arguments to use basic auth, <br />
+          giving you <strong>5,000 requests/hour</strong>. Run <code>grip -h</code> for details.
+        </p>
+        <p>
+          I do apologize for the inconvenience. If you need help, or have ideas on improving this
+          experience, please reach out <a href="mailto:{{ email }}?subject=I+just+hit+GitHub's+rate+limit+with+grip" target="_blank">joe@joeyespo.com</a>
+        </p>
+      </div>
+    {% endif %}
+  </div>
+{%- endblock -%}

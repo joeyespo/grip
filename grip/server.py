@@ -34,7 +34,8 @@ def create_app(path=None, gfm=False, context=None,
     password = password if password is not None else app.config.get('PASSWORD')
 
     # Authentication message
-    if username:
+    is_authenticated = username
+    if is_authenticated:
         print(' * Using credentials:', username)
 
     # Setup style cache
@@ -99,6 +100,14 @@ def create_app(path=None, gfm=False, context=None,
     @app.route(cache_url + '/<path:filename>')
     def render_cache(filename=None):
         return send_from_directory(cache_path, filename)
+
+    # Error views
+    @app.route('/rate-limit-preview')
+    @app.errorhandler(403)
+    def rate_limit_preview():
+        auth = request.args.get('auth')
+        is_auth = auth == '1' if auth else is_authenticated
+        return render_template('limit.html', is_authenticated=is_auth), 403
 
     return app
 
