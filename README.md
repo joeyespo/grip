@@ -177,7 +177,7 @@ Runs a local server and renders the Readme file located
 at `path` when visited in the browser.
 
 ```python
-serve(path=None, host=None, port=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False)
+serve(path=None, host=None, port=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
@@ -190,6 +190,7 @@ serve(path=None, host=None, port=None, gfm=False, context=None, username=None, p
 - `password`: The password to authenticate with GitHub to extend the API limit
 - `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
 - `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `gfm`)
+- `render_inline`: Whether to inline the styles within the HTML file
 
 
 #### export
@@ -197,7 +198,7 @@ serve(path=None, host=None, port=None, gfm=False, context=None, username=None, p
 Writes the specified Readme file to an HTML file with styles and assets inlined.
 
 ```python
-export(path=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, out_filename=None)
+export(path=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=True, out_filename=None)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
@@ -208,6 +209,7 @@ export(path=None, gfm=False, context=None, username=None, password=None, render_
 - `password`: The password to authenticate with GitHub to extend the API limit
 - `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
 - `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `gfm`)
+- `render_inline`: Whether to inline the styles within the HTML file (Note: unlike the other API functions, this defaults to `True`)
 - `out_filename`: The filename to write to, `<in_filename>.html` by default
 
 
@@ -218,7 +220,7 @@ This is the same app used by `serve` and `export` and initializes the cache,
 using the cached styles when available.
 
 ```python
-create_app(path=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False)
+create_app(path=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, text=None)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
@@ -230,9 +232,13 @@ create_app(path=None, gfm=False, context=None, username=None, password=None, ren
 - `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
 - `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `gfm`)
 - `render_inline`: Whether to inline the styles within the HTML file
+- `text`: A string or stream of Markdown text to render instead of being loaded from `path` (Note: `path` can be used to set the page title)
 
 
 #### render_app
+
+Renders the application created by `create_app` and returns the HTML that would
+normally appear when visiting that route.
 
 ```python
 render_app(app, route='/')
@@ -250,7 +256,7 @@ Renders the specified markdown text without caching.
 render_content(text, gfm=False, context=None, username=None, password=None, render_offline=False)
 ```
 
-- `text`: The content to render
+- `text`: The Markdown text to render
 - `gfm`: Whether to render using [GitHub Flavored Markdown][gfm]
 - `context`: The project context to use when `gfm` is true, which
              takes the form of `username/project`
@@ -261,25 +267,23 @@ render_content(text, gfm=False, context=None, username=None, password=None, rend
 
 #### render_page
 
-Renders the specified markdown text without caching and outputs an HTML
-page that resembles the GitHub Readme view.
+Renders the markdown from the specified path or text, without caching,
+and returns an HTML page that resembles the GitHub Readme view.
 
 ```python
-render_page(text, filename=None, gfm=False, context=None, username=None, password=None, render_offline=False, style_urls=[], styles=[], render_title=None, render_wide=False)
+render_page(page=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, text=None)
 ```
 
-- `text`: The content to render
-- `filename`: The text to render at the top of the page and to use in the page's title, if provided
+- `path`: The path to use for the page title, rendering `'README.md'` if None
 - `gfm`: Whether to render using [GitHub Flavored Markdown][gfm]
 - `context`: The project context to use when `gfm` is true, which
              takes the form of `username/project`
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
 - `render_offline`: Whether to render offline using [Python-Markdown][] (Note: this is a work in progress)
-- `style_urls`: A list of URLs that contain CSS to include in the rendered page
-- `styles`: A list of style content strings to inline in the rendered page
-- `render_title`: Whether to render the title section on the page, `not gfm` by default
 - `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `gfm`)
+- `render_inline`: Whether to inline the styles within the HTML file
+- `text`: A string or stream of Markdown text to render instead of being loaded from `path` (Note: `path` can be used to set the page title)
 
 
 #### resolve_readme
@@ -289,10 +293,11 @@ in the directory specified by path. If path is None, the current working
 directory is used. If no compatible README can be found, ValueError is raised.
 
 ```python
-resolve_readme(path=None)
+resolve_readme(path=None, force=False)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
+- `force`: Whether to force a result, even when a readme file is not found
 
 
 #### clear_cache

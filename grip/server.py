@@ -12,19 +12,22 @@ try:
 except ImportError:
     from urllib.parse import urlparse, urljoin
 from traceback import format_exc
-from flask import Flask, safe_join, abort, url_for, send_from_directory
+from flask import (Flask, abort, make_response, render_template, request,
+    safe_join, send_from_directory, url_for)
 from .constants import default_filenames
-from .renderer import render_page, render_image
+from .renderer import render_content
 
 
 def create_app(path=None, gfm=False, context=None,
                username=None, password=None,
-               render_offline=False, render_wide=False, render_inline=False):
+               render_offline=False, render_wide=False, render_inline=False,
+               text=None):
     """
     Creates an WSGI application that can serve the specified file or
     directory containing a README.
     """
-    in_filename = resolve_readme(path)
+    force_resolve = text is not None
+    in_filename = resolve_readme(path, force_resolve)
 
     # Create Flask application
     app = _create_flask()
@@ -82,20 +85,25 @@ def create_app(path=None, gfm=False, context=None,
         if filename is not None:
             filename = safe_join(os.path.dirname(in_filename), filename)
             if os.path.isdir(filename):
-                filename = _find_file_or_404(filename)
+                filename = _find_file_or_404(filename, force_resolve)
             # Read and serve images as binary
             mimetype, _ = mimetypes.guess_type(filename)
             if mimetype and mimetype.startswith('image/'):
-                text = _read_file_or_404(filename, True)
-                return render_image(text, mimetype)
+                image_data = _read_file_or_404(filename, True)
+                return _render_image(image_data, mimetype)
+            render_text = _read_file_or_404(filename)
         else:
             filename = in_filename
+            if text is not None:
+                render_text = (text.read() if hasattr(text, 'read')
+                               else str(text))
+            else:
+                render_text = _read_file_or_404(filename)
 
-        text = _read_file_or_404(filename)
-        return render_page(text, filename, gfm, context,
-                           username, password, render_offline,
-                           style_urls, styles,
-                           None, render_wide)
+        return _render_page(render_text, filename, gfm, context,
+                            username, password,
+                            render_offline, render_wide,
+                            style_urls, styles)
 
     @app.route(cache_url + '/<path:filename>')
     def render_cache(filename=None):
@@ -114,13 +122,13 @@ def create_app(path=None, gfm=False, context=None,
 
 def serve(path=None, host=None, port=None, gfm=False, context=None,
           username=None, password=None,
-          render_offline=False, render_wide=False):
+          render_offline=False, render_wide=False, render_inline=False):
     """
     Starts a server to render the specified file
     or directory containing a README.
     """
     app = create_app(path, gfm, context, username, password,
-                     render_offline, render_wide, False)
+                     render_offline, render_wide, render_inline)
 
     # Set overridden config values
     if host is not None:
@@ -142,7 +150,7 @@ def clear_cache():
     print('Cache cleared.')
 
 
-def resolve_readme(path=None):
+def resolve_readme(path=None, force=False):
     """
     Returns the path if it's a file; otherwise, looks for a compatible README
     file in the directory specified by path. If path is None, the current
@@ -150,8 +158,8 @@ def resolve_readme(path=None):
     a ValueError is raised.
     """
     if not path or os.path.isdir(path):
-        path = _find_file(path)
-    if not os.path.exists(path):
+        path = _find_file(path, force)
+    if not os.path.exists(path) and not force:
         raise ValueError('File not found: ' + path)
     return os.path.normpath(path)
 
@@ -167,6 +175,31 @@ def _create_flask():
     app.config.from_pyfile(user_settings, silent=True)
 
     return app
+
+
+def _render_page(text, filename=None, gfm=False, context=None,
+                 username=None, password=None,
+                 render_offline=False, render_wide=False,
+                 style_urls=[], styles=[]):
+    """Renders the specified markup text to an HTML page."""
+
+    render_title = not gfm
+    content = render_content(text, gfm, context, username, password,
+                             render_offline)
+
+    return render_template('index.html',
+                           content=content, filename=filename,
+                           render_wide=render_wide,
+                           style_urls=style_urls, styles=styles,
+                           render_title=render_title,
+                           discussion=gfm)
+
+
+def _render_image(image_data, content_type):
+    """Renders the specified image data with the given Content-Type."""
+    response = make_response(image_data)
+    response.headers['Content-Type'] = content_type
+    return response
 
 
 def _get_style_urls(source_url, style_pattern, asset_pattern,
@@ -245,7 +278,7 @@ def _get_cached_style_urls(cache_path):
         if style.endswith('.css')]
 
 
-def _find_file(path):
+def _find_file(path, force=False):
     """Gets the full path and extension of the specified."""
     if path is None:
         path = '.'
@@ -253,13 +286,15 @@ def _find_file(path):
         full_path = os.path.join(path, filename)
         if os.path.exists(full_path):
             return full_path
+    if force:
+        return os.path.join(path, default_filenames[0])
     raise ValueError('No README found at ' + path)
 
 
-def _find_file_or_404(path):
+def _find_file_or_404(path, force):
     """Gets the full path and extension of the specified, or raises 404."""
     try:
-        return _find_file(path)
+        return _find_file(path, force)
     except ValueError:
         abort(404)
 

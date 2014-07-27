@@ -13,6 +13,6 @@ __version__ = '2.0.1'
 
 from . import command
 from .constants import supported_extensions, default_filenames
-from .renderer import render_content, render_page
 from .server import create_app, serve, clear_cache
+from .renderer import render_content
 from .exporter import export

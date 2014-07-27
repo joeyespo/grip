@@ -61,7 +61,7 @@ def main(argv=None):
         try:
             export(args['<path>'], args['--gfm'], args['--context'],
                    args['--user'], args['--pass'], False, args['--wide'],
-                   args['<address>'])
+                   True, args['<address>'])
             return 0
         except ValueError as ex:
             print('Error:', ex)

@@ -9,7 +9,7 @@
   {%- if styles %}
   <style>
     {% for style in styles -%}
-    {{ style }}
+    {{ style|safe }}
     {% endfor -%}
   </style>
   {% endif -%}
