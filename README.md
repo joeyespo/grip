@@ -105,13 +105,15 @@ There's also a [work-in-progress branch][fix-render-offline] to provide
 be exposed in the CLI, and will ultimately be used as a seamless fallback
 engine for when the API can't be accessed.
 
+Grip always accesses GitHub over HTTPS, 
+so your README and credentials are protected.
 
 Known issues
 ------------
 
 - [ ] GitHub introduced read-only task lists to all Markdown documents in
       repositories and wikis [back in April][task-lists], but
-      [the API][markdown] doesn't seem to respect this yet.
+      [the API][markdown] doesn't respect this yet.
 
 
 Configuration
