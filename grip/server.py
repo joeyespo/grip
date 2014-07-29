@@ -51,7 +51,8 @@ def create_app(path=None, gfm=False, context=None,
         cache_path = None
     cache_url = app.config.get('CACHE_URL')
 
-    # Get initial styles
+    # Get initial assets
+    assets = {}
     style_urls = list(app.config['STYLE_URLS'] or [])
     styles = []
 
@@ -74,6 +75,8 @@ def create_app(path=None, gfm=False, context=None,
         style_urls.extend(retrieved_urls)
 
         if render_inline:
+            favicon_url = url_for('static', filename='favicon.ico')
+            assets['favicon'] = _to_data_url(app, favicon_url, 'image/x-icon')
             styles.extend(_get_styles(app, style_urls,
                                       app.config['STYLE_ASSET_URLS_INLINE']))
             style_urls[:] = []
@@ -100,10 +103,12 @@ def create_app(path=None, gfm=False, context=None,
             else:
                 render_text = _read_file_or_404(filename)
 
+        favicon = assets.get('favicon', None)
+
         return _render_page(render_text, filename, gfm, context,
                             username, password,
                             render_offline, render_wide,
-                            style_urls, styles)
+                            style_urls, styles, favicon)
 
     @app.route(cache_url + '/<path:filename>')
     def render_cache(filename=None):
@@ -180,7 +185,7 @@ def _create_flask():
 def _render_page(text, filename=None, gfm=False, context=None,
                  username=None, password=None,
                  render_offline=False, render_wide=False,
-                 style_urls=[], styles=[]):
+                 style_urls=[], styles=[], favicon=None):
     """Renders the specified markup text to an HTML page."""
 
     render_title = not gfm
@@ -191,6 +196,7 @@ def _render_page(text, filename=None, gfm=False, context=None,
                            content=content, filename=filename,
                            render_wide=render_wide,
                            style_urls=style_urls, styles=styles,
+                           favicon=favicon,
                            render_title=render_title,
                            discussion=gfm)
 
@@ -244,15 +250,18 @@ def _get_styles(app, style_urls, asset_pattern):
         def match_asset(match):
             url = urljoin(style_url, _normalize_url(match.group(1)))
             ext = os.path.splitext(url)[1][1:]
-            asset = _download(app, url)
-            asset64 = base64.b64encode(asset)
-            data_url = 'url(data:font/{0};base64,{1})'.format(ext, asset64)
-            return data_url
+            return 'url({0})'.format(_to_data_url(app, url, 'font/' + ext))
 
         content = re.sub(asset_pattern, match_asset, _download(app, style_url))
         styles.append(content)
 
     return styles
+
+
+def _to_data_url(app, url, content_type):
+    asset = _download(app, url)
+    asset64 = base64.b64encode(asset)
+    return 'data:{0};base64,{1}'.format(content_type, asset64)
 
 
 def _download(app, url):
