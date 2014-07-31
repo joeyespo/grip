@@ -11,6 +11,7 @@ along with the following contributors:
 - John Gallagher ([@jgallagher](https://github.com/jgallagher))
 - Ilya Rumyantsev ([@iliggio](https://github.com/iliggio))
 - Jon Chen ([@fly](https://github.com/fly))
+- Silas Snider ([@swsnider](https://github.com/swsnider))
 
 
 [home]: README.md
