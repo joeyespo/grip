@@ -84,7 +84,7 @@ Version 0.2.1 (2012-12-02)
 Version 0.2 (2012-12-01)
 ------------------------
 
-- Github styles are now retrieved dynamically when run,
+- GitHub styles are now retrieved dynamically when run,
   instead of using the outdated styles from the config.
 
 

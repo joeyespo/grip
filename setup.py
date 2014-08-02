@@ -2,7 +2,7 @@
 Grip
 ----
 
-Render local readme files before sending off to Github.
+Render local readme files before sending off to GitHub.
 
 
 Grip is easy to set up
@@ -40,7 +40,7 @@ def read(fname):
 setup(
     name='grip',
     version='2.0.1',
-    description='Render local readme files before sending off to Github.',
+    description='Render local readme files before sending off to GitHub.',
     long_description=__doc__,
     author='Joe Esposito',
     author_email='joe@joeyespo.com',
