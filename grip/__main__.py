@@ -8,8 +8,12 @@ Render local readme files before sending off to Github.
 :license: MIT, see LICENSE for more details.
 """
 
-from command import main
+import os
+import sys
 
 
 if __name__ == '__main__':
+    sys.path.append(os.path.dirname(__file__))
+
+    from grip.command import main
     main()
