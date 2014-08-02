@@ -84,12 +84,12 @@
           </div>
         {% else %}
           <div class="repository-content context-loader-container">
-            <div id="readme" class="announce md">
+            <div id="readme" class="boxed-group flush clearfix announce instapaper_body md">
               {% if render_title and filename %}
-                <span class="name">
+                <h3>
                   <span class="octicon octicon-book"></span>
                   {{ filename }}
-                </span>
+                </h3>
               {% endif %}
               <div class="markdown-body entry-content">
                 {{ content|safe }}
