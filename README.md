@@ -118,6 +118,7 @@ engine for when the API can't be accessed.
 Grip always accesses GitHub over HTTPS,
 so your README and credentials are protected.
 
+
 Known issues
 ------------
 
@@ -350,10 +351,9 @@ Contributing
 
 
 [markdown]: http://developer.github.com/v3/markdown
-[fix-render-offline]: http://github.com/joeyespo/grip/tree/fix-render-offline
-[static-readme]: grip/static/README.md
-[task-lists]: https://github.com/blog/1825-task-lists-in-all-markdown-documents
 [rdd]: http://tom.preston-werner.com/2010/08/23/readme-driven-development.html
-[gfm]: http://github.github.com/github-flavored-markdown
-[python-markdown]: https://github.com/waylan/Python-Markdown
 [authors.md]: AUTHORS.md
+[fix-render-offline]: http://github.com/joeyespo/grip/tree/fix-render-offline
+[task-lists]: https://github.com/blog/1825-task-lists-in-all-markdown-documents
+[gfm]: http://github.github.com/github-flavored-markdown
+[python-markdown]: http://github.com/waylan/Python-Markdown
