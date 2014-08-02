@@ -1,6 +1,9 @@
 Grip -- GitHub Readme Instant Preview
 =====================================
 
+[![Downloads/month on PyPI](http://img.shields.io/pypi/dm/grip.svg)][pypi]
+[![Current version on PyPI](http://img.shields.io/pypi/v/grip.svg)][pypi]
+
 Render local readme files before sending off to GitHub.
 
 Grip is a command-line server application written in Python that uses the
@@ -357,6 +360,7 @@ Use this software often? Please consider supporting me on
 </a>
 
 
+[pypi]: http://pypi.python.org/pypi/grip/
 [markdown]: http://developer.github.com/v3/markdown
 [rdd]: http://tom.preston-werner.com/2010/08/23/readme-driven-development.html
 [authors.md]: AUTHORS.md
