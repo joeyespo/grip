@@ -115,7 +115,7 @@ There's also a [work-in-progress branch][fix-render-offline] to provide
 be exposed in the CLI, and will ultimately be used as a seamless fallback
 engine for when the API can't be accessed.
 
-Grip always accesses GitHub over HTTPS, 
+Grip always accesses GitHub over HTTPS,
 so your README and credentials are protected.
 
 Known issues
