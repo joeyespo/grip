@@ -127,8 +127,9 @@ To customize Grip, create `~/.grip/settings.py`, then add one or more of the fol
 - `DEBUG_GRIP`: Prints extended information when an error happens, `False` by default
 - `USERNAME`: The username to use when not provided as a CLI argument, `None` by default
 - `PASSWORD`: The password to use when not provided as a CLI argument, `None` by default
-- `CACHE_DIRECTORY`: The directory to place the cached styles and assets (relative to `~/.grip`), `cache` by default
-- `CACHE_URL`: The URL to serve cached styles and assets from
+- `CACHE_DIRECTORY`: The directory to place the cached styles and assets (relative to `~/.grip`), `'cache'` by default
+- `CACHE_URL`: The URL to serve cached styles and assets from, in case there's a URL conflict, `'/grip-cache'` by default
+- `STATIC_URL_PATH`: The URL to serve static assets from, in case there's a URL conflict, `'/grip-static'` by default
 - `STYLE_URLS`: Additional URLs that will be added to the rendered page, `[]` by default
 - `STYLE_URLS_SOURCE`: The URL to use to locate and download the styles from, `https://github.com/joeyespo/grip` by default
 - `STYLE_URLS_RE`: The regular expression to use to parse the styles from the source

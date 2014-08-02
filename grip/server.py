@@ -172,12 +172,22 @@ def resolve_readme(path=None, force=False):
 def _create_flask():
     instance_path = os.path.abspath(os.path.expanduser('~/.grip'))
     user_settings = os.path.join(instance_path, 'settings.py')
+    default_static_url_path = '/grip-static'
 
     # Flask application
-    app = Flask(__name__, instance_path=instance_path)
-    app.config.from_object('grip.settings')
-    app.config.from_pyfile('settings_local.py', silent=True)
-    app.config.from_pyfile(user_settings, silent=True)
+    def _new_flask(static_url_path=default_static_url_path):
+        app = Flask(__name__,
+                    static_url_path=static_url_path,
+                    instance_path=instance_path)
+        app.config.from_object('grip.settings')
+        app.config.from_pyfile('settings_local.py', silent=True)
+        app.config.from_pyfile(user_settings, silent=True)
+        return app
+
+    app = _new_flask()
+    static_url_path = app.config['STATIC_URL_PATH']
+    if static_url_path and static_url_path != default_static_url_path:
+        app = _new_flask(static_url_path)
 
     return app
 
