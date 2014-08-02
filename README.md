@@ -349,6 +349,13 @@ Contributing
 2. Fork the repository, make your changes, and add yourself to [Authors.md][]
 3. Send a pull request
 
+If your PR has been waiting a while, feel free to [ping me on Twitter][twitter].
+
+Use this software often? Please consider supporting me on
+<a href="http://gittip.com/joeyespo" title="Thank you!">
+  <img align="center" style="margin-bottom:1px" src="http://joeyespo.com/images/gittip-button.png" alt="Gittip">
+</a>
+
 
 [markdown]: http://developer.github.com/v3/markdown
 [rdd]: http://tom.preston-werner.com/2010/08/23/readme-driven-development.html
@@ -357,3 +364,4 @@ Contributing
 [task-lists]: https://github.com/blog/1825-task-lists-in-all-markdown-documents
 [gfm]: http://github.github.com/github-flavored-markdown
 [python-markdown]: http://github.com/waylan/Python-Markdown
+[twitter]: http://twitter.com/joeyespo
