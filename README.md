@@ -60,8 +60,18 @@ since grip supports relative URLs.
 You can combine the previous examples. You can also specify a hostname instead of a port. Or provide both:
 
 ```bash
+$ grip AUTHORS.md 80
+ * Running on http://localhost:80/
+```
+
+```bash
 $ grip AUTHORS.md 0.0.0.0:80
  * Running on http://0.0.0.0:80/
+```
+
+```bash
+$ grip . 0.0.0.0
+ * Running on http://0.0.0.0:5000/
 ```
 
 You can even bypass the server and export to a single HTML, with all the styles and assets inlined:
