@@ -4,21 +4,20 @@
 
 {%- block styles -%}
   {%- for style_url in style_urls -%}
-  <link rel="stylesheet" href="{{ style_url }}" />
+    <link rel="stylesheet" href="{{ style_url }}" />
   {% endfor -%}
   {%- if styles %}
-  <style>
-    {% for style in styles -%}
-    {{ style|safe }}
-    {% endfor -%}
-  </style>
+    <style>
+      {% for style in styles -%}
+      {{ style|safe }}
+      {% endfor -%}
+    </style>
   {% endif -%}
   <style>
     /* Page tweaks */
     .preview-page {
       margin-top: 64px;
     }
-
     /* Discussion tweaks */
     .discussion-timeline.wide {
       width: 920px;
@@ -37,7 +36,6 @@
       if (!images) {
         return;
       }
-      console.log(images);
       for (var index = 0; index < images.length; index++) {
         var image = images[index];
         if (image.getAttribute('data-canonical-src')) {
