@@ -113,6 +113,10 @@ $ grip --user <your-username> --pass <your-password>
 
 Or persist these options [in your local configuration](#configuration).
 
+If you are using two-factor authentication you will need to
+[generate a personal access token](https://github.com/settings/tokens/new?scopes=)
+to use in place of your password.
+
 There's also a [work-in-progress branch][fix-render-offline] to provide
 **offline rendering**. Once this resembles GitHub more precisely, it'll
 be exposed in the CLI, and will ultimately be used as a seamless fallback
