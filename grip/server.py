@@ -117,7 +117,7 @@ def create_app(path=None, gfm=False, context=None,
     # Error views
     @app.route('/rate-limit-preview')
     @app.errorhandler(403)
-    def rate_limit_preview():
+    def rate_limit_preview(exception=None):
         auth = request.args.get('auth')
         is_auth = auth == '1' if auth else is_authenticated
         return render_template('limit.html', is_authenticated=is_auth), 403
