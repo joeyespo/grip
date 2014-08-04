@@ -37,9 +37,12 @@ def create_app(path=None, gfm=False, context=None,
     password = password if password is not None else app.config.get('PASSWORD')
 
     # Authentication message
-    is_authenticated = username
+    is_authenticated = bool(username) or bool(password)
     if is_authenticated:
-        print(' * Using credentials:', username)
+        if username:
+            print(' * Using credentials:', username)
+        else:
+            print(' * Using personal access token')
 
     # Setup style cache
     if app.config['CACHE_DIRECTORY']:

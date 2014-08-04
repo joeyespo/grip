@@ -115,7 +115,7 @@ Or persist these options [in your local configuration](#configuration).
 
 If you are using two-factor authentication you will need to
 [generate a personal access token](https://github.com/settings/tokens/new?scopes=)
-to use in place of your password.
+to use in place of your password. The username isn't required when using this.
 
 There's also a [work-in-progress branch][fix-render-offline] to provide
 **offline rendering**. Once this resembles GitHub more precisely, it'll

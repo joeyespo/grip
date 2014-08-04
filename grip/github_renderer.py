@@ -17,7 +17,7 @@ def render_content(text, gfm=False, context=None,
         data = text
         headers = {'content-type': 'text/x-markdown'}
 
-    auth = (username, password) if username else None
+    auth = (username, password) if username or password else None
     r = requests.post(url, headers=headers, data=data, auth=auth)
 
     # Relay HTTP errors
