@@ -319,7 +319,7 @@ def _get_cached_style_urls(cache_path):
 
 
 def _find_file(path, force=False):
-    """Gets the full path and extension of the specified."""
+    """Gets the full path and extension."""
     if path is None:
         path = '.'
     for filename in default_filenames:
@@ -332,7 +332,7 @@ def _find_file(path, force=False):
 
 
 def _find_file_or_404(path, force):
-    """Gets the full path and extension of the specified, or raises 404."""
+    """Gets the full path and extension, or raises 404."""
     try:
         return _find_file(path, force)
     except ValueError:
