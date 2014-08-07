@@ -19,7 +19,7 @@ USERNAME = None
 PASSWORD = None
 
 
-CACHE_DIRECTORY = 'cache'
+CACHE_DIRECTORY = 'cache-{version}'
 CACHE_URL = '/grip-cache'
 STATIC_URL_PATH = '/grip-static'
 STYLE_URLS = []

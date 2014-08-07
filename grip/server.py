@@ -17,6 +17,7 @@ from flask import (Flask, abort, make_response, render_template, request,
     safe_join, send_from_directory, url_for)
 from .constants import default_filenames
 from .renderer import render_content
+from . import __version__
 
 
 def create_app(path=None, gfm=False, context=None,
@@ -51,6 +52,7 @@ def create_app(path=None, gfm=False, context=None,
 
 
     # Runtime config
+    cache_directory = _cache_directory(app)
     username = username if username is not None else app.config.get('USERNAME')
     password = password if password is not None else app.config.get('PASSWORD')
 
@@ -63,9 +65,8 @@ def create_app(path=None, gfm=False, context=None,
             print(' * Using personal access token')
 
     # Setup style cache
-    if app.config['CACHE_DIRECTORY']:
-        cache_path = os.path.join(app.instance_path,
-                                  app.config['CACHE_DIRECTORY'])
+    if cache_directory:
+        cache_path = os.path.join(app.instance_path, cache_directory)
         if not os.path.exists(cache_path):
             os.makedirs(cache_path)
     else:
@@ -170,7 +171,7 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
 def clear_cache():
     """Clears the cached styles and assets."""
     app = _create_flask()
-    cache_path = os.path.join(app.instance_path, app.config['CACHE_DIRECTORY'])
+    cache_path = os.path.join(app.instance_path, _cache_directory(app))
     if os.path.exists(cache_path):
         shutil.rmtree(cache_path)
     print('Cache cleared.')
@@ -211,6 +212,11 @@ def _create_flask():
         app = _new_flask(static_url_path)
 
     return app
+
+
+def _cache_directory(app):
+    """Gets the cache directory for the specified app."""
+    return app.config['CACHE_DIRECTORY'].format(version=__version__)
 
 
 def _render_page(text, filename=None, gfm=False, context=None,
