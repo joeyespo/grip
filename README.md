@@ -77,7 +77,7 @@ $ grip . 0.0.0.0:80
  * Running on http://0.0.0.0:80/
 ```
 
-You can even bypass the server and export to a single HTML file, with all the styles and assets inlined:
+You can even bypass the server and **export** to a single HTML file, with all the styles and assets inlined:
 
 ```bash
 $ grip --export
@@ -115,7 +115,7 @@ Hello **world**!
  * Running on http://localhost:5000/
 ```
 
-Comment / issue-style GFM is also supported, with an optional repository context for linking to issues:
+**Comment / issue-style GFM** is also supported, with an optional repository context for linking to issues:
 
 ```bash
 $ grip --gfm --context=joeyespo/grip
@@ -145,7 +145,7 @@ $ grip --user <your-username> --pass <your-password>
 
 Or persist these options [in your local configuration](#configuration).
 
-If you are using two-factor authentication you will need to
+If you are using **two-factor authentication** you will need to
 [generate a personal access token](https://github.com/settings/tokens/new?scopes=)
 to use in place of your password. The username isn't required when using this.
 
