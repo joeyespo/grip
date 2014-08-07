@@ -88,7 +88,7 @@ Control the output name with the second argument:
 
 ```bash
 $ grip --export README.md readme.html
-Exporting to authors.html
+Exporting to readme.html
 ```
 
 Reading and writing from **stdin** and **stdout** is also supported, allowing you to use Grip with other programs:
@@ -106,7 +106,7 @@ $ grip --export AUTHORS.md - | bcat
 $ cat README.md | grip --export - | less
 ```
 
-Quickly test how things look by entering Markdown directly in your terminal:
+This allows you to quickly test how things look by entering Markdown directly in your terminal:
 
 ```bash
 $ grip -
