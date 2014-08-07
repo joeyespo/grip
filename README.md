@@ -60,7 +60,7 @@ $ grip AUTHORS.md
 Alternatively, you could just run `grip` and visit [localhost:5000/AUTHORS.md][AUTHORS.md]
 since grip supports relative URLs.
 
-You can combine the previous examples. You can also specify a hostname instead of a port. Or provide both:
+You can combine the previous examples. Or specify a hostname instead of a port. Or provide both.
 
 ```bash
 $ grip AUTHORS.md 80
@@ -68,19 +68,27 @@ $ grip AUTHORS.md 80
 ```
 
 ```bash
-$ grip AUTHORS.md 0.0.0.0:80
- * Running on http://0.0.0.0:80/
-```
-
-```bash
-$ grip . 0.0.0.0
+$ grip CHANGES.md 0.0.0.0
  * Running on http://0.0.0.0:5000/
 ```
 
-You can even bypass the server and export to a single HTML, with all the styles and assets inlined:
+```bash
+$ grip . 0.0.0.0:80
+ * Running on http://0.0.0.0:80/
+```
+
+You can even bypass the server and export to a single HTML file, with all the styles and assets inlined:
 
 ```bash
-$ grip --export AUTHORS.md authors.html
+$ grip --export
+Exporting to README.html
+```
+
+Control the output name with the second argument:
+
+```bash
+$ grip --export README.md readme.html
+Exporting to authors.html
 ```
 
 Reading and writing from **stdin** and **stdout** is also supported, allowing you to use Grip with other programs:
