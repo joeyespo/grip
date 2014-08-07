@@ -11,7 +11,7 @@ Usage:
   grip --version
 
 Where:
-  <path> is a file to render or a directory containing a README.md file
+  <path> is a file to render or a directory containing README.md (- for stdin)
   <address> is what to listen on, of the form <host>[:<port>], or just <port>
 
 Options:
@@ -22,7 +22,7 @@ Options:
   --wide            Renders wide, i.e. when the side nav is collapsed
   --clear           Clears the cached styles and assets and exits
   --export          Exports to <path>.html or README.md instead of serving,
-                    with [<address>] optionally specifying the output file
+                    optionally using [<address>] as the out file (- for stdout)
 """
 
 from __future__ import print_function

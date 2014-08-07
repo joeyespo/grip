@@ -2,6 +2,7 @@ from __future__ import print_function
 
 import os
 import re
+import sys
 import errno
 import shutil
 import base64
@@ -26,11 +27,28 @@ def create_app(path=None, gfm=False, context=None,
     Creates an WSGI application that can serve the specified file or
     directory containing a README.
     """
-    force_resolve = text is not None
+
+    use_stdin = path == '-' and text is None
+    if path == '-':
+        path = None
+
+    force_resolve = text is not None or use_stdin
     in_filename = resolve_readme(path, force_resolve)
 
     # Create Flask application
     app = _create_flask()
+
+    if use_stdin:
+        # Handle debug mode special case
+        if app.config['DEBUG_GRIP']:
+            text = (os.environ['GRIP_STDIN_TEXT']
+                if os.environ.get('WERKZEUG_RUN_MAIN') =='true'
+                else sys.stdin.read())
+            if not os.environ.get('WERKZEUG_RUN_MAIN'):
+                os.environ['GRIP_STDIN_TEXT'] = text
+        else:
+            text = sys.stdin.read()
+
 
     # Runtime config
     username = username if username is not None else app.config.get('USERNAME')
@@ -305,7 +323,7 @@ def _find_file(path, force=False):
     if path is None:
         path = '.'
     for filename in default_filenames:
-        full_path = os.path.join(path, filename)
+        full_path = os.path.join(path, filename) if path else filename
         if os.path.exists(full_path):
             return full_path
     if force:

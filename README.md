@@ -83,6 +83,30 @@ You can even bypass the server and export to a single HTML, with all the styles 
 $ grip --export AUTHORS.md authors.html
 ```
 
+Reading and writing from **stdin** and **stdout** is also supported, allowing you to use Grip with other programs:
+
+```bash
+$ cat README.md | grip -
+ * Running on http://localhost:5000/
+```
+
+```bash
+$ grip --export AUTHORS.md - | bcat
+```
+
+```bash
+$ cat README.md | grip --export - | less
+```
+
+Quickly test how things look by entering Markdown directly in your terminal:
+
+```bash
+$ grip -
+Hello **world**!
+^Z
+ * Running on http://localhost:5000/
+```
+
 Comment / issue-style GFM is also supported, with an optional repository context for linking to issues:
 
 ```bash
