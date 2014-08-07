@@ -15,6 +15,9 @@ DEBUG = True
 DEBUG_GRIP = False
 
 
+# Note: For security concerns, please don't save your GitHub password in your
+# local settings.py. Use a personal access token instead:
+# https://github.com/settings/tokens/new?scopes=
 USERNAME = None
 PASSWORD = None
 

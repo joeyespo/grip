@@ -143,11 +143,15 @@ to unlock a much higher rate limit.
 $ grip --user <your-username> --pass <your-password>
 ```
 
-Or persist these options [in your local configuration](#configuration).
+Or use a [personal access token](https://github.com/settings/tokens/new?scopes=)
+(required if you're using two-factor authentication):
 
-If you are using **two-factor authentication** you will need to
-[generate a personal access token](https://github.com/settings/tokens/new?scopes=)
-to use in place of your password. The username isn't required when using this.
+```bash
+$ grip --pass <token>
+```
+
+You can persist these options [in your local configuration](#configuration).
+(Please don't persist your GitHub password!)
 
 There's also a [work-in-progress branch][fix-render-offline] to provide
 **offline rendering**. Once this resembles GitHub more precisely, it'll
