@@ -144,7 +144,8 @@ $ grip --user <your-username> --pass <your-password>
 ```
 
 Or use a [personal access token](https://github.com/settings/tokens/new?scopes=)
-(required if you're using two-factor authentication):
+with an empty scope (note that a token is *required* if your GitHub account is set up
+with two-factor authentication):
 
 ```bash
 $ grip --pass <token>
