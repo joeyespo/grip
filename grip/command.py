@@ -46,13 +46,13 @@ def main(argv=None):
 
     # Show specific errors
     if '-a' in argv or '--address' in argv:
-      print('Use grip [options] <path> <address> instead of -a')
-      print('See grip -h for details')
-      return 2
+        print('Use grip [options] <path> <address> instead of -a')
+        print('See grip -h for details')
+        return 2
     if '-p' in argv or '--port' in argv:
-      print('Use grip [options] [<path>] [<hostname>:]<port> instead of -p')
-      print('See grip -h for details')
-      return 2
+        print('Use grip [options] [<path>] [<hostname>:]<port> instead of -p')
+        print('See grip -h for details')
+        return 2
 
     # Parse options
     args = docopt(usage, argv=argv, version=version)
