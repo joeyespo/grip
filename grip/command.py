@@ -18,7 +18,7 @@ Options:
   --gfm             Use GitHub-Flavored Markdown, e.g. comments or issues
   --context=<repo>  The repository context, only taken into account with --gfm
   --user=<username> A GitHub username for API authentication
-  --pass=<password> A GitHub password for API authentication
+  --pass=<password> A GitHub password or auth token for API authentication
   --wide            Renders wide, i.e. when the side nav is collapsed
   --clear           Clears the cached styles and assets and exits
   --export          Exports to <path>.html or README.md instead of serving,

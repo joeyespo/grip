@@ -143,16 +143,17 @@ to unlock a much higher rate limit.
 $ grip --user <your-username> --pass <your-password>
 ```
 
-Or use a [personal access token](https://github.com/settings/tokens/new?scopes=)
-with an empty scope (note that a token is *required* if your GitHub account is set up
-with two-factor authentication):
+Or use a [personal access token][] with an empty scope (note that a token is
+*required* if your GitHub account is set up with two-factor authentication):
 
 ```bash
 $ grip --pass <token>
 ```
 
 You can persist these options [in your local configuration](#configuration).
-(Please don't persist your GitHub password!)
+For security purposes, it's highly recommended that you **use an access token
+over a password**. (You could also keep your password safe by configuring
+Grip to [grab your password from a password manager][keychain-access].)
 
 There's also a [work-in-progress branch][fix-render-offline] to provide
 **offline rendering**. Once this resembles GitHub more precisely, it'll
@@ -181,7 +182,7 @@ To customize Grip, create `~/.grip/settings.py`, then add one or more of the fol
 - `DEBUG`: Whether to use Flask's debugger when an error happens, `True` by default
 - `DEBUG_GRIP`: Prints extended information when an error happens, `False` by default
 - `USERNAME`: The username to use when not provided as a CLI argument, `None` by default
-- `PASSWORD`: The password to use when not provided as a CLI argument, `None` by default
+- `PASSWORD`: The password or [personal access token][] to use when not provided as a CLI argument (*Please don't save your passwords here.* Instead, use an access token or drop in this code [grab your password from a password manager][keychain-access]), `None` by default
 - `CACHE_DIRECTORY`: The directory, relative to `~/.grip`, to place cached assets (this gets run through the following filter: `CACHE_DIRECTORY.format(version=__version__)`), `'cache-{version}'` by default
 - `CACHE_URL`: The URL to serve cached styles and assets from, in case there's a URL conflict, `'/grip-cache'` by default
 - `STATIC_URL_PATH`: The URL to serve static assets from, in case there's a URL conflict, `'/grip-static'` by default
@@ -406,6 +407,8 @@ Use this software often? Please consider supporting me on
 [rdd]: http://tom.preston-werner.com/2010/08/23/readme-driven-development.html
 [authors.md]: AUTHORS.md
 [fix-render-offline]: http://github.com/joeyespo/grip/tree/fix-render-offline
+[personal access token]: https://github.com/settings/tokens/new?scopes=
+[keychain-access]: https://gist.github.com/klmr/3840aa3c12f947e4064c
 [task-lists]: https://github.com/blog/1825-task-lists-in-all-markdown-documents
 [gfm]: http://github.github.com/github-flavored-markdown
 [python-markdown]: http://github.com/waylan/Python-Markdown
