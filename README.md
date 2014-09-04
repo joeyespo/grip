@@ -87,7 +87,7 @@ Exporting to README.html
 Control the output name with the second argument:
 
 ```bash
-$ grip --export README.md readme.html
+$ grip README.md --export readme.html
 Exporting to readme.html
 ```
 
@@ -99,7 +99,7 @@ $ cat README.md | grip -
 ```
 
 ```bash
-$ grip --export AUTHORS.md - | bcat
+$ grip AUTHORS.md --export - | bcat
 ```
 
 ```bash
