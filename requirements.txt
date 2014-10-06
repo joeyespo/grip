@@ -1,6 +1,6 @@
-Flask==0.10.1
-Markdown==2.4.1
-Pygments==1.6
-docopt==0.6.2
-path-and-address==1.0.0
-requests==2.3.0
+Flask>=0.10.1
+Markdown>=2.4.1
+Pygments>=1.6
+docopt>=0.6.2
+path-and-address>=1.0.0
+requests>=2.3.0
