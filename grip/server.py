@@ -114,7 +114,7 @@ def create_app(path=None, gfm=False, context=None,
             # Read and serve images as binary
             mimetype, _ = mimetypes.guess_type(filename)
             if mimetype and mimetype.startswith('image/'):
-                image_data = _read_file_or_404(filename, True)
+                image_data = _read_file_or_404(filename, False)
                 return _render_image(image_data, mimetype)
             render_text = _read_file_or_404(filename)
         else:
@@ -259,7 +259,7 @@ def _get_style_urls(source_url, style_pattern, asset_pattern,
                 return cached
 
         # Find style URLs
-        r = requests.get(source_url)
+        r = requests.get(source_url, verify=False)
         if not 200 <= r.status_code < 300:
             print(' * Warning: retrieving styles gave status code',
                   r.status_code)
@@ -303,7 +303,7 @@ def _to_data_url(app, url, content_type):
 
 def _download(app, url):
     if urlparse(url).netloc:
-        return requests.get(url).content
+        return requests.get(url, verify=False).content
 
     with app.test_client() as c:
         return c.get(url).data
@@ -345,12 +345,11 @@ def _find_file_or_404(path, force):
         abort(404)
 
 
-def _read_file_or_404(filename, read_as_binary=False):
+def _read_file_or_404(filename, read_as_text=True):
     """Reads the contents of the specified file, or raise 404."""
-    mode = 'rb' if read_as_binary else 'r'
     try:
-        with open(filename, mode) as f:
-            return f.read()
+        with open(filename, 'rb') as f:
+            return f.read().decode("utf-8") if read_as_text else f.read()
     except IOError as ex:
         if ex.errno != errno.ENOENT:
             raise
@@ -374,7 +373,7 @@ def _cache_contents(style_urls, asset_pattern, asset_pattern_sub, cache_path):
     asset_urls = []
     for style_url in style_urls:
         filename = _cache_filename(style_url, cache_path)
-        contents = requests.get(style_url).text
+        contents = requests.get(style_url, verify=False).text
         # Find assets and replace their base URLs with the cache directory
         asset_urls += map(lambda url: urljoin(style_url, url),
                           re.findall(asset_pattern, contents))
@@ -385,7 +384,7 @@ def _cache_contents(style_urls, asset_pattern, asset_pattern_sub, cache_path):
 
     for asset_url in asset_urls:
         filename = _cache_filename(asset_url, cache_path)
-        contents = requests.get(asset_url).text
+        contents = requests.get(asset_url, verify=False).text
         # Write file and show message
         _write_file(filename, contents)
         print(' * Cached', asset_url, 'in', cache_path)
