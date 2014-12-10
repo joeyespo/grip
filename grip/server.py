@@ -114,7 +114,7 @@ def create_app(path=None, gfm=False, context=None,
             # Read and serve images as binary
             mimetype, _ = mimetypes.guess_type(filename)
             if mimetype and mimetype.startswith('image/'):
-                image_data = _read_file_or_404(filename, True)
+                image_data = _read_file_or_404(filename, False)
                 return _render_image(image_data, mimetype)
             render_text = _read_file_or_404(filename)
         else:
@@ -345,12 +345,11 @@ def _find_file_or_404(path, force):
         abort(404)
 
 
-def _read_file_or_404(filename, read_as_binary=False):
+def _read_file_or_404(filename, read_as_text=True):
     """Reads the contents of the specified file, or raise 404."""
-    mode = 'rb' if read_as_binary else 'r'
     try:
-        with open(filename, mode) as f:
-            return f.read()
+        with open(filename, 'rb') as f:
+            return f.read().decode("utf-8") if read_as_text else f.read()
     except IOError as ex:
         if ex.errno != errno.ENOENT:
             raise
