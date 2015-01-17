@@ -393,7 +393,7 @@ def _cache_contents(style_urls, asset_pattern, asset_pattern_sub, cache_path):
     for asset_url in asset_urls:
         filename = _cache_filename(asset_url, cache_path)
         # Retrieve file and show message
-        urlretrieve(asset_url, os.path.join(cache_path, filename))
+        urlretrieve(asset_url, filename)
         print(' * Cached', asset_url, 'in', cache_path)
 
 
