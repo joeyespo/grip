@@ -12,6 +12,10 @@ try:
     from urlparse import urlparse, urljoin
 except ImportError:
     from urllib.parse import urlparse, urljoin
+try:
+    from urllib import urlretrieve
+except:
+    from urllib.request import urlretrieve
 from traceback import format_exc
 from flask import (Flask, abort, make_response, render_template, request,
     safe_join, send_from_directory, url_for)
@@ -131,6 +135,10 @@ def create_app(path=None, gfm=False, context=None,
                             username, password,
                             render_offline, render_wide,
                             style_urls, styles, favicon)
+
+    @app.route(cache_url + '/octicons/octicons/<filename>')
+    def render_octicon(filename=None):
+        return send_from_directory(cache_path, filename)
 
     @app.route(cache_url + '/<path:filename>')
     def render_cache(filename=None):
@@ -384,9 +392,8 @@ def _cache_contents(style_urls, asset_pattern, asset_pattern_sub, cache_path):
 
     for asset_url in asset_urls:
         filename = _cache_filename(asset_url, cache_path)
-        contents = requests.get(asset_url, verify=False).text
-        # Write file and show message
-        _write_file(filename, contents)
+        # Retrieve file and show message
+        urlretrieve(asset_url, filename)
         print(' * Cached', asset_url, 'in', cache_path)
 
 
