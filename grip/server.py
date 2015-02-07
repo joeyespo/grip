@@ -7,7 +7,16 @@ import errno
 import shutil
 import base64
 import mimetypes
+from traceback import format_exc
+
 import requests
+from flask import (Flask, abort, make_response, render_template, request,
+    safe_join, send_from_directory, url_for)
+
+from . import __version__
+from .constants import default_filenames
+from .renderer import render_content
+
 try:
     from urlparse import urlparse, urljoin
 except ImportError:
@@ -16,12 +25,6 @@ try:
     from urllib import urlretrieve
 except:
     from urllib.request import urlretrieve
-from traceback import format_exc
-from flask import (Flask, abort, make_response, render_template, request,
-    safe_join, send_from_directory, url_for)
-from .constants import default_filenames
-from .renderer import render_content
-from . import __version__
 
 
 def create_app(path=None, gfm=False, context=None,

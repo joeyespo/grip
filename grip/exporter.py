@@ -3,6 +3,7 @@ from __future__ import print_function
 import io
 import os
 import errno
+
 from .server import create_app, resolve_readme
 from .renderer import render_app
 
@@ -24,9 +25,9 @@ def export(path=None, gfm=False, context=None, username=None, password=None,
     use_stdout = out_filename == '-'
     if out_filename is None:
         if path == '-':
-          use_stdout = True
+            use_stdout = True
         else:
-          out_filename = os.path.splitext(resolve_readme(path))[0] + '.html'
+            out_filename = os.path.splitext(resolve_readme(path))[0] + '.html'
 
     if not use_stdout:
         print('Exporting to', out_filename)
@@ -36,10 +37,10 @@ def export(path=None, gfm=False, context=None, username=None, password=None,
 
     if use_stdout:
       try:
-        print(page)
+          print(page)
       except IOError as ex:
           if ex.errno != 0 and ex.errno != errno.EPIPE:
-            raise
+              raise
     else:
         with io.open(out_filename, 'w', encoding='utf-8') as f:
             f.write(page)

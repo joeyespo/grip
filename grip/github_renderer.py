@@ -1,5 +1,5 @@
-from flask import abort, json
 import requests
+from flask import abort, json
 
 
 def render_content(text, gfm=False, context=None,
