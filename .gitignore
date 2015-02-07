@@ -6,7 +6,6 @@ dist
 instance
 build
 env
-*.so
 *.py[cod]
 settings_local.py
 
