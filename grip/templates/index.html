@@ -45,9 +45,9 @@
     }
     function scrollToHash() {
       if (location.hash && !document.querySelector(":target")) {
-        var elements = document.getElementsByName('user-content-' + location.hash.slice(1));
-        if (elements.length > 0) {
-          elements[elements.length - 1].scrollIntoView();
+        var element = document.getElementById('user-content-' + location.hash.slice(1));
+        if (element) {
+           element.scrollIntoView();
         }
       }
     }
