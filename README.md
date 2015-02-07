@@ -397,8 +397,8 @@ Contributing
 If your PR has been waiting a while, feel free to [ping me on Twitter][twitter].
 
 Use this software often? Please consider supporting me on
-<a href="http://gittip.com/joeyespo" title="Thank you!">
-  <img align="center" style="margin-bottom:1px" src="http://joeyespo.com/images/gittip-button.png" alt="Gittip">
+<a href="http://gratipay.com/joeyespo" title="Thank you!">
+  <img align="center" style="margin-bottom:1px" src="http://joeyespo.com/images/gratipay-button.png" alt="Gratipay">
 </a>
 
 
