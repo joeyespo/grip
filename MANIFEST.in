@@ -1,7 +1,2 @@
-include LICENSE
 include *.txt
 include *.md
-
-prune research
-
-global-exclude settings_local.py
