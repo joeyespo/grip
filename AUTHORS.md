@@ -12,6 +12,9 @@ along with the following contributors:
 - Ilya Rumyantsev ([@iliggio](https://github.com/iliggio))
 - Jon Chen ([@fly](https://github.com/fly))
 - Silas Snider ([@swsnider](https://github.com/swsnider))
+- Dave James Miller ([@davejamesmiller](https://github.com/davejamesmiller))
+- Alexandre Magno ([@alexandre-mbm](https://github.com/alexandre-mbm))
+- [@madflow](https://github.com/madflow)
 
 
 [home]: README.md

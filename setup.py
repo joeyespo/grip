@@ -24,7 +24,6 @@ Links
 """
 
 import os
-import sys
 from setuptools import setup, find_packages
 
 
@@ -35,7 +34,7 @@ def read(filename):
 
 setup(
     name='grip',
-    version='3.0.0',
+    version='3.1.0',
     description='Render local readme files before sending off to GitHub.',
     long_description=__doc__,
     author='Joe Esposito',

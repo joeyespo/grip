@@ -2,6 +2,18 @@ Grip Changelog
 ==============
 
 
+Version 3.1.0 (2015-02-08)
+--------------------------
+
+- Bugfix: Support non-ascii languages ([#86](https://github.com/joeyespo/grip/issues/86))
+- Bugfix: Fix links to header anchors ([#94](https://github.com/joeyespo/grip/issues/94))
+- Bugfix: Unpin dependencies so there's no conflict with other globally-installed packages
+- Bugfix: Fix missing octicons ([#95](https://github.com/joeyespo/grip/pull/95) - thanks, [@madflow][]!)
+- Bugfix: Fix "Could not retrieve styles" error on Windows ([#90](https://github.com/joeyespo/grip/pull/90) - thanks, [@alexandre-mbm][]!)
+- Update license to 2015
+- Cleanup
+
+
 Version 3.0.0 (2014-08-08)
 --------------------------
 
@@ -24,7 +36,7 @@ Version 3.0.0 (2014-08-08)
 - Bugfix: Cache the assets of the styles, ([#56](https://github.com/joeyespo/grip/issues/56))
 - Bugfix: Allow cross-platform newlines in config ([#67](https://github.com/joeyespo/grip/pull/67))
 - Bugfix: Fix running from another directory ([#36](https://github.com/joeyespo/grip/issues/36))
-- Bugfix: Move `instance_path` to `~/.grip` to cache to a non-privileged directory ([#39](https://github.com/joeyespo/grip/issues/39) - thanks, [@swsnider][]!)
+- Bugfix: Move `instance_path` to `~/.grip` to cache to a non-privileged directory ([#39](https://github.com/joeyespo/grip/pull/39) - thanks, [@swsnider][]!)
 - Bugfix: Change the default width to match GitHub's new README style ([#47](https://github.com/joeyespo/grip/issues/47))
 - Readme: Mention personal access tokens and link to the appropriate GitHub page ([#74](https://github.com/joeyespo/grip/pull/74) - thanks, [@davejamesmiller][]!)
 - Readme: Add badges, more usage example, and support and contact information
@@ -143,3 +155,5 @@ First public preview release.
 [@fly]: https://github.com/fly
 [@swsnider]: https://github.com/swsnider
 [@davejamesmiller]: https://github.com/davejamesmiller
+[@alexandre-mbm]: https://github.com/alexandre-mbm
+[@madflow]: https://github.com/madflow
