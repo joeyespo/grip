@@ -10,12 +10,12 @@ def render_content(text, gfm=False, context=None,
         data = {'text': text, 'mode': 'gfm'}
         if context:
             data['context'] = context
-        data = json.dumps(data)
-        headers = {'content-type': 'application/json'}
+        data = json.dumps(data, ensure_ascii=False).encode('utf-8')
+        headers = {'content-type': 'application/json; charset=UTF-8'}
     else:
         url = 'https://api.github.com/markdown/raw'
-        data = text
-        headers = {'content-type': 'text/x-markdown'}
+        data = text.encode('utf-8')
+        headers = {'content-type': 'text/x-markdown; charset=UTF-8'}
 
     auth = (username, password) if username or password else None
     r = requests.post(url, headers=headers, data=data, auth=auth, verify=False)
