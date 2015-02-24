@@ -34,7 +34,7 @@ def read(filename):
 
 setup(
     name='grip',
-    version='3.1.0',
+    version='3.2.0',
     description='Render local readme files before sending off to GitHub.',
     long_description=__doc__,
     author='Joe Esposito',

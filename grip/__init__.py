@@ -8,7 +8,7 @@ Render local readme files before sending off to GitHub.
 :license: MIT, see LICENSE for more details.
 """
 
-__version__ = '3.1.0'
+__version__ = '3.2.0'
 
 from . import command
 from .constants import supported_extensions, default_filenames
