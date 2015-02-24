@@ -10,7 +10,6 @@ Version 3.1.0 (2015-02-08)
 - Bugfix: Unpin dependencies so there's no conflict with other globally-installed packages
 - Bugfix: Fix missing octicons ([#95](https://github.com/joeyespo/grip/pull/95) - thanks, [@madflow][]!)
 - Bugfix: Fix "Could not retrieve styles" error on Windows ([#90](https://github.com/joeyespo/grip/pull/90) - thanks, [@alexandre-mbm][]!)
-- Update license to 2015
 - Cleanup
 
 
@@ -29,7 +28,6 @@ Version 3.0.0 (2014-08-08)
 - Enhancement: Add `__main__.py` for allowing grip to be run as a module with `python -m grip`
 - Enhancement: Add `--wide` option to render as the old GitHub size (to opt out of [#47](https://github.com/joeyespo/grip/issues/47))
 - Enhancement: Add title to rendered page to look more like GitHub
-- Enhancement: Python 3 compatibility ([#54](https://github.com/joeyespo/grip/pull/54) - thanks, [@fly][]!)
 - Bugfix: Allow using [personal auth tokens](https://github.com/settings/tokens/new?scopes=) without a username
 - Bugfix: Show images from their canonical source instead of using GitHub's cache ([#50](https://github.com/joeyespo/grip/issues/50))
 - Bugfix: Inline assets into the exported file ([#69](https://github.com/joeyespo/grip/issues/69))
@@ -52,7 +50,7 @@ Version 2.0.1 (2014-06-14)
 --------------------------
 
 - Enhancement: Add ability to export to a specific file using the CLI ([#33](https://github.com/joeyespo/grip/issues/33))
-- Enhancement: Python 3 compatibility (thanks, [@fly][]!)
+- Enhancement: Python 3 compatibility ([#54](https://github.com/joeyespo/grip/pull/54) - thanks, [@fly][]!)
 - Bugfix: Fix issue styles weren't being downloaded properly (thanks, [@fly][]!)
 - Bugfix: Support anchoring to section headers like GitHub ([#58](https://github.com/joeyespo/grip/issues/58))
 - Readme: Document rate limits and --user / --pass
