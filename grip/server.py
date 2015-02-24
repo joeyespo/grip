@@ -1,5 +1,6 @@
 from __future__ import print_function
 
+import io
 import os
 import re
 import sys
@@ -358,9 +359,11 @@ def _find_file_or_404(path, force):
 
 def _read_file_or_404(filename, read_as_text=True):
     """Reads the contents of the specified file, or raise 404."""
+    mode = 'rt' if read_as_text else 'rb'
+    encoding = 'utf-8' if read_as_text else None
     try:
-        with open(filename, 'rb') as f:
-            return f.read().decode("utf-8") if read_as_text else f.read()
+        with io.open(filename, mode, encoding=encoding) as f:
+            return f.read()
     except IOError as ex:
         if ex.errno != errno.ENOENT:
             raise
