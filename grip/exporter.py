@@ -23,20 +23,20 @@ def export(path=None, gfm=False, context=None, username=None, password=None,
            render_offline=False, render_wide=False, render_inline=True,
            out_filename=None):
     """Exports the rendered HTML to a file."""
-    use_stdout = out_filename == '-'
+    export_to_stdout = out_filename == '-'
     if out_filename is None:
         if path == '-':
-            use_stdout = True
+            export_to_stdout = True
         else:
             out_filename = os.path.splitext(resolve_readme(path))[0] + '.html'
 
-    if not use_stdout:
+    if not export_to_stdout:
         print('Exporting to', out_filename, file=sys.stderr)
 
     page = render_page(path, gfm, context, username, password,
                        render_offline, render_wide, render_inline)
 
-    if use_stdout:
+    if export_to_stdout:
       try:
           print(page)
       except IOError as ex:
