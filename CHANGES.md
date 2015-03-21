@@ -2,6 +2,11 @@ Grip Changelog
 --------------
 
 
+#### Version 3.3.0 (development)
+
+- Readme: Add note about `^D` and `^Z` on Windows ([#105](https://github.com/joeyespo/grip/issues/105))
+
+
 #### Version 3.2.0 (2015-02-24)
 
 - Bugfix: Encode to UTF-8 before sending text off to GitHub to support non-`latin-1` characters ([#99](https://github.com/joeyespo/grip/issues/99))

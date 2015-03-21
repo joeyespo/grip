@@ -111,9 +111,11 @@ This allows you to quickly test how things look by entering Markdown directly in
 ```bash
 $ grip -
 Hello **world**!
-^Z
+^D
  * Running on http://localhost:5000/
 ```
+
+*Note: `^D` means `Ctrl+D`, which works on Linux and iOS. On Windows you'll have to use `Ctrl+Z`.*
 
 **Comment / issue-style GFM** is also supported, with an optional repository context for linking to issues:
 
