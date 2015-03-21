@@ -5,6 +5,7 @@ Grip Changelog
 #### Version 3.3.0 (development)
 
 - Readme: Add note about `^D` and `^Z` on Windows ([#105](https://github.com/joeyespo/grip/issues/105))
+- Bugfix: Don't print info messages to STDOUT for when exporting to STDOUT ([#101](https://github.com/joeyespo/grip/issues/101))
 
 
 #### Version 3.2.0 (2015-02-24)

@@ -68,9 +68,9 @@ def create_app(path=None, gfm=False, context=None,
     is_authenticated = bool(username) or bool(password)
     if is_authenticated:
         if username:
-            print(' * Using credentials:', username)
+            print(' * Using credentials:', username, file=sys.stderr)
         else:
-            print(' * Using personal access token')
+            print(' * Using personal access token', file=sys.stderr)
 
     # Setup style cache
     if cache_directory:
@@ -274,7 +274,7 @@ def _get_style_urls(source_url, style_pattern, asset_pattern,
         r = requests.get(source_url, verify=False)
         if not 200 <= r.status_code < 300:
             print(' * Warning: retrieving styles gave status code',
-                  r.status_code)
+                  r.status_code, file=sys.stderr)
         urls = re.findall(style_pattern, r.text)
 
         # Cache the styles and their assets
@@ -285,9 +285,9 @@ def _get_style_urls(source_url, style_pattern, asset_pattern,
         return urls
     except Exception as ex:
         if debug:
-            print(format_exc())
+            print(format_exc(), file=sys.stderr)
         else:
-            print(' * Error: could not retrieve styles:', ex)
+            print(' * Error: could not retrieve styles:', ex, file=sys.stderr)
         return []
 
 
@@ -394,13 +394,13 @@ def _cache_contents(style_urls, asset_pattern, asset_pattern_sub, cache_path):
         contents = re.sub(asset_pattern, asset_pattern_sub, contents)
         # Write file and show message
         _write_file(filename, contents)
-        print(' * Cached', style_url, 'in', cache_path)
+        print(' * Cached', style_url, 'in', cache_path, file=sys.stderr)
 
     for asset_url in asset_urls:
         filename = _cache_filename(asset_url, cache_path)
         # Retrieve file and show message
         urlretrieve(asset_url, filename)
-        print(' * Cached', asset_url, 'in', cache_path)
+        print(' * Cached', asset_url, 'in', cache_path, file=sys.stderr)
 
 
 def _normalize_url(url):

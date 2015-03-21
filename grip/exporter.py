@@ -2,6 +2,7 @@ from __future__ import print_function
 
 import io
 import os
+import sys
 import errno
 
 from .server import create_app, resolve_readme
@@ -30,7 +31,7 @@ def export(path=None, gfm=False, context=None, username=None, password=None,
             out_filename = os.path.splitext(resolve_readme(path))[0] + '.html'
 
     if not use_stdout:
-        print('Exporting to', out_filename)
+        print('Exporting to', out_filename, file=sys.stderr)
 
     page = render_page(path, gfm, context, username, password,
                        render_offline, render_wide, render_inline)
