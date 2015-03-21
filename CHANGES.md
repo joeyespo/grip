@@ -1,15 +1,13 @@
 Grip Changelog
-==============
+--------------
 
 
-Version 3.2.0 (2015-02-24)
---------------------------
+#### Version 3.2.0 (2015-02-24)
 
 - Bugfix: Encode to UTF-8 before sending text off to GitHub to support non-`latin-1` characters ([#99](https://github.com/joeyespo/grip/issues/99))
 
 
-Version 3.1.0 (2015-02-08)
---------------------------
+#### Version 3.1.0 (2015-02-08)
 
 - Bugfix: Support non-ascii languages ([#86](https://github.com/joeyespo/grip/issues/86))
 - Bugfix: Fix links to header anchors ([#94](https://github.com/joeyespo/grip/issues/94))
@@ -19,8 +17,7 @@ Version 3.1.0 (2015-02-08)
 - Cleanup
 
 
-Version 3.0.0 (2014-08-08)
---------------------------
+### Version 3.0.0 (2014-08-08)
 
 - Enhancement: Add `{version}` format argument to `CACHE_DIRECTORY` so upgrades can start fresh and also drive cache clearing
 - Enhancement: Allow exporting to stdout ([#73](https://github.com/joeyespo/grip/issues/73))
@@ -52,8 +49,7 @@ Version 3.0.0 (2014-08-08)
 - Infrastructure and code cleanup
 
 
-Version 2.0.1 (2014-06-14)
---------------------------
+#### Version 2.0.1 (2014-06-14)
 
 - Enhancement: Add ability to export to a specific file using the CLI ([#33](https://github.com/joeyespo/grip/issues/33))
 - Enhancement: Python 3 compatibility ([#54](https://github.com/joeyespo/grip/pull/54) - thanks, [@fly][]!)
@@ -66,8 +62,7 @@ Version 2.0.1 (2014-06-14)
 - Update requirements
 
 
-Version 2.0.0 (2013-09-26)
---------------------------
+### Version 2.0.0 (2013-09-26)
 
 - Feature: Styles are now cached (from the not-yet-released offline rendering) (thanks, [@isbadawi][]!)
 - Feature: Add user/pass options for GitHub auth (thanks, [@joelittlejohn][]!)
@@ -86,68 +81,55 @@ Version 2.0.0 (2013-09-26)
 - Simplify code
 
 
-Version 1.2.0 (2013-03-17)
---------------------------
+#### Version 1.2.0 (2013-03-17)
 
-- Add AUTHORS.md for attributing credit.
-- Feature: Can now click hyperlinks to render other files
-  without re-running (thanks, [@vladwing][]!)
-- Update GitHub CSS regular expression.
+- Add AUTHORS.md for attributing credit
+- Feature: Can now click hyperlinks to render other files without re-running (thanks, [@vladwing][]!)
+- Update GitHub CSS regular expression
 
 
-Version 1.1.1 (2013-01-05)
---------------------------
+#### Version 1.1.1 (2013-01-05)
 
-- Upgrade path-and-address.
-- Use exact versions in requirements.
+- Upgrade path-and-address
+- Use exact versions in requirements
 
 
-Version 1.1 (2013-01-04)
-------------------------
+#### Version 1.1 (2013-01-04)
 
-- Readme: Clarify and add examples.
-- Bugfix: Typo in requirements.
+- Readme: Clarify and add examples
+- Bugfix: Typo in requirements
 - Clean up setup.py
 
 
-Version 1.0 (2012-12-08)
-------------------------
+### Version 1.0 (2012-12-08)
 
-- CLI: now accepts an address, not just a port.
-- CLI: now accepts --gfm and --context=<repo> arguments for rendering
-  GitHub Flavored Markdown.
-- API: `serve` function now accepts `None` for its arguments to
-  indicate 'use default'.
-- API: `serve` function now accepts a 'host'.
-- API: `serve` now resolves the default file when given a path.
-- Now using docopt for more advanced argument processing.
-- Now using path-and-address for humanistic path / address handling.
+- CLI: now accepts an address, not just a port
+- CLI: now accepts --gfm and --context=<repo> arguments for rendering GitHub Flavored Markdown
+- API: `serve` function now accepts `None` for its arguments to indicate 'use default'
+- API: `serve` function now accepts a 'host'
+- API: `serve` now resolves the default file when given a path
+- Now using docopt for more advanced argument processing
+- Now using path-and-address for humanistic path / address handling
 
 
-Version 0.2.1 (2012-12-02)
---------------------------
+#### Version 0.2.1 (2012-12-02)
 
-- Issue #5: Fixed the installer to work in the case where
-  the requirements are not already installed.
+- Issue #5: Fixed the installer to work in the case where the requirements are not already installed
 
 
-Version 0.2 (2012-12-01)
-------------------------
+#### Version 0.2 (2012-12-01)
 
-- GitHub styles are now retrieved dynamically when run,
-  instead of using the outdated styles from the config.
+- GitHub styles are now retrieved dynamically when run, instead of using the outdated styles from the config
 
 
-Version 0.1.1 (2012-11-20)
---------------------------
+#### Version 0.1.1 (2012-11-20)
 
-- Added the port command-line argument.
+- Added the port command-line argument
 
 
-Version 0.1 (2012-11-19)
-------------------------
+#### Version 0.1 (2012-11-19)
 
-First public preview release.
+- First public preview release
 
 
 [@vladwing]: https://github.com/vladwing
