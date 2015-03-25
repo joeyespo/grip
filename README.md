@@ -26,7 +26,7 @@ Installation
 To install grip, simply:
 
 ```bash
-$ pip install grip
+# pip install grip
 ```
 
 
