@@ -204,7 +204,10 @@ def resolve_readme(path=None, force=False):
 
 
 def _create_flask():
-    instance_path = os.path.abspath(os.path.expanduser('~/.grip'))
+    if 'GRIPHOME' in os.environ:
+        instance_path = os.environ['GRIPHOME']
+    else:
+        instance_path = os.path.abspath(os.path.expanduser('~/.grip'))
     user_settings = os.path.join(instance_path, 'settings.py')
     default_static_url_path = '/grip-static'
 
