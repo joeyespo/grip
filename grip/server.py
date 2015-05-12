@@ -29,7 +29,7 @@ except:
 
 
 def create_app(path=None, gfm=False, context=None,
-               username=None, password=None,
+               username=None, password=None, api_url=None,
                render_offline=False, render_wide=False, render_inline=False,
                text=None):
     """
@@ -63,6 +63,7 @@ def create_app(path=None, gfm=False, context=None,
     cache_directory = _cache_directory(app)
     username = username if username is not None else app.config.get('USERNAME')
     password = password if password is not None else app.config.get('PASSWORD')
+    api_url = api_url if api_url is not None else app.config.get('API_URL')
 
     # Authentication message
     is_authenticated = bool(username) or bool(password)
@@ -136,7 +137,7 @@ def create_app(path=None, gfm=False, context=None,
         favicon = assets.get('favicon', None)
 
         return _render_page(render_text, filename, gfm, context,
-                            username, password,
+                            username, password, api_url,
                             render_offline, render_wide,
                             style_urls, styles, favicon)
 
@@ -160,13 +161,13 @@ def create_app(path=None, gfm=False, context=None,
 
 
 def serve(path=None, host=None, port=None, gfm=False, context=None,
-          username=None, password=None,
+          username=None, password=None, api_url=None,
           render_offline=False, render_wide=False, render_inline=False):
     """
     Starts a server to render the specified file
     or directory containing a README.
     """
-    app = create_app(path, gfm, context, username, password,
+    app = create_app(path, gfm, context, username, password, api_url,
                      render_offline, render_wide, render_inline)
 
     # Set overridden config values
@@ -235,13 +236,13 @@ def _cache_directory(app):
 
 
 def _render_page(text, filename=None, gfm=False, context=None,
-                 username=None, password=None,
+                 username=None, password=None, api_url=None,
                  render_offline=False, render_wide=False,
                  style_urls=[], styles=[], favicon=None):
     """Renders the specified markup text to an HTML page."""
 
     render_title = not gfm
-    content = render_content(text, gfm, context, username, password,
+    content = render_content(text, gfm, context, username, password, api_url,
                              render_offline)
 
     return render_template('index.html',

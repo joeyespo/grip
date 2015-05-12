@@ -281,7 +281,7 @@ This is the same app used by `serve` and `export` and initializes the cache,
 using the cached styles when available.
 
 ```python
-create_app(path=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, text=None)
+create_app(path=None, gfm=False, context=None, username=None, password=None, api_url=None, render_offline=False, render_wide=False, render_inline=False, text=None)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
@@ -290,6 +290,7 @@ create_app(path=None, gfm=False, context=None, username=None, password=None, ren
              takes the form of `username/project`
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
+- `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
 - `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `gfm`)
 - `render_inline`: Whether to inline the styles within the HTML file

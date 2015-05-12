@@ -10,16 +10,17 @@ from .renderer import render_app
 
 
 def render_page(path=None, gfm=False, context=None,
-                username=None, password=None,
+                username=None, password=None, api_url=None,
                 render_offline=False, render_wide=False, render_inline=False,
                 text=None):
     """Renders the specified markup text to an HTML page and returns it."""
-    app = create_app(path, gfm, context, username, password,
+    app = create_app(path, gfm, context, username, password, api_url,
                      render_offline, render_wide, render_inline, text)
     return render_app(app)
 
 
 def export(path=None, gfm=False, context=None, username=None, password=None,
+           api_url=None,
            render_offline=False, render_wide=False, render_inline=True,
            out_filename=None):
     """Exports the rendered HTML to a file."""
@@ -33,7 +34,7 @@ def export(path=None, gfm=False, context=None, username=None, password=None,
     if not export_to_stdout:
         print('Exporting to', out_filename, file=sys.stderr)
 
-    page = render_page(path, gfm, context, username, password,
+    page = render_page(path, gfm, context, username, password, api_url,
                        render_offline, render_wide, render_inline)
 
     if export_to_stdout:
