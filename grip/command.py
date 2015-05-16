@@ -77,8 +77,8 @@ def main(argv=None, force_utf8=True):
     if args['--export']:
         try:
             export(args['<path>'], args['--gfm'], args['--context'],
-                   args['--user'], args['--pass'], args['--api-url'],
-                   False, args['--wide'], True, args['<address>'])
+                   args['--user'], args['--pass'], False, args['--wide'],
+                   True, args['<address>'], args['--api-url'])
             return 0
         except ValueError as ex:
             print('Error:', ex)
@@ -95,8 +95,8 @@ def main(argv=None, force_utf8=True):
     # Run server
     try:
         serve(path, host, port, args['--gfm'], args['--context'],
-              args['--user'], args['--pass'], args['--api-url'],
-              False, args['--wide'])
+              args['--user'], args['--pass'], False, args['--wide'], False,
+              args['--api-url'])
         return 0
     except ValueError as ex:
         print('Error:', ex)

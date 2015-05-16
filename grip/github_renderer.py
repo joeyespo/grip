@@ -6,14 +6,14 @@ def render_content(text, api_url, gfm=False, context=None,
                    username=None, password=None):
     """Renders the specified markup using the GitHub API."""
     if gfm:
-        url = '%s/markdown' % api_url
+        url = '{}/markdown'.format(api_url)
         data = {'text': text, 'mode': 'gfm'}
         if context:
             data['context'] = context
         data = json.dumps(data, ensure_ascii=False).encode('utf-8')
         headers = {'content-type': 'application/json; charset=UTF-8'}
     else:
-        url = '%s/markdown/raw' % api_url
+        url = '{}/markdown/raw'.format(api_url)
         data = text.encode('utf-8')
         headers = {'content-type': 'text/x-markdown; charset=UTF-8'}
 

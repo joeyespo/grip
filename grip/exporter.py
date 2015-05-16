@@ -10,19 +10,18 @@ from .renderer import render_app
 
 
 def render_page(path=None, gfm=False, context=None,
-                username=None, password=None, api_url=None,
+                username=None, password=None,
                 render_offline=False, render_wide=False, render_inline=False,
-                text=None):
+                text=None, api_url=None):
     """Renders the specified markup text to an HTML page and returns it."""
-    app = create_app(path, gfm, context, username, password, api_url,
-                     render_offline, render_wide, render_inline, text)
+    app = create_app(path, gfm, context, username, password,
+                     render_offline, render_wide, render_inline, text, api_url)
     return render_app(app)
 
 
 def export(path=None, gfm=False, context=None, username=None, password=None,
-           api_url=None,
            render_offline=False, render_wide=False, render_inline=True,
-           out_filename=None):
+           out_filename=None, api_url=None):
     """Exports the rendered HTML to a file."""
     export_to_stdout = out_filename == '-'
     if out_filename is None:
@@ -34,8 +33,9 @@ def export(path=None, gfm=False, context=None, username=None, password=None,
     if not export_to_stdout:
         print('Exporting to', out_filename, file=sys.stderr)
 
-    page = render_page(path, gfm, context, username, password, api_url,
-                       render_offline, render_wide, render_inline)
+    page = render_page(path, gfm, context, username, password,
+                       render_offline, render_wide, render_inline,
+                       None, api_url)
 
     if export_to_stdout:
       try:
