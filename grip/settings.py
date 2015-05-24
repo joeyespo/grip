@@ -8,7 +8,7 @@ this directory or in ~/.grip/settings.py instead.
 
 
 HOST = 'localhost'
-PORT = 5000
+PORT = 6419
 DEBUG = True
 
 

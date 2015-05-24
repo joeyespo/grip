@@ -38,10 +38,10 @@ To render the readme of a repository:
 ```bash
 $ cd myrepo
 $ grip
- * Running on http://localhost:5000/
+ * Running on http://localhost:6419/
 ```
 
-Now open a browser and visit [http://localhost:5000](http://localhost:5000/).
+Now open a browser and visit [http://localhost:6419](http://localhost:6419/).
 
 You can also specify a port:
 
@@ -54,10 +54,10 @@ Or an explicit file:
 
 ```bash
 $ grip AUTHORS.md
- * Running on http://localhost:5000/
+ * Running on http://localhost:6419/
 ```
 
-Alternatively, you could just run `grip` and visit [localhost:5000/AUTHORS.md][AUTHORS.md]
+Alternatively, you could just run `grip` and visit [localhost:6419/AUTHORS.md][AUTHORS.md]
 since grip supports relative URLs.
 
 You can combine the previous examples. Or specify a hostname instead of a port. Or provide both.
@@ -69,7 +69,7 @@ $ grip AUTHORS.md 80
 
 ```bash
 $ grip CHANGES.md 0.0.0.0
- * Running on http://0.0.0.0:5000/
+ * Running on http://0.0.0.0:6419/
 ```
 
 ```bash
@@ -95,7 +95,7 @@ Reading and writing from **stdin** and **stdout** is also supported, allowing yo
 
 ```bash
 $ cat README.md | grip -
- * Running on http://localhost:5000/
+ * Running on http://localhost:6419/
 ```
 
 ```bash
@@ -112,7 +112,7 @@ This allows you to quickly test how things look by entering Markdown directly in
 $ grip -
 Hello **world**!
 ^D
- * Running on http://localhost:5000/
+ * Running on http://localhost:6419/
 ```
 
 *Note: `^D` means `Ctrl+D`, which works on Linux and iOS. On Windows you'll have to use `Ctrl+Z`.*
@@ -121,7 +121,7 @@ Hello **world**!
 
 ```bash
 $ grip --gfm --context=joeyespo/grip
- * Running on http://localhost:5000/
+ * Running on http://localhost:6419/
 ```
 
 For more details and additional options, see the help:
@@ -180,7 +180,7 @@ Configuration
 To customize Grip, create `~/.grip/settings.py`, then add one or more of the following variables:
 
 - `HOST`: The host to use when not provided as a CLI argument, `localhost` by default
-- `PORT`: The port to use when not provided as a CLI argument, `5000` by default
+- `PORT`: The port to use when not provided as a CLI argument, `6419` by default
 - `DEBUG`: Whether to use Flask's debugger when an error happens, `True` by default
 - `DEBUG_GRIP`: Prints extended information when an error happens, `False` by default
 - `USERNAME`: The username to use when not provided as a CLI argument, `None` by default
