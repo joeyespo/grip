@@ -31,7 +31,7 @@ except:
 def create_app(path=None, gfm=False, context=None,
                username=None, password=None,
                render_offline=False, render_wide=False, render_inline=False,
-               text=None):
+               text=None, api_url=None):
     """
     Creates an WSGI application that can serve the specified file or
     directory containing a README.
@@ -63,6 +63,7 @@ def create_app(path=None, gfm=False, context=None,
     cache_directory = _cache_directory(app)
     username = username if username is not None else app.config.get('USERNAME')
     password = password if password is not None else app.config.get('PASSWORD')
+    api_url = api_url if api_url is not None else app.config.get('API_URL')
 
     # Authentication message
     is_authenticated = bool(username) or bool(password)
@@ -138,7 +139,7 @@ def create_app(path=None, gfm=False, context=None,
         return _render_page(render_text, filename, gfm, context,
                             username, password,
                             render_offline, render_wide,
-                            style_urls, styles, favicon)
+                            style_urls, styles, favicon, api_url)
 
     @app.route(cache_url + '/octicons/octicons/<filename>')
     def render_octicon(filename=None):
@@ -161,13 +162,14 @@ def create_app(path=None, gfm=False, context=None,
 
 def serve(path=None, host=None, port=None, gfm=False, context=None,
           username=None, password=None,
-          render_offline=False, render_wide=False, render_inline=False):
+          render_offline=False, render_wide=False, render_inline=False,
+          api_url=None):
     """
     Starts a server to render the specified file
     or directory containing a README.
     """
     app = create_app(path, gfm, context, username, password,
-                     render_offline, render_wide, render_inline)
+                     render_offline, render_wide, render_inline, None, api_url)
 
     # Set overridden config values
     if host is not None:
@@ -237,12 +239,12 @@ def _cache_directory(app):
 def _render_page(text, filename=None, gfm=False, context=None,
                  username=None, password=None,
                  render_offline=False, render_wide=False,
-                 style_urls=[], styles=[], favicon=None):
+                 style_urls=[], styles=[], favicon=None, api_url=None):
     """Renders the specified markup text to an HTML page."""
 
     render_title = not gfm
     content = render_content(text, gfm, context, username, password,
-                             render_offline)
+                             render_offline, api_url)
 
     return render_template('index.html',
                            content=content, filename=filename,

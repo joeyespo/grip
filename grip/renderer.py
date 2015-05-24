@@ -11,7 +11,8 @@ def render_app(app, route='/'):
 
 
 def render_content(text, gfm=False, context=None,
-                   username=None, password=None, render_offline=False):
+                   username=None, password=None,
+                   render_offline=False, api_url=None):
     """Renders the specified markup and returns the result."""
     return (offline_render(text, gfm, context) if render_offline
-        else github_render(text, gfm, context, username, password))
+        else github_render(text, api_url, gfm, context, username, password))

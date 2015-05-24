@@ -22,6 +22,7 @@ USERNAME = None
 PASSWORD = None
 
 
+API_URL = 'https://api.github.com'
 CACHE_DIRECTORY = 'cache-{version}'
 CACHE_URL = '/grip-cache'
 STATIC_URL_PATH = '/grip-static'

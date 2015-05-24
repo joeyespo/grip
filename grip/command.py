@@ -23,6 +23,9 @@ Options:
   --clear           Clears the cached styles and assets and exits
   --export          Exports to <path>.html or README.md instead of serving,
                     optionally using [<address>] as the out file (- for stdout)
+  --api-url=<url>   Specify a different base URL for the github API, for example
+                    that of a Github Enterprise instance. The default is the public
+                    API https://api.github.com.
 """
 
 from __future__ import print_function
@@ -75,7 +78,7 @@ def main(argv=None, force_utf8=True):
         try:
             export(args['<path>'], args['--gfm'], args['--context'],
                    args['--user'], args['--pass'], False, args['--wide'],
-                   True, args['<address>'])
+                   True, args['<address>'], args['--api-url'])
             return 0
         except ValueError as ex:
             print('Error:', ex)
@@ -92,7 +95,8 @@ def main(argv=None, force_utf8=True):
     # Run server
     try:
         serve(path, host, port, args['--gfm'], args['--context'],
-              args['--user'], args['--pass'], False, args['--wide'])
+              args['--user'], args['--pass'], False, args['--wide'], False,
+              args['--api-url'])
         return 0
     except ValueError as ex:
         print('Error:', ex)
