@@ -163,7 +163,7 @@ def create_app(path=None, gfm=False, context=None,
 
 def serve(path=None, host=None, port=None, gfm=False, context=None,
           username=None, password=None,
-          render_offline=False, render_wide=False, render_inline=False, nobrowser=False):
+          render_offline=False, render_wide=False, render_inline=False, browser=False):
     """
     Starts a server to render the specified file
     or directory containing a README.
@@ -178,7 +178,7 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
         app.config['PORT'] = port
 
     # Opening broswer
-    if not nobrowser:
+    if browser:
         browser_thread = threading.Thread(target=start_browser, args=(app.config['HOST'], app.config['PORT']))
         browser_thread.start()
 
@@ -187,7 +187,8 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
         use_reloader=app.config['DEBUG_GRIP'])
 
     # Closing browser
-    browser_thread.join()
+    if browser:
+        browser_thread.join()
 
 
 

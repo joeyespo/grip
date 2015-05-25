@@ -23,7 +23,7 @@ Options:
   --clear           Clears the cached styles and assets and exits
   --export          Exports to <path>.html or README.md instead of serving,
                     optionally using [<address>] as the out file (- for stdout)
-  --nobrowser       Option to not open a tab in the browser.
+  -b --browser         Option to not open a tab in the browser.
 """
 
 from __future__ import print_function
@@ -93,7 +93,7 @@ def main(argv=None, force_utf8=True):
     # Run server
     try:
         serve(path, host, port, args['--gfm'], args['--context'],
-              args['--user'], args['--pass'], False, args['--wide'],  args['--nobrowser'])
+              args['--user'], args['--pass'], False, args['--wide'], False, args['--browser'])
         return 0
     except ValueError as ex:
         print('Error:', ex)
