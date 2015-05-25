@@ -23,7 +23,7 @@ Options:
   --clear           Clears the cached styles and assets and exits
   --export          Exports to <path>.html or README.md instead of serving,
                     optionally using [<address>] as the out file (- for stdout)
-  -b --browser         Option to not open a tab in the browser.
+  -b --browser      Option to open a tab in the browser.
 """
 
 from __future__ import print_function
