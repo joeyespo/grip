@@ -19,7 +19,7 @@ from flask import (
 from . import __version__
 from .constants import default_filenames
 from .renderer import render_content
-from .browser import start_browser
+from .browser import wait_and_start_browser
 
 try:
     from urlparse import urlparse, urljoin
@@ -184,7 +184,7 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
     # Opening browser
     if browser:
         browser_thread = threading.Thread(
-            target=start_browser,
+            target=wait_and_start_browser,
             args=(app.config['HOST'], app.config['PORT']))
         browser_thread.start()
 
