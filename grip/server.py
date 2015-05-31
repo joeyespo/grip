@@ -334,17 +334,21 @@ def _get_styles(app, style_urls, asset_pattern):
 
 
 def _to_data_url(app, url, content_type):
-    asset = _download(app, url)
+    asset = _download(app, url, binary=True)
     asset64 = base64.b64encode(asset)
     return 'data:{0};base64,{1}'.format(content_type, asset64)
 
 
-def _download(app, url):
+def _download(app, url, binary=False):
     if urlparse(url).netloc:
-        return requests.get(url, verify=False).content
+        r = requests.get(url, verify=False)
+        return r.content if binary else r.text
 
     with app.test_client() as c:
-        return c.get(url).data
+        r = c.get(url)
+        charset = r.mimetype_params.get('charset', 'utf-8')
+        data = c.get(url).data
+        return data if binary else data.decode(charset)
 
 
 def _get_cached_style_urls(cache_path):
