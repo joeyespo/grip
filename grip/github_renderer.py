@@ -26,7 +26,7 @@ def render_content(text, api_url, gfm=False, context=None,
     if r.status_code != 200:
         try:
             message = r.json()['message']
-        except:
+        except Exception:
             message = r.text
         abort(r.status_code, message)
 

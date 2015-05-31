@@ -27,7 +27,7 @@ except ImportError:
     from urllib.parse import urlparse, urljoin
 try:
     from urllib import urlretrieve
-except:
+except Exception:
     from urllib.request import urlretrieve
 
 

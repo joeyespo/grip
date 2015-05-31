@@ -29,7 +29,7 @@ def start_browser(url):
     """
     try:
         webbrowser.open(url)
-    except:
+    except Exception:
         pass
 
 
