@@ -8,6 +8,7 @@ import errno
 import shutil
 import base64
 import mimetypes
+import threading
 from traceback import format_exc
 
 import requests
@@ -17,6 +18,7 @@ from flask import (Flask, abort, make_response, render_template, request,
 from . import __version__
 from .constants import default_filenames
 from .renderer import render_content
+from .browser import start_browser
 
 try:
     from urlparse import urlparse, urljoin
@@ -163,7 +165,7 @@ def create_app(path=None, gfm=False, context=None,
 def serve(path=None, host=None, port=None, gfm=False, context=None,
           username=None, password=None,
           render_offline=False, render_wide=False, render_inline=False,
-          api_url=None):
+          api_url=None, browser=False):
     """
     Starts a server to render the specified file
     or directory containing a README.
@@ -177,9 +179,19 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
     if port is not None:
         app.config['PORT'] = port
 
+    # Opening broswer
+    if browser:
+        browser_thread = threading.Thread(target=start_browser, args=(app.config['HOST'], app.config['PORT']))
+        browser_thread.start()
+
     # Run local server
     app.run(app.config['HOST'], app.config['PORT'], debug=app.debug,
         use_reloader=app.config['DEBUG_GRIP'])
+
+    # Closing browser
+    if browser:
+        browser_thread.join()
+
 
 
 def clear_cache():

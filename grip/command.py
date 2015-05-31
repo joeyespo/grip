@@ -23,6 +23,7 @@ Options:
   --clear           Clears the cached styles and assets and exits
   --export          Exports to <path>.html or README.md instead of serving,
                     optionally using [<address>] as the out file (- for stdout)
+  -b --browser      Option to open a tab in the browser.
   --api-url=<url>   Specify a different base URL for the github API, for example
                     that of a Github Enterprise instance. The default is the public
                     API https://api.github.com.
@@ -96,7 +97,7 @@ def main(argv=None, force_utf8=True):
     try:
         serve(path, host, port, args['--gfm'], args['--context'],
               args['--user'], args['--pass'], False, args['--wide'], False,
-              args['--api-url'])
+              args['--api-url'], args['--browser'])
         return 0
     except ValueError as ex:
         print('Error:', ex)
