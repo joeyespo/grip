@@ -16,6 +16,7 @@ Where:
 
 Options:
   --gfm             GitHub-Flavored Markdown, e.g. comments or issues.
+                    Omit this to render as a normal GitHub README file.
   --context=<repo>  The repository context, only taken into account
                     when using --gfm.
   --user=<username> A GitHub username for API authentication.
