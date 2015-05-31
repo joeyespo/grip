@@ -293,7 +293,7 @@ def _get_style_urls(source_url, style_pattern, asset_pattern,
                 return cached
 
         # Find style URLs
-        r = requests.get(source_url, verify=False)
+        r = requests.get(source_url)
         if not 200 <= r.status_code < 300:
             print('Warning: retrieving styles gave status code',
                   r.status_code, file=sys.stderr)
@@ -343,7 +343,7 @@ def _to_data_url(app, url, content_type):
 
 def _download(app, url, binary=False):
     if urlparse(url).netloc:
-        r = requests.get(url, verify=False)
+        r = requests.get(url)
         return r.content if binary else r.text
 
     with app.test_client() as c:
@@ -432,7 +432,7 @@ def _cache_contents(style_urls, asset_pattern, asset_pattern_sub, cache_path):
     for style_url in style_urls:
         print(' * Downloading style', style_url, file=sys.stderr)
         filename = _cache_filename(style_url, cache_path)
-        r = requests.get(style_url, verify=False)
+        r = requests.get(style_url)
         if not 200 <= r.status_code < 300:
             print(' -> Warning: Style request responded with', r.status_code,
                   file=sys.stderr)
@@ -451,7 +451,7 @@ def _cache_contents(style_urls, asset_pattern, asset_pattern_sub, cache_path):
         print(' * Downloading asset', asset_url, file=sys.stderr)
         filename = _cache_filename(asset_url, cache_path)
         # Retrieve file and show message
-        r = requests.get(asset_url, verify=False)
+        r = requests.get(asset_url)
         if not 200 <= r.status_code < 300:
             print(' -> Warning: Asset request responded with', r.status_code,
                   file=sys.stderr)
