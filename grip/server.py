@@ -287,23 +287,26 @@ def _get_style_urls(source_url, style_pattern, asset_pattern,
     assets in the form of the specified patterns.
     """
     try:
-        # Skip fetching styles if there's any already cached
+        # Check cache
         if cache_path:
             cached = _get_cached_style_urls(cache_path)
+            # Skip fetching styles if there's any already cached
             if cached:
                 return cached
 
         # Find style URLs
         r = requests.get(source_url, verify=False)
         if not 200 <= r.status_code < 300:
-            print(' * Warning: retrieving styles gave status code',
+            print('Warning: retrieving styles gave status code',
                   r.status_code, file=sys.stderr)
         urls = re.findall(style_pattern, r.text)
 
         # Cache the styles and their assets
         if cache_path:
-            _cache_contents(urls, asset_pattern, asset_pattern_sub, cache_path)
-            urls = _get_cached_style_urls(cache_path)
+            is_cached = _cache_contents(urls, asset_pattern, asset_pattern_sub,
+                                        cache_path)
+            if is_cached:
+                urls = _get_cached_style_urls(cache_path)
 
         return urls
     except Exception as ex:
@@ -420,25 +423,51 @@ def _cache_contents(style_urls, asset_pattern, asset_pattern_sub, cache_path):
     Fetches the given URLs and caches their contents
     and their assets in the given directory.
     """
+    files = {}
+
     asset_urls = []
     for style_url in style_urls:
+        print(' * Downloading style', style_url, file=sys.stderr)
         filename = _cache_filename(style_url, cache_path)
-        contents = requests.get(style_url, verify=False).text
+        r = requests.get(style_url, verify=False)
+        if not 200 <= r.status_code < 300:
+            print(' -> Warning: Style request responded with', r.status_code,
+                  file=sys.stderr)
+            files = None
+            continue
+        contents = r.text
         # Find assets and replace their base URLs with the cache directory
         asset_urls += map(lambda url: urljoin(style_url, url),
                           re.findall(asset_pattern, contents))
         contents = re.sub(asset_pattern, asset_pattern_sub, contents)
-        # Write file and show message
-        _write_file(filename, contents)
-        print(' * Cached', style_url, 'in', cache_path, file=sys.stderr)
+        # Prepare cache
+        if files:
+            files[filename] = contents
 
     for asset_url in asset_urls:
+        print(' * Downloading asset', asset_url, file=sys.stderr)
         filename = _cache_filename(asset_url, cache_path)
         # Retrieve file and show message
-        contents = requests.get(asset_url, verify=False).text
-        _write_file(filename, contents)
+        r = requests.get(asset_url, verify=False)
+        if not 200 <= r.status_code < 300:
+            print(' -> Warning: Asset request responded with', r.status_code,
+                  file=sys.stderr)
+            files = None
+            continue
+        # Prepare cache
+        if files:
+            files[filename] = r.text
 
-        print(' * Cached', asset_url, 'in', cache_path, file=sys.stderr)
+    # Skip caching if something went wrong to try again next time
+    if not files:
+        return False
+
+    # Cache files if all downloads were successful
+    for filename in files:
+        _write_file(filename, files[filename])
+
+    print(' * Cached all downloads in', cache_path, file=sys.stderr)
+    return True
 
 
 def _normalize_url(url):
