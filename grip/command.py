@@ -15,18 +15,20 @@ Where:
   <address> is what to listen on, of the form <host>[:<port>], or just <port>
 
 Options:
-  --gfm             Use GitHub-Flavored Markdown, e.g. comments or issues
-  --context=<repo>  The repository context, only taken into account with --gfm
-  --user=<username> A GitHub username for API authentication
-  --pass=<password> A GitHub password or auth token for API authentication
-  --wide            Renders wide, i.e. when the side nav is collapsed
-  --clear           Clears the cached styles and assets and exits
-  --export          Exports to <path>.html or README.md instead of serving,
-                    optionally using [<address>] as the out file (- for stdout)
+  --gfm             GitHub-Flavored Markdown, e.g. comments or issues.
+  --context=<repo>  The repository context, only taken into account
+                    when using --gfm.
+  --user=<username> A GitHub username for API authentication.
+  --pass=<password> A GitHub password or auth token for API auth.
+  --wide            Renders wide, i.e. when the side nav is collapsed.
+  --clear           Clears the cached styles and assets and exits.
+  --export          Exports to <path>.html or README.md instead of
+                    serving, optionally using [<address>] as the out
+                    file (- for stdout).
   -b --browser      Option to open a tab in the browser.
-  --api-url=<url>   Specify a different base URL for the github API, for example
-                    that of a Github Enterprise instance. The default is the public
-                    API https://api.github.com.
+  --api-url=<url>   Specify a different base URL for the github API,
+                    for example that of a Github Enterprise instance.
+                    Default is the public API: https://api.github.com
 """
 
 from __future__ import print_function
@@ -43,10 +45,12 @@ usage = '\n\n\n'.join(__doc__.split('\n\n\n')[1:])
 
 
 def main(argv=None, force_utf8=True):
-    """The entry point of the application."""
+    """
+    The entry point of the application.
+    """
     if force_utf8 and sys.version_info.major == 2:
-      reload(sys)
-      sys.setdefaultencoding('utf-8')
+        reload(sys)
+        sys.setdefaultencoding('utf-8')
 
     if argv is None:
         argv = sys.argv[1:]

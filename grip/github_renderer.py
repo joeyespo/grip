@@ -4,7 +4,9 @@ from flask import abort, json
 
 def render_content(text, api_url, gfm=False, context=None,
                    username=None, password=None):
-    """Renders the specified markup using the GitHub API."""
+    """
+    Renders the specified markup using the GitHub API.
+    """
     if gfm:
         url = '{}/markdown'.format(api_url)
         data = {'text': text, 'mode': 'gfm'}

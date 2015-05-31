@@ -12,8 +12,9 @@ import threading
 from traceback import format_exc
 
 import requests
-from flask import (Flask, abort, make_response, render_template, request,
-    safe_join, send_from_directory, url_for)
+from flask import (
+    Flask, abort, make_response, render_template, request, safe_join,
+    send_from_directory, url_for)
 
 from . import __version__
 from .constants import default_filenames
@@ -53,13 +54,12 @@ def create_app(path=None, gfm=False, context=None,
         # Handle debug mode special case
         if app.config['DEBUG_GRIP']:
             text = (os.environ['GRIP_STDIN_TEXT']
-                if os.environ.get('WERKZEUG_RUN_MAIN') =='true'
-                else sys.stdin.read())
+                    if os.environ.get('WERKZEUG_RUN_MAIN') == 'true'
+                    else sys.stdin.read())
             if not os.environ.get('WERKZEUG_RUN_MAIN'):
                 os.environ['GRIP_STDIN_TEXT'] = text
         else:
             text = sys.stdin.read()
-
 
     # Runtime config
     cache_directory = _cache_directory(app)
@@ -92,7 +92,9 @@ def create_app(path=None, gfm=False, context=None,
     # Get styles from style source
     @app.before_first_request
     def retrieve_styles():
-        """Retrieves the style URLs from the source and caches them."""
+        """
+        Retrieves the style URLs from the source and caches them.
+        """
         style_urls_source = app.config['STYLE_URLS_SOURCE']
         style_urls_re = app.config['STYLE_URLS_RE']
         if not style_urls_source or not style_urls_re:
@@ -179,23 +181,26 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
     if port is not None:
         app.config['PORT'] = port
 
-    # Opening broswer
+    # Opening browser
     if browser:
-        browser_thread = threading.Thread(target=start_browser, args=(app.config['HOST'], app.config['PORT']))
+        browser_thread = threading.Thread(
+            target=start_browser,
+            args=(app.config['HOST'], app.config['PORT']))
         browser_thread.start()
 
     # Run local server
     app.run(app.config['HOST'], app.config['PORT'], debug=app.debug,
-        use_reloader=app.config['DEBUG_GRIP'])
+            use_reloader=app.config['DEBUG_GRIP'])
 
     # Closing browser
     if browser:
         browser_thread.join()
 
 
-
 def clear_cache():
-    """Clears the cached styles and assets."""
+    """
+    Clears the cached styles and assets.
+    """
     app = _create_flask()
     cache_path = os.path.join(app.instance_path, _cache_directory(app))
     if os.path.exists(cache_path):
@@ -205,10 +210,10 @@ def clear_cache():
 
 def resolve_readme(path=None, force=False):
     """
-    Returns the path if it's a file; otherwise, looks for a compatible README
-    file in the directory specified by path. If path is None, the current
-    working directory is used. If no compatible README can be found,
-    a ValueError is raised.
+    Returns the path if it's a file; otherwise, looks for a compatible
+    README file in the directory specified by path. If path is None,
+    the current working directory is used. If no compatible README can
+    be found, a ValueError is raised.
     """
     if not path or os.path.isdir(path):
         path = _find_file(path, force)
@@ -244,7 +249,9 @@ def _create_flask():
 
 
 def _cache_directory(app):
-    """Gets the cache directory for the specified app."""
+    """
+    Gets the cache directory for the specified app.
+    """
     return app.config['CACHE_DIRECTORY'].format(version=__version__)
 
 
@@ -252,8 +259,9 @@ def _render_page(text, filename=None, gfm=False, context=None,
                  username=None, password=None,
                  render_offline=False, render_wide=False,
                  style_urls=[], styles=[], favicon=None, api_url=None):
-    """Renders the specified markup text to an HTML page."""
-
+    """
+    Renders the specified markup text to an HTML page.
+    """
     render_title = not gfm
     content = render_content(text, gfm, context, username, password,
                              render_offline, api_url)
@@ -268,7 +276,9 @@ def _render_page(text, filename=None, gfm=False, context=None,
 
 
 def _render_image(image_data, content_type):
-    """Renders the specified image data with the given Content-Type."""
+    """
+    Renders the specified image data with the given Content-Type.
+    """
     response = make_response(image_data)
     response.headers['Content-Type'] = content_type
     return response
@@ -277,8 +287,8 @@ def _render_image(image_data, content_type):
 def _get_style_urls(source_url, style_pattern, asset_pattern,
                     asset_pattern_sub, cache_path, debug=False):
     """
-    Gets the specified resource and parses all style URLs and their assets
-    in the form of the specified patterns.
+    Gets the specified resource and parses all style URLs and their
+    assets in the form of the specified patterns.
     """
     try:
         # Skip fetching styles if there's any already cached
@@ -309,7 +319,10 @@ def _get_style_urls(source_url, style_pattern, asset_pattern,
 
 
 def _get_styles(app, style_urls, asset_pattern):
-    """Gets the content of the given list of style URLs and inlines assets."""
+    """
+    Gets the content of the given list of style URLs and
+    inlines assets.
+    """
     styles = []
     for style_url in style_urls:
 
@@ -339,7 +352,9 @@ def _download(app, url):
 
 
 def _get_cached_style_urls(cache_path):
-    """Gets the URLs of the cached styles."""
+    """
+    Gets the URLs of the cached styles.
+    """
     try:
         cached_styles = os.listdir(cache_path)
     except IOError as ex:
@@ -349,12 +364,14 @@ def _get_cached_style_urls(cache_path):
     except OSError:
         return []
     return [url_for('render_cache', filename=style)
-        for style in cached_styles
-        if style.endswith('.css')]
+            for style in cached_styles
+            if style.endswith('.css')]
 
 
 def _find_file(path, force=False):
-    """Gets the full path and extension."""
+    """
+    Gets the full path and extension.
+    """
     if path is None:
         path = '.'
     for filename in default_filenames:
@@ -367,7 +384,9 @@ def _find_file(path, force=False):
 
 
 def _find_file_or_404(path, force):
-    """Gets the full path and extension, or raises 404."""
+    """
+    Gets the full path and extension, or raises 404.
+    """
     try:
         return _find_file(path, force)
     except ValueError:
@@ -375,7 +394,9 @@ def _find_file_or_404(path, force):
 
 
 def _read_file_or_404(filename, read_as_text=True):
-    """Reads the contents of the specified file, or raise 404."""
+    """
+    Reads the contents of the specified file, or raise 404.
+    """
     mode = 'rt' if read_as_text else 'rb'
     encoding = 'utf-8' if read_as_text else None
     try:
@@ -388,7 +409,9 @@ def _read_file_or_404(filename, read_as_text=True):
 
 
 def _write_file(filename, contents):
-    """Creates the specified file and writes the given contents to it."""
+    """
+    Creates the specified file and writes the given contents to it.
+    """
     write_path = os.path.dirname(filename)
     if not os.path.exists(write_path):
         os.makedirs(write_path)

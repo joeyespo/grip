@@ -13,7 +13,9 @@ def render_page(path=None, gfm=False, context=None,
                 username=None, password=None,
                 render_offline=False, render_wide=False, render_inline=False,
                 text=None, api_url=None):
-    """Renders the specified markup text to an HTML page and returns it."""
+    """
+    Renders the specified markup text to an HTML page and returns it.
+    """
     app = create_app(path, gfm, context, username, password,
                      render_offline, render_wide, render_inline, text, api_url)
     return render_app(app)
@@ -22,7 +24,9 @@ def render_page(path=None, gfm=False, context=None,
 def export(path=None, gfm=False, context=None, username=None, password=None,
            render_offline=False, render_wide=False, render_inline=True,
            out_filename=None, api_url=None):
-    """Exports the rendered HTML to a file."""
+    """
+    Exports the rendered HTML to a file.
+    """
     export_to_stdout = out_filename == '-'
     if out_filename is None:
         if path == '-':
@@ -38,11 +42,11 @@ def export(path=None, gfm=False, context=None, username=None, password=None,
                        None, api_url)
 
     if export_to_stdout:
-      try:
-          print(page)
-      except IOError as ex:
-          if ex.errno != 0 and ex.errno != errno.EPIPE:
-              raise
+        try:
+            print(page)
+        except IOError as ex:
+            if ex.errno != 0 and ex.errno != errno.EPIPE:
+                raise
     else:
         with io.open(out_filename, 'w', encoding='utf-8') as f:
             f.write(page)
