@@ -13,7 +13,6 @@ Grip is easy to set up
     $ pip install grip
     $ cd myproject
     $ grip
-     * Running on http://localhost:5000/
 
 
 Links
