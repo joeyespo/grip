@@ -72,12 +72,9 @@ def create_app(path=None, gfm=False, context=None,
             print(' * Using personal access token', file=sys.stderr)
 
     # Setup style cache
-    if cache_directory:
-        cache_path = os.path.join(app.instance_path, cache_directory)
-        if not os.path.exists(cache_path):
-            os.makedirs(cache_path)
-    else:
-        cache_path = None
+    cache_path = (os.path.join(app.instance_path, cache_directory)
+                  if cache_directory
+                  else None)
     cache_url = app.config.get('CACHE_URL')
 
     # Get initial assets
@@ -463,6 +460,8 @@ def _cache_contents(style_urls, asset_pattern, asset_pattern_sub, cache_path):
         return False
 
     # Cache files if all downloads were successful
+    if not os.path.exists(cache_path):
+        os.makedirs(cache_path)
     for filename in files:
         _write_file(filename, files[filename])
 
