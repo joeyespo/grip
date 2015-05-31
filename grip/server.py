@@ -25,10 +25,6 @@ try:
     from urlparse import urlparse, urljoin
 except ImportError:
     from urllib.parse import urlparse, urljoin
-try:
-    from urllib import urlretrieve
-except Exception:
-    from urllib.request import urlretrieve
 
 
 def create_app(path=None, gfm=False, context=None,
@@ -439,7 +435,9 @@ def _cache_contents(style_urls, asset_pattern, asset_pattern_sub, cache_path):
     for asset_url in asset_urls:
         filename = _cache_filename(asset_url, cache_path)
         # Retrieve file and show message
-        urlretrieve(asset_url, filename)
+        contents = requests.get(asset_url, verify=False).text
+        _write_file(filename, contents)
+
         print(' * Cached', asset_url, 'in', cache_path, file=sys.stderr)
 
 
