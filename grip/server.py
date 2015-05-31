@@ -1,4 +1,5 @@
 from __future__ import print_function
+from __future__ import unicode_literals
 
 import io
 import os
@@ -335,8 +336,9 @@ def _get_styles(app, style_urls, asset_pattern):
 
 def _to_data_url(app, url, content_type):
     asset = _download(app, url, binary=True)
-    asset64 = base64.b64encode(asset)
-    return 'data:{0};base64,{1}'.format(content_type, asset64)
+    asset64_bytes = base64.b64encode(asset)
+    asset64_string = asset64_bytes.decode('ascii')
+    return 'data:{0};base64,{1}'.format(content_type, asset64_string)
 
 
 def _download(app, url, binary=False):
