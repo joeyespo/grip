@@ -12,18 +12,18 @@ from .renderer import render_app
 def render_page(path=None, gfm=False, context=None,
                 username=None, password=None,
                 render_offline=False, render_wide=False, render_inline=False,
-                text=None, api_url=None):
+                text=None, api_url=None, title=None):
     """
     Renders the specified markup text to an HTML page and returns it.
     """
     app = create_app(path, gfm, context, username, password,
-                     render_offline, render_wide, render_inline, text, api_url)
+                     render_offline, render_wide, render_inline, text, api_url, title)
     return render_app(app)
 
 
 def export(path=None, gfm=False, context=None, username=None, password=None,
            render_offline=False, render_wide=False, render_inline=True,
-           out_filename=None, api_url=None):
+           out_filename=None, api_url=None, title=None):
     """
     Exports the rendered HTML to a file.
     """
@@ -39,7 +39,7 @@ def export(path=None, gfm=False, context=None, username=None, password=None,
 
     page = render_page(path, gfm, context, username, password,
                        render_offline, render_wide, render_inline,
-                       None, api_url)
+                       None, api_url, title)
 
     if export_to_stdout:
         try:

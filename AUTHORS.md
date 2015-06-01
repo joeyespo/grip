@@ -15,6 +15,7 @@ along with the following contributors:
 - Dave James Miller ([@davejamesmiller](https://github.com/davejamesmiller))
 - Alexandre Magno ([@alexandre-mbm](https://github.com/alexandre-mbm))
 - [@madflow](https://github.com/madflow)
+- Jose Honorato ([@jlhonora](https://github.com/jlhonora)
 
 
 [home]: README.md
