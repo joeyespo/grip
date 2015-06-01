@@ -4,8 +4,17 @@ Grip Changelog
 
 #### Version 3.3.0 (development)
 
+- Enhancement: Add `GRIPHOME` environment variable for alternative `settings.py` locations ([#117](https://github.com/joeyespo/grip/pull/117) - thanks, [@zmwangx][]!)
+- Enhancement: Allow alternative github API URL ([#119](https://github.com/joeyespo/grip/pull/119) - thanks, [@dandavison][]!)
+- Enhancement: Change the default port to `6419` to avoid conflicts ([#124](https://github.com/joeyespo/grip/pull/124))
+- Enhancement: Automatically open grip in a new tab in browser ([122](https://github.com/joeyespo/grip/pull/122) - thanks, [@ssundarraj][]!)
+- Enhancement: Add `--title` option to manually set the title on the rendered page ([#125](https://github.com/joeyespo/grip/pull/125) - thanks, [@jlhonora][]!)
+- Bugfix: Don't print info messages to `STDOUT` for when exporting to `STDOUT` ([#101](https://github.com/joeyespo/grip/issues/101))
+- Bugfix: Don't swallow system exceptions
+- Bugfix: Use list builder notation instead of `map` to get `default_filenames` to evaluate it to non-empty on Python 3
+- Bugfix: Fix `InsecureRequestWarning` problems ([#111](https://github.com/joeyespo/grip/issues/111))
 - Readme: Add note about `^D` and `^Z` on Windows ([#105](https://github.com/joeyespo/grip/issues/105))
-- Bugfix: Don't print info messages to STDOUT for when exporting to STDOUT ([#101](https://github.com/joeyespo/grip/issues/101))
+- CLI: Add "Omit this to render as a normal GitHub README file." to help avoid confusion of `--gfm`
 
 
 #### Version 3.2.0 (2015-02-24)
@@ -149,3 +158,7 @@ Grip Changelog
 [@davejamesmiller]: https://github.com/davejamesmiller
 [@alexandre-mbm]: https://github.com/alexandre-mbm
 [@madflow]: https://github.com/madflow
+[@zmwangx]: https://github.com/zmwangx
+[@dandavison]: https://github.com/dandavison
+[@ssundarraj]: https://github.com/ssundarraj
+[@jlhonora]: https://github.com/jlhonora
