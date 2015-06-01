@@ -239,7 +239,7 @@ Runs a local server and renders the Readme file located
 at `path` when visited in the browser.
 
 ```python
-serve(path=None, host=None, port=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None)
+serve(path=None, host=None, port=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
@@ -250,10 +250,11 @@ serve(path=None, host=None, port=None, gfm=False, context=None, username=None, p
              takes the form of `username/project`
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
-- `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
 - `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `gfm`)
 - `render_inline`: Whether to inline the styles within the HTML file
+- `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
+- `title`: The page title, derived from `path` by default
 
 
 #### export
@@ -261,7 +262,7 @@ serve(path=None, host=None, port=None, gfm=False, context=None, username=None, p
 Writes the specified Readme file to an HTML file with styles and assets inlined.
 
 ```python
-export(path=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=True, out_filename=None, api_url=None)
+export(path=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=True, out_filename=None, api_url=None, title=None)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
@@ -270,11 +271,12 @@ export(path=None, gfm=False, context=None, username=None, password=None, render_
              takes the form of `username/project`
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
-- `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
 - `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `gfm`)
 - `render_inline`: Whether to inline the styles within the HTML file (Note: unlike the other API functions, this defaults to `True`)
 - `out_filename`: The filename to write to, `<in_filename>.html` by default
+- `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
+- `title`: The page title, derived from `path` by default
 
 
 #### create_app
@@ -284,7 +286,7 @@ This is the same app used by `serve` and `export` and initializes the cache,
 using the cached styles when available.
 
 ```python
-create_app(path=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, text=None, api_url=None)
+create_app(path=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
@@ -293,10 +295,11 @@ create_app(path=None, gfm=False, context=None, username=None, password=None, ren
              takes the form of `username/project`
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
-- `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
 - `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `gfm`)
 - `render_inline`: Whether to inline the styles within the HTML file
+- `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
+- `title`: The page title, derived from `path` by default
 - `text`: A string or stream of Markdown text to render instead of being loaded from `path` (Note: `path` can be used to set the page title)
 
 
@@ -318,7 +321,7 @@ render_app(app, route='/')
 Renders the specified markdown text without caching.
 
 ```python
-render_content(text, gfm=False, context=None, username=None, password=None, render_offline=False, api_url=None)
+render_content(text, gfm=False, context=None, username=None, password=None, render_offline=False, api_url=None, title=None)
 ```
 
 - `text`: The Markdown text to render
@@ -327,8 +330,9 @@ render_content(text, gfm=False, context=None, username=None, password=None, rend
              takes the form of `username/project`
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
-- `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
+- `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. This is required when not using the offline renderer.
+- `title`: The page title, derived from `path` by default
 
 
 #### render_page
@@ -337,7 +341,7 @@ Renders the markdown from the specified path or text, without caching,
 and returns an HTML page that resembles the GitHub Readme view.
 
 ```python
-render_page(page=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, text=None, api_url=None)
+render_page(path=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None)
 ```
 
 - `path`: The path to use for the page title, rendering `'README.md'` if None
@@ -346,12 +350,12 @@ render_page(page=None, gfm=False, context=None, username=None, password=None, re
              takes the form of `username/project`
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
-- `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `render_offline`: Whether to render offline using [Python-Markdown][] (Note: this is a work in progress)
 - `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `gfm`)
 - `render_inline`: Whether to inline the styles within the HTML file
+- `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
+- `title`: The page title, derived from `path` by default
 - `text`: A string or stream of Markdown text to render instead of being loaded from `path` (Note: `path` can be used to set the page title)
-
 
 #### resolve_readme
 
