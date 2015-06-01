@@ -17,6 +17,8 @@ def render_content(text, gfm=False, context=None, username=None, password=None,
     """
     Renders the specified markup and returns the result.
     """
+    if not render_offline and api_url is None:
+        ValueError('Argument api_url is required when not rendering offline.')
     return (offline_render(text, gfm, context)
             if render_offline
             else github_render(text, api_url, gfm, context,
