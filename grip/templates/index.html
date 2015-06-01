@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}{% if filename %}{{ filename }} - {% endif %}Grip{% endblock %}
+{% block title %}
+  {{ title_str }}
+  {% if title_str == filename %}
+    - Grip
+  {% endif %}
+{% endblock %}
 
 {%- block styles -%}
   {%- for style_url in style_urls -%}
@@ -83,10 +88,10 @@
         {% else %}
           <div class="repository-content context-loader-container">
             <div id="readme" class="boxed-group flush clearfix announce instapaper_body md">
-              {% if render_title and filename %}
+              {% if render_title and title_str %}
                 <h3>
                   <span class="octicon octicon-book"></span>
-                  {{ filename }}
+                  {{ title_str }}
                 </h3>
               {% endif %}
               <div class="markdown-body entry-content">

@@ -27,6 +27,7 @@ Options:
   --api-url=<url>   Specify a different base URL for the github API, for example
                     that of a Github Enterprise instance. The default is the public
                     API https://api.github.com.
+  --title=<title>   Manually sets the page's title. The default is the filename.
 """
 
 from __future__ import print_function
@@ -79,7 +80,7 @@ def main(argv=None, force_utf8=True):
         try:
             export(args['<path>'], args['--gfm'], args['--context'],
                    args['--user'], args['--pass'], False, args['--wide'],
-                   True, args['<address>'], args['--api-url'])
+                   True, args['<address>'], args['--api-url'], args['--title'])
             return 0
         except ValueError as ex:
             print('Error:', ex)
@@ -97,7 +98,7 @@ def main(argv=None, force_utf8=True):
     try:
         serve(path, host, port, args['--gfm'], args['--context'],
               args['--user'], args['--pass'], False, args['--wide'], False,
-              args['--api-url'], args['--browser'])
+              args['--api-url'], args['--browser'], args['--title'])
         return 0
     except ValueError as ex:
         print('Error:', ex)
