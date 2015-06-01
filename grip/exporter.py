@@ -12,12 +12,12 @@ from .renderer import render_app
 def render_page(path=None, gfm=False, context=None,
                 username=None, password=None,
                 render_offline=False, render_wide=False, render_inline=False,
-                text=None, api_url=None, title=None):
+                api_url=None, title=None, text=None):
     """
     Renders the specified markup text to an HTML page and returns it.
     """
     app = create_app(path, gfm, context, username, password, render_offline,
-                     render_wide, render_inline, text, api_url, title)
+                     render_wide, render_inline, api_url, title, text)
     return render_app(app)
 
 
@@ -38,7 +38,7 @@ def export(path=None, gfm=False, context=None, username=None, password=None,
         print('Exporting to', out_filename, file=sys.stderr)
 
     page = render_page(path, gfm, context, username, password, render_offline,
-                       render_wide, render_inline, None, api_url, title)
+                       render_wide, render_inline, api_url, title, None)
 
     if export_to_stdout:
         try:

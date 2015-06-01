@@ -31,7 +31,7 @@ except ImportError:
 def create_app(path=None, gfm=False, context=None,
                username=None, password=None,
                render_offline=False, render_wide=False, render_inline=False,
-               text=None, api_url=None, title=None):
+               api_url=None, title=None, text=None):
     """
     Creates an WSGI application that can serve the specified file or
     directory containing a README.
@@ -165,7 +165,7 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
     or directory containing a README.
     """
     app = create_app(path, gfm, context, username, password, render_offline,
-                     render_wide, render_inline, None, api_url, title)
+                     render_wide, render_inline, api_url, title, None)
 
     # Set overridden config values
     if host is not None:
