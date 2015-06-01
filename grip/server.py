@@ -273,7 +273,7 @@ def _render_page(text, filename=None, gfm=False, context=None,
                            favicon=favicon,
                            render_title=render_title,
                            discussion=gfm,
-                           title_str=title)
+                           title=title)
 
 
 def _render_image(image_data, content_type):

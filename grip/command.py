@@ -30,7 +30,8 @@ Options:
   --api-url=<url>   Specify a different base URL for the github API,
                     for example that of a Github Enterprise instance.
                     Default is the public API: https://api.github.com
-  --title=<title>   Manually sets the page's title. The default is the filename.
+  --title=<title>   Manually sets the page's title.
+                    The default is the filename.
 """
 
 from __future__ import print_function
