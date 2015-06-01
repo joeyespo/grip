@@ -16,8 +16,8 @@ def render_page(path=None, gfm=False, context=None,
     """
     Renders the specified markup text to an HTML page and returns it.
     """
-    app = create_app(path, gfm, context, username, password,
-                     render_offline, render_wide, render_inline, text, api_url, title)
+    app = create_app(path, gfm, context, username, password, render_offline,
+                     render_wide, render_inline, text, api_url, title)
     return render_app(app)
 
 
@@ -37,9 +37,8 @@ def export(path=None, gfm=False, context=None, username=None, password=None,
     if not export_to_stdout:
         print('Exporting to', out_filename, file=sys.stderr)
 
-    page = render_page(path, gfm, context, username, password,
-                       render_offline, render_wide, render_inline,
-                       None, api_url, title)
+    page = render_page(path, gfm, context, username, password, render_offline,
+                       render_wide, render_inline, None, api_url, title)
 
     if export_to_stdout:
         try:

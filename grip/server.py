@@ -95,19 +95,18 @@ def create_app(path=None, gfm=False, context=None,
             return
 
         # Get style URLs from the source HTML page
-        retrieved_urls = _get_style_urls(style_urls_source,
-                                         style_urls_re,
-                                         app.config['STYLE_ASSET_URLS_RE'],
-                                         app.config['STYLE_ASSET_URLS_SUB'],
-                                         cache_path,
-                                         app.config['DEBUG_GRIP'])
+        retrieved_urls = _get_style_urls(
+            cache_path, style_urls_source, style_urls_re,
+            app.config['STYLE_ASSET_URLS_RE'],
+            app.config['STYLE_ASSET_URLS_SUB'],
+            app.config['DEBUG_GRIP'])
         style_urls.extend(retrieved_urls)
 
         if render_inline:
             favicon_url = url_for('static', filename='favicon.ico')
             assets['favicon'] = _to_data_url(app, favicon_url, 'image/x-icon')
-            styles.extend(_get_styles(app, style_urls,
-                                      app.config['STYLE_ASSET_URLS_INLINE']))
+            styles.extend(_get_styles(
+                app, style_urls, app.config['STYLE_ASSET_URLS_INLINE']))
             style_urls[:] = []
 
     # Views
@@ -134,11 +133,9 @@ def create_app(path=None, gfm=False, context=None,
 
         favicon = assets.get('favicon', None)
 
-        return _render_page(render_text, filename, gfm, context,
-                            username, password,
-                            render_offline, render_wide,
-                            style_urls, styles, favicon, api_url,
-                            title)
+        return _render_page(render_text, filename, gfm, context, username,
+                            password, render_offline, render_wide, style_urls,
+                            styles, favicon, api_url, title)
 
     @app.route(cache_url + '/octicons/octicons/<filename>')
     def render_octicon(filename=None):
@@ -167,9 +164,8 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
     Starts a server to render the specified file
     or directory containing a README.
     """
-    app = create_app(path, gfm, context, username, password,
-                     render_offline, render_wide, render_inline, None, api_url,
-                     title)
+    app = create_app(path, gfm, context, username, password, render_offline,
+                     render_wide, render_inline, None, api_url, title)
 
     # Set overridden config values
     if host is not None:
@@ -285,8 +281,8 @@ def _render_image(image_data, content_type):
     return response
 
 
-def _get_style_urls(source_url, style_pattern, asset_pattern,
-                    asset_pattern_sub, cache_path, debug=False):
+def _get_style_urls(cache_path, source_url, style_pattern, asset_pattern,
+                    asset_pattern_sub, debug=False):
     """
     Gets the specified resource and parses all style URLs and their
     assets in the form of the specified patterns.
@@ -308,8 +304,8 @@ def _get_style_urls(source_url, style_pattern, asset_pattern,
 
         # Cache the styles and their assets
         if cache_path:
-            is_cached = _cache_contents(urls, asset_pattern, asset_pattern_sub,
-                                        cache_path)
+            is_cached = _cache_contents(
+                cache_path, urls, asset_pattern, asset_pattern_sub)
             if is_cached:
                 urls = _get_cached_style_urls(cache_path)
 
@@ -428,7 +424,7 @@ def _write_file(filename, contents):
         f.write(contents.encode('utf-8'))
 
 
-def _cache_contents(style_urls, asset_pattern, asset_pattern_sub, cache_path):
+def _cache_contents(cache_path, style_urls, asset_pattern, asset_pattern_sub):
     """
     Fetches the given URLs and caches their contents
     and their assets in the given directory.
@@ -438,7 +434,7 @@ def _cache_contents(style_urls, asset_pattern, asset_pattern_sub, cache_path):
     asset_urls = []
     for style_url in style_urls:
         print(' * Downloading style', style_url, file=sys.stderr)
-        filename = _cache_filename(style_url, cache_path)
+        filename = _cache_filename(cache_path, style_url)
         r = requests.get(style_url)
         if not 200 <= r.status_code < 300:
             print(' -> Warning: Style request responded with', r.status_code,
@@ -456,7 +452,7 @@ def _cache_contents(style_urls, asset_pattern, asset_pattern_sub, cache_path):
 
     for asset_url in asset_urls:
         print(' * Downloading asset', asset_url, file=sys.stderr)
-        filename = _cache_filename(asset_url, cache_path)
+        filename = _cache_filename(cache_path, asset_url)
         # Retrieve file and show message
         r = requests.get(asset_url)
         if not 200 <= r.status_code < 300:
@@ -486,7 +482,7 @@ def _normalize_url(url):
     return url.rsplit('?', 1)[0].rsplit('#', 1)[0]
 
 
-def _cache_filename(url, cache_path):
+def _cache_filename(cache_path, url):
     basename = _normalize_url(url).rsplit('/', 1)[-1]
     filename = os.path.join(cache_path, basename)
     return filename
