@@ -11,5 +11,6 @@ def render_content(text, gfm=False, context=None):
         'codehilite(css_class=highlight)',
         'toc',
         'tables',
+        'sane_lists',
         UrlizeExtension(),
     ])
