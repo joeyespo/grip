@@ -10,6 +10,7 @@ import shutil
 import base64
 import mimetypes
 import threading
+import posixpath
 from traceback import format_exc
 
 import requests
@@ -137,13 +138,9 @@ def create_app(path=None, gfm=False, context=None,
                             password, render_offline, render_wide, style_urls,
                             styles, favicon, api_url, title)
 
-    @app.route(cache_url + '/octicons/octicons/<filename>')
-    def render_octicon(filename=None):
-        return send_from_directory(cache_path, filename)
-
-    @app.route(cache_url + '/<path:filename>')
+    @app.route('{}/<path:filename>'.format(cache_url))
     def render_cache(filename=None):
-        return send_from_directory(cache_path, filename)
+        return send_from_directory(cache_path, posixpath.basename(filename))
 
     # Error views
     @app.route('/rate-limit-preview')
@@ -483,6 +480,4 @@ def _normalize_url(url):
 
 
 def _cache_filename(cache_path, url):
-    basename = _normalize_url(url).rsplit('/', 1)[-1]
-    filename = os.path.join(cache_path, basename)
-    return filename
+    return os.path.join(cache_path, posixpath.basename(url))
