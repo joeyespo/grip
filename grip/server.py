@@ -444,7 +444,7 @@ def _cache_contents(cache_path, style_urls, asset_pattern, asset_pattern_sub):
                           re.findall(asset_pattern, contents))
         contents = re.sub(asset_pattern, asset_pattern_sub, contents)
         # Prepare cache
-        if files:
+        if files is not None:
             files[filename] = contents
 
     for asset_url in asset_urls:
@@ -458,7 +458,7 @@ def _cache_contents(cache_path, style_urls, asset_pattern, asset_pattern_sub):
             files = None
             continue
         # Prepare cache
-        if files:
+        if files is not None:
             files[filename] = r.text
 
     # Skip caching if something went wrong to try again next time
