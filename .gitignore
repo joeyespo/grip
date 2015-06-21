@@ -3,6 +3,7 @@
 dist
 
 # Environment files
+site-packages
 instance
 build
 env
