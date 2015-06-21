@@ -48,6 +48,10 @@ def create_app(path=None, gfm=False, context=None,
     # Create Flask application
     app = _create_flask()
 
+    # Add content types if missing
+    mimetypes.add_type('application/x-font-woff', '.woff')
+    mimetypes.add_type('application/octet-stream', '.ttf')
+
     if use_stdin:
         # Handle debug mode special case
         if app.config['DEBUG_GRIP']:
@@ -410,15 +414,12 @@ def _read_file_or_404(filename, read_as_text=True):
         abort(404)
 
 
-def _write_file(filename, contents):
+def _write_binary_file(filename, data):
     """
-    Creates the specified file and writes the given contents to it.
+    Creates the specified file and writes binary data to it.
     """
-    write_path = os.path.dirname(filename)
-    if not os.path.exists(write_path):
-        os.makedirs(write_path)
     with open(filename, 'wb') as f:
-        f.write(contents.encode('utf-8'))
+        f.write(data)
 
 
 def _cache_contents(cache_path, style_urls, asset_pattern, asset_pattern_sub):
@@ -445,13 +446,13 @@ def _cache_contents(cache_path, style_urls, asset_pattern, asset_pattern_sub):
         contents = re.sub(asset_pattern, asset_pattern_sub, contents)
         # Prepare cache
         if files is not None:
-            files[filename] = contents
+            files[filename] = contents.encode('utf-8')
 
     for asset_url in asset_urls:
         print(' * Downloading asset', asset_url, file=sys.stderr)
         filename = _cache_filename(cache_path, asset_url)
-        # Retrieve file and show message
-        r = requests.get(asset_url)
+        # Retrieve binary file and show message
+        r = requests.get(asset_url, stream=True)
         if not 200 <= r.status_code < 300:
             print(' -> Warning: Asset request responded with', r.status_code,
                   file=sys.stderr)
@@ -459,7 +460,7 @@ def _cache_contents(cache_path, style_urls, asset_pattern, asset_pattern_sub):
             continue
         # Prepare cache
         if files is not None:
-            files[filename] = r.text
+            files[filename] = r.raw.read(decode_content=True)
 
     # Skip caching if something went wrong to try again next time
     if not files:
@@ -469,7 +470,7 @@ def _cache_contents(cache_path, style_urls, asset_pattern, asset_pattern_sub):
     if not os.path.exists(cache_path):
         os.makedirs(cache_path)
     for filename in files:
-        _write_file(filename, files[filename])
+        _write_binary_file(filename, files[filename])
 
     print(' * Cached all downloads in', cache_path, file=sys.stderr)
     return True
@@ -480,4 +481,6 @@ def _normalize_url(url):
 
 
 def _cache_filename(cache_path, url):
+    if '#' in url:
+        url = url[:url.find('#')]
     return os.path.join(cache_path, posixpath.basename(url))
