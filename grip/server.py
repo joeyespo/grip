@@ -147,7 +147,7 @@ def create_app(path=None, gfm=False, context=None,
         return send_from_directory(cache_path, posixpath.basename(filename))
 
     # Error views
-    @app.route('/rate-limit-preview')
+    @app.route('/grip/rate-limit-preview')
     @app.errorhandler(403)
     def rate_limit_preview(exception=None):
         auth = request.args.get('auth')
