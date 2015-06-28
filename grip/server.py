@@ -15,7 +15,7 @@ from traceback import format_exc
 
 import requests
 from flask import (
-    Flask, abort, make_response, render_template, request, safe_join,
+    Flask, abort, make_response, redirect, render_template, request, safe_join,
     send_from_directory, url_for)
 
 from . import __version__
@@ -119,9 +119,15 @@ def create_app(path=None, gfm=False, context=None,
     @app.route('/<path:filename>')
     def render(filename=None):
         if filename is not None:
-            filename = safe_join(os.path.dirname(in_filename), filename)
-            if os.path.isdir(filename):
-                filename = _find_file_or_404(filename, force_resolve)
+            file_or_dir = safe_join(os.path.dirname(in_filename), filename)
+            if os.path.isdir(file_or_dir):
+                if not filename.endswith('/'):
+                    return redirect(filename + '/')
+                filename = _find_file_or_404(file_or_dir, force_resolve)
+            else:
+                if filename.endswith('/'):
+                    return redirect(filename[:-1])
+                filename = file_or_dir
             # Read and serve images as binary
             mimetype, _ = mimetypes.guess_type(filename)
             if mimetype and mimetype.startswith('image/'):
