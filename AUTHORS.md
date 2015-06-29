@@ -19,6 +19,7 @@ along with the following contributors:
 - Dan Davison ([@dandavison](https://github.com/dandavison))
 - Sriram Sundarraj ([@ssundarraj](https://github.com/ssundarraj))
 - Jose Honorato ([@jlhonora](https://github.com/jlhonora)
+- Aka.Why ([@akawhy](https://github.com/akawhy))
 
 
 [home]: README.md
