@@ -1,5 +1,6 @@
 import socket
 import webbrowser
+import time
 
 
 def is_server_running(host, port):
@@ -8,7 +9,8 @@ def is_server_running(host, port):
     host and port.
     """
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    return not sock.connect_ex((host, port)) == 0
+    rc = sock.connect_ex((host, port))
+    return rc == 0
 
 
 def wait_for_server(host, port):
@@ -20,7 +22,7 @@ def wait_for_server(host, port):
     the Flask server.
     """
     while not is_server_running(host, port):
-        pass
+        time.sleep(0.1)
 
 
 def start_browser(url):
