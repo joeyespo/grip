@@ -31,6 +31,12 @@
     .timeline-comment-wrapper > .timeline-comment:before {
       content: none;
     }
+    /* Updated at */
+    .grip-updated-at {
+      font-size: 10px;
+      font-weight: normal;
+      font-style: italic;
+    }
   </style>
 {%- endblock -%}
 
@@ -63,6 +69,23 @@
       scrollToHash();
     }
     showCanonicalImages();
+  {% if autorefresh %}
+    var source = new EventSource("/grip-updates/{{ filename }}");
+    source.onmessage = function(ev) {
+      var msg = JSON.parse(ev.data);
+      if (msg.updating) {
+        var updated_at = document.getElementById('grip-updated-at');
+        updated_at.innerHTML = "(updating...)";
+      } else {
+        console.log("File updated at " + msg.updated_at);
+        var content = document.getElementById('grip-content');
+        content.innerHTML = msg.new_content;
+        var updated_at = document.getElementById('grip-updated-at');
+        var updated_at_date = new Date(msg.updated_at * 1000)
+        updated_at.innerHTML = "(updated at " + updated_at_date.toLocaleDateString() + " " + updated_at_date.toLocaleTimeString() + ")";
+      }
+    }
+  {% endif %}
   </script>
 {%- endblock -%}
 
@@ -77,7 +100,7 @@
               <div class="timeline-comment">
                 <div class="comment">
                   <div class="comment-content">
-                    <div class="comment-body markdown-body markdown-format">
+                    <div id="grip-content" class="comment-body markdown-body markdown-format">
                       {{ content|safe }}
                     </div>
                   </div>
@@ -92,9 +115,10 @@
                 <h3>
                   <span class="octicon octicon-book"></span>
                   {{ title }}
+                  <span id="grip-updated-at" class="grip-updated-at"></span>
                 </h3>
               {% endif %}
-              <div class="markdown-body entry-content">
+              <div id="grip-content" class="markdown-body entry-content">
                 {{ content|safe }}
               </div>
             </div>

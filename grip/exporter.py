@@ -17,7 +17,7 @@ def render_page(path=None, gfm=False, context=None,
     Renders the specified markup text to an HTML page and returns it.
     """
     app = create_app(path, gfm, context, username, password, render_offline,
-                     render_wide, render_inline, api_url, title, text)
+                     render_wide, render_inline, api_url, title, text, False)
     return render_app(app)
 
 

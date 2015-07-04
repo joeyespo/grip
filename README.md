@@ -286,7 +286,7 @@ This is the same app used by `serve` and `export` and initializes the cache,
 using the cached styles when available.
 
 ```python
-create_app(path=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None)
+create_app(path=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None, autorefresh=False)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
@@ -301,6 +301,7 @@ create_app(path=None, gfm=False, context=None, username=None, password=None, ren
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `title`: The page title, derived from `path` by default
 - `text`: A string or stream of Markdown text to render instead of being loaded from `path` (Note: `path` can be used to set the page title)
+- `autorefresh`: The app will generate client-side code to autorefresh the page when the file is changed.
 
 
 #### render_app

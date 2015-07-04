@@ -5,9 +5,11 @@ import io
 import os
 import re
 import sys
+import json
 import errno
 import shutil
 import base64
+import time
 import mimetypes
 import threading
 import posixpath
@@ -16,7 +18,7 @@ from traceback import format_exc
 import requests
 from flask import (
     Flask, abort, make_response, redirect, render_template, request, safe_join,
-    send_from_directory, url_for)
+    send_from_directory, url_for, Response)
 
 from . import __version__
 from .constants import default_filenames
@@ -32,7 +34,7 @@ except ImportError:
 def create_app(path=None, gfm=False, context=None,
                username=None, password=None,
                render_offline=False, render_wide=False, render_inline=False,
-               api_url=None, title=None, text=None):
+               api_url=None, title=None, text=None, autorefresh=False):
     """
     Creates an WSGI application that can serve the specified file or
     directory containing a README.
@@ -115,6 +117,33 @@ def create_app(path=None, gfm=False, context=None,
             style_urls[:] = []
 
     # Views
+    @app.route('/grip-updates/')
+    @app.route('/grip-updates/<path:filename>')
+    def render_updates(filename=None):
+        if filename is None:
+            filename = in_filename
+        def gen():
+            orig_mtime = os.path.getmtime(filename)
+            try:
+                while True:
+                    time.sleep(1)
+                    mtime = os.path.getmtime(filename)
+                    if mtime != orig_mtime:
+                        yield "data: %s\r\n\r\n" % json.dumps({'updating': 'true'})
+                        render_text = _read_file_or_404(filename)
+                        update = { "new_content":
+                            render_content(render_text, gfm, context, username, password,
+                                render_offline, api_url),
+                            "updated_at": int(mtime),
+                        }
+                        update_text = json.dumps(update)
+                        yield "data: %s\r\n\r\n" % update_text
+                        orig_mtime = mtime
+            except GeneratorExit:
+                pass
+
+        return Response(gen(), mimetype="text/event-stream")
+
     @app.route('/')
     @app.route('/<path:filename>')
     def render(filename=None):
@@ -146,7 +175,7 @@ def create_app(path=None, gfm=False, context=None,
 
         return _render_page(render_text, filename, gfm, context, username,
                             password, render_offline, render_wide, style_urls,
-                            styles, favicon, api_url, title)
+                            styles, favicon, api_url, title, autorefresh)
 
     @app.route('{}/<path:filename>'.format(cache_url))
     def render_cache(filename=None):
@@ -172,7 +201,7 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
     or directory containing a README.
     """
     app = create_app(path, gfm, context, username, password, render_offline,
-                     render_wide, render_inline, api_url, title, None)
+                     render_wide, render_inline, api_url, title, None, True)
 
     # Set overridden config values
     if host is not None:
@@ -189,7 +218,7 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
 
     # Run local server
     app.run(app.config['HOST'], app.config['PORT'], debug=app.debug,
-            use_reloader=app.config['DEBUG_GRIP'])
+            use_reloader=app.config['DEBUG_GRIP'], threaded=True)
 
     # Closing browser
     if browser:
@@ -258,7 +287,7 @@ def _render_page(text, filename=None, gfm=False, context=None,
                  username=None, password=None,
                  render_offline=False, render_wide=False,
                  style_urls=[], styles=[], favicon=None, api_url=None,
-                 title=None):
+                 title=None, autorefresh=False):
     """
     Renders the specified markup text to an HTML page.
     """
@@ -276,7 +305,8 @@ def _render_page(text, filename=None, gfm=False, context=None,
                            favicon=favicon,
                            render_title=render_title,
                            discussion=gfm,
-                           title=title)
+                           title=title,
+                           autorefresh=autorefresh)
 
 
 def _render_image(image_data, content_type):
