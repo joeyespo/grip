@@ -33,9 +33,9 @@
     }
     /* Updated at */
     .grip-updated-at {
-      font-size: 10px;
-      font-weight: normal;
-      font-style: italic;
+      padding: 8px;
+      font-size: 12px;
+      color: #767676;
     }
   </style>
 {%- endblock -%}
@@ -75,14 +75,14 @@
       var msg = JSON.parse(ev.data);
       if (msg.updating) {
         var updated_at = document.getElementById('grip-updated-at');
-        updated_at.innerHTML = "(updating...)";
+        updated_at.innerHTML = "Updating...";
       } else {
         console.log("File updated at " + msg.updated_at);
         var content = document.getElementById('grip-content');
         content.innerHTML = msg.new_content;
         var updated_at = document.getElementById('grip-updated-at');
         var updated_at_date = new Date(msg.updated_at * 1000)
-        updated_at.innerHTML = "(updated at " + updated_at_date.toLocaleDateString() + " " + updated_at_date.toLocaleTimeString() + ")";
+        updated_at.innerHTML = "Updated at " + updated_at_date.toLocaleDateString() + " " + updated_at_date.toLocaleTimeString();
       }
     }
   {% endif %}
@@ -92,6 +92,9 @@
 {%- block page -%}
   <div class="preview-page">
     <div class="container">
+      <div class="grip-updated-at">
+        <span id="grip-updated-at">&nbsp;</span>
+      </div>
       <div class="repository-with-sidebar repo-container {{ 'with-full-navigation' if not render_wide }}">
 
         {% if discussion %}
@@ -115,7 +118,6 @@
                 <h3>
                   <span class="octicon octicon-book"></span>
                   {{ title }}
-                  <span id="grip-updated-at" class="grip-updated-at"></span>
                 </h3>
               {% endif %}
               <div id="grip-content" class="markdown-body entry-content">
