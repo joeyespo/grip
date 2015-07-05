@@ -92,9 +92,11 @@
 {%- block page -%}
   <div class="preview-page">
     <div class="container">
-      <div class="grip-updated-at">
-        <span id="grip-updated-at">&nbsp;</span>
-      </div>
+      {% if autorefresh %}
+        <div class="grip-updated-at">
+          <span id="grip-updated-at">&nbsp;</span>
+        </div>
+      {% endif %}
       <div class="repository-with-sidebar repo-container {{ 'with-full-navigation' if not render_wide }}">
 
         {% if discussion %}
