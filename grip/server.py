@@ -214,6 +214,7 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
         browser_thread = threading.Thread(
             target=wait_and_start_browser,
             args=(app.config['HOST'], app.config['PORT']))
+        browser_thread.daemon = True
         browser_thread.start()
 
     # Run local server
