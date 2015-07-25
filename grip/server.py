@@ -137,6 +137,7 @@ def create_app(path=None, gfm=False, context=None,
                             "updated_at": int(mtime),
                         }
                         update_text = json.dumps(update)
+                        print(" * File updated at %s." % time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(mtime)))
                         yield "data: %s\r\n\r\n" % update_text
                         orig_mtime = mtime
             except GeneratorExit:

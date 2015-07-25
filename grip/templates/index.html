@@ -31,12 +31,6 @@
     .timeline-comment-wrapper > .timeline-comment:before {
       content: none;
     }
-    /* Updated at */
-    .grip-updated-at {
-      padding: 8px;
-      font-size: 12px;
-      color: #767676;
-    }
   </style>
 {%- endblock -%}
 
@@ -74,15 +68,12 @@
     source.onmessage = function(ev) {
       var msg = JSON.parse(ev.data);
       if (msg.updating) {
-        var updated_at = document.getElementById('grip-updated-at');
-        updated_at.innerHTML = "Updating...";
+        document.title = document.title + " (updating)";
       } else {
         console.log("File updated at " + msg.updated_at);
         var content = document.getElementById('grip-content');
         content.innerHTML = msg.new_content;
-        var updated_at = document.getElementById('grip-updated-at');
-        var updated_at_date = new Date(msg.updated_at * 1000)
-        updated_at.innerHTML = "Updated at " + updated_at_date.toLocaleDateString() + " " + updated_at_date.toLocaleTimeString();
+        document.title = document.title.replace(/ \(updating\)/g, "");
       }
     }
   {% endif %}
@@ -92,11 +83,6 @@
 {%- block page -%}
   <div class="preview-page">
     <div class="container">
-      {% if autorefresh %}
-        <div class="grip-updated-at">
-          <span id="grip-updated-at">&nbsp;</span>
-        </div>
-      {% endif %}
       <div class="repository-with-sidebar repo-container {{ 'with-full-navigation' if not render_wide }}">
 
         {% if discussion %}
