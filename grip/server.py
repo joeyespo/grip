@@ -226,6 +226,9 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
     if browser:
         browser_thread.join()
 
+    # Exit the process (this terminates the werkzeug threads)
+    os._exit(0)
+
 
 def clear_cache():
     """
