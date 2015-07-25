@@ -31,6 +31,11 @@ except ImportError:
     from urllib.parse import urlparse, urljoin
 
 
+# Signal to the polling threads that they should exit by setting
+# this to True.
+_exiting = False
+
+
 def create_app(path=None, gfm=False, context=None,
                username=None, password=None,
                render_offline=False, render_wide=False, render_inline=False,
@@ -127,6 +132,8 @@ def create_app(path=None, gfm=False, context=None,
             try:
                 while True:
                     time.sleep(1)
+                    if _exiting:
+                        return
                     mtime = os.path.getmtime(filename)
                     if mtime != orig_mtime:
                         yield "data: %s\r\n\r\n" % json.dumps({'updating': 'true'})
@@ -201,6 +208,7 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
     Starts a server to render the specified file
     or directory containing a README.
     """
+    global _exiting
     app = create_app(path, gfm, context, username, password, render_offline,
                      render_wide, render_inline, api_url, title, None, True)
 
@@ -226,8 +234,9 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
     if browser:
         browser_thread.join()
 
-    # Exit the process (this terminates the werkzeug threads)
-    os._exit(0)
+    # Signal to the polling threads that they should exit
+    print(" * Shutting down...")
+    _exiting = True
 
 
 def clear_cache():
