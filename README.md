@@ -408,8 +408,8 @@ Contributing
 
 If your PR has been waiting a while, feel free to [ping me on Twitter][twitter].
 
-Use this software often? Please consider supporting me on
-<a href="http://gratipay.com/joeyespo" title="Thank you!">
+Use this software often? Please consider supporting Grip on
+<a href="https://gratipay.com/grip/" title="Thank you!" target="_blank">
   <img align="center" style="margin-bottom:1px" src="http://joeyespo.com/images/gratipay-button.png" alt="Gratipay">
 </a>
 
