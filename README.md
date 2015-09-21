@@ -166,6 +166,23 @@ Grip always accesses GitHub over HTTPS,
 so your README and credentials are protected.
 
 
+Tips
+----
+
+Here's how others from the community are using Grip.
+
+#### Create a local mirror of a Github Wiki
+
+```bash
+$ git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.wiki.git
+$ grip YOUR_REPOSITORY.wiki/Home.md
+```
+
+*By [Joshua Gourneau](https://twitter.com/gourneau/status/636329126643658753)*.
+
+*Want to share your own? [Say hello][twitter] or [see below](#contributing).*
+
+
 Known issues
 ------------
 
