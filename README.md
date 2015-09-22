@@ -176,7 +176,8 @@ Here's how others from the community are using Grip.
 
 ```bash
 $ git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.wiki.git
-$ grip YOUR_REPOSITORY.wiki/Home.md
+$ cd YOUR_REPOSITORY.wiki
+$ grip
 ```
 
 *By [Joshua Gourneau](https://twitter.com/gourneau/status/636329126643658753)*.
