@@ -32,7 +32,7 @@ except ImportError:
 
 
 # A signal event to the polling threads that they should exit
-_exit_event = threading.Event()
+_shutdown_event = threading.Event()
 
 
 def create_app(path=None, gfm=False, context=None,
@@ -127,7 +127,7 @@ def create_app(path=None, gfm=False, context=None,
         if filename is None:
             filename = in_filename
 
-        if _exit_event.is_set():
+        if _shutdown_event.is_set():
             return ''
 
         def gen():
@@ -135,7 +135,7 @@ def create_app(path=None, gfm=False, context=None,
             try:
                 while True:
                     time.sleep(0.3)
-                    if _exit_event.is_set():
+                    if _shutdown_event.is_set():
                         return
                     file_updated = os.path.getmtime(filename)
                     if file_updated != file_last_updated:
@@ -226,7 +226,7 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
     if browser:
         browser_thread = threading.Thread(
             target=wait_and_start_browser,
-            args=(app.config['HOST'], app.config['PORT']))
+            args=(app.config['HOST'], app.config['PORT'], _shutdown_event))
         browser_thread.daemon = True
         browser_thread.start()
 
@@ -234,13 +234,13 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
     app.run(app.config['HOST'], app.config['PORT'], debug=app.debug,
             use_reloader=app.config['DEBUG_GRIP'], threaded=True)
 
-    # Closing browser
+    # Signal to the polling and browser threads that they should exit
+    print(' * Shutting down...')
+    _shutdown_event.set()
+
+    # Wait for browser thread
     if browser:
         browser_thread.join()
-
-    # Signal to the polling threads that they should exit
-    print(" * Shutting down...")
-    _exit_event.set()
 
 
 def clear_cache():

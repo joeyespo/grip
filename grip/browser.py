@@ -15,16 +15,20 @@ def is_server_running(host, port):
         s.close()
 
 
-def wait_for_server(host, port):
+def wait_for_server(host, port, cancel_event=None):
     """
     Blocks until a local server is listening on the specified
-    host and port.
+    host and port. Set cancel_event to cancel the wait.
 
     This is intended to be used in conjunction with running
     the Flask server.
     """
     while not is_server_running(host, port):
+        # Stop waiting if shutting down
+        if cancel_event and cancel_event.is_set():
+            return False
         time.sleep(0.1)
+    return True
 
 
 def start_browser(url):
@@ -37,7 +41,11 @@ def start_browser(url):
         pass
 
 
-def wait_and_start_browser(host, port):
+def wait_and_start_browser(host, port, cancel_event):
+    """
+    Waits for the server to run and then opens the specified address in
+    the browser. Set cancel_event to cancel the wait.
+    """
     host = 'localhost' if host == '0.0.0.0' else host
-    wait_for_server(host, port)
-    start_browser('http://{0}:{1}/'.format(host, port))
+    if wait_for_server(host, port, cancel_event):
+        start_browser('http://{0}:{1}/'.format(host, port))
