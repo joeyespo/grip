@@ -8,3 +8,7 @@ supported_extensions = ['.md', '.markdown']
 default_filenames = [title + ext
                      for title in supported_titles
                      for ext in supported_extensions]
+
+
+# The default URL to serve static assets at
+default_static_url_path = '/grip-static'

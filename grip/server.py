@@ -17,11 +17,12 @@ from traceback import format_exc
 
 import requests
 from flask import (
-    Flask, abort, make_response, redirect, render_template, request, safe_join,
+    abort, make_response, redirect, render_template, request, safe_join,
     send_from_directory, url_for, Response)
 
 from . import __version__
-from .constants import default_filenames
+from .app import Grip
+from .constants import default_filenames, default_static_url_path
 from .renderer import render_content
 from .browser import wait_and_start_browser
 
@@ -52,7 +53,7 @@ def create_app(path=None, gfm=False, context=None,
     in_filename = resolve_readme(path, force_resolve)
 
     # Create Flask application
-    app = _create_flask()
+    app = _grip_app()
 
     # Add content types if missing
     mimetypes.add_type('application/x-font-woff', '.woff')
@@ -247,7 +248,7 @@ def clear_cache():
     """
     Clears the cached styles and assets.
     """
-    app = _create_flask()
+    app = _grip_app()
     cache_path = os.path.join(app.instance_path, _cache_directory(app))
     if os.path.exists(cache_path):
         shutil.rmtree(cache_path)
@@ -268,28 +269,14 @@ def resolve_readme(path=None, force=False):
     return os.path.normpath(path)
 
 
-def _create_flask():
-    if 'GRIPHOME' in os.environ:
-        instance_path = os.environ['GRIPHOME']
-    else:
-        instance_path = os.path.abspath(os.path.expanduser('~/.grip'))
-    user_settings = os.path.join(instance_path, 'settings.py')
-    default_static_url_path = '/grip-static'
+def _grip_app():
+    # Grip application
+    app = Grip(os.environ.get('GRIPHOME'))
 
-    # Flask application
-    def _new_flask(static_url_path=default_static_url_path):
-        app = Flask(__name__,
-                    static_url_path=static_url_path,
-                    instance_path=instance_path)
-        app.config.from_object('grip.settings')
-        app.config.from_pyfile('settings_local.py', silent=True)
-        app.config.from_pyfile(user_settings, silent=True)
-        return app
-
-    app = _new_flask()
+    # Create new application using custom static URL path
     static_url_path = app.config['STATIC_URL_PATH']
     if static_url_path and static_url_path != default_static_url_path:
-        app = _new_flask(static_url_path)
+        app = Grip(os.environ.get('GRIPHOME'), static_url_path)
 
     return app
 
