@@ -20,6 +20,7 @@ along with the following contributors:
 - Sriram Sundarraj ([@ssundarraj](https://github.com/ssundarraj))
 - Jose Honorato ([@jlhonora](https://github.com/jlhonora)
 - Aka.Why ([@akawhy](https://github.com/akawhy))
+- Mark Thomas ([@markbt](https://github.com/markbt))
 
 
 [home]: README.md
