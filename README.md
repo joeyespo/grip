@@ -258,7 +258,7 @@ Runs a local server and renders the Readme file located
 at `path` when visited in the browser.
 
 ```python
-serve(path=None, host=None, port=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, autoupdate=True)
+serve(path=None, host=None, port=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, autoupdate=True, grip_class=None)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
@@ -275,6 +275,7 @@ serve(path=None, host=None, port=None, gfm=False, context=None, username=None, p
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `title`: The page title, derived from `path` by default
 - `autoupdate`: Automatically update the rendered content when the Readme file changes, `True` by default
+- `grip_class`: Use a custom [Grip class](#grip-class)
 
 
 #### export
@@ -306,7 +307,7 @@ This is the same app used by `serve` and `export` and initializes the cache,
 using the cached styles when available.
 
 ```python
-create_app(path=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None, autoupdate=True)
+create_app(path=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None, autoupdate=True, grip_class=None)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
@@ -322,6 +323,7 @@ create_app(path=None, gfm=False, context=None, username=None, password=None, ren
 - `title`: The page title, derived from `path` by default
 - `text`: A string or stream of Markdown text to render instead of being loaded from `path` (Note: `path` can be used to set the page title)
 - `autoupdate`: Automatically update the rendered content when the Readme file changes, `True` by default
+- `grip_class`: Use a custom [Grip class](#grip-class)
 
 
 #### render_app
@@ -399,6 +401,33 @@ Clears the cached styles and assets.
 ```python
 clear_cache()
 ```
+
+
+### Grip class
+
+A Flask application that provides the following overridable methods.
+
+
+#### read_text
+
+Reads the text content of the specified file. Returns a UTF-8 string.
+
+```python
+read_text(self, filename)
+```
+
+- `filename`: The UTF-8 file to read.
+
+
+#### read_binary
+
+Reads the text content of the specified file. Returns a byte string.
+
+```python
+read_binary(self, filename)
+```
+
+- `filename`: The UTF-8 file to read.
 
 
 #### supported_extensions

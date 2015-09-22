@@ -1,7 +1,6 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import io
 import os
 import re
 import sys
@@ -39,7 +38,8 @@ _shutdown_event = threading.Event()
 def create_app(path=None, gfm=False, context=None,
                username=None, password=None,
                render_offline=False, render_wide=False, render_inline=False,
-               api_url=None, title=None, text=None, autoupdate=True):
+               api_url=None, title=None, text=None, autoupdate=True,
+               grip_class=None):
     """
     Creates an WSGI application that can serve the specified file or
     directory containing a README.
@@ -53,7 +53,7 @@ def create_app(path=None, gfm=False, context=None,
     in_filename = resolve_readme(path, force_resolve)
 
     # Create Flask application
-    app = _grip_app()
+    app = _grip_app(grip_class)
 
     # Add content types if missing
     mimetypes.add_type('application/x-font-woff', '.woff')
@@ -143,7 +143,9 @@ def create_app(path=None, gfm=False, context=None,
                         yield 'data: {}\r\n\r\n'.format(json.dumps({
                             'updating': True,
                         }))
-                        updated_text = _read_file_or_404(filename)
+                        updated_text = app.read_text(filename)
+                        if updated_text is None:
+                            abort(404)
                         print(' * Change detected in {}, updating'
                               .format(filename))
                         yield 'data: {}\r\n\r\n'.format(json.dumps({
@@ -173,16 +175,21 @@ def create_app(path=None, gfm=False, context=None,
             # Read and serve images as binary
             mimetype, _ = mimetypes.guess_type(filename)
             if mimetype and mimetype.startswith('image/'):
-                image_data = _read_file_or_404(filename, False)
+                image_data = app.read_binary(filename)
+                if image_data is None:
+                    abort(404)
                 return _render_image(image_data, mimetype)
-            render_text = _read_file_or_404(filename)
+            render_text = app.read_text(filename)
         else:
             filename = in_filename
             if text is not None:
                 render_text = (text.read() if hasattr(text, 'read')
                                else str(text))
             else:
-                render_text = _read_file_or_404(filename)
+                render_text = app.read_text(filename)
+
+        if render_text is None:
+            abort(404)
 
         favicon = assets.get('favicon', None)
 
@@ -208,14 +215,15 @@ def create_app(path=None, gfm=False, context=None,
 def serve(path=None, host=None, port=None, gfm=False, context=None,
           username=None, password=None,
           render_offline=False, render_wide=False, render_inline=False,
-          api_url=None, browser=False, title=None, autoupdate=True):
+          api_url=None, browser=False, title=None, autoupdate=True,
+          grip_class=None):
     """
     Starts a server to render the specified file
     or directory containing a README.
     """
     app = create_app(path, gfm, context, username, password, render_offline,
                      render_wide, render_inline, api_url, title, None,
-                     autoupdate)
+                     autoupdate, grip_class)
 
     # Set overridden config values
     if host is not None:
@@ -244,11 +252,11 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
         browser_thread.join()
 
 
-def clear_cache():
+def clear_cache(grip_class=None):
     """
     Clears the cached styles and assets.
     """
-    app = _grip_app()
+    app = _grip_app(grip_class)
     cache_path = os.path.join(app.instance_path, _cache_directory(app))
     if os.path.exists(cache_path):
         shutil.rmtree(cache_path)
@@ -269,7 +277,7 @@ def resolve_readme(path=None, force=False):
     return os.path.normpath(path)
 
 
-def _grip_app():
+def _grip_app(grip_class):
     # Grip application
     app = Grip(os.environ.get('GRIPHOME'))
 
@@ -442,21 +450,6 @@ def _find_file_or_404(path, force):
     try:
         return _find_file(path, force)
     except ValueError:
-        abort(404)
-
-
-def _read_file_or_404(filename, read_as_text=True):
-    """
-    Reads the contents of the specified file, or raise 404.
-    """
-    mode = 'rt' if read_as_text else 'rb'
-    encoding = 'utf-8' if read_as_text else None
-    try:
-        with io.open(filename, mode, encoding=encoding) as f:
-            return f.read()
-    except IOError as ex:
-        if ex.errno != errno.ENOENT:
-            raise
         abort(404)
 
 

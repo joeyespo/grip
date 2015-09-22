@@ -1,4 +1,6 @@
+import io
 import os
+import errno
 
 from flask import Flask
 
@@ -31,3 +33,29 @@ class Grip(Flask):
         # Load user instance settings
         user_settings = os.path.join(instance_path, 'settings.py')
         self.config.from_pyfile(user_settings, silent=True)
+
+    def _read_file_or_404(self, filename, read_as_text):
+        """
+        Reads the contents of the specified file, or raise 404.
+        """
+        mode = 'rt' if read_as_text else 'rb'
+        encoding = 'utf-8' if read_as_text else None
+        try:
+            with io.open(filename, mode, encoding=encoding) as f:
+                return f.read()
+        except IOError as ex:
+            if ex.errno != errno.ENOENT:
+                raise
+            return None
+
+    def read_text(self, filename):
+        """
+        Reads the text content of the specified file.
+        """
+        return self._read_file_or_404(filename, True)
+
+    def read_binary(self, filename):
+        """
+        Reads the binary content of the specified file.
+        """
+        return self._read_file_or_404(filename, False)
