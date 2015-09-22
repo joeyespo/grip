@@ -38,6 +38,6 @@ def start_browser(url):
 
 
 def wait_and_start_browser(host, port):
+    host = 'localhost' if host == '0.0.0.0' else host
     wait_for_server(host, port)
-    start_browser('http://{0}:{1}/'.format(
-        'localhost' if host == '0.0.0.0' else host, port))
+    start_browser('http://{0}:{1}/'.format(host, port))
