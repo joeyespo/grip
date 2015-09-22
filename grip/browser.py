@@ -8,9 +8,11 @@ def is_server_running(host, port):
     Checks whether a server is currently listening on the specified
     host and port.
     """
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    rc = sock.connect_ex((host, port))
-    return rc == 0
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try:
+        return s.connect_ex((host, port)) == 0
+    finally:
+        s.close()
 
 
 def wait_for_server(host, port):
