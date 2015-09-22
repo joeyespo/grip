@@ -48,40 +48,50 @@
         }
       }
     }
+
     function scrollToHash() {
-      if (location.hash && !document.querySelector(":target")) {
+      if (location.hash && !document.querySelector(':target')) {
         var element = document.getElementById('user-content-' + location.hash.slice(1));
         if (element) {
            element.scrollIntoView();
         }
       }
     }
+
+    function autoupdateContent(eventSourceUrl) {
+      var initialTitle = document.title;
+      var contentElement = document.getElementById('grip-content');
+      var source = new EventSource(eventSourceUrl);
+      source.onmessage = function(ev) {
+        var msg = JSON.parse(ev.data);
+        if (msg.updating) {
+          document.title += ' (updating)';
+        } else {
+          document.title = initialTitle;
+          contentElement.innerHTML = msg.content;
+        }
+      }
+    }
+
     window.onhashchange = function() {
       scrollToHash();
     }
+
     window.onload = function() {
       scrollToHash();
     }
+
     showCanonicalImages();
-  {% if autorefresh %}
-    var source = new EventSource("/grip-updates/{{ filename }}");
-    source.onmessage = function(ev) {
-      var msg = JSON.parse(ev.data);
-      if (msg.updating) {
-        document.title = document.title + " (updating)";
-      } else {
-        console.log("File updated at " + msg.updated_at);
-        var content = document.getElementById('grip-content');
-        content.innerHTML = msg.new_content;
-        document.title = document.title.replace(/ \(updating\)/g, "");
-      }
+
+    var autoupdateUrl = document.getElementById('preview-page').getAttribute('data-autoupdate-url');
+    if (autoupdateUrl) {
+      autoupdateContent(autoupdateUrl);
     }
-  {% endif %}
   </script>
 {%- endblock -%}
 
 {%- block page -%}
-  <div class="preview-page">
+  <div id="preview-page" class="preview-page" data-autoupdate-url="{{ autoupdate_url if autoupdate_url }}">
     <div class="container">
       <div class="repository-with-sidebar repo-container {{ 'with-full-navigation' if not render_wide }}">
 

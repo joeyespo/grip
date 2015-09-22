@@ -8,7 +8,8 @@ Render local readme files before sending off to GitHub.
 
 Grip is a command-line server application written in Python that uses the
 [GitHub markdown API][markdown] to render a local readme file. The styles also
-come directly from GitHub, so you'll know exactly how it will appear.
+come directly from GitHub, so you'll know exactly how it will appear. Changes
+you make to the Readme file will be instantly reflected in the browser.
 
 
 Motivation
@@ -256,7 +257,7 @@ Runs a local server and renders the Readme file located
 at `path` when visited in the browser.
 
 ```python
-serve(path=None, host=None, port=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None)
+serve(path=None, host=None, port=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, autoupdate=True)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
@@ -272,6 +273,7 @@ serve(path=None, host=None, port=None, gfm=False, context=None, username=None, p
 - `render_inline`: Whether to inline the styles within the HTML file
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `title`: The page title, derived from `path` by default
+- `autoupdate`: Automatically update the rendered content when the Readme file changes, `True` by default
 
 
 #### export
@@ -303,7 +305,7 @@ This is the same app used by `serve` and `export` and initializes the cache,
 using the cached styles when available.
 
 ```python
-create_app(path=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None, autorefresh=False)
+create_app(path=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None, autoupdate=True)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
@@ -318,7 +320,7 @@ create_app(path=None, gfm=False, context=None, username=None, password=None, ren
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `title`: The page title, derived from `path` by default
 - `text`: A string or stream of Markdown text to render instead of being loaded from `path` (Note: `path` can be used to set the page title)
-- `autorefresh`: The app will generate client-side code to autorefresh the page when the file is changed.
+- `autoupdate`: Automatically update the rendered content when the Readme file changes, `True` by default
 
 
 #### render_app

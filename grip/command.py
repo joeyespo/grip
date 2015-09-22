@@ -32,6 +32,8 @@ Options:
                     Default is the public API: https://api.github.com
   --title=<title>   Manually sets the page's title.
                     The default is the filename.
+  --noupdate        Do not automatically update the Readme content when
+                    the file changes.
 """
 
 from __future__ import print_function
@@ -104,7 +106,8 @@ def main(argv=None, force_utf8=True):
     try:
         serve(path, host, port, args['--gfm'], args['--context'],
               args['--user'], args['--pass'], False, args['--wide'], False,
-              args['--api-url'], args['--browser'], args['--title'])
+              args['--api-url'], args['--browser'], args['--title'],
+              not args['--noupdate'])
         return 0
     except ValueError as ex:
         print('Error:', ex)

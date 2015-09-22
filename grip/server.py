@@ -31,15 +31,14 @@ except ImportError:
     from urllib.parse import urlparse, urljoin
 
 
-# Signal to the polling threads that they should exit by setting
-# this to True.
-_exiting = False
+# A signal event to the polling threads that they should exit
+_exit_event = threading.Event()
 
 
 def create_app(path=None, gfm=False, context=None,
                username=None, password=None,
                render_offline=False, render_wide=False, render_inline=False,
-               api_url=None, title=None, text=None, autorefresh=False):
+               api_url=None, title=None, text=None, autoupdate=True):
     """
     Creates an WSGI application that can serve the specified file or
     directory containing a README.
@@ -127,30 +126,35 @@ def create_app(path=None, gfm=False, context=None,
     def render_updates(filename=None):
         if filename is None:
             filename = in_filename
+
+        if _exit_event.is_set():
+            return ''
+
         def gen():
-            orig_mtime = os.path.getmtime(filename)
+            file_last_updated = os.path.getmtime(filename)
             try:
                 while True:
-                    time.sleep(1)
-                    if _exiting:
+                    time.sleep(0.3)
+                    if _exit_event.is_set():
                         return
-                    mtime = os.path.getmtime(filename)
-                    if mtime != orig_mtime:
-                        yield "data: %s\r\n\r\n" % json.dumps({'updating': 'true'})
-                        render_text = _read_file_or_404(filename)
-                        update = { "new_content":
-                            render_content(render_text, gfm, context, username, password,
+                    file_updated = os.path.getmtime(filename)
+                    if file_updated != file_last_updated:
+                        yield 'data: {}\r\n\r\n'.format(json.dumps({
+                            'updating': True,
+                        }))
+                        updated_text = _read_file_or_404(filename)
+                        print(' * Change detected in {}, updating'
+                              .format(filename))
+                        yield 'data: {}\r\n\r\n'.format(json.dumps({
+                            'content': render_content(
+                                updated_text, gfm, context, username, password,
                                 render_offline, api_url),
-                            "updated_at": int(mtime),
-                        }
-                        update_text = json.dumps(update)
-                        print(" * File updated at %s." % time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(mtime)))
-                        yield "data: %s\r\n\r\n" % update_text
-                        orig_mtime = mtime
+                        }))
+                        file_last_updated = file_updated
             except GeneratorExit:
                 pass
 
-        return Response(gen(), mimetype="text/event-stream")
+        return Response(gen(), mimetype='text/event-stream')
 
     @app.route('/')
     @app.route('/<path:filename>')
@@ -183,7 +187,7 @@ def create_app(path=None, gfm=False, context=None,
 
         return _render_page(render_text, filename, gfm, context, username,
                             password, render_offline, render_wide, style_urls,
-                            styles, favicon, api_url, title, autorefresh)
+                            styles, favicon, api_url, title, autoupdate)
 
     @app.route('{}/<path:filename>'.format(cache_url))
     def render_cache(filename=None):
@@ -203,14 +207,14 @@ def create_app(path=None, gfm=False, context=None,
 def serve(path=None, host=None, port=None, gfm=False, context=None,
           username=None, password=None,
           render_offline=False, render_wide=False, render_inline=False,
-          api_url=None, browser=False, title=None):
+          api_url=None, browser=False, title=None, autoupdate=True):
     """
     Starts a server to render the specified file
     or directory containing a README.
     """
-    global _exiting
     app = create_app(path, gfm, context, username, password, render_offline,
-                     render_wide, render_inline, api_url, title, None, True)
+                     render_wide, render_inline, api_url, title, None,
+                     autoupdate)
 
     # Set overridden config values
     if host is not None:
@@ -236,7 +240,7 @@ def serve(path=None, host=None, port=None, gfm=False, context=None,
 
     # Signal to the polling threads that they should exit
     print(" * Shutting down...")
-    _exiting = True
+    _exit_event.set()
 
 
 def clear_cache():
@@ -301,7 +305,7 @@ def _render_page(text, filename=None, gfm=False, context=None,
                  username=None, password=None,
                  render_offline=False, render_wide=False,
                  style_urls=[], styles=[], favicon=None, api_url=None,
-                 title=None, autorefresh=False):
+                 title=None, autoupdate=True):
     """
     Renders the specified markup text to an HTML page.
     """
@@ -312,6 +316,11 @@ def _render_page(text, filename=None, gfm=False, context=None,
     if title is None:
         title = filename
 
+    # TODO: Get this from the ENV like GRIP_STATIC_URL_PATH
+    update_url_path = 'grip-updates'
+    autoupdate_url = ('/{}/{}'.format(update_url_path, filename)
+                      if autoupdate else None)
+
     return render_template('index.html',
                            content=content, filename=filename,
                            render_wide=render_wide,
@@ -320,7 +329,7 @@ def _render_page(text, filename=None, gfm=False, context=None,
                            render_title=render_title,
                            discussion=gfm,
                            title=title,
-                           autorefresh=autorefresh)
+                           autoupdate_url=autoupdate_url)
 
 
 def _render_image(image_data, content_type):
