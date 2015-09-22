@@ -416,6 +416,18 @@ Reads the text content of the specified file. Returns a UTF-8 string.
 read_text(self, filename)
 ```
 
+
+### Constants
+
+
+#### supported_titles
+
+The common Markdown file titles on GitHub.
+
+```python
+supported_titles = ['README', 'Home']
+```
+
 - `filename`: The UTF-8 file to read.
 
 
@@ -444,7 +456,9 @@ supported_extensions = ['.md', '.markdown']
 This constant contains the names Grip looks for when no file is provided.
 
 ```python
-default_filenames = map(lambda ext: 'README' + ext, supported_extensions)
+default_filenames = [title + ext
+                     for title in supported_titles
+                     for ext in supported_extensions]
 ```
 
 
