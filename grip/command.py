@@ -7,8 +7,8 @@ Implements the command-line interface for Grip.
 
 Usage:
   grip [options] [<path>] [<address>]
+  grip -V | --version
   grip -h | --help
-  grip --version
 
 Where:
   <path> is a file to render or a directory containing README.md (- for stdin)
@@ -73,6 +73,11 @@ def main(argv=None, force_utf8=True):
 
     # Parse options
     args = docopt(usage, argv=argv, version=version)
+
+    # Handle printing version with -V (docopt handles --version)
+    if args['-V']:
+        print(version)
+        return 0
 
     # Clear the cache
     if args['--clear']:
