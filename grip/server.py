@@ -35,11 +35,10 @@ except ImportError:
 _shutdown_event = threading.Event()
 
 
-def create_app(path=None, gfm=False, context=None,
-               username=None, password=None,
-               render_offline=False, render_wide=False, render_inline=False,
-               api_url=None, title=None, text=None, autoupdate=True,
-               grip_class=None):
+def create_app(path=None, user_content=False, context=None, username=None,
+               password=None, render_offline=False, render_wide=False,
+               render_inline=False, api_url=None, title=None, text=None,
+               autoupdate=True, grip_class=None):
     """
     Creates an WSGI application that can serve the specified file or
     directory containing a README.
@@ -150,8 +149,8 @@ def create_app(path=None, gfm=False, context=None,
                               .format(filename))
                         yield 'data: {}\r\n\r\n'.format(json.dumps({
                             'content': render_content(
-                                updated_text, gfm, context, username, password,
-                                render_offline, api_url),
+                                updated_text, user_content, context, username,
+                                password, render_offline, api_url),
                         }))
                         file_last_updated = file_updated
             except GeneratorExit:
@@ -193,9 +192,10 @@ def create_app(path=None, gfm=False, context=None,
 
         favicon = assets.get('favicon', None)
 
-        return _render_page(render_text, filename, gfm, context, username,
-                            password, render_offline, render_wide, style_urls,
-                            styles, favicon, api_url, title, autoupdate)
+        return _render_page(render_text, filename, user_content, context,
+                            username, password, render_offline, render_wide,
+                            style_urls, styles, favicon, api_url, title,
+                            autoupdate)
 
     @app.route('{}/<path:filename>'.format(cache_url))
     def render_cache(filename=None):
@@ -212,18 +212,17 @@ def create_app(path=None, gfm=False, context=None,
     return app
 
 
-def serve(path=None, host=None, port=None, gfm=False, context=None,
-          username=None, password=None,
-          render_offline=False, render_wide=False, render_inline=False,
-          api_url=None, browser=False, title=None, autoupdate=True,
-          grip_class=None):
+def serve(path=None, host=None, port=None, user_content=False, context=None,
+          username=None, password=None, render_offline=False,
+          render_wide=False, render_inline=False, api_url=None, browser=False,
+          title=None, autoupdate=True, grip_class=None):
     """
     Starts a server to render the specified file
     or directory containing a README.
     """
-    app = create_app(path, gfm, context, username, password, render_offline,
-                     render_wide, render_inline, api_url, title, None,
-                     autoupdate, grip_class)
+    app = create_app(path, user_content, context, username, password,
+                     render_offline, render_wide, render_inline, api_url,
+                     title, None, autoupdate, grip_class)
 
     # Set overridden config values
     if host is not None:
@@ -296,16 +295,15 @@ def _cache_directory(app):
     return app.config['CACHE_DIRECTORY'].format(version=__version__)
 
 
-def _render_page(text, filename=None, gfm=False, context=None,
-                 username=None, password=None,
-                 render_offline=False, render_wide=False,
-                 style_urls=[], styles=[], favicon=None, api_url=None,
-                 title=None, autoupdate=True):
+def _render_page(text, filename=None, user_content=False, context=None,
+                 username=None, password=None, render_offline=False,
+                 render_wide=False, style_urls=[], styles=[], favicon=None,
+                 api_url=None, title=None, autoupdate=True):
     """
     Renders the specified markup text to an HTML page.
     """
-    render_title = not gfm
-    content = render_content(text, gfm, context, username, password,
+    render_title = not user_content
+    content = render_content(text, user_content, context, username, password,
                              render_offline, api_url)
 
     if title is None:
@@ -322,7 +320,7 @@ def _render_page(text, filename=None, gfm=False, context=None,
                            style_urls=style_urls, styles=styles,
                            favicon=favicon,
                            render_title=render_title,
-                           discussion=gfm,
+                           discussion=user_content,
                            title=title,
                            autoupdate_url=autoupdate_url)
 

@@ -12,14 +12,14 @@ def render_app(app, route='/'):
         return response.data.decode(encoding)
 
 
-def render_content(text, gfm=False, context=None, username=None, password=None,
-                   render_offline=False, api_url=None):
+def render_content(text, user_content=False, context=None, username=None,
+                   password=None, render_offline=False, api_url=None):
     """
     Renders the specified markup and returns the result.
     """
     if not render_offline and api_url is None:
         ValueError('Argument api_url is required when not rendering offline.')
-    return (offline_render(text, gfm, context)
+    return (offline_render(text, user_content, context)
             if render_offline
-            else github_render(text, api_url, gfm, context,
-                               username, password))
+            else github_render(text, api_url, user_content, context, username,
+                               password))

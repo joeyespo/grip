@@ -15,10 +15,10 @@ Where:
   <address> is what to listen on, of the form <host>[:<port>], or just <port>
 
 Options:
-  --gfm             GitHub-Flavored Markdown, e.g. comments or issues.
+  --user-content    GitHub-Flavored Markdown, e.g. comments or issues.
                     Omit this to render as a normal GitHub README file.
   --context=<repo>  The repository context, only taken into account
-                    when using --gfm.
+                    when using --user-content.
   --user=<username> A GitHub username for API authentication.
   --pass=<password> A GitHub password or auth token for API auth.
   --wide            Renders wide, i.e. when the side nav is collapsed.
@@ -91,7 +91,7 @@ def main(argv=None, force_utf8=True):
     # Export to a file instead of running a server
     if args['--export']:
         try:
-            export(args['<path>'], args['--gfm'], args['--context'],
+            export(args['<path>'], args['--user-content'], args['--context'],
                    args['--user'], args['--pass'], False, args['--wide'],
                    True, args['<address>'], args['--api-url'], args['--title'])
             return 0
@@ -109,7 +109,7 @@ def main(argv=None, force_utf8=True):
 
     # Run server
     try:
-        serve(path, host, port, args['--gfm'], args['--context'],
+        serve(path, host, port, args['--user-content'], args['--context'],
               args['--user'], args['--pass'], False, args['--wide'], False,
               args['--api-url'], args['--browser'], args['--title'],
               not args['--noupdate'])

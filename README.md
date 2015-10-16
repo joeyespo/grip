@@ -118,10 +118,10 @@ Hello **world**!
 
 *Note: `^D` means `Ctrl+D`, which works on Linux and iOS. On Windows you'll have to use `Ctrl+Z`.*
 
-**Comment / issue-style GFM** is also supported, with an optional repository context for linking to issues:
+Rendering as user-content like **comments** and **issues** is also supported, with an optional repository context for linking to issues:
 
 ```bash
-$ grip --gfm --context=joeyespo/grip
+$ grip --user-content --context=joeyespo/grip
  * Running on http://localhost:6419/
 ```
 
@@ -245,7 +245,7 @@ Or access the underlying Flask application for even more flexibility:
 ```python
 from grip import create_app
 
-grip_app = create_app(gfm=True)
+grip_app = create_app(user_content=True)
 # Use in your own app
 ```
 
@@ -258,19 +258,19 @@ Runs a local server and renders the Readme file located
 at `path` when visited in the browser.
 
 ```python
-serve(path=None, host=None, port=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, autoupdate=True, grip_class=None)
+serve(path=None, host=None, port=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, autoupdate=True, grip_class=None)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
 - `host`: The host to listen on, defaulting to the HOST configuration variable
 - `port`: The port to listen on, defaulting to the PORT configuration variable
-- `gfm`: Whether to render using [GitHub Flavored Markdown][gfm]
-- `context`: The project context to use when `gfm` is true, which
+- `user_content`: Whether to render a document as [user-content][] like user comments or issues
+- `context`: The project context to use when `user_content` is true, which
              takes the form of `username/project`
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
 - `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
-- `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `gfm`)
+- `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `user_content`)
 - `render_inline`: Whether to inline the styles within the HTML file
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `title`: The page title, derived from `path` by default
@@ -283,17 +283,17 @@ serve(path=None, host=None, port=None, gfm=False, context=None, username=None, p
 Writes the specified Readme file to an HTML file with styles and assets inlined.
 
 ```python
-export(path=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=True, out_filename=None, api_url=None, title=None)
+export(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=True, out_filename=None, api_url=None, title=None)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
-- `gfm`: Whether to render using [GitHub Flavored Markdown][gfm]
-- `context`: The project context to use when `gfm` is true, which
+- `user_content`: Whether to render a document as [user-content][] like user comments or issues
+- `context`: The project context to use when `user_content` is true, which
              takes the form of `username/project`
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
 - `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
-- `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `gfm`)
+- `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `user_content`)
 - `render_inline`: Whether to inline the styles within the HTML file (Note: unlike the other API functions, this defaults to `True`)
 - `out_filename`: The filename to write to, `<in_filename>.html` by default
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
@@ -307,17 +307,17 @@ This is the same app used by `serve` and `export` and initializes the cache,
 using the cached styles when available.
 
 ```python
-create_app(path=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None, autoupdate=True, grip_class=None)
+create_app(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None, autoupdate=True, grip_class=None)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
-- `gfm`: Whether to render using [GitHub Flavored Markdown][gfm]
-- `context`: The project context to use when `gfm` is true, which
+- `user_content`: Whether to render a document as [user-content][] like user comments or issues
+- `context`: The project context to use when `user_content` is true, which
              takes the form of `username/project`
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
 - `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
-- `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `gfm`)
+- `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `user_content`)
 - `render_inline`: Whether to inline the styles within the HTML file
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `title`: The page title, derived from `path` by default
@@ -344,12 +344,12 @@ render_app(app, route='/')
 Renders the specified markdown text without caching.
 
 ```python
-render_content(text, gfm=False, context=None, username=None, password=None, render_offline=False, api_url=None, title=None)
+render_content(text, user_content=False, context=None, username=None, password=None, render_offline=False, api_url=None, title=None)
 ```
 
 - `text`: The Markdown text to render
-- `gfm`: Whether to render using [GitHub Flavored Markdown][gfm]
-- `context`: The project context to use when `gfm` is true, which
+- `user_content`: Whether to render a document as [user-content][] like user comments or issues
+- `context`: The project context to use when `user_content` is true, which
              takes the form of `username/project`
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
@@ -364,17 +364,17 @@ Renders the markdown from the specified path or text, without caching,
 and returns an HTML page that resembles the GitHub Readme view.
 
 ```python
-render_page(path=None, gfm=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None)
+render_page(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None)
 ```
 
 - `path`: The path to use for the page title, rendering `'README.md'` if None
-- `gfm`: Whether to render using [GitHub Flavored Markdown][gfm]
-- `context`: The project context to use when `gfm` is true, which
+- `user_content`: Whether to render a document as [user-content][] like user comments or issues
+- `context`: The project context to use when `user_content` is true, which
              takes the form of `username/project`
 - `username`: The user to authenticate with GitHub to extend the API limit
 - `password`: The password to authenticate with GitHub to extend the API limit
 - `render_offline`: Whether to render offline using [Python-Markdown][] (Note: this is a work in progress)
-- `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `gfm`)
+- `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `user_content`)
 - `render_inline`: Whether to inline the styles within the HTML file
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `title`: The page title, derived from `path` by default
@@ -486,6 +486,6 @@ Use this software often? Please consider supporting Grip on
 [personal access token]: https://github.com/settings/tokens/new?scopes=
 [keychain-access]: https://gist.github.com/klmr/3840aa3c12f947e4064c
 [task-lists]: https://github.com/blog/1825-task-lists-in-all-markdown-documents
-[gfm]: http://github.github.com/github-flavored-markdown
+[user-content]: http://github.github.com/github-flavored-markdown
 [python-markdown]: http://github.com/waylan/Python-Markdown
 [twitter]: http://twitter.com/joeyespo

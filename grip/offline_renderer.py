@@ -2,7 +2,7 @@ import markdown
 from .mdx_urlize import UrlizeExtension
 
 
-def render_content(text, gfm=False, context=None):
+def render_content(text, user_content=False, context=None):
     """
     Renders the specified markup locally.
     """
