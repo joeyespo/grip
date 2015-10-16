@@ -31,9 +31,9 @@ STYLE_URLS_SOURCE = 'https://github.com/joeyespo/grip'
 STYLE_URLS_RE = (
     '<link.+href=[\'"]?([^\'" >]+)[\'"]?.+media=[\'"]?(?:screen|all)[\'"]?.'
     '+rel=[\'"]?stylesheet[\'"]?.+/>')
-STYLE_ASSET_URLS_INLINE = ('url\([\'"]?((?:/assets|{0})/[^\'" \)]+)[\'"]?\)'
+STYLE_ASSET_URLS_INLINE = ('url\([\'"]?((?:/static|{0})/[^\'" \)]+)[\'"]?\)'
                            .format(CACHE_URL))
-STYLE_ASSET_PATH = '/assets/octicons/octicons'
+STYLE_ASSET_PATH = '/static/fonts/octicons'
 STYLE_ASSET_URLS_RE = ('url\([\'"]?({}/[^\'" \)]+)[\'"]?\)'
                        .format(STYLE_ASSET_PATH))
 STYLE_ASSET_URLS_SUB = 'url("{0}\\1")'.format(CACHE_URL)

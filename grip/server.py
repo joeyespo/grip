@@ -522,4 +522,6 @@ def _normalize_url(url):
 def _cache_filename(cache_path, url):
     if '#' in url:
         url = url[:url.find('#')]
+    if '?' in url:
+        url = url[:url.find('?')]
     return os.path.join(cache_path, posixpath.basename(url))
