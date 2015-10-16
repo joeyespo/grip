@@ -1,23 +1,18 @@
 {% extends "base.html" %}
 
-{% block title %}
-  {{ title }}
-  {% if title == filename %}
-    - Grip
-  {% endif %}
-{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {%- block styles -%}
-  {%- for style_url in style_urls -%}
-    <link rel="stylesheet" href="{{ style_url }}" />
-  {% endfor -%}
+  {%- for style_url in style_urls %}
+  <link rel="stylesheet" href="{{ style_url }}" />
+  {%- endfor %}
   {%- if styles %}
-    <style>
-      {% for style in styles -%}
-      {{ style|safe }}
-      {% endfor -%}
-    </style>
-  {% endif -%}
+  <style>
+    {%- for style in styles %}
+    {{ style|safe }}
+    {%- endfor %}
+  </style>
+  {%- endif %}
   <style>
     /* Page tweaks */
     .preview-page {
@@ -58,7 +53,7 @@
       }
     }
 
-    function autoupdateContent(eventSourceUrl) {
+    function autorefreshContent(eventSourceUrl) {
       var initialTitle = document.title;
       var contentElement = document.getElementById('grip-content');
       var source = new EventSource(eventSourceUrl);
@@ -83,20 +78,20 @@
 
     showCanonicalImages();
 
-    var autoupdateUrl = document.getElementById('preview-page').getAttribute('data-autoupdate-url');
-    if (autoupdateUrl) {
-      autoupdateContent(autoupdateUrl);
+    var autorefreshUrl = document.getElementById('preview-page').getAttribute('data-autorefresh-url');
+    if (autorefreshUrl) {
+      autorefreshContent(autorefreshUrl);
     }
   </script>
 {%- endblock -%}
 
 {%- block page -%}
-  <div id="preview-page" class="preview-page" data-autoupdate-url="{{ autoupdate_url if autoupdate_url }}">
+  <div id="preview-page" class="preview-page" data-autorefresh-url="{{ autorefresh_url if autorefresh_url }}">
     <div class="container">
-      <div class="repository-with-sidebar repo-container {{ 'with-full-navigation' if not render_wide }}">
+      <div class="repository-with-sidebar repo-container {{ 'with-full-navigation' if not wide_style }}">
 
         {% if user_content %}
-          <div class="discussion-timeline {{ 'wide' if render_wide }}">
+          <div class="discussion-timeline {{ 'wide' if wide_style }}">
             <div class="timeline-comment-wrapper">
               <div class="timeline-comment">
                 <div class="comment">
@@ -112,7 +107,7 @@
         {% else %}
           <div class="repository-content context-loader-container">
             <div id="readme" class="boxed-group flush clearfix announce instapaper_body md">
-              {% if render_title and title %}
+              {% if not user_content and title %}
                 <h3>
                   <span class="octicon octicon-book"></span>
                   {{ title }}

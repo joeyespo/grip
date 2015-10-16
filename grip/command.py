@@ -31,18 +31,20 @@ Options:
                     Default is the public API: https://api.github.com
   --title=<title>   Manually sets the page's title.
                     The default is the filename.
-  --noupdate        Do not automatically update the Readme content when
+  --norefresh       Do not automatically refresh the Readme content when
                     the file changes.
+  --quiet           Do not print to the terminal
 """
 
 from __future__ import print_function
 
 import sys
-from path_and_address import resolve, split_address
+
 from docopt import docopt
-from .server import clear_cache, serve
-from .exporter import export
+from path_and_address import resolve, split_address
+
 from . import __version__
+from .api import clear_cache, export, serve
 
 
 usage = '\n\n\n'.join(__doc__.split('\n\n\n')[1:])
@@ -110,8 +112,8 @@ def main(argv=None, force_utf8=True):
     try:
         serve(path, host, port, args['--user-content'], args['--context'],
               args['--user'], args['--pass'], False, args['--wide'], False,
-              args['--api-url'], args['--browser'], args['--title'],
-              not args['--noupdate'])
+              args['--api-url'], args['--title'], not args['--norefresh'],
+              args['--browser'], args['--quiet'], None)
         return 0
     except ValueError as ex:
         print('Error:', ex)

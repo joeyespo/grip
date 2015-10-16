@@ -9,10 +9,12 @@ this directory or in ~/.grip/settings.py instead.
 
 HOST = 'localhost'
 PORT = 6419
-DEBUG = True
-
-
+DEBUG = False
 DEBUG_GRIP = False
+API_URL = 'https://api.github.com'
+CACHE_DIRECTORY = 'cache-{version}'
+AUTOREFRESH = True
+QUIET = False
 
 
 # Note: For security concerns, please don't save your GitHub password in your
@@ -22,18 +24,5 @@ USERNAME = None
 PASSWORD = None
 
 
-API_URL = 'https://api.github.com'
-CACHE_DIRECTORY = 'cache-{version}'
-CACHE_URL = '/grip-cache'
-STATIC_URL_PATH = '/grip-static'
+# Custom styles
 STYLE_URLS = []
-STYLE_URLS_SOURCE = 'https://github.com/joeyespo/grip'
-STYLE_URLS_RE = (
-    '<link.+href=[\'"]?([^\'" >]+)[\'"]?.+media=[\'"]?(?:screen|all)[\'"]?.'
-    '+rel=[\'"]?stylesheet[\'"]?.+/>')
-STYLE_ASSET_URLS_INLINE = ('url\([\'"]?((?:/static|{0})/[^\'" \)]+)[\'"]?\)'
-                           .format(CACHE_URL))
-STYLE_ASSET_PATH = '/static/fonts/octicons'
-STYLE_ASSET_URLS_RE = ('url\([\'"]?({}/[^\'" \)]+)[\'"]?\)'
-                       .format(STYLE_ASSET_PATH))
-STYLE_ASSET_URLS_SUB = 'url("{0}\\1")'.format(CACHE_URL)
