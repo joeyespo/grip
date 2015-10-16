@@ -15,8 +15,7 @@ Where:
   <address> is what to listen on, of the form <host>[:<port>], or just <port>
 
 Options:
-  --user-content    GitHub-Flavored Markdown, e.g. comments or issues.
-                    Omit this to render as a normal GitHub README file.
+  --user-content    Render as user-content like comments or issues.
   --context=<repo>  The repository context, only taken into account
                     when using --user-content.
   --user=<username> A GitHub username for API authentication.
@@ -26,7 +25,7 @@ Options:
   --export          Exports to <path>.html or README.md instead of
                     serving, optionally using [<address>] as the out
                     file (- for stdout).
-  -b --browser      Option to open a tab in the browser.
+  -b --browser      Open a tab in the browser after the server starts.
   --api-url=<url>   Specify a different base URL for the github API,
                     for example that of a Github Enterprise instance.
                     Default is the public API: https://api.github.com
