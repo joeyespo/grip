@@ -38,7 +38,7 @@
       }
       for (var index = 0; index < images.length; index++) {
         var image = images[index];
-        if (image.getAttribute('data-canonical-src')) {
+        if (image.getAttribute('data-canonical-src') && image.src !== image.getAttribute('data-canonical-src')) {
           image.src = image.getAttribute('data-canonical-src');
         }
       }
@@ -64,6 +64,7 @@
         } else {
           document.title = initialTitle;
           contentElement.innerHTML = msg.content;
+          showCanonicalImages();
         }
       }
     }
