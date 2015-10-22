@@ -60,7 +60,7 @@
       source.onmessage = function(ev) {
         var msg = JSON.parse(ev.data);
         if (msg.updating) {
-          document.title += ' (updating)';
+          document.title = '(Rendering) ' + document.title;
         } else {
           document.title = initialTitle;
           contentElement.innerHTML = msg.content;
