@@ -9,6 +9,7 @@ import re
 import sys
 import threading
 import time
+from traceback import format_exc
 try:
     from urlparse import urlparse, urljoin
 except ImportError:
@@ -276,8 +277,14 @@ class Grip(Flask):
         Retrieves the style URLs from the source and caches them. This
         is called before the first request is dispatched.
         """
-        # Get style URLs
-        self.assets.retrieve_styles(url_for('asset'))
+        try:
+            self.assets.retrieve_styles(url_for('asset'))
+        except Exception as ex:
+            if self.debug:
+                print(format_exc(), file=sys.stderr)
+            else:
+                print(' * Error: could not retrieve styles:', ex,
+                      file=sys.stderr)
 
         # Download styles directly and clear the URLs when inlining
         if self.render_inline:

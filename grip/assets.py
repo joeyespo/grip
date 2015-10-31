@@ -7,7 +7,6 @@ import re
 import sys
 import shutil
 from abc import ABCMeta, abstractmethod
-from traceback import format_exc
 try:
     from urlparse import urljoin
 except ImportError:
@@ -65,36 +64,27 @@ class GitHubAssetManager(AssetManager):
         Gets the specified resource and parses all style URLs and their
         assets in the form of the specified patterns.
         """
-        try:
-            # Check cache
-            if self.cache_path:
-                cached = self._get_cached_style_urls(asset_url)
-                # Skip fetching styles if there's any already cached
-                if cached:
-                    return cached
+        # Check cache
+        if self.cache_path:
+            cached = self._get_cached_style_urls(asset_url)
+            # Skip fetching styles if there's any already cached
+            if cached:
+                return cached
 
-            # Find style URLs
-            r = requests.get(STYLE_URLS_SOURCE)
-            if not 200 <= r.status_code < 300:
-                print('Warning: retrieving styles gave status code',
-                      r.status_code, file=sys.stderr)
-            urls = re.findall(STYLE_URLS_RE, r.text)
+        # Find style URLs
+        r = requests.get(STYLE_URLS_SOURCE)
+        if not 200 <= r.status_code < 300:
+            print('Warning: retrieving styles gave status code',
+                  r.status_code, file=sys.stderr)
+        urls = re.findall(STYLE_URLS_RE, r.text)
 
-            # Cache the styles and their assets
-            if self.cache_path:
-                is_cached = self._cache_contents(urls, asset_url)
-                if is_cached:
-                    urls = self._get_cached_style_urls(asset_url)
+        # Cache the styles and their assets
+        if self.cache_path:
+            is_cached = self._cache_contents(urls, asset_url)
+            if is_cached:
+                urls = self._get_cached_style_urls(asset_url)
 
-            return urls
-        except Exception as ex:
-            # TODO: Extract printing and debug info to app?
-            if self.debug:
-                print(format_exc(), file=sys.stderr)
-            else:
-                print(' * Error: could not retrieve styles:', ex,
-                      file=sys.stderr)
-            return []
+        return urls
 
     def _get_cached_style_urls(self, asset_url):
         """
