@@ -126,9 +126,8 @@ class Grip(Flask):
         """
         Renders the specified cache file.
         """
-        # FUTURE: Use subpath exactly instead of flattening it here
         return send_from_directory(
-            self.assets.cache_path, posixpath.basename(subpath))
+            self.assets.cache_path, self.assets.cache_filename(subpath))
 
     def _render_page(self, subpath=None):
         # Normalize the subpath

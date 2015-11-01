@@ -13,6 +13,7 @@ except ImportError:
     from urllib.parse import urljoin
 
 import requests
+from flask import safe_join
 
 from .constants import (
     STYLE_URLS_SOURCE, STYLE_URLS_RE, STYLE_ASSET_URLS_RE,
@@ -33,12 +34,23 @@ class AssetManager(object):
         self.style_urls = list(style_urls) if style_urls else []
         self.styles = []
 
+    def _stip_url_params(self, url):
+        return url.rsplit('?', 1)[0].rsplit('#', 1)[0]
+
     def clear(self):
         """
         Clears the asset cache.
         """
         if self.cache_path and os.path.exists(self.cache_path):
             shutil.rmtree(self.cache_path)
+
+    def cache_filename(self, url):
+        """
+        Gets a suitable relative filename for the specified URL.
+        """
+        # FUTURE: Use url exactly instead of flattening it here
+        url = posixpath.basename(url)
+        return self._stip_url_params(url)
 
     @abstractmethod
     def retrieve_styles(self, asset_url_path):
@@ -119,7 +131,6 @@ class GitHubAssetManager(AssetManager):
         asset_urls = []
         for style_url in style_urls:
             print(' * Downloading style', style_url, file=sys.stderr)
-            filename = self._cache_filename(style_url)
             r = requests.get(style_url)
             if not 200 <= r.status_code < 300:
                 print(' -> Warning: Style request responded with',
@@ -136,11 +147,11 @@ class GitHubAssetManager(AssetManager):
                 asset_content)
             # Prepare cache
             if files is not None:
+                filename = self.cache_filename(style_url)
                 files[filename] = contents.encode('utf-8')
 
         for asset_url in asset_urls:
             print(' * Downloading asset', asset_url, file=sys.stderr)
-            filename = self._cache_filename(asset_url)
             # Retrieve binary file and show message
             r = requests.get(asset_url, stream=True)
             if not 200 <= r.status_code < 300:
@@ -150,6 +161,7 @@ class GitHubAssetManager(AssetManager):
                 continue
             # Prepare cache
             if files is not None:
+                filename = self.cache_filename(asset_url)
                 files[filename] = r.raw.read(decode_content=True)
 
         # Skip caching if something went wrong to try again next time
@@ -157,24 +169,16 @@ class GitHubAssetManager(AssetManager):
             return False
 
         # Cache files if all downloads were successful
+        cache = {}
+        for relname in files:
+            cache[safe_join(self.cache_path, relname)] = files[relname]
         if not os.path.exists(self.cache_path):
             os.makedirs(self.cache_path)
-        for filename in files:
-            self._write_binary_file(filename, files[filename])
+        for filename in cache:
+            self._write_binary_file(filename, cache[filename])
 
         print(' * Cached all downloads in', self.cache_path, file=sys.stderr)
         return True
-
-    def _cache_filename(self, url):
-        if '?' in url:
-            url = url[:url.find('?')]
-        if '#' in url:
-            url = url[:url.find('#')]
-        # FUTURE: Use url exactly instead of flattening it here
-        return os.path.join(self.cache_path, posixpath.basename(url))
-
-    def _normalize_base_url(self, url):
-        return (url or '/').rstrip('/') or '/'
 
     def retrieve_styles(self, asset_url_path):
         """
