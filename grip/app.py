@@ -11,9 +11,9 @@ import threading
 import time
 from traceback import format_exc
 try:
-    from urlparse import urlparse, urljoin
+    from urlparse import urlparse
 except ImportError:
-    from urllib.parse import urlparse, urljoin
+    from urllib.parse import urlparse
 
 import requests
 from flask import (
@@ -246,31 +246,35 @@ class Grip(Flask):
         asset64_string = asset64_bytes.decode('ascii')
         return 'data:{0};base64,{1}'.format(content_type, asset64_string)
 
-    def _normalize_url(self, url):
-        return url.rsplit('?', 1)[0].rsplit('#', 1)[0]
+    def _match_asset(self, match):
+        url = match.group(1)
+        ext = os.path.splitext(url)[1][1:]
+        return 'url({0})'.format(
+            self._to_data_url(url, 'font/' + ext))
 
-    def _get_inline_styles(self, style_urls):
+    def _get_styles(self, style_urls, asset_url_path):
         """
         Gets the content of the given list of style URLs and
         inlines assets.
         """
-        asset_url = url_for('asset').rstrip('/') or '/'
-
         styles = []
         for style_url in style_urls:
-
-            def match_asset(match):
-                url = urljoin(style_url, self._normalize_url(match.group(1)))
-                ext = os.path.splitext(url)[1][1:]
-                return 'url({0})'.format(
-                    self._to_data_url(url, 'font/' + ext))
-
-            urls_inline = STYLE_ASSET_URLS_INLINE_FORMAT.format(asset_url)
+            urls_inline = STYLE_ASSET_URLS_INLINE_FORMAT.format(
+                asset_url_path.rstrip('/'))
             asset_content = self._download(style_url)
-            content = re.sub(urls_inline, match_asset, asset_content)
+            content = re.sub(urls_inline, self._match_asset, asset_content)
             styles.append(content)
 
         return styles
+
+    def _inline_styles(self):
+        """
+        Downloads the assets from the style URL list, clears it, and adds
+        each style with its embedded asset to the literal style list.
+        """
+        styles = self._get_styles(self.assets.style_urls, url_for('asset'))
+        self.assets.styles.extend(styles)
+        self.assets.style_urls[:] = []
 
     def retrieve_styles(self):
         """
@@ -285,13 +289,8 @@ class Grip(Flask):
             else:
                 print(' * Error: could not retrieve styles:', ex,
                       file=sys.stderr)
-
-        # Download styles directly and clear the URLs when inlining
         if self.render_inline:
-            # TODO: Refactor and move to asset manager
-            self.assets.styles.extend(
-                self._get_inline_styles(self.assets.style_urls))
-            self.assets.style_urls[:] = []
+            self._inline_styles()
 
     def default_renderer(self):
         """

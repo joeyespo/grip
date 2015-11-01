@@ -41,10 +41,10 @@ class AssetManager(object):
             shutil.rmtree(self.cache_path)
 
     @abstractmethod
-    def retrieve_styles(self, asset_url):
+    def retrieve_styles(self, asset_url_path):
         """
-        Get style URLs from the source HTML page and specified cached
-        asset base URL.
+        Get style URLs from the source HTML page and specified cached asset
+        URL path.
         """
         pass
 
@@ -59,14 +59,14 @@ class GitHubAssetManager(AssetManager):
         super(GitHubAssetManager, self).__init__(cache_path, style_urls)
         self.debug = debug if debug is not None else False
 
-    def _get_style_urls(self, asset_url):
+    def _get_style_urls(self, asset_url_path):
         """
         Gets the specified resource and parses all style URLs and their
         assets in the form of the specified patterns.
         """
         # Check cache
         if self.cache_path:
-            cached = self._get_cached_style_urls(asset_url)
+            cached = self._get_cached_style_urls(asset_url_path)
             # Skip fetching styles if there's any already cached
             if cached:
                 return cached
@@ -80,13 +80,13 @@ class GitHubAssetManager(AssetManager):
 
         # Cache the styles and their assets
         if self.cache_path:
-            is_cached = self._cache_contents(urls, asset_url)
+            is_cached = self._cache_contents(urls, asset_url_path)
             if is_cached:
-                urls = self._get_cached_style_urls(asset_url)
+                urls = self._get_cached_style_urls(asset_url_path)
 
         return urls
 
-    def _get_cached_style_urls(self, asset_url):
+    def _get_cached_style_urls(self, asset_url_path):
         """
         Gets the URLs of the cached styles.
         """
@@ -98,7 +98,7 @@ class GitHubAssetManager(AssetManager):
             return []
         except OSError:
             return []
-        return [posixpath.join(asset_url, style)
+        return [posixpath.join(asset_url_path, style)
                 for style in cached_styles
                 if style.endswith('.css')]
 
@@ -109,7 +109,7 @@ class GitHubAssetManager(AssetManager):
         with open(filename, 'wb') as f:
             f.write(data)
 
-    def _cache_contents(self, style_urls, asset_url):
+    def _cache_contents(self, style_urls, asset_url_path):
         """
         Fetches the given URLs and caches their contents
         and their assets in the given directory.
@@ -132,7 +132,7 @@ class GitHubAssetManager(AssetManager):
                 asset_urls.append(urljoin(style_url, url))
             contents = re.sub(
                 STYLE_ASSET_URLS_RE,
-                STYLE_ASSET_URLS_SUB_FORMAT.format(asset_url),
+                STYLE_ASSET_URLS_SUB_FORMAT.format(asset_url_path.rstrip('/')),
                 asset_content)
             # Prepare cache
             if files is not None:
@@ -176,10 +176,11 @@ class GitHubAssetManager(AssetManager):
     def _normalize_base_url(self, url):
         return (url or '/').rstrip('/') or '/'
 
-    def retrieve_styles(self, asset_url):
+    def retrieve_styles(self, asset_url_path):
         """
         Get style URLs from the source HTML page and specified cached
         asset base URL.
         """
-        self.style_urls.extend(
-            self._get_style_urls(self._normalize_base_url(asset_url)))
+        if not asset_url_path.endswith('/'):
+            asset_url_path += '/'
+        self.style_urls.extend(self._get_style_urls(asset_url_path))
