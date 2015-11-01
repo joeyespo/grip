@@ -114,13 +114,6 @@ class GitHubAssetManager(AssetManager):
                 for style in cached_styles
                 if style.endswith('.css')]
 
-    def _write_binary_file(self, filename, data):
-        """
-        Creates the specified file and writes binary data to it.
-        """
-        with open(filename, 'wb') as f:
-            f.write(data)
-
     def _cache_contents(self, style_urls, asset_url_path):
         """
         Fetches the given URLs and caches their contents
@@ -175,8 +168,8 @@ class GitHubAssetManager(AssetManager):
         if not os.path.exists(self.cache_path):
             os.makedirs(self.cache_path)
         for filename in cache:
-            self._write_binary_file(filename, cache[filename])
-
+            with open(filename, 'wb') as f:
+                f.write(cache[filename])
         print(' * Cached all downloads in', self.cache_path, file=sys.stderr)
         return True
 
