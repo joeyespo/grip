@@ -305,14 +305,11 @@ class Grip(Flask):
 
         This is only used if asset_manager is set to None in the constructor.
         """
-        # TODO: Finish this
+        cache_path = None
         cache_directory = self.config['CACHE_DIRECTORY']
-        if cache_directory is not None:
-            cache_path = os.path.join(
-                self.instance_path,
-                cache_directory.format(version=__version__))
-        else:
-            cache_path = None
+        if cache_directory:
+            cache_directory = cache_directory.format(version=__version__)
+            cache_path = os.path.join(self.instance_path, cache_directory)
         return GitHubAssetManager(
             cache_path, self.config['STYLE_URLS'], self.config['DEBUG_GRIP'])
 
