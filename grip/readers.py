@@ -140,7 +140,7 @@ class DirectoryReader(ReadmeReader):
         if subpath is None:
             return self.filename
 
-        # Convert URL path to OS-specific path
+        # Convert URL to OS-specific paths
         return os.path.join(*posixpath.split(subpath))
 
     def last_updated(self, subpath=None):
@@ -189,33 +189,35 @@ class TextReader(ReadmeReader):
     """
     Reads Readme content from STDIN.
     """
-    def __init__(self, text):
+    def __init__(self, text, filename=None):
         super(TextReader, self).__init__()
         self.text = text
+        self.filename = filename
 
     def filename_for(self, subpath):
         """
         Returns None.
         """
-        return DEFAULT_FILENAMES[0] if not subpath else None
+        # Providing a subpath for text readers is not supported, return None
+        if subpath is not None:
+            return None
+        return self.filename if self.filename else DEFAULT_FILENAMES[0]
 
     def read(self, subpath=None):
         """
         Returns the UTF-8 Readme content, or None if subpath is specified.
         """
+        # Providing a subpath for text readers is not supported, return None
         if subpath is not None:
-            return None, None
-        # TODO: Delete this
-        if hasattr(self.text, 'read'):
-            return self.text.read(), None
-        return str(self.text), None
+            return None
+        return str(self.text)
 
 
 class StdinReader(TextReader):
     """
     Reads Readme text from STDIN.
     """
-    def __init__(self):
+    def __init__(self, filename=None):
         # Handle debug mode special case
         if self.config['DEBUG_GRIP']:
             text = (os.environ['GRIP_STDIN_TEXT']
@@ -226,4 +228,4 @@ class StdinReader(TextReader):
         else:
             text = sys.stdin.read()
 
-        super(StdinReader, self).__init__(text)
+        super(StdinReader, self).__init__(text, filename)
