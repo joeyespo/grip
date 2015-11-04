@@ -15,23 +15,17 @@ def create_app(path=None, user_content=False, context=None, username=None,
                password=None, render_offline=False, render_wide=False,
                render_inline=False, api_url=None, title=None, text=None,
                autorefresh=None, quiet=None, grip_class=None):
+    # Customize the app
     if grip_class is None:
         grip_class = Grip
 
-    # Find the file
-    use_stdin = path == '-' and text is None
-    if path == '-':
-        path = None
-    force_resolve = text is not None or use_stdin
-    in_filename = resolve_readme(path, force_resolve)
-
     # Customize the reader
-    if use_stdin:
-        source = StdinReader(in_filename)
-    elif text is not None:
-        source = TextReader(in_filename)
+    if text is not None:
+        source = TextReader(text, resolve_readme(path, True))
+    elif path == '-':
+        source = StdinReader(resolve_readme(None, True))
     else:
-        source = DirectoryReader(in_filename)
+        source = DirectoryReader(resolve_readme(path))
 
     # Customize the renderer
     if render_offline:
@@ -41,9 +35,11 @@ def create_app(path=None, user_content=False, context=None, username=None,
     else:
         renderer = None
 
+    # Optional basic auth
     auth = (username, password) if username or password else None
-    assets = None
-    return grip_class(source, auth, renderer, assets, render_wide,
+
+    # Create the customized app with default asset manager
+    return grip_class(source, auth, renderer, None, render_wide,
                       render_inline, title, autorefresh, quiet)
 
 
