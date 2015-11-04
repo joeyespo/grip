@@ -6,7 +6,7 @@ import sys
 import errno
 
 from .app import Grip
-from .readers import DirectoryReader
+from .readers import DirectoryReader, StdinReader, TextReader
 from .renderers import GitHubRenderer, OfflineRenderer
 from .resolver import resolve_readme
 
@@ -18,25 +18,31 @@ def create_app(path=None, user_content=False, context=None, username=None,
     if grip_class is None:
         grip_class = Grip
 
+    # Find the file
     use_stdin = path == '-' and text is None
     if path == '-':
         path = None
     force_resolve = text is not None or use_stdin
     in_filename = resolve_readme(path, force_resolve)
-    # TODO: StdinReader
-    # TODO: TextReader
 
-    source = DirectoryReader(in_filename)
-    auth = (username, password) if username or password else None
-    renderer = None
-    assets = None
+    # Customize the reader
+    if use_stdin:
+        source = StdinReader(in_filename)
+    elif text is not None:
+        source = TextReader(in_filename)
+    else:
+        source = DirectoryReader(in_filename)
 
     # Customize the renderer
     if render_offline:
         renderer = OfflineRenderer(user_content, context)
     elif user_content or context or api_url:
         renderer = GitHubRenderer(user_content, context, api_url)
+    else:
+        renderer = None
 
+    auth = (username, password) if username or password else None
+    assets = None
     return grip_class(source, auth, renderer, assets, render_wide,
                       render_inline, title, autorefresh, quiet)
 
