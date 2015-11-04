@@ -85,19 +85,20 @@ class Grip(Flask):
         self.title = title
         self.quiet = self.config['QUIET']
 
-        # Contextual attributes
+        # Overridable attributes
         if self.renderer is None:
-            self.renderer = self.default_renderer()
-            if not isinstance(self.renderer, ReadmeRenderer):
+            renderer = self.default_renderer()
+            if not isinstance(renderer, ReadmeRenderer):
                 raise ValueError(
-                    'Expected Grip.default_renderer to return '
-                    'a ReadmeRenderer instance, got None.')
+                    'Expected Grip.default_renderer to return a '
+                    'ReadmeRenderer instance, got {}.'.format(type(renderer)))
+            self.renderer = renderer
         if self.assets is None:
             assets = self.default_asset_manager()
             if not isinstance(assets, AssetManager):
                 raise ValueError(
-                    'Expected Grip.default_asset_manager to return '
-                    'an AssetManager instance, got {}.'.format(type(assets)))
+                    'Expected Grip.default_asset_manager to return an '
+                    'AssetManager instance, got {}.'.format(type(assets)))
             self.assets = assets
 
         # Add missing content types
