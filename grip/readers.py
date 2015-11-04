@@ -218,14 +218,16 @@ class StdinReader(TextReader):
     Reads Readme text from STDIN.
     """
     def __init__(self, filename=None):
-        # Handle debug mode special case
-        if self.config['DEBUG_GRIP']:
-            text = (os.environ['GRIP_STDIN_TEXT']
-                    if os.environ.get('WERKZEUG_RUN_MAIN') == 'true'
-                    else sys.stdin.read())
-            if not os.environ.get('WERKZEUG_RUN_MAIN'):
-                os.environ['GRIP_STDIN_TEXT'] = text
-        else:
-            text = sys.stdin.read()
+        super(StdinReader, self).__init__(None, filename)
 
-        super(StdinReader, self).__init__(text, filename)
+    def read(self, subpath=None):
+        """
+        Returns the UTF-8 Readme content, or None if subpath is specified.
+        """
+        if self.text is None and subpath is None:
+            self.text = self.read_stdin()
+        return super(StdinReader, self).read(subpath)
+
+    def read_stdin(self):
+        """Reads stdin until the end of input."""
+        return sys.stdin.read()
