@@ -168,10 +168,7 @@ class DirectoryReader(ReadmeReader):
         Returns the UTF-8 content of the normalized subpath, or None if
         subpath does not exist.
         """
-        if subpath is None:
-            return self.read_text_file(self.filename)
-
-        # Resolve filename
+        # Resolve file
         filename = safe_join(self.directory, self.filename_for(subpath))
         if os.path.isdir(filename):
             filename = find_file(filename)
