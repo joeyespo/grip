@@ -175,51 +175,44 @@ class DirectoryReader(ReadmeReader):
             if filename is None:
                 return None
 
-        # Read UTF-8 text or binary file
-        is_text = not self.is_binary(subpath)
-        return (self.read_text_file(filename)
-                if is_text
-                else self.read_binary_file(filename))
+        # Read binary or UTF-8 text file
+        if self.is_binary(subpath):
+            return self.read_binary_file(filename)
+        return self.read_text_file(filename)
 
 
 class TextReader(ReadmeReader):
     """
     Reads Readme content from the provided unicode string.
     """
-    def __init__(self, text, filename=None):
+    def __init__(self, text, display_filename=None):
+        if display_filename is None:
+            display_filename = DEFAULT_FILENAMES[0]
         super(TextReader, self).__init__()
         self.text = text
-        self.filename = filename
+        self.display_filename = display_filename
 
     def filename_for(self, subpath):
         """
-        Returns None.
+        Returns the display filename when no subpath is specified;
+        otherwise, None since subpaths is not supported for text readers.
         """
-        # Providing a subpath for text readers is not supported, return None
-        if subpath is not None:
-            return None
-
-        # Return the implied or explicitly provided filename
-        return self.filename if self.filename else DEFAULT_FILENAMES[0]
+        return self.display_filename if subpath is None else None
 
     def read(self, subpath=None):
         """
-        Returns the UTF-8 Readme content, or None if subpath is specified.
+        Returns the UTF-8 Readme content when no subpath is specified;
+        otherwise, None since subpaths is not supported for text readers.
         """
-        # Providing a subpath for text readers is not supported, return None
-        if subpath is not None:
-            return None
-
-        # Return the provided text
-        return self.text
+        return self.text if subpath is None else None
 
 
 class StdinReader(TextReader):
     """
     Reads Readme text from STDIN.
     """
-    def __init__(self, filename=None):
-        super(StdinReader, self).__init__(None, filename)
+    def __init__(self, display_filename=None):
+        super(StdinReader, self).__init__(None, display_filename)
 
     def read(self, subpath=None):
         """
@@ -235,6 +228,7 @@ class StdinReader(TextReader):
         Reads STDIN until the end of input and returns a unicode string.
         """
         text = sys.stdin.read()
+        # Decode the bytes returned from earlier Python STDIN implementations
         if sys.version_info.major < 3 and text is not None:
             text = text.decode(sys.stdin.encoding)
         return text
