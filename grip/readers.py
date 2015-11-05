@@ -187,7 +187,7 @@ class DirectoryReader(ReadmeReader):
 
 class TextReader(ReadmeReader):
     """
-    Reads Readme content from STDIN.
+    Reads Readme content from the provided unicode string.
     """
     def __init__(self, text, filename=None):
         super(TextReader, self).__init__()
@@ -201,6 +201,8 @@ class TextReader(ReadmeReader):
         # Providing a subpath for text readers is not supported, return None
         if subpath is not None:
             return None
+
+        # Return the implied or explicitly provided filename
         return self.filename if self.filename else DEFAULT_FILENAMES[0]
 
     def read(self, subpath=None):
@@ -210,7 +212,9 @@ class TextReader(ReadmeReader):
         # Providing a subpath for text readers is not supported, return None
         if subpath is not None:
             return None
-        return str(self.text)
+
+        # Return the provided text
+        return self.text
 
 
 class StdinReader(TextReader):
@@ -224,10 +228,16 @@ class StdinReader(TextReader):
         """
         Returns the UTF-8 Readme content, or None if subpath is specified.
         """
+        # Lazily read STDIN
         if self.text is None and subpath is None:
             self.text = self.read_stdin()
         return super(StdinReader, self).read(subpath)
 
     def read_stdin(self):
-        """Reads stdin until the end of input."""
-        return sys.stdin.read()
+        """
+        Reads STDIN until the end of input and returns a unicode string.
+        """
+        text = sys.stdin.read()
+        if sys.version_info.major < 3 and text is not None:
+            text = text.decode(sys.stdin.encoding)
+        return text
