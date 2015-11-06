@@ -10,8 +10,7 @@ from abc import ABCMeta, abstractmethod
 
 from flask import safe_join
 
-from .constants import DEFAULT_FILENAMES
-from .resolver import find_file
+from .resolver import find_file, resolve_readme
 
 
 class ReadmeReader(object):
@@ -85,7 +84,7 @@ class DirectoryReader(ReadmeReader):
     """
     def __init__(self, path=None):
         super(DirectoryReader, self).__init__()
-        self.path = path
+        self.path = resolve_readme(path)
         # TODO: Resolve in_filename
         in_filename = path
         self.filename = in_filename
@@ -186,11 +185,9 @@ class TextReader(ReadmeReader):
     Reads Readme content from the provided unicode string.
     """
     def __init__(self, text, display_filename=None):
-        if display_filename is None:
-            display_filename = DEFAULT_FILENAMES[0]
         super(TextReader, self).__init__()
         self.text = text
-        self.display_filename = display_filename
+        self.display_filename = resolve_readme(display_filename, True)
 
     def filename_for(self, subpath):
         """

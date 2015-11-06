@@ -21,11 +21,11 @@ def create_app(path=None, user_content=False, context=None, username=None,
 
     # Customize the reader
     if text is not None:
-        source = TextReader(text, resolve_readme(path, True))
+        source = TextReader(text, path)
     elif path == '-':
-        source = StdinReader(resolve_readme(None, True))
+        source = StdinReader()
     else:
-        source = DirectoryReader(resolve_readme(path))
+        source = DirectoryReader(path)
 
     # Customize the renderer
     if render_offline:
