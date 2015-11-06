@@ -39,12 +39,15 @@ class Grip(Flask):
                  assets=None, render_wide=None, render_inline=None, title=None,
                  autorefresh=None, quiet=None, grip_url=None,
                  static_url_path=None, instance_path=None, **kwargs):
+        # Defaults
+        if source is None or isinstance(source, basestring):
+            source = DirectoryReader(source)
+        if render_wide is None:
+            render_wide = False
+        if render_inline is None:
+            render_inline = False
+
         # Defaults from ENV
-        if instance_path is None:
-            instance_path = os.environ.get('GRIPHOME')
-            if instance_path is None:
-                instance_path = DEFAULT_GRIPHOME
-        instance_path = os.path.abspath(os.path.expanduser(instance_path))
         if grip_url is None:
             grip_url = os.environ.get('GRIPURL')
             if grip_url is None:
@@ -52,6 +55,11 @@ class Grip(Flask):
         grip_url = grip_url.rstrip('/')
         if static_url_path is None:
             static_url_path = posixpath.join(grip_url, 'static')
+        if instance_path is None:
+            instance_path = os.environ.get('GRIPHOME')
+            if instance_path is None:
+                instance_path = DEFAULT_GRIPHOME
+        instance_path = os.path.abspath(os.path.expanduser(instance_path))
 
         # Flask application
         super(Grip, self).__init__(
@@ -63,10 +71,10 @@ class Grip(Flask):
             os.path.join(instance_path, 'settings.py'), silent=True)
 
         # Defaults from settings
-        if render_inline is None:
-            render_inline = False
         if autorefresh is None:
             autorefresh = self.config['AUTOREFRESH']
+        if quiet is None:
+            quiet = self.config['QUIET']
 
         # Thread-safe event to signal to the polling threads to exit
         self._run_mutex = threading.Lock()
@@ -75,15 +83,13 @@ class Grip(Flask):
         # Parameterized attributes
         self.auth = auth
         self.autorefresh = autorefresh
-        self.reader = (DirectoryReader(source)
-                       if source is None or isinstance(source, basestring)
-                       else source)
+        self.reader = source
         self.renderer = renderer
         self.assets = assets
         self.render_wide = render_wide
         self.render_inline = render_inline
         self.title = title
-        self.quiet = self.config['QUIET']
+        self.quiet = quiet
 
         # Overridable attributes
         if self.renderer is None:
