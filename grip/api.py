@@ -85,10 +85,11 @@ def render_content(text, user_content=False, context=None, username=None,
     """
     if not render_offline and api_url is None:
         ValueError('Argument api_url is required when not rendering offline.')
-    return (offline_render(text, user_content, context)
-            if render_offline
-            else github_render(text, api_url, user_content, context, username,
-                               password))
+    renderer = (GitHubRenderer(user_content, context, api_url)
+                if not render_offline else
+                OfflineRenderer(user_content, context))
+    auth = (username, password) if username or password else None
+    return renderer.render(text, auth)
 
 
 def export(path=None, user_content=False, context=None, username=None,
