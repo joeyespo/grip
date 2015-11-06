@@ -11,7 +11,6 @@ HOST = 'localhost'
 PORT = 6419
 DEBUG = False
 DEBUG_GRIP = False
-API_URL = 'https://api.github.com'
 CACHE_DIRECTORY = 'cache-{version}'
 AUTOREFRESH = True
 QUIET = False
@@ -22,6 +21,10 @@ QUIET = False
 # https://github.com/settings/tokens/new?scopes=
 USERNAME = None
 PASSWORD = None
+
+
+# Custom GitHub API
+API_URL = None
 
 
 # Custom styles

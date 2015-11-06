@@ -11,6 +11,8 @@ except ImportError:
     markdown = None
     UrlizeExtension = None
 
+from .constants import DEFAULT_API_URL
+
 
 class ReadmeRenderer(object):
     """
@@ -38,6 +40,8 @@ class GitHubRenderer(ReadmeRenderer):
     Renders the specified Readme using the GitHub Markdown API.
     """
     def __init__(self, user_content=None, context=None, api_url=None):
+        if api_url is None:
+            api_url = DEFAULT_API_URL
         super(GitHubRenderer, self).__init__(user_content, context)
         self.api_url = api_url
 

@@ -83,8 +83,6 @@ def render_content(text, user_content=False, context=None, username=None,
     """
     Renders the specified markup and returns the result.
     """
-    if not render_offline and api_url is None:
-        ValueError('Argument api_url is required when not rendering offline.')
     renderer = (GitHubRenderer(user_content, context, api_url)
                 if not render_offline else
                 OfflineRenderer(user_content, context))
