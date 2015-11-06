@@ -1,6 +1,6 @@
 import os
 
-from .constants import DEFAULT_FILENAMES
+from .constants import DEFAULT_FILENAME, DEFAULT_FILENAMES
 
 
 def find_file(path):
@@ -33,7 +33,7 @@ def resolve_readme(path=None, force=False):
         path = find_file(path)
         if path is None:
             if force:
-                return DEFAULT_FILENAMES[0]
+                return DEFAULT_FILENAME
             raise ValueError('No README found at ' + path)
     if not os.path.exists(path) and not force:
         raise ValueError('File not found: ' + path)

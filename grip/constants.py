@@ -8,6 +8,7 @@ SUPPORTED_EXTENSIONS = ['.md', '.markdown']
 DEFAULT_FILENAMES = [title + ext
                      for title in SUPPORTED_TITLES
                      for ext in SUPPORTED_EXTENSIONS]
+DEFAULT_FILENAME = DEFAULT_FILENAMES[0]
 
 
 # The default directory to load Grip settings from
