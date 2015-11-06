@@ -160,7 +160,7 @@ class DirectoryReader(ReadmeReader):
         Gets whether the specified subpath is a supported binary file.
         """
         mimetype = self.mimetype_for(subpath)
-        return mimetype and mimetype.startswith('image/')
+        return mimetype is not None and mimetype.startswith('image/')
 
     def read(self, subpath=None):
         """
