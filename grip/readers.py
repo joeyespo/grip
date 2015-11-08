@@ -90,31 +90,21 @@ class DirectoryReader(ReadmeReader):
         self.filename = in_filename
         self.directory = os.path.dirname(in_filename)
 
-    def read_text_file(self, filename):
+    def _read_text(self, filename):
         """
         Helper that reads the UTF-8 content of the specified file, or
         None if the file doesn't exist. This returns a unicode string.
         """
-        try:
-            with io.open(filename, 'rt', encoding='utf-8') as f:
-                return f.read()
-        except IOError as ex:
-            if ex.errno == errno.ENOENT:
-                return None
-            raise
+        with io.open(filename, 'rt', encoding='utf-8') as f:
+            return f.read()
 
-    def read_binary_file(self, filename):
+    def _read_binary(self, filename):
         """
         Helper that reads the binary content of the specified file, or
         None if the file doesn't exist. This returns a byte string.
         """
-        try:
-            with io.open(filename, 'rb') as f:
-                return f.read()
-        except IOError as ex:
-            if ex.errno == errno.ENOENT:
-                return None
-            raise
+        with io.open(filename, 'rb') as f:
+            return f.read()
 
     def normalize_subpath(self, subpath):
         """
@@ -178,9 +168,15 @@ class DirectoryReader(ReadmeReader):
                 return None
 
         # Read binary or UTF-8 text file
-        if self.is_binary(subpath):
-            return self.read_binary_file(filename)
-        return self.read_text_file(filename)
+        is_binary = self.is_binary(subpath)
+        try:
+            if is_binary:
+                return self._read_binary(filename)
+            return self._read_text(filename)
+        except IOError as ex:
+            if ex.errno == errno.ENOENT:
+                return None
+            raise
 
 
 class TextReader(ReadmeReader):
