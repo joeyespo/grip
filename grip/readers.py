@@ -173,7 +173,8 @@ class DirectoryReader(ReadmeReader):
             if is_binary:
                 return self._read_binary(filename)
             return self._read_text(filename)
-        except IOError as ex:
+        # OSError for Python 3 base class, EnvironmentError for Python 2
+        except (OSError, EnvironmentError) as ex:
             if ex.errno == errno.ENOENT:
                 return None
             raise
