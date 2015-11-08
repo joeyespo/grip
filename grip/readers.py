@@ -10,6 +10,7 @@ from abc import ABCMeta, abstractmethod
 
 from flask import safe_join
 
+from .constants import DEFAULT_FILENAME
 from .resolver import find_file, resolve_readme
 
 
@@ -46,8 +47,7 @@ class ReadmeReader(object):
         Gets the mimetype for the specified subpath.
         """
         if subpath is None:
-            return None
-
+            subpath = DEFAULT_FILENAME
         mimetype, _ = mimetypes.guess_type(subpath)
         return mimetype
 
