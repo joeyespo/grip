@@ -193,14 +193,20 @@ class TextReader(ReadmeReader):
         Returns the display filename when no subpath is specified;
         otherwise, None since subpaths is not supported for text readers.
         """
-        return self.display_filename if subpath is None else None
+        if subpath is not None:
+            return None
+
+        return self.display_filename
 
     def read(self, subpath=None):
         """
         Returns the UTF-8 Readme content when no subpath is specified;
         otherwise, None since subpaths is not supported for text readers.
         """
-        return self.text if subpath is None else None
+        if subpath is not None:
+            return None
+
+        return self.text
 
 
 class StdinReader(TextReader):
@@ -217,6 +223,7 @@ class StdinReader(TextReader):
         # Lazily read STDIN
         if self.text is None and subpath is None:
             self.text = self.read_stdin()
+
         return super(StdinReader, self).read(subpath)
 
     def read_stdin(self):
@@ -224,7 +231,9 @@ class StdinReader(TextReader):
         Reads STDIN until the end of input and returns a unicode string.
         """
         text = sys.stdin.read()
+
         # Decode the bytes returned from earlier Python STDIN implementations
         if sys.version_info.major < 3 and text is not None:
             text = text.decode(sys.stdin.encoding)
+
         return text
