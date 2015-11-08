@@ -6,7 +6,7 @@ from abc import ABCMeta, abstractmethod
 import requests
 try:
     import markdown
-    from .mdx_urlize import UrlizeExtension
+    from .vendor.mdx_urlize import UrlizeExtension
 except ImportError:
     markdown = None
     UrlizeExtension = None
