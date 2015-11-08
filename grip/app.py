@@ -138,7 +138,7 @@ class Grip(Flask):
 
     def _render_page(self, subpath=None):
         # Normalize the subpath
-        normalized = self.reader.normalize(subpath)
+        normalized = self.reader.normalize_subpath(subpath)
         if normalized != subpath:
             return redirect(normalized)
 
@@ -181,7 +181,7 @@ class Grip(Flask):
             abort(404)
 
         # Normalize the subpath
-        normalized = self.reader.normalize(subpath)
+        normalized = self.reader.normalize_subpath(subpath)
         if normalized != subpath:
             return redirect(normalized)
 

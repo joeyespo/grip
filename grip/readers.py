@@ -22,7 +22,7 @@ class ReadmeReader(object):
     def __init__(self):
         super(ReadmeReader, self).__init__()
 
-    def normalize(self, subpath):
+    def normalize_subpath(self, subpath):
         """
         Returns the normalized subpath.
 
@@ -116,9 +116,12 @@ class DirectoryReader(ReadmeReader):
                 return None
             raise
 
-    def normalize(self, subpath):
+    def normalize_subpath(self, subpath):
         """
         Normalizes the specified subpath, or None if subpath is None.
+
+        Raises werkzeug.exceptions.NotFound if the resulting path
+        would fall out of the root directory.
         """
         if subpath is None:
             return None
@@ -129,8 +132,8 @@ class DirectoryReader(ReadmeReader):
             return subpath.rstrip('/')
         elif not subpath.endswith('/'):
             return subpath + '/'
-
-        return subpath
+        else:
+            return subpath
 
     def filename_for(self, subpath):
         """
