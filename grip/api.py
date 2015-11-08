@@ -8,7 +8,6 @@ import errno
 from .app import Grip
 from .readers import DirectoryReader, StdinReader, TextReader
 from .renderers import GitHubRenderer, OfflineRenderer
-from .resolver import resolve_readme
 
 
 def create_app(path=None, user_content=False, context=None, username=None,
@@ -102,7 +101,9 @@ def export(path=None, user_content=False, context=None, username=None,
         if path == '-':
             export_to_stdout = True
         else:
-            out_filename = os.path.splitext(resolve_readme(path))[0] + '.html'
+            filetitle, _ = os.path.splitext(
+                os.path.relpath(DirectoryReader(path).root_filename))
+            out_filename = '{}.html'.format(filetitle)
 
     if not export_to_stdout:
         print('Exporting to', out_filename, file=sys.stderr)
