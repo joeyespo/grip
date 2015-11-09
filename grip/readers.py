@@ -29,15 +29,15 @@ class ReadmeReader(object):
         This allows Readme files to be inferred from directories while
         still allowing relative paths to work properly.
 
-        This returns subpath as-is, implying that no subpaths are
-        identical by default.
+        Override to change the default behavior of returning the
+        specified subpath as-is.
         """
         return subpath
 
     def filename_for(self, subpath):
         """
-        Returns the full relative filename for the specified subpath,
-        or None if the file does not exist.
+        Returns the relative filename for the specified subpath, or None
+        if the file does not exist.
         """
         return subpath
 
@@ -152,6 +152,9 @@ class DirectoryReader(ReadmeReader):
     def normalize_subpath(self, subpath):
         """
         Normalizes the specified subpath, or None if subpath is None.
+
+        This allows Readme files to be inferred from directories while
+        still allowing relative paths to work properly.
 
         Raises werkzeug.exceptions.NotFound if the resulting path
         would fall out of the root directory.
