@@ -30,6 +30,6 @@ STYLE_URLS_RE = (
     '+rel=[\'"]?stylesheet[\'"]?.+/>')
 STYLE_ASSET_URLS_RE = (
     'url\([\'"]?(/static/fonts/octicons/[^\'" \)]+)[\'"]?\)')
-STYLE_ASSET_URLS_SUB_FORMAT = 'url("{}\\1")'
+STYLE_ASSET_URLS_SUB_FORMAT = r'url("{}\1")'
 STYLE_ASSET_URLS_INLINE_FORMAT = (
     'url\([\'"]?((?:/static|{})/[^\'" \)]+)[\'"]?\)')
