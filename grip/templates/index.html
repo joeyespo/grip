@@ -57,14 +57,25 @@
       var initialTitle = document.title;
       var contentElement = document.getElementById('grip-content');
       var source = new EventSource(eventSourceUrl);
+      var isRendering = false;
+
       source.onmessage = function(ev) {
         var msg = JSON.parse(ev.data);
         if (msg.updating) {
+          isRendering = true;
           document.title = '(Rendering) ' + document.title;
         } else {
+          isRendering = false;
           document.title = initialTitle;
           contentElement.innerHTML = msg.content;
           showCanonicalImages();
+        }
+      }
+
+      source.onerror = function(e) {
+        if (e.readyState === EventSource.CLOSED && isRendering) {
+          isRendering = false;
+          document.title = initialTitle;
         }
       }
     }
