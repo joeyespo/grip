@@ -25,7 +25,7 @@ from .assets import AssetManager, GitHubAssetManager
 from .browser import start_browser_when_ready
 from .constants import (
     DEFAULT_GRIPHOME, DEFAULT_GRIPURL, STYLE_ASSET_URLS_INLINE_FORMAT)
-from .exceptions import AlreadyRunningError
+from .exceptions import AlreadyRunningError, ReadmeNotFoundError
 from .readers import DirectoryReader
 from .renderers import GitHubRenderer, ReadmeRenderer
 
@@ -143,13 +143,15 @@ class Grip(Flask):
             return redirect(normalized)
 
         # Get the contextual or overridden title
-        title = ('{} - Grip'.format(self.reader.filename_for(subpath))
-                 if self.title is None
-                 else self.title)
+        title = self.title
+        if title is None:
+            filename = self.reader.filename_for(subpath)
+            title = ' - '.join([filename or '', 'Grip'])
 
         # Read the Readme text or asset
-        data = self.reader.read(subpath)
-        if data is None:
+        try:
+            data = self.reader.read(subpath)
+        except ReadmeNotFoundError:
             abort(404)
 
         # Return binary asset
@@ -214,8 +216,9 @@ class Grip(Flask):
                     if self.reader.is_binary(subpath):
                         return
                     # Read the Readme text
-                    text = self.reader.read(subpath)
-                    if text is None:
+                    try:
+                        text = self.reader.read(subpath)
+                    except ReadmeNotFoundError:
                         return
                     # Render the Readme content
                     content = self.renderer.render(text)

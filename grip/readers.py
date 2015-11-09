@@ -4,14 +4,13 @@ import errno
 import io
 import mimetypes
 import os
-import posixpath
 import sys
 from abc import ABCMeta, abstractmethod
 
 from flask import safe_join
 
-from .constants import DEFAULT_FILENAME
-from .resolver import find_file, resolve_readme
+from .constants import DEFAULT_FILENAMES, DEFAULT_FILENAME
+from .exceptions import ReadmeNotFoundError
 
 
 class ReadmeReader(object):
@@ -82,13 +81,57 @@ class DirectoryReader(ReadmeReader):
     """
     Reads Readme files from URL subpaths.
     """
-    def __init__(self, path=None):
+    def __init__(self, path=None, silent=False):
         super(DirectoryReader, self).__init__()
-        self.path = resolve_readme(path)
-        # TODO: Resolve in_filename
-        in_filename = path
-        self.filename = in_filename
-        self.directory = os.path.dirname(in_filename)
+        root_filename = os.path.abspath(self._resolve_readme(path, silent))
+        self.root_filename = root_filename
+        self.root_directory = os.path.dirname(root_filename)
+
+    def _find_file(self, path, silent=False):
+        """
+        Gets the full path and extension, or None if a README file could not
+        be found at the specified path.
+        """
+        for filename in DEFAULT_FILENAMES:
+            full_path = os.path.join(path, filename) if path else filename
+            if os.path.exists(full_path):
+                return full_path
+
+        # Return default filename if silent
+        if silent:
+            return os.path.join(path, DEFAULT_FILENAME)
+
+        raise ReadmeNotFoundError(path)
+
+    def _resolve_readme(self, path=None, silent=False):
+        """
+        Returns the path if it's a file; otherwise, looks for a compatible
+        README file in the directory specified by path.
+
+        If path is None, the current working directory is used.
+
+        If silent is set, the default relative filename will be returned
+        if path is a directory or None if it does not exist.
+
+        Raises ReadmeNotFoundError if no compatible README file can be
+        found and silent is False.
+        """
+        # Default to current working directory
+        if path is None:
+            path = '.'
+
+        # Normalize the path
+        path = os.path.normpath(path)
+
+        # Resolve README file if path is a directory
+        if os.path.isdir(path):
+            return self._find_file(path, silent)
+
+        # Return path if file exists or if silent
+        if silent or os.path.exists(path):
+            return path
+
+        raise ReadmeNotFoundError(path, 'File not found: ' + path)
 
     def _read_text(self, filename):
         """
@@ -116,8 +159,8 @@ class DirectoryReader(ReadmeReader):
         if subpath is None:
             return None
 
-        # Resolve filename
-        filename = safe_join(self.directory, self.filename_for(subpath))
+        # Add or remove trailing slash to properly support relative links
+        filename = safe_join(self.root_directory, subpath)
         if not os.path.isdir(filename):
             return subpath.rstrip('/')
         elif not subpath.endswith('/'):
@@ -125,28 +168,46 @@ class DirectoryReader(ReadmeReader):
         else:
             return subpath
 
-    def filename_for(self, subpath):
+    def readme_for(self, subpath):
         """
-        Returns the relative filename for the specified subpath.
+        Returns the full path for the README file for the specified
+        subpath, or the root filename if subpath is None.
+
+        Raises ReadmeNotFoundError if a README for the specified subpath
+        does not exist.
+
+        Raises werkzeug.exceptions.NotFound if the resulting path
+        would fall out of the root directory.
         """
         if subpath is None:
-            return self.filename
+            return self.root_filename
 
-        # Convert URL to OS-specific paths
-        return os.path.join(*posixpath.split(subpath))
+        # Join for safety and to convert subpath to normalized OS-specific path
+        filename = safe_join(self.root_directory, subpath)
 
-    def last_updated(self, subpath=None):
+        # Check for existence
+        if not os.path.exists(filename):
+            raise ReadmeNotFoundError(filename)
+
+        # Resolve README file if path is a directory
+        if os.path.isdir(filename):
+            return self._find_file(filename)
+
+        return filename
+
+    def filename_for(self, subpath):
         """
-        Returns the time of the last modification of the Readme or
-        specified subpath. None is returned if the reader doesn't
-        support modification tracking.
+        Returns the relative filename for the specified subpath, or the
+        root filename if subpath is None.
 
-        The return value is a number giving the number of seconds since
-        the epoch (see the time module).
+        Raises werkzeug.exceptions.NotFound if the resulting path
+        would fall out of the root directory.
         """
-        # TODO: Validate / normalize subpath?
-        return os.path.getmtime(
-            subpath if subpath is not None else self.filename)
+        try:
+            filename = self.readme_for(subpath)
+            return os.path.relpath(filename, self.root_directory)
+        except ReadmeNotFoundError:
+            return None
 
     def is_binary(self, subpath=None):
         """
@@ -155,20 +216,34 @@ class DirectoryReader(ReadmeReader):
         mimetype = self.mimetype_for(subpath)
         return mimetype is not None and mimetype.startswith('image/')
 
+    def last_updated(self, subpath=None):
+        """
+        Returns the time of the last modification of the Readme or
+        specified subpath, or None if the file does not exist.
+
+        The return value is a number giving the number of seconds since
+        the epoch (see the time module).
+
+        Raises werkzeug.exceptions.NotFound if the resulting path
+        would fall out of the root directory.
+        """
+        try:
+            return os.path.getmtime(self.readme_for(subpath))
+        except ReadmeNotFoundError:
+            return None
+
     def read(self, subpath=None):
         """
-        Returns the UTF-8 content of the normalized subpath, or None if
-        subpath does not exist.
-        """
-        # Resolve file
-        filename = safe_join(self.directory, self.filename_for(subpath))
-        if os.path.isdir(filename):
-            filename = find_file(filename)
-            if filename is None:
-                return None
+        Returns the UTF-8 content of the normalized subpath.
 
-        # Read binary or UTF-8 text file
+        Raises ReadmeNotFoundError if a README for the specified subpath
+        does not exist.
+
+        Raises werkzeug.exceptions.NotFound if the resulting path
+        would fall out of the root directory.
+        """
         is_binary = self.is_binary(subpath)
+        filename = self.readme_for(subpath)
         try:
             if is_binary:
                 return self._read_binary(filename)
@@ -176,7 +251,7 @@ class DirectoryReader(ReadmeReader):
         # OSError for Python 3 base class, EnvironmentError for Python 2
         except (OSError, EnvironmentError) as ex:
             if ex.errno == errno.ENOENT:
-                return None
+                raise ReadmeNotFoundError(filename)
             raise
 
 
@@ -187,12 +262,12 @@ class TextReader(ReadmeReader):
     def __init__(self, text, display_filename=None):
         super(TextReader, self).__init__()
         self.text = text
-        self.display_filename = resolve_readme(display_filename, True)
+        self.display_filename = display_filename
 
     def filename_for(self, subpath):
         """
-        Returns the display filename when no subpath is specified;
-        otherwise, None since subpaths is not supported for text readers.
+        Returns the display filename, or None if subpath is specified
+        since subpaths are not supported for text readers.
         """
         if subpath is not None:
             return None
@@ -201,11 +276,13 @@ class TextReader(ReadmeReader):
 
     def read(self, subpath=None):
         """
-        Returns the UTF-8 Readme content when no subpath is specified;
-        otherwise, None since subpaths is not supported for text readers.
+        Returns the UTF-8 Readme content.
+
+        Raises ReadmeNotFoundError if subpath is specified since
+        subpaths are not supported for text readers.
         """
         if subpath is not None:
-            return None
+            raise ReadmeNotFoundError(subpath)
 
         return self.text
 
@@ -219,7 +296,10 @@ class StdinReader(TextReader):
 
     def read(self, subpath=None):
         """
-        Returns the UTF-8 Readme content, or None if subpath is specified.
+        Returns the UTF-8 Readme content.
+
+        Raises ReadmeNotFoundError if subpath is specified since
+        subpaths are not supported for text readers.
         """
         # Lazily read STDIN
         if self.text is None and subpath is None:

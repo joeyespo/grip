@@ -23,7 +23,8 @@ def create_app(path=None, user_content=False, context=None, username=None,
 
     # Customize the reader
     if text is not None:
-        source = TextReader(text, path)
+        display_filename = DirectoryReader(path).filename_for(None)
+        source = TextReader(text, display_filename)
     elif path == '-':
         source = StdinReader()
     else:
