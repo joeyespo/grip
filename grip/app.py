@@ -75,6 +75,11 @@ class Grip(Flask):
             autorefresh = self.config['AUTOREFRESH']
         if quiet is None:
             quiet = self.config['QUIET']
+        if auth is None:
+            username = self.config['USERNAME']
+            password = self.config['PASSWORD']
+            if username or password:
+                auth = (username, password)
 
         # Thread-safe event to signal to the polling threads to exit
         self._run_mutex = threading.Lock()
@@ -150,17 +155,22 @@ class Grip(Flask):
 
         # Read the Readme text or asset
         try:
-            data = self.reader.read(subpath)
+            text = self.reader.read(subpath)
         except ReadmeNotFoundError:
             abort(404)
 
         # Return binary asset
         if self.reader.is_binary(subpath):
             mimetype = self.reader.mimetype_for(subpath)
-            return Response(data, mimetype=mimetype)
+            return Response(text, mimetype=mimetype)
 
         # Render the Readme content
-        content = self.renderer.render(data)
+        try:
+            content = self.renderer.render(text, self.auth)
+        except requests.HTTPError as ex:
+            if ex.response.status_code == 403:
+                abort(403)
+            raise
 
         # Inline favicon asset
         favicon = None
@@ -221,7 +231,12 @@ class Grip(Flask):
                     except ReadmeNotFoundError:
                         return
                     # Render the Readme content
-                    content = self.renderer.render(text)
+                    try:
+                        content = self.renderer.render(text, self.auth)
+                    except requests.HTTPError as ex:
+                        if ex.response.status_code == 403:
+                            abort(403)
+                        raise
                     # Return the Readme content
                     yield 'data: {}\r\n\r\n'.format(
                         json.dumps({'content': content}))
@@ -372,10 +387,13 @@ class Grip(Flask):
 
         # Authentication message
         if self.auth and not self.quiet:
-            auth_method = ('credentials: {}'.format(self.renderer.username)
-                           if (isinstance(self.renderer, GitHubRenderer) and
-                               self.renderer.username)
-                           else 'personal access token')
+            if isinstance(self.auth, tuple):
+                username, password = self.auth
+                auth_method = ('credentials: {}'.format(username)
+                               if username
+                               else 'personal access token')
+            else:
+                auth_method = type(self.auth).__name__
             print(' * Using', auth_method, file=sys.stderr)
 
         # Open browser
