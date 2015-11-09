@@ -83,12 +83,8 @@ def main(argv=None, force_utf8=True):
 
     # Clear the cache
     if args['--clear']:
-        try:
-            clear_cache()
-            return 0
-        except ReadmeNotFoundError as ex:
-            print('Error:', ex)
-            return 1
+        clear_cache()
+        return 0
 
     # Export to a file instead of running a server
     if args['--export']:
