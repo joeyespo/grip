@@ -39,7 +39,7 @@ class ReadmeReader(object):
         Returns the relative filename for the specified subpath, or None
         if the file does not exist.
         """
-        return subpath
+        return None
 
     def mimetype_for(self, subpath=None):
         """
