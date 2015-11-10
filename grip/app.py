@@ -335,8 +335,7 @@ class Grip(Flask):
         if cache_directory:
             cache_directory = cache_directory.format(version=__version__)
             cache_path = os.path.join(self.instance_path, cache_directory)
-        return GitHubAssetManager(
-            cache_path, self.config['STYLE_URLS'], self.config['DEBUG_GRIP'])
+        return GitHubAssetManager(cache_path, self.config['STYLE_URLS'])
 
     def add_content_types(self):
         """

@@ -67,9 +67,8 @@ class GitHubAssetManager(AssetManager):
 
     Set cache_path to None to disable caching.
     """
-    def __init__(self, cache_path, style_urls=None, debug=None):
+    def __init__(self, cache_path, style_urls=None):
         super(GitHubAssetManager, self).__init__(cache_path, style_urls)
-        self.debug = debug if debug is not None else False
 
     def _get_style_urls(self, asset_url_path):
         """
