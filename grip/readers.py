@@ -4,6 +4,7 @@ import errno
 import io
 import mimetypes
 import os
+import posixpath
 import sys
 from abc import ABCMeta, abstractmethod
 
@@ -32,7 +33,10 @@ class ReadmeReader(object):
         Override to change the default behavior of returning the
         specified subpath as-is.
         """
-        return subpath
+        if subpath is None:
+            return None
+
+        return posixpath.normpath(subpath)
 
     def filename_for(self, subpath):
         """
@@ -162,14 +166,15 @@ class DirectoryReader(ReadmeReader):
         if subpath is None:
             return None
 
+        # Normalize the subpath
+        subpath = posixpath.normpath(subpath)
+
         # Add or remove trailing slash to properly support relative links
         filename = os.path.normpath(safe_join(self.root_directory, subpath))
-        if not os.path.isdir(filename):
-            return subpath.rstrip('/')
-        elif not subpath.endswith('/'):
-            return subpath + '/'
-        else:
-            return subpath
+        if os.path.isdir(filename):
+            subpath += '/'
+
+        return subpath
 
     def readme_for(self, subpath):
         """
