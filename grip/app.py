@@ -21,7 +21,7 @@ from flask import (
     send_from_directory, url_for)
 
 from . import __version__
-from .assets import AssetManager, GitHubAssetManager
+from .assets import GitHubAssetManager, ReadmeAssetManager
 from .browser import start_browser_when_ready
 from .constants import (
     DEFAULT_GRIPHOME, DEFAULT_GRIPURL, STYLE_ASSET_URLS_INLINE_FORMAT)
@@ -106,10 +106,11 @@ class Grip(Flask):
             self.renderer = renderer
         if self.assets is None:
             assets = self.default_asset_manager()
-            if not isinstance(assets, AssetManager):
+            if not isinstance(assets, ReadmeAssetManager):
                 raise ValueError(
                     'Expected Grip.default_asset_manager to return an '
-                    'AssetManager instance, got {}.'.format(type(assets)))
+                    'ReadmeAssetManager instance, got {}.'.format(
+                        type(assets)))
             self.assets = assets
 
         # Add missing content types

@@ -13,7 +13,7 @@ __version__ = '3.3.0'
 from .api import (
     clear_cache, create_app, export, render_content, render_page, serve)
 from .app import Grip
-from .assets import AssetManager, GitHubAssetManager
+from .assets import GitHubAssetManager, ReadmeAssetManager
 from .command import main
 from .constants import (
     DEFAULT_API_URL, DEFAULT_FILENAMES, DEFAULT_FILENAME, DEFAULT_GRIPHOME,
@@ -31,9 +31,9 @@ __all__ = [
     'STYLE_ASSET_URLS_RE', 'STYLE_ASSET_URLS_SUB_FORMAT', 'STYLE_URLS_RE',
     'STYLE_URLS_SOURCE', 'SUPPORTED_EXTENSIONS', 'SUPPORTED_TITLES',
 
-    'AlreadyRunningError', 'AssetManager', 'DirectoryReader',
-    'GitHubAssetManager', 'GitHubRenderer', 'Grip', 'OfflineRenderer',
-    'ReadmeNotFoundError', 'ReadmeReader', 'ReadmeRenderer', 'StdinReader',
+    'AlreadyRunningError', 'DirectoryReader', 'GitHubAssetManager',
+    'GitHubRenderer', 'Grip', 'OfflineRenderer', 'ReadmeNotFoundError',
+    'ReadmeAssetManager', 'ReadmeReader', 'ReadmeRenderer', 'StdinReader',
     'TextReader',
 
     'clear_cache', 'create_app', 'export', 'main', 'render_content',

@@ -20,7 +20,7 @@ from .constants import (
     STYLE_ASSET_URLS_SUB_FORMAT)
 
 
-class AssetManager(object):
+class ReadmeAssetManager(object):
     """
     Manages the style and font assets rendered with Readme pages.
 
@@ -29,7 +29,7 @@ class AssetManager(object):
     __metaclass__ = ABCMeta
 
     def __init__(self, cache_path, style_urls=None):
-        super(AssetManager, self).__init__()
+        super(ReadmeAssetManager, self).__init__()
         self.cache_path = cache_path
         self.style_urls = list(style_urls) if style_urls else []
         self.styles = []
@@ -61,7 +61,7 @@ class AssetManager(object):
         pass
 
 
-class GitHubAssetManager(AssetManager):
+class GitHubAssetManager(ReadmeAssetManager):
     """
     Reads the styles used for rendering Readme pages.
 
