@@ -100,14 +100,14 @@ class Grip(Flask):
         if self.renderer is None:
             renderer = self.default_renderer()
             if not isinstance(renderer, ReadmeRenderer):
-                raise ValueError(
+                raise TypeError(
                     'Expected Grip.default_renderer to return a '
                     'ReadmeRenderer instance, got {}.'.format(type(renderer)))
             self.renderer = renderer
         if self.assets is None:
             assets = self.default_asset_manager()
             if not isinstance(assets, ReadmeAssetManager):
-                raise ValueError(
+                raise TypeError(
                     'Expected Grip.default_asset_manager to return an '
                     'ReadmeAssetManager instance, got {}.'.format(
                         type(assets)))
