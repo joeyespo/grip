@@ -46,6 +46,7 @@ from . import __version__
 
 
 usage = '\n\n\n'.join(__doc__.split('\n\n\n')[1:])
+version = 'Grip ' + __version__
 
 
 def main(argv=None, force_utf8=True):
@@ -58,7 +59,6 @@ def main(argv=None, force_utf8=True):
 
     if argv is None:
         argv = sys.argv[1:]
-    version = 'Grip ' + __version__
 
     # Show specific errors
     if '-a' in argv or '--address' in argv:
