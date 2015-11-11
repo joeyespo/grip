@@ -75,7 +75,7 @@ class ReadmeReader(object):
     @abstractmethod
     def read(self, subpath=None):
         """
-        Returns the UTF-8 content of the normalized subpath, or None if
+        Returns the UTF-8 content of the specified subpath, or None if
         subpath does not exist.
         """
         pass
@@ -247,7 +247,9 @@ class DirectoryReader(ReadmeReader):
 
     def read(self, subpath=None):
         """
-        Returns the UTF-8 content of the normalized subpath.
+        Returns the UTF-8 content of the specified subpath.
+
+        subpath is expected to already have been normalized.
 
         Raises ReadmeNotFoundError if a README for the specified subpath
         does not exist.
