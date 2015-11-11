@@ -239,6 +239,11 @@ class DirectoryReader(ReadmeReader):
             return os.path.getmtime(self.readme_for(subpath))
         except ReadmeNotFoundError:
             return None
+        # OSError for Python 3 base class, EnvironmentError for Python 2
+        except (OSError, EnvironmentError) as ex:
+            if ex.errno == errno.ENOENT:
+                return None
+            raise
 
     def read(self, subpath=None):
         """
