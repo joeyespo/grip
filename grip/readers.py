@@ -163,7 +163,7 @@ class DirectoryReader(ReadmeReader):
             return None
 
         # Add or remove trailing slash to properly support relative links
-        filename = safe_join(self.root_directory, subpath)
+        filename = os.path.normpath(safe_join(self.root_directory, subpath))
         if not os.path.isdir(filename):
             return subpath.rstrip('/')
         elif not subpath.endswith('/'):
@@ -186,7 +186,7 @@ class DirectoryReader(ReadmeReader):
             return self.root_filename
 
         # Join for safety and to convert subpath to normalized OS-specific path
-        filename = safe_join(self.root_directory, subpath)
+        filename = os.path.normpath(safe_join(self.root_directory, subpath))
 
         # Check for existence
         if not os.path.exists(filename):
