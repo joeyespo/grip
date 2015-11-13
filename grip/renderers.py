@@ -99,6 +99,10 @@ class GitHubRenderer(ReadmeRenderer):
 
         r = requests.post(url, headers=headers, data=data, auth=auth)
         r.raise_for_status()
+
+        # FUTURE: Remove this once GitHub API properly handles Unicode markdown
+        r.encoding = 'utf-8'
+
         return r.text if self.raw else self.patch(r.text)
 
 
