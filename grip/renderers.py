@@ -50,11 +50,13 @@ class GitHubRenderer(ReadmeRenderer):
     """
     Renders the specified Readme using the GitHub Markdown API.
     """
-    def __init__(self, user_content=None, context=None, api_url=None):
+    def __init__(self, user_content=None, context=None, api_url=None,
+                 raw=None):
         if api_url is None:
             api_url = DEFAULT_API_URL
         super(GitHubRenderer, self).__init__(user_content, context)
         self.api_url = api_url
+        self.raw = raw
 
     def patch(self, html):
         """
@@ -89,7 +91,7 @@ class GitHubRenderer(ReadmeRenderer):
 
         r = requests.post(url, headers=headers, data=data, auth=auth)
         r.raise_for_status()
-        return self.patch(r.text)
+        return r.text if self.raw else self.patch(r.text)
 
 
 class OfflineRenderer(ReadmeRenderer):
