@@ -2,6 +2,7 @@ from __future__ import print_function, unicode_literals
 
 import re
 import json
+import sys
 from abc import ABCMeta, abstractmethod
 
 import requests
@@ -75,8 +76,15 @@ class GitHubRenderer(ReadmeRenderer):
         """
         Renders the specified markdown content and embedded styles.
 
+        Raises TypeError if text is not a Unicode string.
         Raises requests.HTTPError if the request fails.
         """
+        # Ensure text is Unicode
+        expected = str if sys.version_info.major >= 3 else unicode
+        if not isinstance(text, expected):
+            raise TypeError(
+                'Expected a Unicode string, got {!r}.'.format(text))
+
         if self.user_content:
             url = '{}/markdown'.format(self.api_url)
             data = {'text': text, 'mode': 'gfm'}
