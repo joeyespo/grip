@@ -17,11 +17,17 @@ def run(*args, **kwargs):
     cmd = [command] + list(args)
     p = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=STDOUT,
               universal_newlines=True)
-    out1, _ = p.communicate(input=stdin)
+    # Sent input as STDIN then close it
+    output, _ = p.communicate(input=stdin)
     p.stdin.close()
+    # Wait for process to terminate
     returncode = p.wait()
-    out2, _ = p.communicate()
-    output = out1 + out2
+    # Capture any more output that occurred during shutdown
+    try:
+        output += p.communicate()[0]
+    except ValueError:
+        pass
+    # Raise exception on failed process calls
     if returncode != 0:
         raise CalledProcessError(returncode, cmd, output=output)
     return output
