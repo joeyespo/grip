@@ -53,7 +53,7 @@ def main(argv=None, force_utf8=True):
     """
     The entry point of the application.
     """
-    if force_utf8 and sys.version_info.major == 2:
+    if force_utf8 and sys.version_info[0] == 2:
         reload(sys)
         sys.setdefaultencoding('utf-8')
 

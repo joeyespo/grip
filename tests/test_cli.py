@@ -4,10 +4,18 @@ Tests the Grip command-line interface.
 
 from __future__ import print_function, unicode_literals
 
+import sys
 from subprocess import PIPE, STDOUT, CalledProcessError, Popen
 
 import pytest
 from grip.command import usage, version
+
+
+if sys.version_info[0] == 2 and sys.version_info[1] < 7:
+    class CalledProcessError(CalledProcessError):
+        def __init__(self, returncode, cmd, output):
+            super(CalledProcessError, self).__init__(returncode, cmd)
+            self.output = output
 
 
 def run(*args, **kwargs):
