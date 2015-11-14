@@ -46,19 +46,19 @@ from . import __version__
 
 
 usage = '\n\n\n'.join(__doc__.split('\n\n\n')[1:])
+version = 'Grip ' + __version__
 
 
 def main(argv=None, force_utf8=True):
     """
     The entry point of the application.
     """
-    if force_utf8 and sys.version_info.major == 2:
+    if force_utf8 and sys.version_info[0] == 2:
         reload(sys)
         sys.setdefaultencoding('utf-8')
 
     if argv is None:
         argv = sys.argv[1:]
-    version = 'Grip ' + __version__
 
     # Show specific errors
     if '-a' in argv or '--address' in argv:
