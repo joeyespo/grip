@@ -10,6 +10,5 @@ python:
   - "3.5"
   - "pypy3"
 install:
-  - "pip install -r requirements.txt"
-  - "pip install -e ."
+  - "pip install -e .[tests]"
 script: py.test
