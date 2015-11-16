@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>README.md - Grip</title>
+  <link rel="icon" href="/__/grip/static/favicon.ico" />
+  <style>
+    /* Page tweaks */
+    .preview-page {
+      margin-top: 64px;
+    }
+    /* Discussion tweaks */
+    .discussion-timeline.wide {
+      width: 920px;
+    }
+    .timeline-comment-wrapper > .timeline-comment:after,
+    .timeline-comment-wrapper > .timeline-comment:before {
+      content: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div id="preview-page" class="preview-page" data-autorefresh-url="">
+    <div class="container">
+      <div class="repository-with-sidebar repo-container with-full-navigation">
+
+        
+          <div class="discussion-timeline ">
+            <div class="timeline-comment-wrapper">
+              <div class="timeline-comment">
+                <div class="comment">
+                  <div class="comment-content">
+                    <div id="grip-content" class="comment-body markdown-body markdown-format">
+                      <h1>GitHub Flavored Markdown Test</h1>
+
+<p>This Markdown file contains all the features of <strong>GitHub Flavored Markdown</strong> for<br>
+testing a renderer with.</p>
+
+<p>The features are taken directly from <a href="https://daringfireball.net/projects/markdown/syntax">Daring Fireball</a><br>
+and <a href="https://help.github.com/articles/github-flavored-markdown/">GitHub Flavored Markdown</a>,<br>
+followed by a list of one-offs.</p>
+
+<h2>Inline HTML</h2>
+
+<table>
+  <tbody>
+<tr>
+    <td>Foo</td>
+  </tr>
+  <tr>
+    <td>
+      Note that Markdown formatting syntax is not processed within block-level HTML tags.
+      E.g., you can’t use Markdown-style *emphasis* inside an HTML block.
+    </td>
+  </tr>
+</tbody>
+</table>
+
+<p>Span-level HTML tags — e.g. &lt;span&gt;, &lt;cite&gt;, or &lt;del&gt; — can be used anywhere<br>
+in a Markdown paragraph, list item, or header. If you want, you can even use HTML tags instead<br>
+of Markdown formatting; e.g. if you’d prefer to use HTML &lt;a&gt; or &lt;img&gt; tags instead<br>
+of Markdown’s link or image syntax, go right ahead.</p>
+
+<h4>Testing span, cite, and <del>del</del> tags</h4>
+
+<p>Testing span, cite, and <del>del</del> tags in a paragraph.</p>
+
+<p>And each element in its own list item:</p>
+
+<ul>
+<li>This is within a span tag.</li>
+<li>This is within a cite tag.</li>
+<li><del>This is within a del tag.</del></li>
+</ul>
+
+<h2>Automatic escaping for special characters</h2>
+
+<ul>
+<li>© copyright</li>
+<li>AT&amp;T should render the same as AT&amp;T</li>
+<li>4 &lt; 5 should render the same as 4 &lt; 5</li>
+</ul>
+
+<p>Note that GitHub Flavored Markdown has URL autolinking, which will <em>not</em><br>
+convert <code>&amp;amp;</code>. So these two should yield different links:</p>
+
+<ul>
+<li><a href="http://images.google.com/images?num=30&amp;q=larry+bird">http://images.google.com/images?num=30&amp;q=larry+bird</a></li>
+<li><a href="http://images.google.com/images?num=30&amp;amp;q=larry+bird">http://images.google.com/images?num=30&amp;amp;q=larry+bird</a></li>
+</ul>
+
+<h2>Paragraphs and line breaks</h2>
+
+<p>This is a normal paragraph.</p>
+
+<p>This and the next sentence is separated by a single newline.<br>
+This should be on the same line.</p>
+
+<p>This and the next sentence is joined by a single <code>&lt;br /&gt;</code>. <br><br>
+This should be on a new line, directly below.</p>
+
+<p>These two sentences are separated by two <code>&lt;br /&gt;</code> tags. <br><br><br>
+This should be two lines below.</p>
+
+<p>These two paragraphs are separated by two <code>&lt;br /&gt;</code> tags. <br><br></p>
+
+<p>This should be three lines below.</p>
+
+<h2>Headers</h2>
+
+<p>Here are some headers followed by <a href="https://en.wikipedia.org/wiki/Lorem_ipsum">Lorem Ipsum</a>.</p>
+
+<h1>This is an H1 (Setext-style)</h1>
+
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+
+<h2>This is an H2 (Setext-style)</h2>
+
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+
+<p>The following are atx-style.</p>
+
+<h1>This is an H1</h1>
+
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+
+<h2>This is an H2</h2>
+
+<p>Mauris feugiat, augue vitae sollicitudin vulputate, neque arcu dapibus eros, eget semper lorem ex rhoncus nulla.</p>
+
+<h3>This is an H3</h3>
+
+<p>Etiam sit amet orci sit amet dui mollis molestie.</p>
+
+<h4>This is an H4</h4>
+
+<p>Cras et elit egestas, lacinia est eu, vestibulum enim.</p>
+
+<h5>This is an H5</h5>
+
+<p>Phasellus sed suscipit quam.</p>
+
+<h6>This is an H√36</h6>
+
+<p>Nam rutrum imperdiet purus, sit amet porttitor augue tempor quis.</p>
+
+<h2>Blockquotes</h2>
+
+<p>Email-style blockquotes:</p>
+
+<blockquote>
+<p>This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,<br>
+consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.<br>
+Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.</p>
+
+<p>Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse<br>
+id sem consectetuer libero luctus adipiscing.</p>
+</blockquote>
+
+<p>Putting the &gt; before the first line of a hard-wrapped paragraph:</p>
+
+<blockquote>
+<p>This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,<br>
+consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.<br>
+Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.</p>
+
+<p>Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse<br>
+id sem consectetuer libero luctus adipiscing.</p>
+</blockquote>
+
+<p>Nested blockquotes (i.e. a blockquote-in-a-blockquote):</p>
+
+<blockquote>
+<p>This is the first level of quoting.</p>
+
+<blockquote>
+<p>This is nested blockquote.</p>
+</blockquote>
+
+<p>Back to the first level.</p>
+</blockquote>
+
+<p>Blockquotes containing other Markdown elements:</p>
+
+<blockquote>
+<h2>This is a header.</h2>
+
+<ol>
+<li>  This is the first list item.</li>
+<li>  This is the second list item.</li>
+</ol>
+
+<p>Here's some example code:</p>
+
+<pre><code>return shell_exec("echo $input | $markdown_script");
+</code></pre>
+</blockquote>
+
+<h2>Lists</h2>
+
+<h5>These three lists should be equivalent</h5>
+
+<p>First:</p>
+
+<ul>
+<li>  Red</li>
+<li>  Green</li>
+<li>  Blue</li>
+</ul>
+
+<p>Second:</p>
+
+<ul>
+<li>  Red</li>
+<li>  Green</li>
+<li>  Blue</li>
+</ul>
+
+<p>Third:</p>
+
+<ul>
+<li>  Red</li>
+<li>  Green</li>
+<li>  Blue</li>
+</ul>
+
+<h4>These three ordered lists should be equivalent</h4>
+
+<p>First:</p>
+
+<ol>
+<li> Bird</li>
+<li> McHale</li>
+<li> Parish</li>
+</ol>
+
+<p>Second:</p>
+
+<ol>
+<li> Bird</li>
+<li> McHale</li>
+<li> Parish</li>
+</ol>
+
+<p>Third:</p>
+
+<ol>
+<li>Bird</li>
+<li>McHale</li>
+<li>Parish</li>
+</ol>
+
+<h4>These two lists should be equivalent</h4>
+
+<p>First:</p>
+
+<ul>
+<li>  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,
+viverra nec, fringilla in, laoreet vitae, risus.</li>
+<li>  Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
+Suspendisse id sem consectetuer libero luctus adipiscing.</li>
+</ul>
+
+<p>Second:</p>
+
+<ul>
+<li>  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,
+viverra nec, fringilla in, laoreet vitae, risus.</li>
+<li>  Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
+Suspendisse id sem consectetuer libero luctus adipiscing.</li>
+</ul>
+
+<h4>Paragraphs and lists</h4>
+
+<ul>
+<li>  Bird</li>
+<li>  Magic</li>
+</ul>
+
+<p>Blank line separated:</p>
+
+<ul>
+<li><p>Bird</p></li>
+<li><p>Magic</p></li>
+</ul>
+
+<h4>Paragraphs within lists</h4>
+
+<p>First:</p>
+
+<ol>
+<li>
+<p>This is a list item with two paragraphs. Lorem ipsum dolor<br>
+sit amet, consectetuer adipiscing elit. Aliquam hendrerit<br>
+mi posuere lectus.</p>
+
+<p>Vestibulum enim wisi, viverra nec, fringilla in, laoreet<br>
+vitae, risus. Donec sit amet nisl. Aliquam semper ipsum<br>
+sit amet velit.</p>
+</li>
+<li><p>Suspendisse id sem consectetuer libero luctus adipiscing.</p></li>
+</ol>
+
+<p>Second:</p>
+
+<ul>
+<li>
+<p>This is a list item with two paragraphs.</p>
+
+<p>This is the second paragraph in the list item. You're<br>
+only required to indent the first line. Lorem ipsum dolor<br>
+sit amet, consectetuer adipiscing elit.</p>
+</li>
+<li><p>Another item in the same list.</p></li>
+</ul>
+
+<h4>Blockquote within a list</h4>
+
+<ul>
+<li>
+<p>A list item with a blockquote:</p>
+
+<blockquote>
+<p>This is a blockquote<br>
+inside a list item.</p>
+</blockquote>
+</li>
+</ul>
+
+<h4>Code within a list</h4>
+
+<ul>
+<li>
+<p>A list item with a code block:</p>
+
+<pre><code>&lt;code goes here&gt;
+</code></pre>
+</li>
+</ul>
+
+<h4>Accidental lists</h4>
+
+<ol>
+<li>What a great season. (oops, I wanted a year, not a list)</li>
+</ol>
+
+<p>1986. What a great season. (<em>whew!</em> there we go)</p>
+
+<h2>Code blocks</h2>
+
+<p>This is a normal paragraph:</p>
+
+<pre><code>This is a code block.
+</code></pre>
+
+<p>Here is an example of AppleScript:</p>
+
+<pre><code>tell application "Foo"
+    beep
+end tell
+</code></pre>
+
+<p>Markdown will handle the hassle of encoding the ampersands and angle brackets:</p>
+
+<pre><code>&lt;div class="footer"&gt;
+    &amp;copy; 2004 Foo Corporation
+&lt;/div&gt;
+
+
+def this_is
+  puts "some #{4-space-indent} code"
+end
+</code></pre>
+
+<p><code><br>
+print('Code block')<br>
+</code></p>
+
+<pre>print('Pre block')
+</pre>
+
+<h2>Horizontal rules</h2>
+
+<hr>
+
+<hr>
+
+<hr>
+
+<hr>
+
+<hr>
+
+<h2>Links</h2>
+
+<p>Markdown supports two style of links: inline and reference.</p>
+
+<p>This is <a href="http://joeyespo.com/" title="Title">an example</a> inline link.</p>
+
+<p><a href="http://joeyespo.com/">This link</a> has no title attribute.</p>
+
+<p>See my <a href="/about/">About</a> page for some awesome people (<em>note: broken link</em>).</p>
+
+<p>This is <a href="http://joeyespo.com/" title="Optional Title Here">an example</a> reference-style link.<br>
+This is <a href="http://joeyespo.com/" title="Optional Title Here">an example</a> reference-style link with a space separating the brackets.</p>
+
+<p>These should all be equivalent:</p>
+
+<ul>
+<li><a href="http://joeyespo.com/" title="Optional Title Here">foo 1</a></li>
+<li><a href="http://joeyespo.com/" title="Optional Title Here">foo 2</a></li>
+<li><a href="http://joeyespo.com/" title="Optional Title Here">foo 3</a></li>
+<li><a href="http://joeyespo.com/" title="Optional Title Here">foo 4</a></li>
+<li><a href="http://joeyespo.com/" title="Optional Title Here">foo 5</a></li>
+</ul>
+
+<h2>Emphasis</h2>
+
+<ul>
+<li><em>single asterisks</em></li>
+<li><em>single underscores</em></li>
+<li><strong>double asterisks</strong></li>
+<li><strong>double underscores</strong></li>
+<li>un<em>frigging</em>believable</li>
+<li>*this text is surrounded by literal asterisks*</li>
+</ul>
+
+<h2>Code</h2>
+
+<ul>
+<li>Use the <code>printf()</code> function.</li>
+<li><code>There is a literal backtick (`) here.</code></li>
+<li>A single backtick in a code span: <code>`</code>
+</li>
+<li>A backtick-delimited string in a code span: <code>`foo`</code>
+</li>
+<li>Please don't use any <code>&lt;blink&gt;</code> tags.</li>
+<li>
+<code>&amp;#8212;</code> is the decimal-encoded equivalent of <code>&amp;mdash;</code>
+</li>
+</ul>
+
+<h2>Images</h2>
+
+<ul>
+<li><a href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" target="_blank"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" alt="Alt text" style="max-width:100%;"></a></li>
+<li><a href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" target="_blank"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" alt="Alt text" title="Optional title" style="max-width:100%;"></a></li>
+<li><a href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" target="_blank"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" alt="Alt text" title="Optional title attribute" style="max-width:100%;"></a></li>
+<li>
+<a href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" target="_blank"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" width="32" height="32" style="max-width:100%;"></a>   ← bigger &amp; blurrier</li>
+</ul>
+
+<h2>Automatic links</h2>
+
+<ul>
+<li><a href="http://joeyespo.com/">http://joeyespo.com/</a></li>
+<li><a href="mailto:joe@joeyespo.com">joe@joeyespo.com</a></li>
+</ul>
+
+<h2>Backslash escapes</h2>
+
+<ul>
+<li>*literal asterisks*</li>
+<li>\   backslash</li>
+<li>`   backtick</li>
+<li>*   asterisk</li>
+<li>_   underscore</li>
+<li>{}  curly braces</li>
+<li>[]  square brackets</li>
+<li>()  parentheses</li>
+<li>#   hash mark</li>
+<li>+   plus sign</li>
+<li>-   minus sign (hyphen)</li>
+<li>.   dot</li>
+<li>!   exclamation mark</li>
+</ul>
+
+<h2>GitHub Flavored Markdown</h2>
+
+<p>See <a href="https://help.github.com/articles/github-flavored-markdown/">GitHub Flavored Markdown</a> for details.</p>
+
+<h4>Multiple underscores in words</h4>
+
+<ul>
+<li>wow_great_stuff</li>
+</ul>
+
+<h4>URL autolinking</h4>
+
+<p><a href="http://joeyespo.com">http://joeyespo.com</a></p>
+
+<h4>Strikethrough</h4>
+
+<p><del>Mistaken text.</del></p>
+
+<h4>Fenced code blocks</h4>
+
+<pre><code>function test() {
+  console.log("notice the blank line before this function?");
+}
+</code></pre>
+
+<h4>Syntax highlighting</h4>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-k">print</span>(<span class="pl-s"><span class="pl-pds">'</span>Hello!<span class="pl-pds">'</span></span>)</pre></div>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>JavaScript!<span class="pl-pds">'</span></span>);</pre></div>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>JavaScript (with js)!<span class="pl-pds">'</span></span>);</pre></div>
+
+<pre lang="unmatched_language"><code>console.log('No matching language, but looks like JavaScript.');
+</code></pre>
+
+<h4>Tables</h4>
+
+<p>Simple:</p>
+
+<table>
+<thead>
+<tr>
+<th>First Header</th>
+<th>Second Header</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+</tbody>
+</table>
+
+<p>Pipes:</p>
+
+<table>
+<thead>
+<tr>
+<th>First Header</th>
+<th>Second Header</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+</tbody>
+</table>
+
+<p>Unmatched:</p>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Help</td>
+<td>Display the help window.</td>
+</tr>
+<tr>
+<td>Close</td>
+<td>Closes a window</td>
+</tr>
+</tbody>
+</table>
+
+<p>Inner Markdown:</p>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Help</td>
+<td>
+<del>Display the</del> help window.</td>
+</tr>
+<tr>
+<td>Close</td>
+<td>
+<em>Closes</em> a window</td>
+</tr>
+</tbody>
+</table>
+
+<p>Alignment:</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Left-Aligned</th>
+<th align="center">Center Aligned</th>
+<th align="right">Right Aligned</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">col 3 is</td>
+<td align="center">some wordy text</td>
+<td align="right">$1600</td>
+</tr>
+<tr>
+<td align="left">col 2 is</td>
+<td align="center">centered</td>
+<td align="right">$12</td>
+</tr>
+<tr>
+<td align="left">zebra stripes</td>
+<td align="center">are neat</td>
+<td align="right">$1</td>
+</tr>
+</tbody>
+</table>
+
+<p>Text right below a table.</p>
+
+<h4>HTML</h4>
+
+<p><em>TODO: Test all allowed HTML tags.</em></p>
+
+<h2>Writing on GitHub</h2>
+
+<p>See <a href="https://help.github.com/articles/writing-on-github/">this article</a> for details.</p>
+
+<h4>Newlines</h4>
+
+<p>Roses are red<br>
+Violets are Blue</p>
+
+<h4>Task lists</h4>
+
+<ul class="task-list">
+<li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" checked disabled> <a href="https://github.com/blog/821" class="user-mention">@mentions</a>, #refs, <a href="">links</a>, <strong>formatting</strong>, and <del>tags</del> are supported</li>
+<li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" checked disabled> list syntax is required (any unordered or ordered list supported)</li>
+<li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" checked disabled> this is a complete item</li>
+<li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" disabled> this is an incomplete item</li>
+</ul>
+
+<p>Task lists can be nested to better structure your tasks:</p>
+
+<ul class="task-list">
+<li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" disabled> a bigger project
+
+<ul class="task-list">
+<li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" checked disabled> first subtask #1234</li>
+<li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" disabled> follow up subtask #4321</li>
+<li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" disabled> final subtask cc <a href="https://github.com/blog/821" class="user-mention">@mention</a>
+</li>
+</ul>
+</li>
+<li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" checked disabled> a separate task</li>
+</ul>
+
+<h4>References</h4>
+
+<ul>
+<li>SHA: dbcd7a410ee7489acf92f40641a135fbcf52a768</li>
+<li>User@SHA: joeyespo@dbcd7a410ee7489acf92f40641a135fbcf52a768</li>
+<li>User/Repository@SHA: <a href="https://github.com/joeyespo/grip/commit/dbcd7a410ee7489acf92f40641a135fbcf52a768" class="commit-link">joeyespo/grip@<tt>dbcd7a4</tt></a>
+</li>
+<li>#Num: #135</li>
+<li>GH-Num: GH-135</li>
+<li>User#Num: joeyespo#135</li>
+<li>User/Repository#Num: <a href="https://github.com/joeyespo/grip/pull/135" class="issue-link" title="Add autorefresh">joeyespo/grip#135</a>
+</li>
+</ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+
+      </div>
+    </div>
+  </div>
+  <div>&nbsp;</div>
+  </div><script>
+    function showCanonicalImages() {
+      var images = document.getElementsByTagName('img');
+      if (!images) {
+        return;
+      }
+      for (var index = 0; index < images.length; index++) {
+        var image = images[index];
+        if (image.getAttribute('data-canonical-src') && image.src !== image.getAttribute('data-canonical-src')) {
+          image.src = image.getAttribute('data-canonical-src');
+        }
+      }
+    }
+
+    function scrollToHash() {
+      if (location.hash && !document.querySelector(':target')) {
+        var element = document.getElementById('user-content-' + location.hash.slice(1));
+        if (element) {
+           element.scrollIntoView();
+        }
+      }
+    }
+
+    function autorefreshContent(eventSourceUrl) {
+      var initialTitle = document.title;
+      var contentElement = document.getElementById('grip-content');
+      var source = new EventSource(eventSourceUrl);
+      var isRendering = false;
+
+      source.onmessage = function(ev) {
+        var msg = JSON.parse(ev.data);
+        if (msg.updating) {
+          isRendering = true;
+          document.title = '(Rendering) ' + document.title;
+        } else {
+          isRendering = false;
+          document.title = initialTitle;
+          contentElement.innerHTML = msg.content;
+          showCanonicalImages();
+        }
+      }
+
+      source.onerror = function(e) {
+        if (e.readyState === EventSource.CLOSED && isRendering) {
+          isRendering = false;
+          document.title = initialTitle;
+        }
+      }
+    }
+
+    window.onhashchange = function() {
+      scrollToHash();
+    }
+
+    window.onload = function() {
+      scrollToHash();
+    }
+
+    showCanonicalImages();
+
+    var autorefreshUrl = document.getElementById('preview-page').getAttribute('data-autorefresh-url');
+    if (autorefreshUrl) {
+      autorefreshContent(autorefreshUrl);
+    }
+  </script>
+</body>
+</html>

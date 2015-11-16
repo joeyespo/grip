@@ -60,4 +60,4 @@ def test_bad_command():
 
 # TODO: Figure out how to run the CLI and still capture requests
 # TODO: Test all Grip CLI commands and arguments
-# TODO: Test settings wire-up
+# TODO: Test settings wire-up (settings.py, settings_local.py, ~/.grip)
