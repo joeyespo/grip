@@ -361,7 +361,7 @@ class Grip(Flask):
         if route is None:
             route = '/'
         with self.test_client() as c:
-            response = c.get(route)
+            response = c.get(route, follow_redirects=True)
             encoding = response.charset
             return response.data.decode(encoding)
 
