@@ -12,14 +12,14 @@ from flask import safe_join
 
 from .constants import DEFAULT_FILENAMES, DEFAULT_FILENAME
 from .exceptions import ReadmeNotFoundError
+from .vendor.six import add_metaclass
 
 
+@add_metaclass(ABCMeta)
 class ReadmeReader(object):
     """
     Reads Readme content from a URL subpath.
     """
-    __metaclass__ = ABCMeta
-
     def __init__(self):
         super(ReadmeReader, self).__init__()
 
@@ -329,7 +329,7 @@ class StdinReader(TextReader):
         text = sys.stdin.read()
 
         # Decode the bytes returned from earlier Python STDIN implementations
-        if sys.version_info.major < 3 and text is not None:
+        if sys.version_info[0] < 3 and text is not None:
             text = text.decode(sys.stdin.encoding)
 
         return text

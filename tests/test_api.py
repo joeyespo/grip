@@ -256,7 +256,7 @@ def test_app(monkeypatch, tmpdir):
         assert Grip(zero_path, assets=assets).render('/') == zero_output
         assert Grip(zero_path, assets=assets).render('/x/../') == zero_output
         with Grip(zero_path, assets=assets).test_client() as client:
-            assert client.get('/').data == zero_output
+            assert client.get('/').data.decode('utf-8') == zero_output
         assert len(responses.calls) == 4
 
     with GitHubRequestsMock() as responses:

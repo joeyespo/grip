@@ -36,10 +36,10 @@ class GitHubRequestsMock(responses.RequestsMock):
             },
         }
         self.add_callback(
-            responses.POST, '{}/markdown'.format(DEFAULT_API_URL),
+            responses.POST, '{0}/markdown'.format(DEFAULT_API_URL),
             callback=self._markdown_request)
         self.add_callback(
-            responses.POST, '{}/markdown/raw'.format(DEFAULT_API_URL),
+            responses.POST, '{0}/markdown/raw'.format(DEFAULT_API_URL),
             callback=self._markdown_raw_request)
 
     def _authenticate(self, request):
@@ -65,7 +65,7 @@ class GitHubRequestsMock(responses.RequestsMock):
                 return responses['user-context']
             else:
                 raise ValueError(
-                    'Markdown group not found for user context: {}'.format(
+                    'Markdown group not found for user context: {0}'.format(
                         USER_CONTEXT))
         raise ValueError('Markdown group not found for: {!r}'.format(content))
 

@@ -20,7 +20,7 @@ class ReadmeNotFoundError(NotFoundError):
             errno.ENOENT, 'README not found', path)
 
     def __repr__(self):
-        return '{}({!r}, {!r})'.format(
+        return '{0}({!r}, {!r})'.format(
             type(self).__name__, self.path, self.message)
 
     def __str__(self):
@@ -28,6 +28,6 @@ class ReadmeNotFoundError(NotFoundError):
             return self.message
 
         if self.path is not None:
-            return 'No README found at {}'.format(self.path)
+            return 'No README found at {0}'.format(self.path)
 
         return self.strerror

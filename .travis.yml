@@ -10,4 +10,4 @@ python:
   - "pypy3"
 install:
   - "pip install -e .[tests]"
-script: py.test
+script: py.test -m "not assumption"

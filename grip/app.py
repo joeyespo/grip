@@ -14,6 +14,10 @@ try:
     from urlparse import urlparse
 except ImportError:
     from urllib.parse import urlparse
+try:
+    str_type = basestring
+except NameError:
+    str_type = str
 
 import requests
 from flask import (
@@ -40,7 +44,7 @@ class Grip(Flask):
                  autorefresh=None, quiet=None, grip_url=None,
                  static_url_path=None, instance_path=None, **kwargs):
         # Defaults
-        if source is None or isinstance(source, basestring):
+        if source is None or isinstance(source, str_type):
             source = DirectoryReader(source)
         if render_wide is None:
             render_wide = False
@@ -102,14 +106,14 @@ class Grip(Flask):
             if not isinstance(renderer, ReadmeRenderer):
                 raise TypeError(
                     'Expected Grip.default_renderer to return a '
-                    'ReadmeRenderer instance, got {}.'.format(type(renderer)))
+                    'ReadmeRenderer instance, got {0}.'.format(type(renderer)))
             self.renderer = renderer
         if self.assets is None:
             assets = self.default_asset_manager()
             if not isinstance(assets, ReadmeAssetManager):
                 raise TypeError(
                     'Expected Grip.default_asset_manager to return an '
-                    'ReadmeAssetManager instance, got {}.'.format(
+                    'ReadmeAssetManager instance, got {0}.'.format(
                         type(assets)))
             self.assets = assets
 
@@ -219,9 +223,9 @@ class Grip(Flask):
                     last_updated = updated
                     # Notify user that a refresh is in progress
                     if not self.quiet:
-                        print(' * Change detected in {}, refreshing'
+                        print(' * Change detected in {0}, refreshing'
                               .format(filename))
-                    yield 'data: {}\r\n\r\n'.format(
+                    yield 'data: {0}\r\n\r\n'.format(
                         json.dumps({'updating': True}))
                     # Binary assets not supported
                     if self.reader.is_binary(subpath):
@@ -239,7 +243,7 @@ class Grip(Flask):
                             abort(403)
                         raise
                     # Return the Readme content
-                    yield 'data: {}\r\n\r\n'.format(
+                    yield 'data: {0}\r\n\r\n'.format(
                         json.dumps({'content': content}))
             except GeneratorExit:
                 pass
@@ -389,7 +393,7 @@ class Grip(Flask):
         if self.auth and not self.quiet:
             if isinstance(self.auth, tuple):
                 username, password = self.auth
-                auth_method = ('credentials: {}'.format(username)
+                auth_method = ('credentials: {0}'.format(username)
                                if username
                                else 'personal access token')
             else:

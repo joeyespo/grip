@@ -1,6 +1,6 @@
 # The common titles and supported extensions,
 # as defined by https://github.com/github/markup
-SUPPORTED_TITLES = ['README', 'Home']
+SUPPORTED_TITLES = ['README', 'Readme', 'readme', 'Home']
 SUPPORTED_EXTENSIONS = ['.md', '.markdown']
 
 
@@ -30,6 +30,6 @@ STYLE_URLS_RE = (
     '+rel=[\'"]?stylesheet[\'"]?.+/>')
 STYLE_ASSET_URLS_RE = (
     'url\([\'"]?(/static/fonts/octicons/[^\'" \)]+)[\'"]?\)')
-STYLE_ASSET_URLS_SUB_FORMAT = r'url("{}\1")'
+STYLE_ASSET_URLS_SUB_FORMAT = r'url("{0}\1")'
 STYLE_ASSET_URLS_INLINE_FORMAT = (
-    'url\([\'"]?((?:/static|{})/[^\'" \)]+)[\'"]?\)')
+    'url\([\'"]?((?:/static|{0})/[^\'" \)]+)[\'"]?\)')

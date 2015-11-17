@@ -18,16 +18,16 @@ from flask import safe_join
 from .constants import (
     STYLE_URLS_SOURCE, STYLE_URLS_RE, STYLE_ASSET_URLS_RE,
     STYLE_ASSET_URLS_SUB_FORMAT)
+from .vendor.six import add_metaclass
 
 
+@add_metaclass(ABCMeta)
 class ReadmeAssetManager(object):
     """
     Manages the style and font assets rendered with Readme pages.
 
     Set cache_path to None to disable caching.
     """
-    __metaclass__ = ABCMeta
-
     def __init__(self, cache_path, style_urls=None):
         super(ReadmeAssetManager, self).__init__()
         self.cache_path = cache_path

@@ -14,6 +14,7 @@ except ImportError:
     UrlizeExtension = None
 
 from .constants import DEFAULT_API_URL
+from .vendor.six import add_metaclass
 
 
 INCOMPLETE_RE = re.compile(r'<li>\[ \] (.*?)(<ul.*?>|</li>)', re.DOTALL)
@@ -26,12 +27,11 @@ COMPLETE_SUB = (r'<li class="task-list-item">'
                 r'checked="" disabled=""> \1\2')
 
 
+@add_metaclass(ABCMeta)
 class ReadmeRenderer(object):
     """
     Renders the Readme.
     """
-    __metaclass__ = ABCMeta
-
     def __init__(self, user_content=None, context=None):
         if user_content is None:
             user_content = False
@@ -80,20 +80,20 @@ class GitHubRenderer(ReadmeRenderer):
         Raises requests.HTTPError if the request fails.
         """
         # Ensure text is Unicode
-        expected = str if sys.version_info.major >= 3 else unicode
+        expected = str if sys.version_info[0] >= 3 else unicode
         if not isinstance(text, expected):
             raise TypeError(
                 'Expected a Unicode string, got {!r}.'.format(text))
 
         if self.user_content:
-            url = '{}/markdown'.format(self.api_url)
+            url = '{0}/markdown'.format(self.api_url)
             data = {'text': text, 'mode': 'gfm'}
             if self.context:
                 data['context'] = self.context
             data = json.dumps(data, ensure_ascii=False).encode('utf-8')
             headers = {'content-type': 'application/json; charset=UTF-8'}
         else:
-            url = '{}/markdown/raw'.format(self.api_url)
+            url = '{0}/markdown/raw'.format(self.api_url)
             data = text.encode('utf-8')
             headers = {'content-type': 'text/x-markdown; charset=UTF-8'}
 

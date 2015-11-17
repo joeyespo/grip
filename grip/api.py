@@ -107,7 +107,7 @@ def export(path=None, user_content=False, context=None, username=None,
         else:
             filetitle, _ = os.path.splitext(
                 os.path.relpath(DirectoryReader(path).root_filename))
-            out_filename = '{}.html'.format(filetitle)
+            out_filename = '{0}.html'.format(filetitle)
 
     if not export_to_stdout:
         print('Exporting to', out_filename, file=sys.stderr)
