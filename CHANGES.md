@@ -2,6 +2,69 @@ Grip Changelog
 --------------
 
 
+### Version 4.0.0 (2015-11-18)
+
+##### Notable changes
+
+- Content is now refreshed when the file changes ([#135](https://github.com/joeyespo/grip/pull/135) - thanks, [@markbt][]!)
+- Rename `--gfm` to `--user-content` to reduce confusion ([#139](https://github.com/joeyespo/grip/pull/139))
+- Fix general Readme [Task Lists](https://github.com/blog/1825-task-lists-in-all-markdown-documents) ([#149](https://github.com/joeyespo/grip/issues/149))
+- Rearchitect the internals
+- Add tests
+
+##### Breaking changes (API)
+
+- Reorder API function arguments for consistency
+- Remove `STATIC_URL_PATH` from settings (use `Grip` constructor or the ENV variable instead)
+- Remove `STYLE_URLS_SOURCE` and `STYLE_ASSET_` settings (they're now constants)
+- Remove `CACHE_URL` setting (the cache URL is now `{}/cache.format(GRIPURL)`)
+- Remove `github_renderer.render_content` (use `GitHubRenderer` instead)
+- Remove `offline_renderer.render_content` (use `OfflineRenderer` instead)
+- Remove `read_binary` and `read_text` functions (use `io.open` directly)
+- Remove `resolve_readme` (use `DirectoryReader(path, force).filename_for(None)` instead)
+- Remove `text.read` call in `TextReader.read(text)`
+- Route Grip assets through `/__/grip` by default instead of `/`
+- Raise `ReadmeNotFoundError` when a Readme is not found instead of `ValueError`
+- Require a Unicode string when rendering Markdown
+- Set `DEBUG` to `False` by default in settings
+- Use UPPERCASE for constants
+
+##### Assumptions fixed
+
+- Update URL of GitHub assets
+
+##### Bugs fixed
+
+- Stop `--browser` from consuming all the sockets ([#136](https://github.com/joeyespo/grip/pull/136) - thanks, [@markbt][]!)
+- Fix `--browser` to stop waiting when the server is terminated before it listens
+- Fix `--browser` when listening on `0.0.0.0`
+- Fix Python 2.6
+- Fix Python 3.x with `python -m grip`
+- Allow caching of assets that include query parameters
+- Take the `route` argument into account in `Grip.render` (this was broken in the old `render_app`)
+- Fix rendering Readme containing Unicode by manually decoding UTF-8 from the GitHub response
+
+##### Other changes
+
+- Add `Home.md` as a supported default file title for GitHub Wikis
+- Add `AlreadyRunningError` for calling `Grip.run` while the server is already running
+- Add `ReadmeNotFoundError` for cross-Python-version file-not-found errors
+- Add `Grip`, a subclass of `Flask`
+- Add `ReadmeAssetManager` and `GitHubAssetManager`
+- Add `ReadmeReader`, `DirectoryReader`, `StdinReader`, and `TextReader`
+- Add `ReadmeRenderer`, `GitHubRenderer`, and `OfflineRenderer`
+- Add `grip.command.version` for printing version information (similar to `grip.command.usage`)
+- Print version with `-V`
+- Make `port` and `cancel_event` optional arguments in `wait_and_start_browser`
+- Add `start_browser_when_ready` to wait and start the browser in a background thread
+- Add the `--quiet` CLI option
+- The `GRIPHOME` ENV variable now expands the user directory (`~`), e.g. `~/.config/grip`
+- Add `DEFAULT_API_URL` constant as a fallback for when `api_url` is not specified in `render_content` or `GitHubRenderer`
+- Add `grip_url` and its fallback constant `DEFAULT_GRIPURL` for specifying a route to serve Grip assets from
+- Remove implicit dependencies in `requirements.txt`
+- Readme: Add [Tips section](https://github.com/joeyespo/grip#tips)
+
+
 #### Version 3.3.0 (2015-06-28)
 
 - Enhancement: Add `GRIPHOME` environment variable for alternative `settings.py` locations ([#117](https://github.com/joeyespo/grip/pull/117) - thanks, [@zmwangx][]!)
@@ -169,3 +232,4 @@ Grip Changelog
 [@ssundarraj]: https://github.com/ssundarraj
 [@jlhonora]: https://github.com/jlhonora
 [@akawhy]: https://github.com/akawhy
+[@markbt]: https://github.com/markbt
