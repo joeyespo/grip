@@ -1,6 +1,7 @@
 import socket
-import webbrowser
 import time
+import webbrowser
+from threading import Thread
 
 
 def is_server_running(host, port):
@@ -41,11 +42,28 @@ def start_browser(url):
         pass
 
 
-def wait_and_start_browser(host, port, cancel_event):
+def wait_and_start_browser(host, port=None, cancel_event=None):
     """
     Waits for the server to run and then opens the specified address in
     the browser. Set cancel_event to cancel the wait.
     """
-    host = 'localhost' if host == '0.0.0.0' else host
+    if host == '0.0.0.0':
+        host = 'localhost'
+    if port is None:
+        port = 80
+
     if wait_for_server(host, port, cancel_event):
         start_browser('http://{0}:{1}/'.format(host, port))
+
+
+def start_browser_when_ready(host, port=None, cancel_event=None):
+    """
+    Starts a thread that waits for the server then opens the specified
+    address in the browser. Set cancel_event to cancel the wait. The
+    started thread object is returned.
+    """
+    browser_thread = Thread(
+        target=wait_and_start_browser, args=(host, port, cancel_event))
+    browser_thread.daemon = True
+    browser_thread.start()
+    return browser_thread

@@ -1,8 +1,8 @@
 Grip -- GitHub Readme Instant Preview
 =====================================
 
-[![Downloads/month on PyPI](http://img.shields.io/pypi/dm/grip.svg)][pypi]
 [![Current version on PyPI](http://img.shields.io/pypi/v/grip.svg)][pypi]
+[![Downloads/month on PyPI](http://img.shields.io/pypi/dm/grip.svg)][pypi]
 
 Render local readme files before sending off to GitHub.
 
@@ -188,9 +188,9 @@ $ grip
 Known issues
 ------------
 
-- [ ] GitHub introduced read-only task lists (checkboxes) to all Markdown
+- [x] GitHub introduced read-only task lists (checkboxes) to all Markdown
       documents in repositories and wikis [back in April][task-lists], but
-      [the API][markdown] doesn't respect this yet.
+      [the API][markdown] doesn't respect this yet. *This has been patched*
 
 
 Configuration
@@ -200,21 +200,20 @@ To customize Grip, create `~/.grip/settings.py`, then add one or more of the fol
 
 - `HOST`: The host to use when not provided as a CLI argument, `localhost` by default
 - `PORT`: The port to use when not provided as a CLI argument, `6419` by default
-- `DEBUG`: Whether to use Flask's debugger when an error happens, `True` by default
+- `DEBUG`: Whether to use Flask's debugger when an error happens, `False` by default
 - `DEBUG_GRIP`: Prints extended information when an error happens, `False` by default
+- `API_URL`: Base URL for the github API, for example that of a Github Enterprise instance. `https://api.github.com` by default
+- `CACHE_DIRECTORY`: The directory, relative to `~/.grip`, to place cached assets (this gets run through the following filter: `CACHE_DIRECTORY.format(version=__version__)`), `'cache-{version}'` by default
+- `AUTOREFRESH`: Whether to automatically refresh the Readme content when the file changes, `True` by default
+- `QUIET`: Do not print extended information, `False` by default
+- `STYLE_URLS`: Additional URLs that will be added to the rendered page, `[]` by default
 - `USERNAME`: The username to use when not provided as a CLI argument, `None` by default
 - `PASSWORD`: The password or [personal access token][] to use when not provided as a CLI argument (*Please don't save your passwords here.* Instead, use an access token or drop in this code [grab your password from a password manager][keychain-access]), `None` by default
-- `API_URL`: Base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
-- `CACHE_DIRECTORY`: The directory, relative to `~/.grip`, to place cached assets (this gets run through the following filter: `CACHE_DIRECTORY.format(version=__version__)`), `'cache-{version}'` by default
-- `CACHE_URL`: The URL to serve cached styles and assets from, in case there's a URL conflict, `'/grip-cache'` by default
-- `STATIC_URL_PATH`: The URL to serve static assets from, in case there's a URL conflict, `'/grip-static'` by default
-- `STYLE_URLS`: Additional URLs that will be added to the rendered page, `[]` by default
-- `STYLE_URLS_SOURCE`: The URL to use to locate and download the styles from, `https://github.com/joeyespo/grip` by default
-- `STYLE_URLS_RE`: The regular expression to use to parse the styles from the source
-- `STYLE_ASSET_URLS_RE`: The regular expression to use to parse the assets from the styles
-- `STYLE_ASSET_URLS_SUB`: Replaces the above regular expression with a local URL, as saved in the cache
-- `STYLE_ASSET_URLS_INLINE`: The regular expression to use when inlining assets into the downloaded style
-   Note that this must include both the original and post-`STYLE_ASSET_URLS_SUB` patterns.
+
+#### Environment variables
+
+- `GRIPHOME`: Specify an alternative `settings.py` location, `~/.grip` by default
+- `GRIPURL`: The URL of the Grip server, `/__/grip` by default
 
 #### Advanced
 
@@ -240,6 +239,15 @@ serve(port=8080)
  * Running on http://localhost:8080/
 ```
 
+Run main directly:
+
+```python
+from grip import main
+
+main(argv=['-b', '8080'])
+ * Running on http://localhost:8080/
+```
+
 Or access the underlying Flask application for even more flexibility:
 
 ```python
@@ -258,7 +266,7 @@ Runs a local server and renders the Readme file located
 at `path` when visited in the browser.
 
 ```python
-serve(path=None, host=None, port=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, autoupdate=True, grip_class=None)
+serve(path=None, host=None, port=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, autorefresh=True, browser=False, grip_class=None)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
@@ -274,7 +282,8 @@ serve(path=None, host=None, port=None, user_content=False, context=None, usernam
 - `render_inline`: Whether to inline the styles within the HTML file
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `title`: The page title, derived from `path` by default
-- `autoupdate`: Automatically update the rendered content when the Readme file changes, `True` by default
+- `autorefresh`: Automatically update the rendered content when the Readme file changes, `True` by default
+- `browser`: Open a tab in the browser after the server starts., `False` by default
 - `grip_class`: Use a custom [Grip class](#grip-class)
 
 
@@ -283,7 +292,7 @@ serve(path=None, host=None, port=None, user_content=False, context=None, usernam
 Writes the specified Readme file to an HTML file with styles and assets inlined.
 
 ```python
-export(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=True, out_filename=None, api_url=None, title=None)
+export(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=True, out_filename=None, api_url=None, title=None, grip_class=None)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
@@ -298,6 +307,7 @@ export(path=None, user_content=False, context=None, username=None, password=None
 - `out_filename`: The filename to write to, `<in_filename>.html` by default
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `title`: The page title, derived from `path` by default
+- `grip_class`: Use a custom [Grip class](#grip-class)
 
 
 #### create_app
@@ -307,7 +317,7 @@ This is the same app used by `serve` and `export` and initializes the cache,
 using the cached styles when available.
 
 ```python
-create_app(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None, autoupdate=True, grip_class=None)
+create_app(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None, grip_class=None)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
@@ -322,7 +332,6 @@ create_app(path=None, user_content=False, context=None, username=None, password=
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `title`: The page title, derived from `path` by default
 - `text`: A string or stream of Markdown text to render instead of being loaded from `path` (Note: `path` can be used to set the page title)
-- `autoupdate`: Automatically update the rendered content when the Readme file changes, `True` by default
 - `grip_class`: Use a custom [Grip class](#grip-class)
 
 
@@ -364,7 +373,7 @@ Renders the markdown from the specified path or text, without caching,
 and returns an HTML page that resembles the GitHub Readme view.
 
 ```python
-render_page(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None)
+render_page(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None, grip_class=None)
 ```
 
 - `path`: The path to use for the page title, rendering `'README.md'` if None
@@ -379,19 +388,7 @@ render_page(path=None, user_content=False, context=None, username=None, password
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `title`: The page title, derived from `path` by default
 - `text`: A string or stream of Markdown text to render instead of being loaded from `path` (Note: `path` can be used to set the page title)
-
-#### resolve_readme
-
-Returns the path if it's a file; otherwise, looks for a compatible README file
-in the directory specified by path. If path is None, the current working
-directory is used. If no compatible README can be found, ValueError is raised.
-
-```python
-resolve_readme(path=None, force=False)
-```
-
-- `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
-- `force`: Whether to force a result, even when a readme file is not found
+- `grip_class`: Use a custom [Grip class](#grip-class)
 
 
 #### clear_cache
@@ -399,66 +396,307 @@ resolve_readme(path=None, force=False)
 Clears the cached styles and assets.
 
 ```python
-clear_cache()
+clear_cache(grip_class=None)
+```
+
+#### main
+
+Runs Grip with the specified arguments.
+
+```python
+main(argv=None, force_utf8=True)
+```
+
+- `argv`: The arguments to run with, `sys.argv[1:]` by default
+- `force_utf8`: Sets the default encoding to `utf-8` in the current Python instance. This has no effect on Python 3 since Unicode is handled by default
+
+
+### Classes
+
+#### class Grip(Flask)
+
+A Flask application that can serve a file or directory containing a README.
+
+```python
+Grip(source=None, auth=None, renderer=None, assets=None, render_wide=None, render_inline=None, title=None, autorefresh=None, quiet=None, grip_url=None, static_url_path=None, instance_path=None, **kwargs)
+```
+
+##### default_renderer
+
+Returns the default renderer using the current config. This is only used if
+renderer is set to None in the constructor.
+
+```python
+Grip.default_renderer()
+```
+
+##### default_asset_manager
+
+Returns the default asset manager using the current config. This is only used
+if asset_manager is set to None in the constructor.
+
+```python
+Grip.default_asset_manager()
+```
+
+##### add_content_types
+
+Adds the application/x-font-woff and application/octet-stream content types if
+they are missing. Override to add additional content types on initialization.
+
+```python
+Grip.add_content_types()
+```
+
+##### clear_cache
+
+Clears the downloaded assets.
+
+```python
+Grip.clear_cache()
+```
+
+##### render
+
+Renders the application and returns the HTML unicode that would normally appear
+when visiting in the browser.
+
+```python
+Grip.render(route=None)
+```
+
+- `route`: The route to render, `/` by default
+
+##### run
+
+Starts a server to render the README. This calls [Flask.run][] internally.
+
+```python
+Grip.run(host=None, port=None, debug=None, use_reloader=None, open_browser=False)
+```
+
+- `host`: The hostname to listen on. Set this to `'0.0.0.0'` to have the server
+          available externally as well, `'localhost'` by default
+- `port`: The port of the webserver. Defaults to `6419`
+- `debug`: If given, enable or disable debug mode. See [Flask.debug][].
+- `use_reloader`: Should the server automatically restart the python process
+                  if modules were changed? `False` by default unless the
+                  `DEBUG_GRIP` setting is specified.
+- `open_browser`: Opens the browser to the address when the server starts
+
+
+#### class AlreadyRunningError(RuntimeError)
+
+Raised when `Grip.run` is called while the server is already running.
+
+```python
+AlreadyRunningError()
 ```
 
 
-### Grip class
+#### class ReadmeNotFoundError(NotFoundError or IOError)
 
-A Flask application that provides the following overridable methods.
-
-
-#### read_text
-
-Reads the text content of the specified file. Returns a UTF-8 string.
+Raised when the specified Readme could not be found.
 
 ```python
-read_text(self, filename)
+ReadmeNotFoundError(path=None, message=None)
+```
+
+
+#### class ReadmeAssetManager(object)
+
+Manages the style and font assets rendered with Readme pages. This is an
+abstract base class.
+
+```python
+ReadmeAssetManager(cache_path, style_urls=None)
+```
+
+
+#### class GitHubAssetManager(ReadmeAssetManager)
+
+Manages the style and font assets rendered with Readme pages. Set cache_path to
+None to disable caching.
+
+
+#### class ReadmeReader(object)
+
+Reads Readme content from a URL subpath. This is an abstract base class.
+
+```python
+ReadmeReader()
+```
+
+
+#### class class DirectoryReader(ReadmeReader)
+
+Reads Readme files from URL subpaths.
+
+```python
+DirectoryReader(path=None, silent=False)
+```
+
+
+#### class TextReader(ReadmeReader)
+
+Reads Readme content from the provided unicode string.
+
+```python
+TextReader(text, display_filename=None)
+```
+
+
+#### class StdinReader(TextReader)
+
+Reads Readme text from STDIN.
+
+```python
+StdinReader(display_filename=None)
+```
+
+
+#### class ReadmeRenderer(object)
+
+Renders the Readme. This is an abstract base class.
+
+```python
+ReadmeRenderer(user_content=None, context=None)
+```
+
+
+#### class GitHubRenderer(ReadmeRenderer)
+
+Renders the specified Readme using the GitHub Markdown API.
+
+```python
+GitHubRenderer(user_content=None, context=None, api_url=None, raw=None)
+```
+
+
+#### class OfflineRenderer(ReadmeRenderer)
+
+Renders the specified Readme locally using pure Python. Note: This is currently
+an incomplete feature.
+
+```python
+OfflineRenderer(user_content=None, context=None)
 ```
 
 
 ### Constants
 
 
-#### supported_titles
+#### SUPPORTED_TITLES
 
 The common Markdown file titles on GitHub.
 
 ```python
-supported_titles = ['README', 'Home']
+SUPPORTED_TITLES = ['README', 'Home']
 ```
 
 - `filename`: The UTF-8 file to read.
 
 
-#### read_binary
-
-Reads the text content of the specified file. Returns a byte string.
-
-```python
-read_binary(self, filename)
-```
-
-- `filename`: The UTF-8 file to read.
-
-
-#### supported_extensions
+#### SUPPORTED_EXTENSIONS
 
 The supported extensions, as defined by [GitHub][markdown].
 
 ```python
-supported_extensions = ['.md', '.markdown']
+SUPPORTED_EXTENSIONS = ['.md', '.markdown']
 ```
 
 
-#### default_filenames
+#### DEFAULT_FILENAMES
 
 This constant contains the names Grip looks for when no file is provided.
 
 ```python
-default_filenames = [title + ext
-                     for title in supported_titles
-                     for ext in supported_extensions]
+DEFAULT_FILENAMES = [title + ext
+                     for title in SUPPORTED_TITLES
+                     for ext in SUPPORTED_EXTENSIONS]
+```
+
+
+#### DEFAULT_FILENAME
+
+This constant contains the default Readme filename, namely:
+
+```python
+DEFAULT_FILENAME = DEFAULT_FILENAMES[0]  # README.md
+```
+
+
+#### DEFAULT_GRIPHOME
+
+This constant points to the default value if the `GRIPHOME`
+[environment variable](#environment-variables) is not specified.
+
+```python
+DEFAULT_GRIPHOME = '~/.grip'
+```
+
+
+#### DEFAULT_GRIPURL
+
+The default URL of the Grip server and all its assets:
+
+```python
+DEFAULT_GRIPURL = '/__/grip'
+```
+
+
+#### DEFAULT_API_URL
+
+The default app_url value:
+
+```python
+DEFAULT_API_URL = 'https://api.github.com'
+```
+
+
+Testing
+-------
+
+Install the package and test requirements:
+
+```bash
+$ pip install -e .[tests]
+```
+
+Run tests with [pytest][]:
+
+```bash
+$ py.test
+```
+
+Or to re-run tests as you make changes, use [pytest-watch][]:
+
+```bash
+$ ptw
+```
+
+
+#### External assumption tests
+
+If you're experiencing a problem with Grip, it's likely that an assumption made
+about the GitHub API has been broken. To verify this, run:
+
+```bash
+$ py.test -m assumption
+```
+
+Since the external assumptions rely on an internet connection, you may want to skip
+them when developing locally. Tighten the cycle even further by stopping on the
+first failure with `-x`:
+
+```bash
+$ py.test -xm "not assumption"
+```
+
+Or with [pytest-watch][]:
+
+```bash
+$ ptw -- -xm "not assumption"
 ```
 
 
@@ -472,9 +710,10 @@ Contributing
 
 If your PR has been waiting a while, feel free to [ping me on Twitter][twitter].
 
-Use this software often? Please consider supporting Grip on
+Use this software often? Please consider [supporting Grip][support].
+
 <a href="https://gratipay.com/grip/" title="Thank you!" target="_blank">
-  <img align="center" style="margin-bottom:1px" src="http://joeyespo.com/images/gratipay-button.png" alt="Gratipay">
+  <img src="https://img.shields.io/gratipay/joeyespo.svg" align="center" alt="Thank you!">
 </a>
 
 
@@ -488,4 +727,9 @@ Use this software often? Please consider supporting Grip on
 [task-lists]: https://github.com/blog/1825-task-lists-in-all-markdown-documents
 [user-content]: http://github.github.com/github-flavored-markdown
 [python-markdown]: http://github.com/waylan/Python-Markdown
+[flask.run]: http://flask.pocoo.org/docs/0.10/api/#flask.Flask.run
+[flask.debug]: http://flask.pocoo.org/docs/0.10/api/#flask.Flask.debug
+[pytest]: http://pytest.org/
+[pytest-watch]: https://github.com/joeyespo/pytest-watch
 [twitter]: http://twitter.com/joeyespo
+[support]: https://gratipay.com/grip/

@@ -1,18 +1,9 @@
-{% extends "base.html" %}
-
-{% block title %}{{ title }}{% endblock %}
-
-{%- block styles -%}
-  {%- for style_url in style_urls %}
-  <link rel="stylesheet" href="{{ style_url }}" />
-  {%- endfor %}
-  {%- if styles %}
-  <style>
-    {%- for style in styles %}
-    {{ style|safe }}
-    {%- endfor %}
-  </style>
-  {%- endif %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>zero.md - Grip</title>
+  <link rel="icon" href="/__/grip/static/favicon.ico" />
   <style>
     /* Page tweaks */
     .preview-page {
@@ -27,10 +18,34 @@
       content: none;
     }
   </style>
-{%- endblock -%}
+</head>
+<body>
+  <div class="page">
+    <div id="preview-page" class="preview-page" data-autorefresh-url="/__/grip/refresh/">
+    <div class="container">
+      <div class="repository-with-sidebar repo-container with-full-navigation">
 
-{%- block scripts -%}
-  <script>
+        
+          <div class="discussion-timeline ">
+            <div class="timeline-comment-wrapper">
+              <div class="timeline-comment">
+                <div class="comment">
+                  <div class="comment-content">
+                    <div id="grip-content" class="comment-body markdown-body markdown-format">
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+
+      </div>
+    </div>
+  </div>
+  <div>&nbsp;</div>
+  </div><script>
     function showCanonicalImages() {
       var images = document.getElementsByTagName('img');
       if (!images) {
@@ -95,45 +110,5 @@
       autorefreshContent(autorefreshUrl);
     }
   </script>
-{%- endblock -%}
-
-{%- block page -%}
-  <div id="preview-page" class="preview-page" data-autorefresh-url="{{ autorefresh_url if autorefresh_url }}">
-    <div class="container">
-      <div class="repository-with-sidebar repo-container {{ 'with-full-navigation' if not wide_style }}">
-
-        {% if user_content %}
-          <div class="discussion-timeline {{ 'wide' if wide_style }}">
-            <div class="timeline-comment-wrapper">
-              <div class="timeline-comment">
-                <div class="comment">
-                  <div class="comment-content">
-                    <div id="grip-content" class="comment-body markdown-body markdown-format">
-                      {{ content|safe }}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        {% else %}
-          <div class="repository-content context-loader-container">
-            <div id="readme" class="boxed-group flush clearfix announce instapaper_body md">
-              {% if not user_content and title %}
-                <h3>
-                  <span class="octicon octicon-book"></span>
-                  {{ title }}
-                </h3>
-              {% endif %}
-              <div id="grip-content" class="markdown-body entry-content">
-                {{ content|safe }}
-              </div>
-            </div>
-          </div>
-        {% endif %}
-
-      </div>
-    </div>
-  </div>
-  <div>&nbsp;</div>
-{%- endblock -%}
+</body>
+</html>
