@@ -189,14 +189,6 @@ $ grip
 *Want to share your own? [Say hello][twitter] or [see below](#contributing).*
 
 
-Known issues
-------------
-
-- [x] GitHub introduced read-only task lists (checkboxes) to all Markdown
-      documents in repositories and wikis [back in April][task-lists], but
-      [the API][markdown] doesn't respect this yet. *This has been patched*
-
-
 Configuration
 -------------
 
