@@ -43,6 +43,7 @@ $ grip
 ```
 
 Now open a browser and visit [http://localhost:6419](http://localhost:6419/).
+Or run with `-b` and Grip will open a new browser tab for you.
 
 You can also specify a port:
 
