@@ -330,6 +330,6 @@ class StdinReader(TextReader):
 
         # Decode the bytes returned from earlier Python STDIN implementations
         if sys.version_info[0] < 3 and text is not None:
-            text = text.decode(sys.stdin.encoding)
+            text = text.decode(sys.stdin.encoding or 'utf-8')
 
         return text

@@ -2,6 +2,11 @@ Grip Changelog
 --------------
 
 
+#### Version 4.0.1 (dev)
+
+- Bugfix: Default to UTF-8 when reading from stdin and there's no encoding ([#152](https://github.com/joeyespo/grip/issues/152))
+
+
 ### Version 4.0.0 (2015-11-18)
 
 ##### Notable changes
