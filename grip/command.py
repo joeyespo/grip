@@ -18,8 +18,10 @@ Options:
   --user-content    Render as user-content like comments or issues.
   --context=<repo>  The repository context, only taken into account
                     when using --user-content.
-  --user=<username> A GitHub username for API authentication.
-  --pass=<password> A GitHub password or auth token for API auth.
+  --user=<username> A GitHub username for API authentication. If used 
+                    without the --pass option, an upcoming password
+                    input will be necessary.
+  --pass=<password> A GitHub password or auth token for API auth.                    
   --wide            Renders wide, i.e. when the side nav is collapsed.
   --clear           Clears the cached styles and assets and exits.
   --export          Exports to <path>.html or README.md instead of
@@ -41,6 +43,7 @@ from __future__ import print_function
 import sys
 
 from docopt import docopt
+from getpass import getpass
 from path_and_address import resolve, split_address
 
 from . import __version__
@@ -85,12 +88,17 @@ def main(argv=None, force_utf8=True):
     if args['--clear']:
         clear_cache()
         return 0
+        
+    # Get password from prompt if necessary 
+    password = args['--pass']
+    if args['--user'] and not password:
+        password = getpass()
 
     # Export to a file instead of running a server
     if args['--export']:
         try:
             export(args['<path>'], args['--user-content'], args['--context'],
-                   args['--user'], args['--pass'], False, args['--wide'],
+                   args['--user'], password, False, args['--wide'],
                    True, args['<address>'], args['--api-url'], args['--title'])
             return 0
         except ReadmeNotFoundError as ex:
@@ -108,7 +116,7 @@ def main(argv=None, force_utf8=True):
     # Run server
     try:
         serve(path, host, port, args['--user-content'], args['--context'],
-              args['--user'], args['--pass'], False, args['--wide'], False,
+              args['--user'], password, False, args['--wide'], False,
               args['--api-url'], args['--title'], not args['--norefresh'],
               args['--browser'], args['--quiet'], None)
         return 0
