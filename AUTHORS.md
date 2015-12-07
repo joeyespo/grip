@@ -21,6 +21,7 @@ along with the following contributors:
 - Jose Honorato ([@jlhonora](https://github.com/jlhonora)
 - Aka.Why ([@akawhy](https://github.com/akawhy))
 - Mark Thomas ([@markbt](https://github.com/markbt))
+- Gastón N. Charkiewicz ([@mekoda](https://github.com/mekoda))
 
 
 [home]: README.md
