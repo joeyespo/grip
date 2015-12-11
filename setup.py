@@ -1,4 +1,4 @@
-"""\
+"""
 Grip
 ----
 
@@ -44,9 +44,7 @@ setup(
     packages=find_packages(),
     package_data={'grip': ['static/*', 'templates/*', 'vendor/*']},
     install_requires=read('requirements.txt').splitlines(),
-    extras_require={
-        'tests':  read('requirements-test.txt').splitlines(),
-    },
+    extras_require={'tests': read('requirements-test.txt').splitlines()},
     zip_safe=False,
-    entry_points={'console_scripts': ['grip = grip.command:main']},
+    entry_points={'console_scripts': ['grip = grip:main']},
 )
