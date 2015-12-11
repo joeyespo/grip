@@ -26,6 +26,8 @@ from .renderers import ReadmeRenderer, GitHubRenderer, OfflineRenderer
 
 
 __all__ = [
+    '__version__',
+
     'DEFAULT_API_URL', 'DEFAULT_FILENAMES', 'DEFAULT_FILENAME',
     'DEFAULT_GRIPHOME', 'DEFAULT_GRIPURL', 'STYLE_ASSET_URLS_INLINE_FORMAT',
     'STYLE_ASSET_URLS_RE', 'STYLE_ASSET_URLS_SUB_FORMAT', 'STYLE_URLS_RE',
