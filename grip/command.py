@@ -18,10 +18,10 @@ Options:
   --user-content    Render as user-content like comments or issues.
   --context=<repo>  The repository context, only taken into account
                     when using --user-content.
-  --user=<username> A GitHub username for API authentication. If used 
+  --user=<username> A GitHub username for API authentication. If used
                     without the --pass option, an upcoming password
                     input will be necessary.
-  --pass=<password> A GitHub password or auth token for API auth.                    
+  --pass=<password> A GitHub password or auth token for API auth.
   --wide            Renders wide, i.e. when the side nav is collapsed.
   --clear           Clears the cached styles and assets and exits.
   --export          Exports to <path>.html or README.md instead of
@@ -88,8 +88,8 @@ def main(argv=None, force_utf8=True):
     if args['--clear']:
         clear_cache()
         return 0
-        
-    # Get password from prompt if necessary 
+
+    # Get password from prompt if necessary
     password = args['--pass']
     if args['--user'] and not password:
         password = getpass()
