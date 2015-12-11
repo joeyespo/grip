@@ -2,9 +2,13 @@ Grip Changelog
 --------------
 
 
-#### Version 4.0.1 (dev)
+#### Version 4.1.0 (2015-12-11)
 
+- Enhancement: Prompt for password when `--user` is provided without a `--pass` ([#154](https://github.com/joeyespo/grip/pull/154) - thanks, [@mekoda][]!)
 - Bugfix: Default to UTF-8 when reading from stdin and there's no encoding ([#152](https://github.com/joeyespo/grip/issues/152))
+- Readme: Document `-b`
+- Readme: Add [link to Grip Release Letter](http://joeyespo.us2.list-manage.com/subscribe?u=255dd49194fa8078258d9a735&id=d76534e979&group[14285][1]=true) for getting notified about future releases
+- Readme: Remove Known Issues section since they are now working
 
 
 ### Version 4.0.0 (2015-11-18)
@@ -238,3 +242,4 @@ Grip Changelog
 [@jlhonora]: https://github.com/jlhonora
 [@akawhy]: https://github.com/akawhy
 [@markbt]: https://github.com/markbt
+[@mekoda]: https://github.com/mekoda
