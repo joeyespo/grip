@@ -7,6 +7,7 @@ site-packages
 instance
 build
 env
+.cache
 *.py[cod]
 settings_local.py
 
