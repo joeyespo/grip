@@ -121,7 +121,7 @@ Hello **world**!
  * Running on http://localhost:6419/
 ```
 
-*Note: `^D` means `Ctrl+D`, which works on Linux and iOS. On Windows you'll have to use `Ctrl+Z`.*
+*Note: `^D` means `Ctrl+D`, which works on Linux and OS X. On Windows you'll have to use `Ctrl+Z`.*
 
 Rendering as user-content like **comments** and **issues** is also supported, with an optional repository context for linking to issues:
 
