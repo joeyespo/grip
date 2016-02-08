@@ -36,7 +36,9 @@ Options:
   --norefresh               Do not automatically refresh the Readme content when
                             the file changes.
   --quiet                   Do not print to the terminal.
-  --inline=<true/false>     Renders CSS inline in the html. The default is True.
+  --inline=<true/false>     Renders CSS inline in the html.
+                            If --export is specified, the default is True.
+                            Otherwise, the default is False.
 """
 
 from __future__ import print_function
