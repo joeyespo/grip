@@ -22,6 +22,7 @@ along with the following contributors:
 - Aka.Why ([@akawhy](https://github.com/akawhy))
 - Mark Thomas ([@markbt](https://github.com/markbt))
 - Gastón N. Charkiewicz ([@mekoda](https://github.com/mekoda))
+- Matthew R. Tanudjaja ([@mrexmelle](https://github.com/mrexmelle))
 
 
 [home]: README.md
