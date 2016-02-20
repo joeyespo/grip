@@ -3,8 +3,8 @@ Grip -- GitHub Readme Instant Preview
 
 [![Current version on PyPI](http://img.shields.io/pypi/v/grip.svg)][pypi]
 [![Downloads/month on PyPI](http://img.shields.io/pypi/dm/grip.svg)][pypi]
-<a href="http://joeyespo.us2.list-manage.com/subscribe?u=255dd49194fa8078258d9a735&id=d76534e979&group[14285][1]=true" target="_blank">
-  <img src="https://img.shields.io/badge/release%20letter-subscribe-brightgreen.svg" title="Get notified about new Grip releases" alt="Get notified about new Grip releases">
+<a href="https://gratipay.com/grip/" title="Thank you!" target="_blank">
+  <img src="https://img.shields.io/gratipay/joeyespo.svg" alt="Thank you!">
 </a>
 
 Render local readme files before sending off to GitHub.
