@@ -97,6 +97,13 @@ $ grip README.md --export readme.html
 Exporting to readme.html
 ```
 
+If you're exporting a bunch of files, you can prevent styles from being inlining to save space with `--no-inline`:
+
+```bash
+$ grip README.md --export --no-inline introduction.html
+Exporting to introduction.html
+```
+
 Reading and writing from **stdin** and **stdout** is also supported, allowing you to use Grip with other programs:
 
 ```bash
