@@ -15,27 +15,30 @@ Where:
   <address> is what to listen on, of the form <host>[:<port>], or just <port>
 
 Options:
-  --user-content    Render as user-content like comments or issues.
-  --context=<repo>  The repository context, only taken into account
-                    when using --user-content.
-  --user=<username> A GitHub username for API authentication. If used
-                    without the --pass option, an upcoming password
-                    input will be necessary.
-  --pass=<password> A GitHub password or auth token for API auth.
-  --wide            Renders wide, i.e. when the side nav is collapsed.
-  --clear           Clears the cached styles and assets and exits.
-  --export          Exports to <path>.html or README.md instead of
-                    serving, optionally using [<address>] as the out
-                    file (- for stdout).
-  -b --browser      Open a tab in the browser after the server starts.
-  --api-url=<url>   Specify a different base URL for the github API,
-                    for example that of a Github Enterprise instance.
-                    Default is the public API: https://api.github.com
-  --title=<title>   Manually sets the page's title.
-                    The default is the filename.
-  --norefresh       Do not automatically refresh the Readme content when
-                    the file changes.
-  --quiet           Do not print to the terminal
+  --user-content            Render as user-content like comments or issues.
+  --context=<repo>          The repository context, only taken into account
+                            when using --user-content.
+  --user=<username>         A GitHub username for API authentication. If used
+                            without the --pass option, an upcoming password
+                            input will be necessary.
+  --pass=<password>         A GitHub password or auth token for API auth.
+  --wide                    Renders wide, i.e. when the side nav is collapsed.
+  --clear                   Clears the cached styles and assets and exits.
+  --export                  Exports to <path>.html or README.md instead of
+                            serving, optionally using [<address>] as the out
+                            file (- for stdout).
+  -b --browser              Open a tab in the browser after the server starts.
+  --api-url=<url>           Specify a different base URL for the github API,
+                            for example that of a Github Enterprise instance.
+                            Default is the public API: https://api.github.com
+  --title=<title>           Manually sets the page's title.
+                            The default is the filename.
+  --norefresh               Do not automatically refresh the Readme content when
+                            the file changes.
+  --quiet                   Do not print to the terminal.
+  --inline=<true/false>     Renders CSS inline in the html.
+                            If --export is specified, the default is True.
+                            Otherwise, the default is False.
 """
 
 from __future__ import print_function
@@ -94,12 +97,27 @@ def main(argv=None, force_utf8=True):
     if args['--user'] and not password:
         password = getpass()
 
+    # Get render_inline value
+    inline_str=args['--inline']
+    inline_bool=None
+    if inline_str:
+        inline_str=inline_str.lower()
+        if inline_str=='true':
+            inline_bool=True
+        elif inline_str=='false':
+            inline_bool=False
+        else:
+            print('inline argument only accepts True or False value')
+            return 1
+
     # Export to a file instead of running a server
     if args['--export']:
+        if inline_bool==None:
+            inline_bool=True
         try:
             export(args['<path>'], args['--user-content'], args['--context'],
                    args['--user'], password, False, args['--wide'],
-                   True, args['<address>'], args['--api-url'], args['--title'])
+                   inline_bool, args['<address>'], args['--api-url'], args['--title'])
             return 0
         except ReadmeNotFoundError as ex:
             print('Error:', ex)
@@ -115,8 +133,10 @@ def main(argv=None, force_utf8=True):
 
     # Run server
     try:
+        if inline_bool==None:
+            inline_bool=False
         serve(path, host, port, args['--user-content'], args['--context'],
-              args['--user'], password, False, args['--wide'], False,
+              args['--user'], password, False, args['--wide'], inline_bool,
               args['--api-url'], args['--title'], not args['--norefresh'],
               args['--browser'], args['--quiet'], None)
         return 0
