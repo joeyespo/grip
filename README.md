@@ -189,14 +189,14 @@ $ grip
 
 #### Create a documentation set of HTML pages
 
-As an example, if I want to convert all md files in $HOME/Documents/docs directory to html files, and produce a documentation tarball with name docs.tgz containing these html files and the github css styles, these are what I'm gonna do:
+As an example, if you want to convert all md files in $HOME/Documents/docs directory to html files, and produce a documentation tarball with name docs.tgz containing these html files and the github css styles, these are the step=by-step instruction that you should follow:
 
--  Changing working directory to that directory.
+-  Change working directory to that directory.
    
    ```bash
    $ cd $HOME/Documents/docs
    ```
--  Changing the value of CACHE_DIRECTORY in $HOME/.grip/settings.py to '../Documents/docs/asset'
+-  Change the value of CACHE_DIRECTORY in $HOME/.grip/settings.py to '../Documents/docs/asset'
 -  Set GRIPURL to current directory.
    
    ```bash
