@@ -192,26 +192,31 @@ $ grip
 As an example, if I want to convert all md files in $HOME/Documents/docs directory to html files, and produce a documentation tarball with name docs.tgz containing these html files and the github css styles, these are what I'm gonna do:
 
 -  Changing working directory to that directory.
+   
    ```bash
    $ cd $HOME/Documents/docs
    ```
 -  Changing the value of CACHE_DIRECTORY in $HOME/.grip/settings.py to '../Documents/docs/asset'
 -  Set GRIPURL to current directory.
+   
    ```bash
    $ export GRIPURL=$(PWD)
    ```
-- Export all your md files using Grip.
+-  Export all your md files using Grip.
+   
    ```bash
    $ for f in *.md; do grip --export $f --inline=False; done
    ```      
-- Replace absolute asset paths in html files with relative paths.
+-  Replace absolute asset paths in html files with relative paths.
+   
    ```bash
    $ for f in *.html; do sed -i '' "s?$GRIPURL/??g" $f; done
    ```
-- Compress the entire html and the asset directory into docs.tgz tarball.
-  ```bash
-  $ tar -czvf docs.tgz `ls | grep [\.]html$` asset
-  ```
+-  Compress the entire html and the asset directory into docs.tgz tarball.
+   
+   ```bash
+   $ tar -czvf docs.tgz `ls | grep [\.]html$` asset
+   ```
   
 *By [Matthew R. Tanudjaja](https://github.com/mrexmelle)*.  
 
