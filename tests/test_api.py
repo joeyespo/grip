@@ -11,14 +11,6 @@ from __future__ import print_function, unicode_literals
 import os
 import posixpath
 
-from grip import (
-    DEFAULT_API_URL, DEFAULT_FILENAMES, DEFAULT_FILENAME, DEFAULT_GRIPHOME, DEFAULT_GRIPURL, STYLE_ASSET_URLS_INLINE_FORMAT, STYLE_ASSET_URLS_RE,
-    STYLE_ASSET_URLS_SUB_FORMAT, STYLE_URLS_RE, STYLE_URLS_SOURCE,
-    SUPPORTED_EXTENSIONS, SUPPORTED_TITLES, AlreadyRunningError,
-    DirectoryReader, GitHubAssetManager, GitHubRenderer, Grip, OfflineRenderer,
-    ReadmeAssetManager, ReadmeNotFoundError, ReadmeReader, ReadmeRenderer,
-    StdinReader, TextReader, clear_cache, create_app, export, main,
-    render_content, render_page, serve)
 import pytest
 from requests.exceptions import HTTPError
 from werkzeug.exceptions import NotFound
@@ -26,6 +18,23 @@ from werkzeug.exceptions import NotFound
 from helpers import USER_CONTEXT, input_file, input_filename, output_file
 from mocks import (
     GitHubAssetManagerMock, GripMock, GitHubRequestsMock, StdinReaderMock)
+
+from grip import (
+    DEFAULT_API_URL, DEFAULT_FILENAMES, DEFAULT_FILENAME, DEFAULT_GRIPHOME,
+    DEFAULT_GRIPURL, STYLE_ASSET_URLS_INLINE_FORMAT, STYLE_ASSET_URLS_RE,
+    STYLE_ASSET_URLS_SUB_FORMAT, STYLE_URLS_RE, STYLE_URLS_SOURCE,
+    SUPPORTED_EXTENSIONS, SUPPORTED_TITLES, AlreadyRunningError,
+    DirectoryReader, GitHubAssetManager, GitHubRenderer, Grip, OfflineRenderer,
+    ReadmeAssetManager, ReadmeNotFoundError, ReadmeReader, ReadmeRenderer,
+    TextReader, clear_cache, create_app, export, main, render_content,
+    render_page, serve)
+
+
+# TODO: Test DEFAULT_API_URL, DEFAULT_FILENAMES, DEFAULT_GRIPHOME,
+#       DEFAULT_GRIPURL, DEFAULT_GRIPURL, STYLE_ASSET_URLS_RE,
+#       STYLE_ASSET_URLS_SUB_FORMAT, STYLE_URLS_RE, STYLE_URLS_SOURCE,
+#       SUPPORTED_EXTENSIONS, SUPPORTED_TITLES, ReadmeAssetManager,
+#       clear_cache, export, main, render_content, render_page, serve
 
 
 DIRNAME = os.path.dirname(os.path.abspath(__file__))

@@ -8,6 +8,7 @@ import sys
 from subprocess import PIPE, STDOUT, CalledProcessError, Popen
 
 import pytest
+
 from grip.command import usage, version
 
 
