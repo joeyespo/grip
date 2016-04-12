@@ -23,6 +23,7 @@ Options:
                     input will be necessary.
   --pass=<password> A GitHub password or auth token for API auth.
   --wide            Renders wide, i.e. when the side nav is collapsed.
+                    This only takes effect when --user-content is used.
   --clear           Clears the cached styles and assets and exits.
   --export          Exports to <path>.html or README.md instead of
                     serving, optionally using [<address>] as the out
