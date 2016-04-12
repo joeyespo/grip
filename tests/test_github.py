@@ -73,8 +73,8 @@ def test_styles_exist(tmpdir):
 
     files = map(lambda f: os.path.basename(str(f)), tmpdir.listdir())
     assert any(f.startswith('github-') and f.endswith('.css') for f in files)
-    assert any(f.startswith('github2-') and f.endswith('.css') for f in files)
-    assert any('octicons' in f for f in files)
+    assert any(
+        f.startswith('frameworks-') and f.endswith('.css') for f in files)
 
     # TODO: Test that style retrieval actually parsed CSS with regex
 

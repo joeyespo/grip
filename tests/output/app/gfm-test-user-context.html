@@ -4,35 +4,42 @@
   <meta charset="utf-8" />
   <title>gfm-test.md - Grip</title>
   <link rel="icon" href="/__/grip/static/favicon.ico" />
+  <link rel="stylesheet" href="//octicons.github.com/components/octicons/octicons/octicons.css" />
   <style>
     /* Page tweaks */
     .preview-page {
       margin-top: 64px;
     }
-    /* Discussion tweaks */
-    .discussion-timeline.wide {
-      width: 920px;
-    }
+    /* User-content tweaks */
     .timeline-comment-wrapper > .timeline-comment:after,
     .timeline-comment-wrapper > .timeline-comment:before {
       content: none;
+    }
+    /* User-content overrides */
+    .discussion-timeline.wide {
+      width: 920px;
     }
   </style>
 </head>
 <body>
   <div class="page">
     <div id="preview-page" class="preview-page" data-autorefresh-url="/__/grip/refresh/">
-    <div class="container">
-      <div class="repository-with-sidebar repo-container with-full-navigation">
 
-        
-          <div class="discussion-timeline ">
-            <div class="timeline-comment-wrapper">
-              <div class="timeline-comment">
-                <div class="comment">
-                  <div class="comment-content">
-                    <div id="grip-content" class="comment-body markdown-body markdown-format">
-                      <h1>GitHub Flavored Markdown Test</h1>
+    
+
+      <div role="main" class="main-content">
+        <div class="container new-discussion-timeline experiment-repo-nav">
+          <div class="repository-content">
+            <div class="issues-listing" data-pjax="">
+              <div id="show_issue" class="js-issues-results">
+                <div id="discussion_bucket" class="clearfix">
+                  <div class="discussion-timeline js-quote-selection-container ">
+                    <div class="timeline-comment-wrapper js-comment-container">
+                      <div class="comment  timeline-comment js-comment js-task-list-container is-task-list-enabled">
+                        <div class="comment-content">
+                          <div class="edit-comment-hide">
+                            <div class="comment-body markdown-body markdown-format js-comment-body" id="grip-content">
+                              <h1>GitHub Flavored Markdown Test</h1>
 
 <p>This Markdown file contains all the features of <strong>GitHub Flavored Markdown</strong> for<br>
 testing a renderer with.</p>
@@ -505,7 +512,7 @@ This is <a href="http://joeyespo.com/" title="Optional Title Here">an example</a
 
 <h4>Syntax highlighting</h4>
 
-<div class="highlight highlight-source-python"><pre><span class="pl-k">print</span>(<span class="pl-s"><span class="pl-pds">'</span>Hello!<span class="pl-pds">'</span></span>)</pre></div>
+<div class="highlight highlight-source-python"><pre><span class="pl-c1">print</span>(<span class="pl-s"><span class="pl-pds">'</span>Hello!<span class="pl-pds">'</span></span>)</pre></div>
 
 <div class="highlight highlight-source-js"><pre><span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>JavaScript!<span class="pl-pds">'</span></span>);</pre></div>
 
@@ -650,7 +657,7 @@ Violets are Blue</p>
 
 <ul class="task-list">
 <li class="task-list-item">
-<input type="checkbox" class="task-list-item-checkbox" checked disabled> <a href="https://github.com/blog/821" class="user-mention">@mentions</a>, #refs, <a href="">links</a>, <strong>formatting</strong>, and <del>tags</del> are supported</li>
+<input type="checkbox" class="task-list-item-checkbox" checked disabled> <a href="https://help.github.com/articles/basic-writing-and-formatting-syntax/#mentioning-users-and-teams" class="user-mention">@mentions</a>, #refs, <a href="">links</a>, <strong>formatting</strong>, and <del>tags</del> are supported</li>
 <li class="task-list-item">
 <input type="checkbox" class="task-list-item-checkbox" checked disabled> list syntax is required (any unordered or ordered list supported)</li>
 <li class="task-list-item">
@@ -671,7 +678,7 @@ Violets are Blue</p>
 <li class="task-list-item">
 <input type="checkbox" class="task-list-item-checkbox" disabled> follow up subtask #4321</li>
 <li class="task-list-item">
-<input type="checkbox" class="task-list-item-checkbox" disabled> final subtask cc <a href="https://github.com/blog/821" class="user-mention">@mention</a>
+<input type="checkbox" class="task-list-item-checkbox" disabled> final subtask cc <a href="https://help.github.com/articles/basic-writing-and-formatting-syntax/#mentioning-users-and-teams" class="user-mention">@mention</a>
 </li>
 </ul>
 </li>
@@ -688,25 +695,30 @@ Violets are Blue</p>
 </li>
 <li>User/Repository@SHA: <a href="https://github.com/joeyespo/grip/commit/dbcd7a410ee7489acf92f40641a135fbcf52a768" class="commit-link">joeyespo/grip@<tt>dbcd7a4</tt></a>
 </li>
-<li>#Num: <a href="https://github.com/joeyespo/grip/pull/135" class="issue-link" title="Add autorefresh">#135</a>
+<li>#Num: <a href="https://github.com/joeyespo/grip/pull/135" class="issue-link js-issue-link" data-url="https://github.com/joeyespo/grip/issues/135" data-id="93030887" data-error-text="Failed to load issue title" data-permission-text="Issue title is private">#135</a>
 </li>
-<li>GH-Num: <a href="https://github.com/joeyespo/grip/pull/135" class="issue-link" title="Add autorefresh">GH-135</a>
+<li>GH-Num: <a href="https://github.com/joeyespo/grip/pull/135" class="issue-link js-issue-link" data-url="https://github.com/joeyespo/grip/issues/135" data-id="93030887" data-error-text="Failed to load issue title" data-permission-text="Issue title is private">GH-135</a>
 </li>
-<li>User#Num: <a href="https://github.com/joeyespo/grip/pull/135" class="issue-link" title="Add autorefresh">joeyespo#135</a>
+<li>User#Num: <a href="https://github.com/joeyespo/grip/pull/135" class="issue-link js-issue-link" data-url="https://github.com/joeyespo/grip/issues/135" data-id="93030887" data-error-text="Failed to load issue title" data-permission-text="Issue title is private">joeyespo#135</a>
 </li>
-<li>User/Repository#Num: <a href="https://github.com/joeyespo/grip/pull/135" class="issue-link" title="Add autorefresh">joeyespo/grip#135</a>
+<li>User/Repository#Num: <a href="https://github.com/joeyespo/grip/pull/135" class="issue-link js-issue-link" data-url="https://github.com/joeyespo/grip/issues/135" data-id="93030887" data-error-text="Failed to load issue title" data-permission-text="Issue title is private">joeyespo/grip#135</a>
 </li>
 </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        
-
+        </div>
       </div>
-    </div>
+
+    
+
   </div>
   <div>&nbsp;</div>
   </div><script>

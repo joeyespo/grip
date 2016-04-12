@@ -4,45 +4,49 @@
   <meta charset="utf-8" />
   <title>zero.md - Grip</title>
   <link rel="icon" href="/__/grip/static/favicon.ico" />
+  <link rel="stylesheet" href="//octicons.github.com/components/octicons/octicons/octicons.css" />
   <style>
     /* Page tweaks */
     .preview-page {
       margin-top: 64px;
     }
-    /* Discussion tweaks */
-    .discussion-timeline.wide {
-      width: 920px;
-    }
+    /* User-content tweaks */
     .timeline-comment-wrapper > .timeline-comment:after,
     .timeline-comment-wrapper > .timeline-comment:before {
       content: none;
+    }
+    /* User-content overrides */
+    .discussion-timeline.wide {
+      width: 920px;
     }
   </style>
 </head>
 <body>
   <div class="page">
     <div id="preview-page" class="preview-page" data-autorefresh-url="/__/grip/refresh/">
-    <div class="container">
-      <div class="repository-with-sidebar repo-container with-full-navigation">
 
-        
-          <div class="repository-content context-loader-container">
-            <div id="readme" class="boxed-group flush clearfix announce instapaper_body md">
+    
+
+      <div role="main" class="main-content">
+        <div class="container new-discussion-timeline experiment-repo-nav">
+          <div class="repository-content">
+            <div id="readme" class="readme boxed-group clearfix announce instapaper_body md">
               
                 <h3>
                   <span class="octicon octicon-book"></span>
                   zero.md - Grip
                 </h3>
               
-              <div id="grip-content" class="markdown-body entry-content">
+              <article class="markdown-body entry-content" itemprop="text" id="grip-content">
                 
-              </div>
+              </article>
             </div>
           </div>
-        
-
+        </div>
       </div>
-    </div>
+
+    
+
   </div>
   <div>&nbsp;</div>
   </div><script>
