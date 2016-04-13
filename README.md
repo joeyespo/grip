@@ -184,6 +184,9 @@ Tips
 
 Here's how others from the community are using Grip.
 
+Want to share your own? [Say hello @joeyespo][twitter] or [submit a pull request](#contributing).
+
+
 #### Create a local mirror of a Github Wiki
 
 ```bash
@@ -192,42 +195,40 @@ $ cd YOUR_REPOSITORY.wiki
 $ grip
 ```
 
-*By [Joshua Gourneau](https://twitter.com/gourneau/status/636329126643658753)*.
+*By [Joshua Gourneau](https://twitter.com/gourneau/status/636329126643658753).*
 
-#### Create a documentation set of HTML pages
 
-As an example, if you want to convert all md files in $HOME/Documents/docs directory to html files, and produce a documentation tarball with name docs.tgz containing these html files and the github css styles, these are the step=by-step instruction that you should follow:
+#### Generate HTML documentation from a collection of linked README files
 
--  Change working directory to that directory.
-   
+1. Enter the directory:
+
    ```bash
-   $ cd $HOME/Documents/docs
-   ```
--  Change the value of CACHE_DIRECTORY in $HOME/.grip/settings.py to '../Documents/docs/asset'
--  Set GRIPURL to current directory.
-   
-   ```bash
+   $ cd YOUR_DIR
    $ export GRIPURL=$(PWD)
    ```
--  Export all your md files using Grip.
-   
+
+2. Include all assets by setting the `CACHE_DIRECTORY` [config variable](#configuration):
+
+   ```bash
+   $ echo "CACHE_DIRECTORY = '$(pwd)/asset'" >> ~/.grip/settings.py
+   ```
+
+3. Export all your Markdown files with Grip and replace absolute asset paths with relative paths:
+
    ```bash
    $ for f in *.md; do grip --export $f --inline=False; done
-   ```      
--  Replace absolute asset paths in html files with relative paths.
-   
-   ```bash
    $ for f in *.html; do sed -i '' "s?$GRIPURL/??g" $f; done
    ```
--  Compress the entire html and the asset directory into docs.tgz tarball.
-   
+
+You can optionally compress the set of HTML files to `docs.tgz` with:
+
    ```bash
    $ tar -czvf docs.tgz `ls | grep [\.]html$` asset
    ```
-  
-*By [Matthew R. Tanudjaja](https://github.com/mrexmelle)*.  
 
-*Want to share your own? [Say hello][twitter] or [see below](#contributing).*
+Looking for a cross platform solution? Here's an equivalent [Python script](https://gist.github.com/mrexmelle/659abc02ae1295d60647).
+
+*By [Matthew R. Tanudjaja](https://github.com/mrexmelle).*
 
 
 Configuration
