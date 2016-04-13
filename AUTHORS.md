@@ -18,7 +18,7 @@ along with the following contributors:
 - Zhiming Wang ([@zmwangx](https://github.com/zmwangx))
 - Dan Davison ([@dandavison](https://github.com/dandavison))
 - Sriram Sundarraj ([@ssundarraj](https://github.com/ssundarraj))
-- Jose Honorato ([@jlhonora](https://github.com/jlhonora)
+- Jose Honorato ([@jlhonora](https://github.com/jlhonora))
 - Aka.Why ([@akawhy](https://github.com/akawhy))
 - Mark Thomas ([@markbt](https://github.com/markbt))
 - Gastón N. Charkiewicz ([@mekoda](https://github.com/mekoda))
