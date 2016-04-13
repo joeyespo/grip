@@ -43,6 +43,7 @@ Options:
 from __future__ import print_function
 
 import sys
+import mimetypes
 
 from docopt import docopt
 from getpass import getpass
@@ -57,13 +58,15 @@ usage = '\n\n\n'.join(__doc__.split('\n\n\n')[1:])
 version = 'Grip ' + __version__
 
 
-def main(argv=None, force_utf8=True):
+def main(argv=None, force_utf8=True, patch_svg=True):
     """
     The entry point of the application.
     """
     if force_utf8 and sys.version_info[0] == 2:
         reload(sys)
         sys.setdefaultencoding('utf-8')
+    if patch_svg and sys.version_info[0] == 2 and sys.version_info[2] <= 6:
+        mimetypes.add_type('image/svg+xml', '.svg')
 
     if argv is None:
         argv = sys.argv[1:]
