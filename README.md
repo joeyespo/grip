@@ -210,7 +210,7 @@ $ grip
 2. Include all assets by setting the `CACHE_DIRECTORY` [config variable](#configuration):
 
    ```bash
-   $ echo "CACHE_DIRECTORY = '$(pwd)/asset'" >> ~/.grip/settings.py
+   $ echo "CACHE_DIRECTORY = '$(pwd)/assets'" >> ~/.grip/settings.py
    ```
 
 3. Export all your Markdown files with Grip and replace absolute asset paths with relative paths:
@@ -223,7 +223,7 @@ $ grip
 You can optionally compress the set of HTML files to `docs.tgz` with:
 
    ```bash
-   $ tar -czvf docs.tgz `ls | grep [\.]html$` asset
+   $ tar -czvf docs.tgz `ls | grep [\.]html$` assets
    ```
 
 Looking for a cross platform solution? Here's an equivalent [Python script](https://gist.github.com/mrexmelle/659abc02ae1295d60647).
