@@ -8,7 +8,7 @@ Render local readme files before sending off to GitHub.
 :license: MIT, see LICENSE for more details.
 """
 
-__version__ = '4.1.0'
+__version__ = '4.2.0'
 
 from .api import (
     clear_cache, create_app, export, render_content, render_page, serve)

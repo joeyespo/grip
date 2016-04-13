@@ -22,7 +22,9 @@ along with the following contributors:
 - Aka.Why ([@akawhy](https://github.com/akawhy))
 - Mark Thomas ([@markbt](https://github.com/markbt))
 - Gastón N. Charkiewicz ([@mekoda](https://github.com/mekoda))
+- Erik Hummel ([@ErikMHummel](https://github.com/ErikMHummel))
 - Matthew R. Tanudjaja ([@mrexmelle](https://github.com/mrexmelle))
+- Tom Dunlap ([@motevets](https://github.com/motevets))
 
 
 [home]: README.md

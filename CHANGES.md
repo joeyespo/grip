@@ -2,6 +2,17 @@ Grip Changelog
 --------------
 
 
+#### Version 4.2.0 (2016-04-12)
+
+- Enhancement: Expose `render_inline` through `--no-inline` CLI option ([#165](https://github.com/joeyespo/grip/pull/165) - thanks, [@mrexmelle][]!)
+- Bugfix: Update Readme width to match latest GitHub changes ([#167](https://github.com/joeyespo/grip/pull/167) - thanks, [@motevets][]!)
+- Bugfix: Update Octicons to match latest GitHub changes ([#167](https://github.com/joeyespo/grip/pull/167) - thanks, [@motevets][]!)
+- Bugfix: Enable SVG support for Python 2.6 and below ([#157](https://github.com/joeyespo/grip/issues/157))
+- Readme: Fix Mac OS name ([#162](https://github.com/joeyespo/grip/pull/162) - thanks, [@ErikMHummel][]!)
+- Readme: Add tip for generating docs from Readme files ([#168](https://github.com/joeyespo/grip/pull/168) - thanks, [@mrexmelle][]!)
+- License: Update year
+
+
 #### Version 4.1.0 (2015-12-11)
 
 - Enhancement: Prompt for password when `--user` is provided without a `--pass` ([#154](https://github.com/joeyespo/grip/pull/154) - thanks, [@mekoda][]!)
@@ -243,3 +254,6 @@ Grip Changelog
 [@akawhy]: https://github.com/akawhy
 [@markbt]: https://github.com/markbt
 [@mekoda]: https://github.com/mekoda
+[@ErikMHummel]: https://github.com/ErikMHummel
+[@mrexmelle]: https://github.com/mrexmelle
+[@motevets]: https://github.com/motevets
