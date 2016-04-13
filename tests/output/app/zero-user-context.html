@@ -4,45 +4,57 @@
   <meta charset="utf-8" />
   <title>zero.md - Grip</title>
   <link rel="icon" href="/__/grip/static/favicon.ico" />
+  <link rel="stylesheet" href="//octicons.github.com/components/octicons/octicons/octicons.css" />
   <style>
     /* Page tweaks */
     .preview-page {
       margin-top: 64px;
     }
-    /* Discussion tweaks */
-    .discussion-timeline.wide {
-      width: 920px;
-    }
+    /* User-content tweaks */
     .timeline-comment-wrapper > .timeline-comment:after,
     .timeline-comment-wrapper > .timeline-comment:before {
       content: none;
+    }
+    /* User-content overrides */
+    .discussion-timeline.wide {
+      width: 920px;
     }
   </style>
 </head>
 <body>
   <div class="page">
     <div id="preview-page" class="preview-page" data-autorefresh-url="/__/grip/refresh/">
-    <div class="container">
-      <div class="repository-with-sidebar repo-container with-full-navigation">
 
-        
-          <div class="discussion-timeline ">
-            <div class="timeline-comment-wrapper">
-              <div class="timeline-comment">
-                <div class="comment">
-                  <div class="comment-content">
-                    <div id="grip-content" class="comment-body markdown-body markdown-format">
-                      
+    
+
+      <div role="main" class="main-content">
+        <div class="container new-discussion-timeline experiment-repo-nav">
+          <div class="repository-content">
+            <div class="issues-listing" data-pjax="">
+              <div id="show_issue" class="js-issues-results">
+                <div id="discussion_bucket" class="clearfix">
+                  <div class="discussion-timeline js-quote-selection-container ">
+                    <div class="timeline-comment-wrapper js-comment-container">
+                      <div class="comment  timeline-comment js-comment js-task-list-container is-task-list-enabled">
+                        <div class="comment-content">
+                          <div class="edit-comment-hide">
+                            <div class="comment-body markdown-body markdown-format js-comment-body" id="grip-content">
+                              
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        
-
+        </div>
       </div>
-    </div>
+
+    
+
   </div>
   <div>&nbsp;</div>
   </div><script>
