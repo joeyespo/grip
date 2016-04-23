@@ -72,6 +72,22 @@ class GitHubRenderer(ReadmeRenderer):
 
         return html
 
+    def wiki_patch(self, text):
+        """
+        Pre-process Markdown text to synthesize Github WikiLinks
+        """
+        def urlencode(match):
+            c = match.group(0).encode('utf8')
+            return ''.join('%{:02X}'.format(b) for b in c)
+
+        def wiki_url(match):
+            url = match.group(2) or match.group(1)
+            url = re.sub(r'[\s\+]', '-', url)
+            url = re.sub(r'[^a-z0-9\-_]', urlencode, url)
+            return '[{0}]({1})'.format(match.group(1), url)
+
+        return re.sub(r'\[\[([^\]\|]+)(?:\|([^\]]+))?\]\]', wiki_url, text)
+
     def render(self, text, auth=None):
         """
         Renders the specified markdown content and embedded styles.
@@ -94,7 +110,7 @@ class GitHubRenderer(ReadmeRenderer):
             headers = {'content-type': 'application/json; charset=UTF-8'}
         else:
             url = '{0}/markdown/raw'.format(self.api_url)
-            data = text.encode('utf-8')
+            data = self.wiki_patch(text).encode('utf-8')
             headers = {'content-type': 'text/x-markdown; charset=UTF-8'}
 
         r = requests.post(url, headers=headers, data=data, auth=auth)

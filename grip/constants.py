@@ -1,7 +1,7 @@
 # The common titles and supported extensions,
 # as defined by https://github.com/github/markup
 SUPPORTED_TITLES = ['README', 'Readme', 'readme', 'Home']
-SUPPORTED_EXTENSIONS = ['.md', '.markdown']
+SUPPORTED_EXTENSIONS = ('.md', '.markdown')
 
 
 # The default filenames when no file is provided
