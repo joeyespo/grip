@@ -179,6 +179,18 @@ Grip always accesses GitHub over HTTPS,
 so your README and credentials are protected.
 
 
+With docker
+-----------
+
+#### Basic usage
+
+Run grip to render /path/to/project/ directory :
+
+```bash
+docker run -v /path/to/project/:/export -p 8080:80 psycofdj/grip:latest [grip options]
+```
+
+
 Tips
 ----
 
