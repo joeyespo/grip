@@ -100,7 +100,7 @@ Grip Changelog
 - Bugfix: Fix asset retrieval on both Python 2 and 3
 - Bugfix: Fix `InsecureRequestWarning` problems ([#111](https://github.com/joeyespo/grip/issues/111), [#128](https://github.com/joeyespo/grip/issues/128))
 - Bugfix: Fix missing Octicons by properly downloading assets as binary files ([#127](https://github.com/joeyespo/grip/issues/127))
-- Bugfix: Add trailing slashes to directories and remove them for files so so relative links are correct ([#131](https://github.com/joeyespo/grip/issues/131))
+- Bugfix: Add trailing slashes to directories and remove them for files so relative links are correct ([#131](https://github.com/joeyespo/grip/issues/131))
 - CLI: Add "Omit this to render as a normal GitHub README file." to help avoid confusion of `--gfm`
 - Readme: Add note about `^D` and `^Z` on Windows ([#105](https://github.com/joeyespo/grip/issues/105))
 - Cleanup: PEP8
@@ -128,7 +128,7 @@ Grip Changelog
 - Enhancement: Allow reading from stdin ([#72](https://github.com/joeyespo/grip/issues/72))
 - Enhancement: Allow `:<port>` pattern in CLI
 - Enhancement: Add a favicon ![favicon](artwork/favicon.ico) ([#60](https://github.com/joeyespo/grip/issues/60))
-- Enhancement: Add "GitHub rate limit" page to replace the a generic 403 error ([#48](https://github.com/joeyespo/grip/issues/48))
+- Enhancement: Add "GitHub rate limit" page to replace the generic 403 error ([#48](https://github.com/joeyespo/grip/issues/48))
 - Enhancement: Add option to clear the cache ([#68](https://github.com/joeyespo/grip/issues/68))
 - Enhancement: Allow storing credentials in config file ([#61](https://github.com/joeyespo/grip/issues/61))
 - Enhancement: Read user settings from `~/.grip`
@@ -176,7 +176,7 @@ Grip Changelog
 - Enhancement: Relay GitHub API HTTP errors to browser for debuggability
 - Enhancement: Extract render_app and add create_app in API
 - Bugfix: Fix manual installs using setup.py (thanks, [@briancappello][]!)
-- Bugfix: Fix rendering rendering local images (thanks, [@jgallagher][]!)
+- Bugfix: Fix rendering local images (thanks, [@jgallagher][]!)
 - Bugfix: Handle File Not Found errors as 404 when given a directory
 - Rename and re-arrange the configuration files
 - Update README.md with new features
