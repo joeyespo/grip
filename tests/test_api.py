@@ -103,7 +103,13 @@ def test_directory_reader():
         reader.readme_for(input_path)
     assert reader.readme_for(markdown_path) == os.path.abspath(markdown_file)
     assert reader.readme_for(default_path) == os.path.abspath(default_file)
-    assert reader.readme_for(markdown_no_ext_path) == \
+
+    with pytest.raises(ReadmeNotFoundError):
+        reader.readme_for(markdown_no_ext_path)
+
+    inferred_reader = DirectoryReader(DIRNAME, silent=True,
+                                      infer_extensions=True)
+    assert inferred_reader.readme_for(markdown_no_ext_path) == \
         os.path.abspath(markdown_file)
 
     # TODO: 'README.md' vs 'readme.md'

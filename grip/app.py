@@ -42,10 +42,12 @@ class Grip(Flask):
     def __init__(self, source=None, auth=None, renderer=None,
                  assets=None, render_wide=None, render_inline=None, title=None,
                  autorefresh=None, quiet=None, grip_url=None,
-                 static_url_path=None, instance_path=None, **kwargs):
+                 static_url_path=None, instance_path=None, wiki=False,
+                 **kwargs):
         # Defaults
         if source is None or isinstance(source, str_type):
-            source = DirectoryReader(source)
+            source = DirectoryReader(source,
+                                     infer_extensions=kwargs.pop('wiki', False))
         if render_wide is None:
             render_wide = False
         if render_inline is None:
