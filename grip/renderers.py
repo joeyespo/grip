@@ -1,5 +1,6 @@
 from __future__ import print_function, unicode_literals
 
+import os
 import re
 import json
 import sys
@@ -124,7 +125,11 @@ class GitHubWikiRenderer(GitHubRenderer):
             url = match.group(2) or match.group(1)
             url = re.sub(r'[\s\+]', '-', url)
             url = re.sub(r'[^a-z0-9\-_]', urlencode, url)
-            return '[{0}]({1})'.format(match.group(1), url)
+            md = '[{0}]({1})'.format(match.group(1), url)
+            ext = os.path.splitext(url)[1]
+            if ext and ext in ('.jpg', '.jpeg', '.png', '.gif'):
+                return '!' + md
+            return md
 
         return re.sub(r'\[\[([^\]\|]+)(?:\|([^\]]+))?\]\]', wiki_url, text)
 
