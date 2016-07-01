@@ -128,7 +128,8 @@ class Grip(Flask):
         rate_limit_route = posixpath.join(grip_url, 'rate-limit-preview')
 
         # Initialize views
-        self.before_first_request(self._retrieve_styles)
+        self._styles_retrieved = False
+        self.before_request(self._retrieve_styles)
         self.add_url_rule(asset_route, 'asset', self._render_asset)
         self.add_url_rule(asset_subpath, 'asset', self._render_asset)
         self.add_url_rule('/', 'render', self._render_page)
@@ -310,6 +311,10 @@ class Grip(Flask):
         Retrieves the style URLs from the source and caches them. This
         is called before the first request is dispatched.
         """
+        if self._styles_retrieved:
+            return
+        self._styles_retrieved = True
+
         try:
             self.assets.retrieve_styles(url_for('asset'))
         except Exception as ex:
