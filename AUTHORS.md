@@ -25,6 +25,8 @@ along with the following contributors:
 - Erik Hummel ([@ErikMHummel](https://github.com/ErikMHummel))
 - Matthew R. Tanudjaja ([@mrexmelle](https://github.com/mrexmelle))
 - Tom Dunlap ([@motevets](https://github.com/motevets))
+- Konstantin Baierer ([@kba](https://github.com/kba))
+- Jakub Wilk ([@jwilk](https://github.com/jwilk))
 
 
 [home]: README.md

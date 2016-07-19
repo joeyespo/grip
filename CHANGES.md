@@ -2,6 +2,19 @@ Grip Changelog
 --------------
 
 
+#### Version 4.3.0 (2016-07-19)
+
+- Bugfix: Fix `--export` deadlock ([#184](https://github.com/joeyespo/grip/issues/184))
+- Bugfix: Make `--quiet` truly quiet ([#188](https://github.com/joeyespo/grip/pull/188) - thanks, [@kba][]!)
+- Bugfix: Allow `--clear` to work without a README file present ([#189](https://github.com/joeyespo/grip/issues/189))
+- Bugfix: Fix tests by patching sys.exc_clear to have Flask 0.11 work on pypy3 ([#190](https://github.com/joeyespo/grip/issues/190))
+- Bugfix: Fix minor version check during patch_svg ([#191](https://github.com/joeyespo/grip/issues/191))
+- Bugfix: Add Octicon font until the Readme API inlines SVGs ([#192](https://github.com/joeyespo/grip/issues/192))
+- Bugfix: Show '- Grip' in `<title>` only, not in page header ([#193](https://github.com/joeyespo/grip/issues/193))
+- Readme: Remove duplicated words ([#177](https://github.com/joeyespo/grip/pull/177) - thanks, [@jwilk][]!)
+- Readme: Remove download count badge since it's broken ([#194](https://github.com/joeyespo/grip/pull/194))
+
+
 #### Version 4.2.0 (2016-04-12)
 
 - Enhancement: Expose `render_inline` through `--no-inline` CLI option ([#165](https://github.com/joeyespo/grip/pull/165) - thanks, [@mrexmelle][]!)
@@ -257,3 +270,5 @@ Grip Changelog
 [@ErikMHummel]: https://github.com/ErikMHummel
 [@mrexmelle]: https://github.com/mrexmelle
 [@motevets]: https://github.com/motevets
+[@kba]: https://github.com/kba
+[@jwilk]: https://github.com/jwilk
