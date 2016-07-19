@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}{{ title }}{% endblock %}
+{% block title %}{% if title %}{{ title }}{% else %}{{ filename or '' }} - Grip{% endif %}{% endblock %}
 
 {%- block styles -%}
   {%- for style_url in style_urls %}
@@ -108,10 +108,10 @@
         <div class="container new-discussion-timeline experiment-repo-nav">
           <div class="repository-content">
             <div id="readme" class="readme boxed-group clearfix announce instapaper_body md">
-              {% if not user_content and title %}
+              {% if not user_content and title or filename %}
                 <h3>
                   <span class="octicon octicon-book"></span>
-                  {{ title }}
+                  {% if title %}{{ title }}{% else %}{{ filename }}{% endif %}
                 </h3>
               {% endif %}
               <article class="markdown-body entry-content" itemprop="text" id="grip-content">

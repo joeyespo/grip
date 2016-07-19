@@ -158,12 +158,6 @@ class Grip(Flask):
         if normalized != subpath:
             return redirect(normalized)
 
-        # Get the contextual or overridden title
-        title = self.title
-        if title is None:
-            filename = self.reader.filename_for(subpath)
-            title = ' - '.join([filename or '', 'Grip'])
-
         # Read the Readme text or asset
         try:
             text = self.reader.read(subpath)
@@ -194,7 +188,8 @@ class Grip(Flask):
                            else None)
 
         return render_template(
-            'index.html', title=title, content=content, favicon=favicon,
+            'index.html', filename=self.reader.filename_for(subpath),
+            title=self.title, content=content, favicon=favicon,
             user_content=self.renderer.user_content,
             wide_style=self.render_wide, style_urls=self.assets.style_urls,
             styles=self.assets.styles, autorefresh_url=autorefresh_url)
