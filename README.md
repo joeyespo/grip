@@ -2,7 +2,6 @@ Grip -- GitHub Readme Instant Preview
 =====================================
 
 [![Current version on PyPI](http://img.shields.io/pypi/v/grip.svg)][pypi]
-[![Downloads/month on PyPI](http://img.shields.io/pypi/dm/grip.svg)][pypi]
 <a href="https://gratipay.com/grip/" title="Thank you!" target="_blank">
   <img src="https://img.shields.io/gratipay/grip.svg" alt="Thank you!">
 </a>
