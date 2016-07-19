@@ -66,7 +66,7 @@ def clear_cache(grip_class=None):
     """
     if grip_class is None:
         grip_class = Grip
-    grip_class().clear_cache()
+    grip_class(StdinReader()).clear_cache()
 
 
 def render_page(path=None, user_content=False, context=None,
