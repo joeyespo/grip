@@ -99,6 +99,11 @@ class Grip(Flask):
         self.render_inline = render_inline
         self.title = title
         self.quiet = quiet
+        if self.quiet:
+            import logging
+            log = logging.getLogger('werkzeug')
+            log.setLevel(logging.ERROR)
+
 
         # Overridable attributes
         if self.renderer is None:
@@ -345,7 +350,7 @@ class Grip(Flask):
         if cache_directory:
             cache_directory = cache_directory.format(version=__version__)
             cache_path = os.path.join(self.instance_path, cache_directory)
-        return GitHubAssetManager(cache_path, self.config['STYLE_URLS'])
+        return GitHubAssetManager(cache_path, self.config['STYLE_URLS'], self.quiet)
 
     def add_content_types(self):
         """

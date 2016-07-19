@@ -28,11 +28,12 @@ class ReadmeAssetManager(object):
 
     Set cache_path to None to disable caching.
     """
-    def __init__(self, cache_path, style_urls=None):
+    def __init__(self, cache_path, style_urls=None, quiet=None):
         super(ReadmeAssetManager, self).__init__()
         self.cache_path = cache_path
         self.style_urls = list(style_urls) if style_urls else []
         self.styles = []
+        self.quiet = quiet
 
     def _stip_url_params(self, url):
         return url.rsplit('?', 1)[0].rsplit('#', 1)[0]
@@ -67,8 +68,8 @@ class GitHubAssetManager(ReadmeAssetManager):
 
     Set cache_path to None to disable caching.
     """
-    def __init__(self, cache_path, style_urls=None):
-        super(GitHubAssetManager, self).__init__(cache_path, style_urls)
+    def __init__(self, cache_path, style_urls=None, quiet=None):
+        super(GitHubAssetManager, self).__init__(cache_path, style_urls, quiet)
 
     def _get_style_urls(self, asset_url_path):
         """
@@ -122,7 +123,8 @@ class GitHubAssetManager(ReadmeAssetManager):
 
         asset_urls = []
         for style_url in style_urls:
-            print(' * Downloading style', style_url, file=sys.stderr)
+            if not self.quiet:
+                print(' * Downloading style', style_url, file=sys.stderr)
             r = requests.get(style_url)
             if not 200 <= r.status_code < 300:
                 print(' -> Warning: Style request responded with',
@@ -143,7 +145,8 @@ class GitHubAssetManager(ReadmeAssetManager):
                 files[filename] = contents.encode('utf-8')
 
         for asset_url in asset_urls:
-            print(' * Downloading asset', asset_url, file=sys.stderr)
+            if not self.quiet:
+                print(' * Downloading asset', asset_url, file=sys.stderr)
             # Retrieve binary file and show message
             r = requests.get(asset_url, stream=True)
             if not 200 <= r.status_code < 300:
@@ -169,7 +172,8 @@ class GitHubAssetManager(ReadmeAssetManager):
         for filename in cache:
             with open(filename, 'wb') as f:
                 f.write(cache[filename])
-        print(' * Cached all downloads in', self.cache_path, file=sys.stderr)
+        if not self.quiet:
+            print(' * Cached all downloads in', self.cache_path, file=sys.stderr)
         return True
 
     def retrieve_styles(self, asset_url_path):
