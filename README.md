@@ -566,7 +566,7 @@ ReadmeReader()
 ```
 
 
-#### class class DirectoryReader(ReadmeReader)
+#### class DirectoryReader(ReadmeReader)
 
 Reads Readme files from URL subpaths.
 
