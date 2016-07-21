@@ -5,7 +5,7 @@ Grip Changelog
 #### Version 4.3.1 (2016-07-21)
 
 - Bugfix: Allow port 0 ([#197](https://github.com/joeyespo/grip/pull/197))
-- Bugfix: Fix setup.py build and include octicon files in the build asset ([#196](https://github.com/joeyespo/grip/issues/196))
+- Bugfix: Fix setup.py build and include octicon files in the build asset ([#198](https://github.com/joeyespo/grip/issues/198))
 
 
 #### Version 4.3.0 (2016-07-19)
