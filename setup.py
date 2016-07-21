@@ -42,7 +42,7 @@ setup(
     license='MIT',
     platforms='any',
     packages=find_packages(),
-    package_data={'grip': ['static/*', 'templates/*', 'vendor/*']},
+    package_data={'grip': ['static/*', 'static/octicons/*', 'templates/*']},
     install_requires=read('requirements.txt').splitlines(),
     extras_require={'tests': read('requirements-test.txt').splitlines()},
     zip_safe=False,
