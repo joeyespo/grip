@@ -2,6 +2,11 @@ Grip Changelog
 --------------
 
 
+#### Version 4.3.2 (2016-07-21)
+
+- Bugfix: Fix `setup.py install` ([#199](https://github.com/joeyespo/grip/issues/199))
+
+
 #### Version 4.3.1 (2016-07-21)
 
 - Bugfix: Allow port 0 ([#197](https://github.com/joeyespo/grip/pull/197))
