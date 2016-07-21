@@ -116,7 +116,7 @@ def main(argv=None, force_utf8=True, patch_svg=True):
     host, port = split_address(address)
 
     # Validate address
-    if address and not host and not port:
+    if address and not host and port is None:
         print('Error: Invalid address', repr(address))
 
     # Run server

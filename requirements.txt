@@ -1,6 +1,6 @@
 docopt>=0.6.2
 Flask>=0.10.1
 Markdown>=2.5.1
-path-and-address>=1.0.0
+path-and-address>=2.0.1
 Pygments>=1.6
 requests>=2.4.1
