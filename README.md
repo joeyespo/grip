@@ -33,6 +33,12 @@ To install grip, simply:
 $ pip install grip
 ```
 
+On OS X, you can also install with Homebrew:
+
+```bash
+$ brew install grip
+```
+
 
 Usage
 -----
