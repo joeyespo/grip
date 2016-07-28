@@ -2,6 +2,11 @@ Grip Changelog
 --------------
 
 
+#### Development
+
+- Readme: Add Homebrew installation instructions ([#201](https://github.com/joeyespo/grip/issues/201) - thanks, [@zmwangx][]!)
+
+
 #### Version 4.3.2 (2016-07-21)
 
 - Bugfix: Fix `setup.py install` ([#199](https://github.com/joeyespo/grip/issues/199))
