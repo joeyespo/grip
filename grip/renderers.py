@@ -1,6 +1,5 @@
 from __future__ import print_function, unicode_literals
 
-import re
 import json
 import sys
 from abc import ABCMeta, abstractmethod
@@ -14,17 +13,8 @@ except ImportError:
     UrlizeExtension = None
 
 from .constants import DEFAULT_API_URL
+from .patcher import patch
 from .vendor.six import add_metaclass
-
-
-INCOMPLETE_RE = re.compile(r'<li>\[ \] (.*?)(<ul.*?>|</li>)', re.DOTALL)
-INCOMPLETE_SUB = (r'<li class="task-list-item">'
-                  r'<input type="checkbox" '
-                  r'class="task-list-item-checkbox" disabled=""> \1\2')
-COMPLETE_RE = re.compile(r'<li>\[x\] (.*?)(<ul.*?>|</li>)', re.DOTALL)
-COMPLETE_SUB = (r'<li class="task-list-item">'
-                r'<input type="checkbox" class="task-list-item-checkbox" '
-                r'checked="" disabled=""> \1\2')
 
 
 @add_metaclass(ABCMeta)
@@ -59,19 +49,6 @@ class GitHubRenderer(ReadmeRenderer):
         self.api_url = api_url
         self.raw = raw
 
-    def patch(self, html):
-        """
-        Processes the HTML rendered by the GitHub API, patching
-        any inconsistencies from the main site.
-        """
-        # FUTURE: Remove this once GitHub API renders task lists
-        # https://github.com/isaacs/github/issues/309
-        if not self.user_content:
-            html = INCOMPLETE_RE.sub(INCOMPLETE_SUB, html)
-            html = COMPLETE_RE.sub(COMPLETE_SUB, html)
-
-        return html
-
     def render(self, text, auth=None):
         """
         Renders the specified markdown content and embedded styles.
@@ -103,7 +80,7 @@ class GitHubRenderer(ReadmeRenderer):
         # FUTURE: Remove this once GitHub API properly handles Unicode markdown
         r.encoding = 'utf-8'
 
-        return r.text if self.raw else self.patch(r.text)
+        return r.text if self.raw else patch(r.text)
 
 
 class OfflineRenderer(ReadmeRenderer):
