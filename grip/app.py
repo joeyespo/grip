@@ -104,7 +104,6 @@ class Grip(Flask):
             log = logging.getLogger('werkzeug')
             log.setLevel(logging.ERROR)
 
-
         # Overridable attributes
         if self.renderer is None:
             renderer = self.default_renderer()
