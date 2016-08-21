@@ -209,7 +209,7 @@ $ grip
 
    ```bash
    $ cd YOUR_DIR
-   $ export GRIPURL=$(PWD)
+   $ export GRIPURL=$(pwd)
    ```
 
 2. Include all assets by setting the `CACHE_DIRECTORY` [config variable](#configuration):
