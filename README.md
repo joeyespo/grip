@@ -98,8 +98,8 @@ Exporting to README.html
 Control the output name with the second argument:
 
 ```bash
-$ grip README.md --export readme.html
-Exporting to readme.html
+$ grip README.md --export index.html
+Exporting to index.html
 ```
 
 If you're exporting a bunch of files, you can prevent styles from being inlining to save space with `--no-inline`:
