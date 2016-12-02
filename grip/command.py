@@ -44,6 +44,8 @@ from __future__ import print_function
 
 import sys
 import mimetypes
+import socket
+import errno
 
 from docopt import docopt
 from getpass import getpass
@@ -128,4 +130,9 @@ def main(argv=None, force_utf8=True, patch_svg=True):
         return 0
     except ReadmeNotFoundError as ex:
         print('Error:', ex)
+        return 1
+    except socket.error as ex:
+        print('Error:', ex)
+        if ex.errno == errno.EADDRINUSE:
+            print('This port is in use. Is a grip server already running? Kill it or specify another port.')
         return 1
