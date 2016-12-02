@@ -6,6 +6,7 @@ import mimetypes
 import os
 import posixpath
 import re
+import socket
 import sys
 import threading
 import time
@@ -403,6 +404,13 @@ class Grip(Flask):
             else:
                 auth_method = type(self.auth).__name__
             print(' * Using', auth_method, file=sys.stderr)
+
+        # Get random port manually when needed ahead of time
+        if port == 0 and open_browser:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.bind(('localhost', 0))
+            port = sock.getsockname()[1]
+            sock.close()
 
         # Open browser
         browser_thread = (
