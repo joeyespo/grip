@@ -84,7 +84,7 @@ class Grip(Flask):
             username = self.config['USERNAME']
             password = self.config['PASSWORD']
             if username or password:
-                auth = (username, password)
+                auth = (username or '', password or '')
 
         # Thread-safe event to signal to the polling threads to exit
         self._run_mutex = threading.Lock()
