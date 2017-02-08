@@ -15,7 +15,7 @@ def create_app(path=None, user_content=False, context=None, username=None,
                render_inline=False, api_url=None, title=None, text=None,
                autorefresh=None, quiet=None, grip_class=None):
     """
-    Creates an Grip application with the specified overrides.
+    Creates a Grip application with the specified overrides.
     """
     # Customize the app
     if grip_class is None:
