@@ -30,7 +30,7 @@ Installation
 To install grip, simply:
 
 ```bash
-$ pip install grip
+# pip install grip
 ```
 
 On OS X, you can also install with Homebrew:
