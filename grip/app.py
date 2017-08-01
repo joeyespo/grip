@@ -41,7 +41,8 @@ class Grip(Flask):
     containing a README.
     """
     def __init__(self, source=None, auth=None, renderer=None,
-                 assets=None, render_wide=None, render_inline=None, title=None,
+                 assets=None, render_wide=None, render_inline=None,
+                 title=None, hide_border=False, hide_title=False,
                  autorefresh=None, quiet=None, grip_url=None,
                  static_url_path=None, instance_path=None, **kwargs):
         # Defaults
@@ -99,6 +100,8 @@ class Grip(Flask):
         self.render_wide = render_wide
         self.render_inline = render_inline
         self.title = title
+        self.hide_border = hide_border
+        self.hide_title = hide_title
         self.quiet = quiet
         if self.quiet:
             import logging
@@ -189,7 +192,8 @@ class Grip(Flask):
 
         return render_template(
             'index.html', filename=self.reader.filename_for(subpath),
-            title=self.title, content=content, favicon=favicon,
+            title=self.title, hide_border=self.hide_border,
+            hide_title=self.hide_title, content=content, favicon=favicon,
             user_content=self.renderer.user_content,
             wide_style=self.render_wide, style_urls=self.assets.style_urls,
             styles=self.assets.styles, autorefresh_url=autorefresh_url)
