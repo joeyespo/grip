@@ -26,10 +26,10 @@ DEFAULT_API_URL = 'https://api.github.com'
 # Style parsing
 STYLE_URLS_SOURCE = 'https://github.com/joeyespo/grip'
 STYLE_URLS_RE = (
-    '<link.+href=[\'"]?([^\'" >]+)[\'"]?.+media=[\'"]?(?:screen|all)[\'"]?.'
-    '+rel=[\'"]?stylesheet[\'"]?.+/>')
+    r'''<link.+href=['"]?([^'" >]+)['"]?.+media=['"]?(?:screen|all)['"]?.'''
+    r'''+rel=['"]?stylesheet['"]?.+/>''')
 STYLE_ASSET_URLS_RE = (
-    'url\([\'"]?(/static/fonts/octicons/[^\'" \)]+)[\'"]?\)')
+    r'''url\(['"]?(/static/fonts/octicons/[^'" \)]+)['"]?\)''')
 STYLE_ASSET_URLS_SUB_FORMAT = r'url("{0}\1")'
 STYLE_ASSET_URLS_INLINE_FORMAT = (
-    'url\([\'"]?((?:/static|{0})/[^\'" \)]+)[\'"]?\)')
+    r'''url\(['"]?((?:/static|{0})/[^'" \)]+)['"]?\)''')
