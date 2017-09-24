@@ -27,6 +27,10 @@ along with the following contributors:
 - Tom Dunlap ([@motevets](https://github.com/motevets))
 - Konstantin Baierer ([@kba](https://github.com/kba))
 - Jakub Wilk ([@jwilk](https://github.com/jwilk))
+- Devin Chen ([@xxd3vin](https://github.com/xxd3vin))
+- Jamie Davis ([@davisjam](https://github.com/davisjam))
+- JasonThomasData ([@JasonThomasData](https://github.com/JasonThomasData))
+- Andrej ([@4ndrej](https://github.com/4ndrej))
 
 
 [home]: README.md

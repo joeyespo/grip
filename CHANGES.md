@@ -4,7 +4,23 @@ Grip Changelog
 
 #### Development
 
+
+#### Version 4.4.0 (2017-09-24)
+
+- Patch: Work around a GitHub API header bug ([#245](https://github.com/joeyespo/grip/pull/245))
+- Bugfix: Fail cleanly when server address is already in use ([#216](https://github.com/joeyespo/grip/pull/216) - thanks, [@davisjam][]!)
+- Bugfix: Fix `--browser` when running on a random port (port 0) ([#219](https://github.com/joeyespo/grip/pull/219))
+- Bugfix: Add defaults to USERNAME and PASSWORD in case just one is provided ([#222](https://github.com/joeyespo/grip/pull/222))
+- Internals: Fix deprecation warning in Python 3.6 by using triple-quoted raw strings in regexp constants ([#223](https://github.com/joeyespo/grip/pull/223) - thanks, [@jwilk][]!)
+- Internals: Decouple patchers from renderers
+- Docs: Fix typo in API docs ([#224](https://github.com/joeyespo/grip/pull/224) - thanks, [@jwilk][]!)
 - Readme: Add Homebrew installation instructions ([#201](https://github.com/joeyespo/grip/issues/201) - thanks, [@zmwangx][]!)
+- Readme: Use `pwd` instead of `PWD` in bash shell example ([#207](https://github.com/joeyespo/grip/pull/207) - thanks, [@xxd3vin][]!)
+- Readme: Use 'index.html' in --export example for searchability
+- Readme: Fix link to `offline-renderer` branch ([#230](https://github.com/joeyespo/grip/pull/230) - thanks, [@4ndrej][]!)
+- Readme: Add Configuration troubleshooting tip and example
+- Readme: Add Say Thanks badge :smiley:
+- Thanks: [@JasonThomasData][] for investigating and working with GitHub Support to fix a heading bug ([#235](https://github.com/joeyespo/grip/pull/235))
 
 
 #### Version 4.3.2 (2016-07-21)
@@ -288,3 +304,8 @@ Grip Changelog
 [@motevets]: https://github.com/motevets
 [@kba]: https://github.com/kba
 [@jwilk]: https://github.com/jwilk
+[@xxd3vin]: https://github.com/xxd3vin
+[@davisjam]: https://github.com/davisjam
+[@JasonThomasData]: https://github.com/JasonThomasData
+[@4ndrej]: https://github.com/4ndrej
+[@erikrtn]: https://github.com/erikrtn
