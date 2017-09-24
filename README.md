@@ -2,9 +2,7 @@ Grip -- GitHub Readme Instant Preview
 =====================================
 
 [![Current version on PyPI](http://img.shields.io/pypi/v/grip.svg)][pypi]
-<a href="https://gratipay.com/grip/" title="Thank you!" target="_blank">
-  <img src="https://img.shields.io/gratipay/grip.svg" alt="Thank you!">
-</a>
+[![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/joeyespo)
 
 Render local readme files before sending off to GitHub.
 
@@ -762,11 +760,9 @@ Contributing
 
 If your PR has been waiting a while, feel free to [ping me on Twitter][twitter].
 
-Use this software often? Please consider [supporting Grip][support].
-
-<a href="https://gratipay.com/grip/" title="Thank you!" target="_blank">
-  <img src="https://img.shields.io/gratipay/grip.svg" align="center" alt="Thank you!">
-</a>
+Use this software often? Please consider [supporting Grip][support]. Or just
+<a href="https://saythanks.io/to/joeyespo" target="_blank"><img src="https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg" align="center" alt="Say Thanks!"></a>
+:smiley:
 
 
 [pypi]: http://pypi.python.org/pypi/grip/
