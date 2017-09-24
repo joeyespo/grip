@@ -175,7 +175,7 @@ For security purposes, it's highly recommended that you **use an access token
 over a password**. (You could also keep your password safe by configuring
 Grip to [grab your password from a password manager][keychain-access].)
 
-There's also a [work-in-progress branch][fix-render-offline] to provide
+There's also a [work-in-progress branch][offline-renderer] to provide
 **offline rendering**. Once this resembles GitHub more precisely, it'll
 be exposed in the CLI, and will ultimately be used as a seamless fallback
 engine for when the API can't be accessed.
@@ -764,7 +764,7 @@ Use this software often? Please consider [supporting Grip][support].
 [markdown]: http://developer.github.com/v3/markdown
 [rdd]: http://tom.preston-werner.com/2010/08/23/readme-driven-development.html
 [authors.md]: AUTHORS.md
-[fix-render-offline]: http://github.com/joeyespo/grip/tree/fix-render-offline
+[offline-renderer]: http://github.com/joeyespo/grip/tree/offline-renderer
 [personal access token]: https://github.com/settings/tokens/new?scopes=
 [keychain-access]: https://gist.github.com/klmr/3840aa3c12f947e4064c
 [task-lists]: https://github.com/blog/1825-task-lists-in-all-markdown-documents
