@@ -1,5 +1,6 @@
 from __future__ import print_function, unicode_literals
 
+import os
 import re
 import json
 import sys
@@ -94,7 +95,7 @@ class GitHubRenderer(ReadmeRenderer):
             headers = {'content-type': 'application/json; charset=UTF-8'}
         else:
             url = '{0}/markdown/raw'.format(self.api_url)
-            data = text.encode('utf-8')
+            data = text.encode('utf8')
             headers = {'content-type': 'text/x-markdown; charset=UTF-8'}
 
         r = requests.post(url, headers=headers, data=data, auth=auth)
@@ -104,6 +105,33 @@ class GitHubRenderer(ReadmeRenderer):
         r.encoding = 'utf-8'
 
         return r.text if self.raw else self.patch(r.text)
+
+
+class GitHubWikiRenderer(GitHubRenderer):
+    def render(self, text, auth=None):
+        if not self.user_content:
+            text = self.wiki_patch(text)
+        return super(GitHubWikiRenderer, self).render(text, auth=auth)
+
+    def wiki_patch(self, text):
+        """
+        Pre-process Markdown text to synthesize Github WikiLinks
+        """
+        def urlencode(match):
+            c = match.group(0)
+            return ''.join('%{:02X}'.format(ord(b)) for b in c)
+
+        def wiki_url(match):
+            url = match.group(2) or match.group(1)
+            url = re.sub(r'[\s\+]', '-', url)
+            url = re.sub(r'[^a-z0-9\-_]', urlencode, url)
+            md = '[{0}]({1})'.format(match.group(1), url)
+            ext = os.path.splitext(url)[1]
+            if ext and ext in ('.jpg', '.jpeg', '.png', '.gif'):
+                return '!' + md
+            return md
+
+        return re.sub(r'\[\[([^\]\|]+)(?:\|([^\]]+))?\]\]', wiki_url, text)
 
 
 class OfflineRenderer(ReadmeRenderer):

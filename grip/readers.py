@@ -10,7 +10,7 @@ from abc import ABCMeta, abstractmethod
 
 from flask import safe_join
 
-from .constants import DEFAULT_FILENAMES, DEFAULT_FILENAME
+from .constants import DEFAULT_FILENAMES, DEFAULT_FILENAME, SUPPORTED_EXTENSIONS
 from .exceptions import ReadmeNotFoundError
 from .vendor.six import add_metaclass
 
@@ -85,11 +85,12 @@ class DirectoryReader(ReadmeReader):
     """
     Reads Readme files from URL subpaths.
     """
-    def __init__(self, path=None, silent=False):
+    def __init__(self, path=None, silent=False, infer_extensions=False):
         super(DirectoryReader, self).__init__()
         root_filename = os.path.abspath(self._resolve_readme(path, silent))
         self.root_filename = root_filename
         self.root_directory = os.path.dirname(root_filename)
+        self.infer_extensions = infer_extensions
 
     def _find_file(self, path, silent=False):
         """
@@ -192,6 +193,14 @@ class DirectoryReader(ReadmeReader):
 
         # Join for safety and to convert subpath to normalized OS-specific path
         filename = os.path.normpath(safe_join(self.root_directory, subpath))
+
+        if self.infer_extensions:
+            # Append extension if absent in the filename
+            if not filename.endswith(SUPPORTED_EXTENSIONS):
+                for ext in SUPPORTED_EXTENSIONS:
+                    if os.path.isfile(filename + ext):
+                        filename += ext
+                        break
 
         # Check for existence
         if not os.path.exists(filename):

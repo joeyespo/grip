@@ -27,6 +27,7 @@ along with the following contributors:
 - Tom Dunlap ([@motevets](https://github.com/motevets))
 - Konstantin Baierer ([@kba](https://github.com/kba))
 - Jakub Wilk ([@jwilk](https://github.com/jwilk))
+- Tommy Allen ([@tweekmonster](https://github.com/tweekmonster))
 
 
 [home]: README.md

@@ -37,6 +37,7 @@ Options:
                     The default is the filename.
   --norefresh       Do not automatically refresh the Readme content when
                     the file changes.
+  --wiki            Render as GitHub wiki page.
   --quiet           Do not print to the terminal.
 """
 
@@ -107,7 +108,7 @@ def main(argv=None, force_utf8=True, patch_svg=True):
             export(args['<path>'], args['--user-content'], args['--context'],
                    args['--user'], password, False, args['--wide'],
                    not args['--no-inline'], args['<address>'],
-                   args['--api-url'], args['--title'])
+                   args['--api-url'], args['--title'], args['--wiki'])
             return 0
         except ReadmeNotFoundError as ex:
             print('Error:', ex)
@@ -126,7 +127,7 @@ def main(argv=None, force_utf8=True, patch_svg=True):
         serve(path, host, port, args['--user-content'], args['--context'],
               args['--user'], password, False, args['--wide'], False,
               args['--api-url'], args['--title'], not args['--norefresh'],
-              args['--browser'], args['--quiet'], None)
+              args['--browser'], args['--quiet'], None, args['--wiki'])
         return 0
     except ReadmeNotFoundError as ex:
         print('Error:', ex)

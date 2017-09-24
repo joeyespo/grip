@@ -60,6 +60,7 @@ def test_readme_reader():
 def test_directory_reader():
     input_path = 'input'
     markdown_path = posixpath.join(input_path, 'gfm-test.md')
+    markdown_no_ext_path = os.path.splitext(markdown_path)[0]
     default_path = posixpath.join(input_path, 'default')
     input_img_path = posixpath.join(input_path, 'img.png')
 
@@ -102,6 +103,14 @@ def test_directory_reader():
         reader.readme_for(input_path)
     assert reader.readme_for(markdown_path) == os.path.abspath(markdown_file)
     assert reader.readme_for(default_path) == os.path.abspath(default_file)
+
+    with pytest.raises(ReadmeNotFoundError):
+        reader.readme_for(markdown_no_ext_path)
+
+    inferred_reader = DirectoryReader(DIRNAME, silent=True,
+                                      infer_extensions=True)
+    assert inferred_reader.readme_for(markdown_no_ext_path) == \
+        os.path.abspath(markdown_file)
 
     # TODO: 'README.md' vs 'readme.md'
 
