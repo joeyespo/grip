@@ -253,6 +253,15 @@ To customize Grip, create `~/.grip/settings.py`, then add one or more of the fol
 - `USERNAME`: The username to use when not provided as a CLI argument, `None` by default
 - `PASSWORD`: The password or [personal access token][] to use when not provided as a CLI argument (*Please don't save your passwords here.* Instead, use an access token or drop in this code [grab your password from a password manager][keychain-access]), `None` by default
 
+Note that this is a Python file. If you see `'X' is not defined` errors, you
+may have overlooked some quotes. For example:
+
+```py
+USERNAME = 'your-username'
+PASSWORD = 'your-personal-access-token'
+```
+
+
 #### Environment variables
 
 - `GRIPHOME`: Specify an alternative `settings.py` location, `~/.grip` by default
