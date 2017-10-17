@@ -93,7 +93,7 @@ def render_content(text, user_content=False, context=None, username=None,
     return renderer.render(text, auth)
 
 
-def export(path=None, user_content=False, context=None, username=None,
+def export(path=None, quiet=False, user_content=False, context=None, username=None,
            password=None, render_offline=False, render_wide=False,
            render_inline=True, out_filename=None, api_url=None, title=None,
            grip_class=None):
@@ -109,7 +109,7 @@ def export(path=None, user_content=False, context=None, username=None,
                 os.path.relpath(DirectoryReader(path).root_filename))
             out_filename = '{0}.html'.format(filetitle)
 
-    if not export_to_stdout:
+    if not export_to_stdout and not quiet:
         print('Exporting to', out_filename, file=sys.stderr)
 
     page = render_page(path, user_content, context, username, password,

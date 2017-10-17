@@ -104,7 +104,7 @@ def main(argv=None, force_utf8=True, patch_svg=True):
     # Export to a file instead of running a server
     if args['--export']:
         try:
-            export(args['<path>'], args['--user-content'], args['--context'],
+            export(args['<path>'], args['--quiet'], args['--user-content'], args['--context'],
                    args['--user'], password, False, args['--wide'],
                    not args['--no-inline'], args['<address>'],
                    args['--api-url'], args['--title'])
