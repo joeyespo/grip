@@ -10,6 +10,7 @@ import socket
 import sys
 import threading
 import time
+import errno
 from traceback import format_exc
 try:
     from urlparse import urlparse
@@ -71,9 +72,19 @@ class Grip(Flask):
             __name__, static_url_path=static_url_path,
             instance_path=instance_path, **kwargs)
         self.config.from_object('grip.settings')
-        self.config.from_pyfile('settings_local.py', silent=True)
-        self.config.from_pyfile(
-            os.path.join(instance_path, 'settings.py'), silent=True)
+
+        try:
+            self.config.from_pyfile('settings_local.py', silent=True)
+            self.config.from_pyfile(
+                os.path.join(instance_path, 'settings.py'), silent=True)
+        except IOError as ex:
+            # workaround for pre-existing ~/.grip regular file from
+            # the cd-rom tool, and flask not silently ignoring those
+            if ex.errno in (errno.ENOTDIR,):
+                pass
+            else:
+                raise
+
 
         # Defaults from settings
         if autorefresh is None:
