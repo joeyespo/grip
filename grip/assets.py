@@ -35,7 +35,7 @@ class ReadmeAssetManager(object):
         self.styles = []
         self.quiet = quiet
 
-    def _stip_url_params(self, url):
+    def _strip_url_params(self, url):
         return url.rsplit('?', 1)[0].rsplit('#', 1)[0]
 
     def clear(self):
@@ -51,7 +51,7 @@ class ReadmeAssetManager(object):
         """
         # FUTURE: Use url exactly instead of flattening it here
         url = posixpath.basename(url)
-        return self._stip_url_params(url)
+        return self._strip_url_params(url)
 
     @abstractmethod
     def retrieve_styles(self, asset_url_path):
