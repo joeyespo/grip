@@ -27,13 +27,13 @@ Installation
 
 To install grip, simply:
 
-```bash
+```console
 $ pip install grip
 ```
 
 On OS X, you can also install with Homebrew:
 
-```bash
+```console
 $ brew install grip
 ```
 
@@ -43,7 +43,7 @@ Usage
 
 To render the readme of a repository:
 
-```bash
+```console
 $ cd myrepo
 $ grip
  * Running on http://localhost:6419/
@@ -54,14 +54,14 @@ Or run with `-b` and Grip will open a new browser tab for you.
 
 You can also specify a port:
 
-```bash
+```console
 $ grip 80
  * Running on http://localhost:80/
 ```
 
 Or an explicit file:
 
-```bash
+```console
 $ grip AUTHORS.md
  * Running on http://localhost:6419/
 ```
@@ -71,60 +71,60 @@ since grip supports relative URLs.
 
 You can combine the previous examples. Or specify a hostname instead of a port. Or provide both.
 
-```bash
+```console
 $ grip AUTHORS.md 80
  * Running on http://localhost:80/
 ```
 
-```bash
+```console
 $ grip CHANGES.md 0.0.0.0
  * Running on http://0.0.0.0:6419/
 ```
 
-```bash
+```console
 $ grip . 0.0.0.0:80
  * Running on http://0.0.0.0:80/
 ```
 
 You can even bypass the server and **export** to a single HTML file, with all the styles and assets inlined:
 
-```bash
+```console
 $ grip --export
 Exporting to README.html
 ```
 
 Control the output name with the second argument:
 
-```bash
+```console
 $ grip README.md --export index.html
 Exporting to index.html
 ```
 
 If you're exporting a bunch of files, you can prevent styles from being inlining to save space with `--no-inline`:
 
-```bash
+```console
 $ grip README.md --export --no-inline introduction.html
 Exporting to introduction.html
 ```
 
 Reading and writing from **stdin** and **stdout** is also supported, allowing you to use Grip with other programs:
 
-```bash
+```console
 $ cat README.md | grip -
  * Running on http://localhost:6419/
 ```
 
-```bash
+```console
 $ grip AUTHORS.md --export - | bcat
 ```
 
-```bash
+```console
 $ cat README.md | grip --export - | less
 ```
 
 This allows you to quickly test how things look by entering Markdown directly in your terminal:
 
-```bash
+```console
 $ grip -
 Hello **world**!
 ^D
@@ -135,14 +135,14 @@ Hello **world**!
 
 Rendering as user-content like **comments** and **issues** is also supported, with an optional repository context for linking to issues:
 
-```bash
+```console
 $ grip --user-content --context=joeyespo/grip
  * Running on http://localhost:6419/
 ```
 
 For more details and additional options, see the help:
 
-```bash
+```console
 $ grip -h
 ```
 
@@ -157,14 +157,14 @@ However, because of this you may hit the API's hourly rate limit. If this
 happens, grip offers a way to access the API using your credentials
 to unlock a much higher rate limit.
 
-```bash
+```console
 $ grip --user <your-username> --pass <your-password>
 ```
 
 Or use a [personal access token][] with an empty scope (note that a token is
 *required* if your GitHub account is set up with two-factor authentication):
 
-```bash
+```console
 $ grip --pass <token>
 ```
 
@@ -192,7 +192,7 @@ Want to share your own? [Say hello @joeyespo][twitter] or [submit a pull request
 
 #### Create a local mirror of a Github Wiki
 
-```bash
+```console
 $ git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.wiki.git
 $ cd YOUR_REPOSITORY.wiki
 $ grip
@@ -205,27 +205,27 @@ $ grip
 
 1. Enter the directory:
 
-   ```bash
+   ```console
    $ cd YOUR_DIR
    $ export GRIPURL=$(pwd)
    ```
 
 2. Include all assets by setting the `CACHE_DIRECTORY` [config variable](#configuration):
 
-   ```bash
+   ```console
    $ echo "CACHE_DIRECTORY = '$(pwd)/assets'" >> ~/.grip/settings.py
    ```
 
 3. Export all your Markdown files with Grip and replace absolute asset paths with relative paths:
 
-   ```bash
+   ```console
    $ for f in *.md; do grip --export $f --inline=False; done
    $ for f in *.html; do sed -i '' "s?$GRIPURL/??g" $f; done
    ```
 
 You can optionally compress the set of HTML files to `docs.tgz` with:
 
-   ```bash
+   ```console
    $ tar -czvf docs.tgz `ls | grep [\.]html$` assets
    ```
 
@@ -709,19 +709,19 @@ Testing
 
 Install the package and test requirements:
 
-```bash
+```console
 $ pip install -e .[tests]
 ```
 
 Run tests with [pytest][]:
 
-```bash
+```console
 $ py.test
 ```
 
 Or to re-run tests as you make changes, use [pytest-watch][]:
 
-```bash
+```console
 $ ptw
 ```
 
@@ -731,7 +731,7 @@ $ ptw
 If you're experiencing a problem with Grip, it's likely that an assumption made
 about the GitHub API has been broken. To verify this, run:
 
-```bash
+```console
 $ py.test -m assumption
 ```
 
@@ -739,13 +739,13 @@ Since the external assumptions rely on an internet connection, you may want to s
 them when developing locally. Tighten the cycle even further by stopping on the
 first failure with `-x`:
 
-```bash
+```console
 $ py.test -xm "not assumption"
 ```
 
 Or with [pytest-watch][]:
 
-```bash
+```console
 $ ptw -- -xm "not assumption"
 ```
 
