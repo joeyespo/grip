@@ -34,6 +34,9 @@ Options:
                     for example that of a Github Enterprise instance.
                     Default is the public API: https://api.github.com
   --title=<title>   Manually sets the page's title.
+  -B                Remove borders (currently not supported when running
+                    with --user-content).
+  -T                Remove title.
                     The default is the filename.
   --norefresh       Do not automatically refresh the Readme content when
                     the file changes.
@@ -107,7 +110,7 @@ def main(argv=None, force_utf8=True, patch_svg=True):
             export(args['<path>'], args['--quiet'], args['--user-content'], args['--context'],
                    args['--user'], password, False, args['--wide'],
                    not args['--no-inline'], args['<address>'],
-                   args['--api-url'], args['--title'])
+                   args['--api-url'], args['--title'], args['-B'], args['-T'])
             return 0
         except ReadmeNotFoundError as ex:
             print('Error:', ex)
@@ -125,8 +128,8 @@ def main(argv=None, force_utf8=True, patch_svg=True):
     try:
         serve(path, host, port, args['--user-content'], args['--context'],
               args['--user'], password, False, args['--wide'], False,
-              args['--api-url'], args['--title'], not args['--norefresh'],
-              args['--browser'], args['--quiet'], None)
+              args['--api-url'], args['--title'], args['-B'], args['-T'],
+              not args['--norefresh'], args['--browser'], args['--quiet'], None)
         return 0
     except ReadmeNotFoundError as ex:
         print('Error:', ex)

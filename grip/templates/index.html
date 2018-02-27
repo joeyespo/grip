@@ -108,13 +108,13 @@
         <div class="container new-discussion-timeline experiment-repo-nav">
           <div class="repository-content">
             <div id="readme" class="readme boxed-group clearfix announce instapaper_body md">
-              {% if not user_content and title or filename %}
-                <h3>
+              {% if not hide_title and (not user_content and title or filename) %}
+                <h3 {% if hide_border %}style="border:0px solid #ddd;"{% endif %}>
                   <span class="octicon octicon-book"></span>
                   {% if title %}{{ title }}{% else %}{{ filename }}{% endif %}
                 </h3>
               {% endif %}
-              <article class="markdown-body entry-content" itemprop="text" id="grip-content">
+              <article class="markdown-body entry-content" itemprop="text" id="grip-content" {% if hide_border %}style="border:0px solid #ddd;"{% endif %}>
                 {{ content|safe }}
               </article>
             </div>
