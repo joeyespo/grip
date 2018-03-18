@@ -16,7 +16,7 @@ import requests
 from flask import safe_join
 
 from .constants import (
-    STYLE_URLS_SOURCE, STYLE_URLS_RE, STYLE_ASSET_URLS_RE,
+    STYLE_URLS_SOURCE, STYLE_URLS_RES, STYLE_ASSET_URLS_RE,
     STYLE_ASSET_URLS_SUB_FORMAT)
 from .vendor.six import add_metaclass
 
@@ -88,7 +88,9 @@ class GitHubAssetManager(ReadmeAssetManager):
         if not 200 <= r.status_code < 300:
             print('Warning: retrieving styles gave status code',
                   r.status_code, file=sys.stderr)
-        urls = re.findall(STYLE_URLS_RE, r.text)
+        urls = []
+        for style_urls_re in STYLE_URLS_RES:
+            urls.extend(re.findall(style_urls_re, r.text))
         if not urls:
             print('Warning: no styles found - see https://github.com/joeyespo/'
                   'grip/issues/265', file=sys.stderr)
