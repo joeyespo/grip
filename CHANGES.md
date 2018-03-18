@@ -5,6 +5,23 @@ Grip Changelog
 #### Development
 
 
+#### Version 4.5.0 (2018-03-18)
+
+- Enhancement: Show warning if no styles are collected ([#265](https://github.com/joeyespo/grip/pull/265))
+- Bugfix: Don't print "Exporting" from `--export` when using `--quiet` ([#247](https://github.com/joeyespo/grip/pull/247) - thanks, [@kagof][]!)
+- Bugfix: Fix style parsing ([#265](https://github.com/joeyespo/grip/pull/265))
+- Bugfix: Loosen up the style URLs matching ([#265](https://github.com/joeyespo/grip/pull/265))
+- Internals: Fix `_strip_url_params` method name typo ([#254](https://github.com/joeyespo/grip/pull/254) - thanks, [@jwilk][]!)
+- Readme: Fix syntax highlighting in README ([#264](https://github.com/joeyespo/grip/pull/264) - thanks, [@jwilk][]!)
+- Readme: Remove Gratipay :frowning_face: ([Article](https://gratipay.news/the-end-cbfba8f50981))
+- Readme: Tweak Contributing copy
+- Tests: Wrap map() with list() for multiple iteration for Python 3 support
+- Tests: Call `Popen.communicate()` only once
+- Tests: Regenerate render output
+- Cleanup: PEP8
+- Thanks: [@jwilk][] for getting the GitHub repo to finally show the right Language stats :smiley: ([#263](https://github.com/joeyespo/grip/pull/263))
+
+
 #### Version 4.4.0 (2017-09-24)
 
 - Patch: Work around a GitHub API header bug ([#245](https://github.com/joeyespo/grip/pull/245))
@@ -19,7 +36,7 @@ Grip Changelog
 - Readme: Use 'index.html' in --export example for searchability
 - Readme: Fix link to `offline-renderer` branch ([#230](https://github.com/joeyespo/grip/pull/230) - thanks, [@4ndrej][]!)
 - Readme: Add Configuration troubleshooting tip and example
-- Readme: Add Say Thanks badge :smiley:
+- Readme: Add [Say Thanks](http://saythanks.io/) badge :smiley:
 - Thanks: [@JasonThomasData][] for investigating and working with GitHub Support to fix a heading bug ([#235](https://github.com/joeyespo/grip/pull/235))
 
 
@@ -309,3 +326,4 @@ Grip Changelog
 [@JasonThomasData]: https://github.com/JasonThomasData
 [@4ndrej]: https://github.com/4ndrej
 [@erikrtn]: https://github.com/erikrtn
+[@kagof]: https://github.com/kagof

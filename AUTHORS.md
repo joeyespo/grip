@@ -31,6 +31,7 @@ along with the following contributors:
 - Jamie Davis ([@davisjam](https://github.com/davisjam))
 - JasonThomasData ([@JasonThomasData](https://github.com/JasonThomasData))
 - Andrej ([@4ndrej](https://github.com/4ndrej))
+- Karl Goffin ([@kagof](https://github.com/kagof))
 
 
 [home]: README.md
