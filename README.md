@@ -760,8 +760,7 @@ Contributing
 
 If your PR has been waiting a while, feel free to [ping me on Twitter][twitter].
 
-Use this software often? Please consider [supporting Grip][support]. Or just
-<a href="https://saythanks.io/to/joeyespo" target="_blank"><img src="https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg" align="center" alt="Say Thanks!"></a>
+Use this software often? <a href="https://saythanks.io/to/joeyespo" target="_blank"><img src="https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg" align="center" alt="Say Thanks!"></a>
 :smiley:
 
 
@@ -780,4 +779,3 @@ Use this software often? Please consider [supporting Grip][support]. Or just
 [pytest]: http://pytest.org/
 [pytest-watch]: https://github.com/joeyespo/pytest-watch
 [twitter]: http://twitter.com/joeyespo
-[support]: https://gratipay.com/grip/
