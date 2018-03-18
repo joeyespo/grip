@@ -89,6 +89,9 @@ class GitHubAssetManager(ReadmeAssetManager):
             print('Warning: retrieving styles gave status code',
                   r.status_code, file=sys.stderr)
         urls = re.findall(STYLE_URLS_RE, r.text)
+        if not urls:
+            print('Warning: no styles found - see https://github.com/joeyespo/'
+                  'grip/issues/265', file=sys.stderr)
 
         # Cache the styles and their assets
         if self.cache_path:
