@@ -5,6 +5,14 @@ Grip Changelog
 #### Development
 
 
+#### Version 4.5.1 (2018-03-18)
+
+- Bugfix: Don't print "Downloading" from `--export` when using `--quiet`
+- Cleanup: Move `quiet` kwarg of `export()` to the end like the other API methods
+- Readme: Document `quiet` kwarg of `export()`
+- Readme: Document `quiet` kwarg of `render_page()`
+
+
 #### Version 4.5.0 (2018-03-18)
 
 - Enhancement: Show warning if no styles are collected ([#265](https://github.com/joeyespo/grip/pull/265))

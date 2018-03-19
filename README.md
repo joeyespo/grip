@@ -342,7 +342,7 @@ serve(path=None, host=None, port=None, user_content=False, context=None, usernam
 Writes the specified Readme file to an HTML file with styles and assets inlined.
 
 ```python
-export(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=True, out_filename=None, api_url=None, title=None, grip_class=None)
+export(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=True, out_filename=None, api_url=None, title=None, quiet=None, grip_class=None)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
@@ -357,6 +357,7 @@ export(path=None, user_content=False, context=None, username=None, password=None
 - `out_filename`: The filename to write to, `<in_filename>.html` by default
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `title`: The page title, derived from `path` by default
+- `quiet`: Do not print to the terminal
 - `grip_class`: Use a custom [Grip class](#grip-class)
 
 
@@ -423,7 +424,7 @@ Renders the markdown from the specified path or text, without caching,
 and returns an HTML page that resembles the GitHub Readme view.
 
 ```python
-render_page(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None, grip_class=None)
+render_page(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None, quiet=None, grip_class=None)
 ```
 
 - `path`: The path to use for the page title, rendering `'README.md'` if None
@@ -438,6 +439,7 @@ render_page(path=None, user_content=False, context=None, username=None, password
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `title`: The page title, derived from `path` by default
 - `text`: A string or stream of Markdown text to render instead of being loaded from `path` (Note: `path` can be used to set the page title)
+- `quiet`: Do not print to the terminal
 - `grip_class`: Use a custom [Grip class](#grip-class)
 
 
