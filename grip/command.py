@@ -65,7 +65,7 @@ def main(argv=None, force_utf8=True, patch_svg=True):
     The entry point of the application.
     """
     if force_utf8 and sys.version_info[0] == 2:
-        reload(sys)
+        reload(sys)  # noqa
         sys.setdefaultencoding('utf-8')
     if patch_svg and sys.version_info[0] == 2 and sys.version_info[1] <= 6:
         mimetypes.add_type('image/svg+xml', '.svg')
@@ -104,9 +104,9 @@ def main(argv=None, force_utf8=True, patch_svg=True):
     # Export to a file instead of running a server
     if args['--export']:
         try:
-            export(args['<path>'], args['--quiet'], args['--user-content'], args['--context'],
-                   args['--user'], password, False, args['--wide'],
-                   not args['--no-inline'], args['<address>'],
+            export(args['<path>'], args['--quiet'], args['--user-content'],
+                   args['--context'], args['--user'], password, False,
+                   args['--wide'], not args['--no-inline'], args['<address>'],
                    args['--api-url'], args['--title'])
             return 0
         except ReadmeNotFoundError as ex:
@@ -134,5 +134,6 @@ def main(argv=None, force_utf8=True, patch_svg=True):
     except socket.error as ex:
         print('Error:', ex)
         if ex.errno == errno.EADDRINUSE:
-            print('This port is in use. Is a grip server already running? Kill it or specify another port.')
+            print('This port is in use. Is a grip server already running? '
+                  'Stop that instance or specify another port here.')
         return 1

@@ -178,7 +178,8 @@ class GitHubAssetManager(ReadmeAssetManager):
             with open(filename, 'wb') as f:
                 f.write(cache[filename])
         if not self.quiet:
-            print(' * Cached all downloads in', self.cache_path, file=sys.stderr)
+            print(
+                ' * Cached all downloads in', self.cache_path, file=sys.stderr)
         return True
 
     def retrieve_styles(self, asset_url_path):

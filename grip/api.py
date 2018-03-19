@@ -93,10 +93,10 @@ def render_content(text, user_content=False, context=None, username=None,
     return renderer.render(text, auth)
 
 
-def export(path=None, quiet=False, user_content=False, context=None, username=None,
-           password=None, render_offline=False, render_wide=False,
-           render_inline=True, out_filename=None, api_url=None, title=None,
-           grip_class=None):
+def export(path=None, quiet=False, user_content=False, context=None,
+           username=None, password=None, render_offline=False,
+           render_wide=False, render_inline=True, out_filename=None,
+           api_url=None, title=None, grip_class=None):
     """
     Exports the rendered HTML to a file.
     """

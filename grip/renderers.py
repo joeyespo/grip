@@ -57,7 +57,7 @@ class GitHubRenderer(ReadmeRenderer):
         Raises requests.HTTPError if the request fails.
         """
         # Ensure text is Unicode
-        expected = str if sys.version_info[0] >= 3 else unicode
+        expected = str if sys.version_info[0] >= 3 else unicode  # noqa
         if not isinstance(text, expected):
             raise TypeError(
                 'Expected a Unicode string, got {!r}.'.format(text))
