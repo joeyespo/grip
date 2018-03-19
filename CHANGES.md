@@ -5,7 +5,13 @@ Grip Changelog
 #### Development
 
 
-#### Version 4.5.1 (2018-03-18)
+###### Version 4.5.2 (2018-03-18)
+
+- Enhancement: Show more helpful error message on TLSV1_ALERT_PROTOCOL_VERSION to help people through ([#262](https://github.com/joeyespo/grip/pull/262))
+- Docs: Use smaller header for patch version titles in CHANGES.md
+
+
+###### Version 4.5.1 (2018-03-18)
 
 - Bugfix: Don't print "Downloading" from `--export` when using `--quiet`
 - Cleanup: Move `quiet` kwarg of `export()` to the end like the other API methods
@@ -53,7 +59,7 @@ Grip Changelog
 - Bugfix: Fix `setup.py install` ([#199](https://github.com/joeyespo/grip/issues/199))
 
 
-#### Version 4.3.1 (2016-07-21)
+###### Version 4.3.1 (2016-07-21)
 
 - Bugfix: Allow port 0 ([#197](https://github.com/joeyespo/grip/pull/197))
 - Bugfix: Fix setup.py build and include octicon files in the build asset ([#198](https://github.com/joeyespo/grip/issues/198))
@@ -223,7 +229,7 @@ Grip Changelog
 - Infrastructure and code cleanup
 
 
-#### Version 2.0.1 (2014-06-14)
+###### Version 2.0.1 (2014-06-14)
 
 - Enhancement: Add ability to export to a specific file using the CLI ([#33](https://github.com/joeyespo/grip/issues/33))
 - Enhancement: Python 3 compatibility ([#54](https://github.com/joeyespo/grip/pull/54) - thanks, [@fly][]!)
@@ -262,7 +268,7 @@ Grip Changelog
 - Update GitHub CSS regular expression
 
 
-#### Version 1.1.1 (2013-01-05)
+###### Version 1.1.1 (2013-01-05)
 
 - Upgrade path-and-address
 - Use exact versions in requirements
