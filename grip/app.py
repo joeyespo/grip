@@ -176,6 +176,15 @@ class Grip(Flask):
             if ex.response.status_code == 403:
                 abort(403)
             raise
+        except requests.exceptions.SSLError as ex:
+            if 'TLSV1_ALERT_PROTOCOL_VERSION' in str(ex):
+                print('Error: GitHub has turned off TLS1.0 support. '
+                      'Please upgrade your version of Python or Homebrew '
+                      'to use a leter version of openssl. '
+                      'For more information, see '
+                      'https://github.com/joeyespo/grip/issues/262')
+                abort(500)
+            raise
 
         # Inline favicon asset
         favicon = None
