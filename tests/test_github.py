@@ -71,7 +71,7 @@ def test_styles_exist(tmpdir):
     GitHubAssetManager(str(tmpdir)).retrieve_styles('http://dummy/')
     assert len(tmpdir.listdir()) > 2
 
-    files = map(lambda f: os.path.basename(str(f)), tmpdir.listdir())
+    files = list(map(lambda f: os.path.basename(str(f)), tmpdir.listdir()))
     assert any(f.startswith('github-') and f.endswith('.css') for f in files)
     assert any(
         f.startswith('frameworks-') and f.endswith('.css') for f in files)

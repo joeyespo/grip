@@ -31,11 +31,6 @@ def run(*args, **kwargs):
     p.stdin.close()
     # Wait for process to terminate
     returncode = p.wait()
-    # Capture any more output that occurred during shutdown
-    try:
-        output += p.communicate()[0]
-    except ValueError:
-        pass
     # Raise exception on failed process calls
     if returncode != 0:
         raise CalledProcessError(returncode, cmd, output=output)
