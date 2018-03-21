@@ -180,7 +180,7 @@ class Grip(Flask):
             if 'TLSV1_ALERT_PROTOCOL_VERSION' in str(ex):
                 print('Error: GitHub has turned off TLS1.0 support. '
                       'Please upgrade your version of Python or Homebrew '
-                      'to use a leter version of openssl. '
+                      'to use a later version of openssl. '
                       'For more information, see '
                       'https://github.com/joeyespo/grip/issues/262')
                 abort(500)
