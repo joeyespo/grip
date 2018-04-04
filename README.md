@@ -219,7 +219,7 @@ $ grip
 3. Export all your Markdown files with Grip and replace absolute asset paths with relative paths:
 
    ```console
-   $ for f in *.md; do grip --export $f --inline=False; done
+   $ for f in *.md; do grip --export $f --no-inline; done
    $ for f in *.html; do sed -i '' "s?$GRIPURL/??g" $f; done
    ```
 
