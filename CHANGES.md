@@ -5,6 +5,7 @@ Grip Changelog
 #### Development
 
 - **Breaking change**: Drop Python 2.6 support
+- **Breaking change**: Drop Python 3.3 support
 
 - Tests: Add Python 3.6 support
 
