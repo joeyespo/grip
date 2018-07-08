@@ -334,7 +334,7 @@ serve(path=None, host=None, port=None, user_content=False, context=None, usernam
 - `title`: The page title, derived from `path` by default
 - `autorefresh`: Automatically update the rendered content when the Readme file changes, `True` by default
 - `browser`: Open a tab in the browser after the server starts., `False` by default
-- `grip_class`: Use a custom [Grip class](#grip-class)
+- `grip_class`: Use a custom [Grip class](#class-gripflask)
 
 
 #### export
@@ -358,7 +358,7 @@ export(path=None, user_content=False, context=None, username=None, password=None
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `title`: The page title, derived from `path` by default
 - `quiet`: Do not print to the terminal
-- `grip_class`: Use a custom [Grip class](#grip-class)
+- `grip_class`: Use a custom [Grip class](#class-gripflask)
 
 
 #### create_app
@@ -383,7 +383,7 @@ create_app(path=None, user_content=False, context=None, username=None, password=
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `title`: The page title, derived from `path` by default
 - `text`: A string or stream of Markdown text to render instead of being loaded from `path` (Note: `path` can be used to set the page title)
-- `grip_class`: Use a custom [Grip class](#grip-class)
+- `grip_class`: Use a custom [Grip class](#class-gripflask)
 
 
 #### render_app
@@ -440,7 +440,7 @@ render_page(path=None, user_content=False, context=None, username=None, password
 - `title`: The page title, derived from `path` by default
 - `text`: A string or stream of Markdown text to render instead of being loaded from `path` (Note: `path` can be used to set the page title)
 - `quiet`: Do not print to the terminal
-- `grip_class`: Use a custom [Grip class](#grip-class)
+- `grip_class`: Use a custom [Grip class](#class-gripflask)
 
 
 #### clear_cache
