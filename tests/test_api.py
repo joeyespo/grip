@@ -45,8 +45,8 @@ def test_exceptions():
     Test that ReadmeNotFoundError behaves like FileNotFoundError on
     Python 3 and IOError on Python 2.
     """
-    assert str(ReadmeNotFoundError()) == 'README not found'
-    assert (str(ReadmeNotFoundError('.')) == 'No README found at .')
+    assert str(ReadmeNotFoundError()) == 'README.md not found'
+    assert (str(ReadmeNotFoundError('.')) == 'No README.md found at .')
     assert str(ReadmeNotFoundError('some/path', 'Overridden')) == 'Overridden'
     assert ReadmeNotFoundError().filename is None
     assert ReadmeNotFoundError(DEFAULT_FILENAME).filename == DEFAULT_FILENAME
