@@ -16,3 +16,6 @@ settings_local.py
 .DS_Store
 Desktop.ini
 Thumbs.db
+
+# Tests
+.pytest_cache
