@@ -3,7 +3,10 @@ Default Configuration
 
 Do NOT change the values here for risk of accidentally committing them.
 Override them using command-line arguments or with a settings_local.py in
-this directory or in ~/.grip/settings.py instead.
+this directory or in one of the following (in order of precedence):
+ 1. "${GRIPHOME}/settings.py" (if GRIPHOME is set)
+ 2. "~/.grip/settings.py" (if "~/.grip" exists)
+ 3. "${XDG_CONFIG_HOME:-~/.config}/grip/settings.py" (fallback)
 """
 
 

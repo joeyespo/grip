@@ -63,7 +63,10 @@ class Grip(Flask):
         if instance_path is None:
             instance_path = os.environ.get('GRIPHOME')
             if instance_path is None:
-                instance_path = DEFAULT_GRIPHOME
+                instance_path = os.path.expanduser(DEFAULT_GRIPHOME)
+                if not os.path.exists(instance_path):
+                    instance_path = os.environ.get('XDG_CONFIG_HOME', '~/.config')
+                    instance_path = os.path.join(instance_path, 'grip')
         instance_path = os.path.abspath(os.path.expanduser(instance_path))
 
         # Flask application
@@ -353,7 +356,9 @@ class Grip(Flask):
         cache_directory = self.config['CACHE_DIRECTORY']
         if cache_directory:
             cache_directory = cache_directory.format(version=__version__)
-            cache_path = os.path.join(self.instance_path, cache_directory)
+            cache_path = os.environ.get('XDG_CACHE_HOME', '~/.cache')
+            cache_path = os.path.abspath(os.path.expanduser(cache_path))
+            cache_path = os.path.join(cache_path, 'grip', cache_directory)
         return GitHubAssetManager(
             cache_path, self.config['STYLE_URLS'], self.quiet)
 
