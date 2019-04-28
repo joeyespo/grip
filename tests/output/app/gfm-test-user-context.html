@@ -61,11 +61,11 @@ followed by a list of one-offs.</p>
 in a Markdown paragraph, list item, or header. If you want, you can even use HTML tags instead<br>
 of Markdown formatting; e.g. if you’d prefer to use HTML &lt;a&gt; or &lt;img&gt; tags instead<br>
 of Markdown’s link or image syntax, go right ahead.</p>
-<h4>Testing span, cite, and <del>del</del> tags</h4>
-<p>Testing span, cite, and <del>del</del> tags in a paragraph.</p>
+<h4>Testing <span>span</span>, cite, and <del>del</del> tags</h4>
+<p>Testing <span>span</span>, cite, and <del>del</del> tags in a paragraph.</p>
 <p>And each element in its own list item:</p>
 <ul>
-<li>This is within a span tag.</li>
+<li><span>This is within a span tag.</span></li>
 <li>This is within a cite tag.</li>
 <li><del>This is within a del tag.</del></li>
 </ul>
@@ -333,10 +333,10 @@ This is [an example] <a href="http://joeyespo.com/" title="Optional Title Here" 
 </ul>
 <h2>Images</h2>
 <ul>
-<li><a target="_blank" href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" alt="Alt text" style="max-width:100%;"></a></li>
-<li><a target="_blank" href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" alt="Alt text" title="Optional title" style="max-width:100%;"></a></li>
-<li><a target="_blank" href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" alt="Alt text" title="Optional title attribute" style="max-width:100%;"></a></li>
-<li><a target="_blank" href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" width="32" height="32" style="max-width:100%;"></a>   ← bigger &amp; blurrier</li>
+<li><a target="_blank" rel="noopener noreferrer" href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" alt="Alt text" style="max-width:100%;"></a></li>
+<li><a target="_blank" rel="noopener noreferrer" href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" alt="Alt text" title="Optional title" style="max-width:100%;"></a></li>
+<li><a target="_blank" rel="noopener noreferrer" href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" alt="Alt text" title="Optional title attribute" style="max-width:100%;"></a></li>
+<li><a target="_blank" rel="noopener noreferrer" href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" width="32" height="32" style="max-width:100%;"></a>   ← bigger &amp; blurrier</li>
 </ul>
 <h2>Automatic links</h2>
 <ul>
@@ -397,7 +397,9 @@ This is [an example] <a href="http://joeyespo.com/" title="Optional Title Here" 
 <tr>
 <td>Content Cell</td>
 <td>Content Cell</td>
-</tr></tbody></table>
+</tr>
+</tbody>
+</table>
 <p>Pipes:</p>
 <table>
 <thead>
@@ -414,7 +416,9 @@ This is [an example] <a href="http://joeyespo.com/" title="Optional Title Here" 
 <tr>
 <td>Content Cell</td>
 <td>Content Cell</td>
-</tr></tbody></table>
+</tr>
+</tbody>
+</table>
 <p>Unmatched:</p>
 <table>
 <thead>
@@ -431,7 +435,9 @@ This is [an example] <a href="http://joeyespo.com/" title="Optional Title Here" 
 <tr>
 <td>Close</td>
 <td>Closes a window</td>
-</tr></tbody></table>
+</tr>
+</tbody>
+</table>
 <p>Inner Markdown:</p>
 <table>
 <thead>
@@ -448,7 +454,9 @@ This is [an example] <a href="http://joeyespo.com/" title="Optional Title Here" 
 <tr>
 <td>Close</td>
 <td><em>Closes</em> a window</td>
-</tr></tbody></table>
+</tr>
+</tbody>
+</table>
 <p>Alignment:</p>
 <table>
 <thead>
@@ -478,7 +486,9 @@ This is [an example] <a href="http://joeyespo.com/" title="Optional Title Here" 
 <td align="left">Text right below a table.</td>
 <td align="center"></td>
 <td align="right"></td>
-</tr></tbody></table>
+</tr>
+</tbody>
+</table>
 <h4>HTML</h4>
 <p><em>TODO: Test all allowed HTML tags.</em></p>
 <h2>Writing on GitHub</h2>
@@ -506,13 +516,13 @@ Violets are Blue</p>
 </ul>
 <h4>References</h4>
 <ul>
-<li>SHA: <a class="commit-link" href="https://github.com/joeyespo/grip/commit/dbcd7a410ee7489acf92f40641a135fbcf52a768"><tt>dbcd7a4</tt></a></li>
-<li>User@SHA: <a class="commit-link" href="https://github.com/joeyespo/grip/commit/dbcd7a410ee7489acf92f40641a135fbcf52a768"><tt>dbcd7a4</tt></a></li>
-<li>User/Repository@SHA: <a class="commit-link" href="https://github.com/joeyespo/grip/commit/dbcd7a410ee7489acf92f40641a135fbcf52a768"><tt>dbcd7a4</tt></a></li>
-<li>#Num: <a class="issue-link js-issue-link" data-error-text="Failed to load issue title" data-id="93030887" data-permission-text="Issue title is private" data-url="https://github.com/joeyespo/grip/issues/135" href="https://github.com/joeyespo/grip/pull/135">#135</a></li>
-<li>GH-Num: <a class="issue-link js-issue-link" data-error-text="Failed to load issue title" data-id="93030887" data-permission-text="Issue title is private" data-url="https://github.com/joeyespo/grip/issues/135" href="https://github.com/joeyespo/grip/pull/135">GH-135</a></li>
-<li>User#Num: <a class="issue-link js-issue-link" data-error-text="Failed to load issue title" data-id="93030887" data-permission-text="Issue title is private" data-url="https://github.com/joeyespo/grip/issues/135" href="https://github.com/joeyespo/grip/pull/135">joeyespo#135</a></li>
-<li>User/Repository#Num: <a class="issue-link js-issue-link" data-error-text="Failed to load issue title" data-id="93030887" data-permission-text="Issue title is private" data-url="https://github.com/joeyespo/grip/issues/135" href="https://github.com/joeyespo/grip/pull/135">joeyespo/grip#135</a></li>
+<li>SHA: <a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/joeyespo/grip/commit/dbcd7a410ee7489acf92f40641a135fbcf52a768/hovercard" href="https://github.com/joeyespo/grip/commit/dbcd7a410ee7489acf92f40641a135fbcf52a768"><tt>dbcd7a4</tt></a></li>
+<li>User@SHA: <a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/joeyespo/grip/commit/dbcd7a410ee7489acf92f40641a135fbcf52a768/hovercard" href="https://github.com/joeyespo/grip/commit/dbcd7a410ee7489acf92f40641a135fbcf52a768"><tt>dbcd7a4</tt></a></li>
+<li>User/Repository@SHA: <a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/joeyespo/grip/commit/dbcd7a410ee7489acf92f40641a135fbcf52a768/hovercard" href="https://github.com/joeyespo/grip/commit/dbcd7a410ee7489acf92f40641a135fbcf52a768"><tt>dbcd7a4</tt></a></li>
+<li>#Num: <a class="issue-link js-issue-link" data-error-text="Failed to load issue title" data-id="93030887" data-permission-text="Issue title is private" data-url="https://github.com/joeyespo/grip/issues/135" data-hovercard-type="pull_request" data-hovercard-url="/joeyespo/grip/pull/135/hovercard" href="https://github.com/joeyespo/grip/pull/135">#135</a></li>
+<li>GH-Num: <a class="issue-link js-issue-link" data-error-text="Failed to load issue title" data-id="93030887" data-permission-text="Issue title is private" data-url="https://github.com/joeyespo/grip/issues/135" data-hovercard-type="pull_request" data-hovercard-url="/joeyespo/grip/pull/135/hovercard" href="https://github.com/joeyespo/grip/pull/135">GH-135</a></li>
+<li>User#Num: <a class="issue-link js-issue-link" data-error-text="Failed to load issue title" data-id="93030887" data-permission-text="Issue title is private" data-url="https://github.com/joeyespo/grip/issues/135" data-hovercard-type="pull_request" data-hovercard-url="/joeyespo/grip/pull/135/hovercard" href="https://github.com/joeyespo/grip/pull/135">#135</a></li>
+<li>User/Repository#Num: <a class="issue-link js-issue-link" data-error-text="Failed to load issue title" data-id="93030887" data-permission-text="Issue title is private" data-url="https://github.com/joeyespo/grip/issues/135" data-hovercard-type="pull_request" data-hovercard-url="/joeyespo/grip/pull/135/hovercard" href="https://github.com/joeyespo/grip/pull/135">#135</a></li>
 </ul>
                             </div>
                           </div>
