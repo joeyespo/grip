@@ -6,7 +6,6 @@ from __future__ import print_function, unicode_literals
 
 import sys
 from subprocess import PIPE, STDOUT, CalledProcessError, Popen
-from shutil import which
 
 import pytest
 from grip.command import usage, version
@@ -21,10 +20,12 @@ if sys.version_info[0] == 2 and sys.version_info[1] < 7:
 
 def run(*args, **kwargs):
     command = kwargs.pop('command', 'grip')
-    if which(command):
-        cmd = [command] + list(args)
-    else:
+    which_grip = Popen(["which", command], stdout=PIPE)
+    which_grip.communicate()
+    if which_grip.returncode:
         cmd = ['python', 'grip/__main__.py'] + list(args)
+    else:
+        cmd = [command] + list(args)
     stdin = kwargs.pop('stdin', None)
 
     p = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=STDOUT,
