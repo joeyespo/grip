@@ -119,7 +119,7 @@ def export(path=None, user_content=False, context=None,
 
     if export_to_stdout:
         try:
-            print(page)
+            print(page.encode('utf-8'))
         except IOError as ex:
             if ex.errno != 0 and ex.errno != errno.EPIPE:
                 raise
