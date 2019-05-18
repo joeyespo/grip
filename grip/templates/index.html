@@ -100,23 +100,28 @@
 {%- endblock -%}
 
 {%- block page -%}
-  <div id="preview-page" class="preview-page" data-autorefresh-url="{{ autorefresh_url if autorefresh_url }}">
+  <div>&nbsp;</div>
+  <div id="preview-page" data-autorefresh-url="{{ autorefresh_url if autorefresh_url }}">
 
     {% if not user_content %}
 
       <div role="main" class="main-content">
-        <div class="container new-discussion-timeline experiment-repo-nav">
+        <div class="container-lg new-discussion-timeline experiment-repo-nav">
           <div class="repository-content">
-            <div id="readme" class="readme boxed-group clearfix announce instapaper_body md">
-              {% if not user_content and title or filename %}
-                <h3>
-                  <span class="octicon octicon-book"></span>
-                  {% if title %}{{ title }}{% else %}{{ filename }}{% endif %}
-                </h3>
-              {% endif %}
-              <article class="markdown-body entry-content" itemprop="text" id="grip-content">
-                {{ content|safe }}
-              </article>
+            <div class="Box mt-3 position-relative">
+                {% if not user_content and title or filename %}
+                  <div class="commit-tease d-flex rounded-top-1" style="border: 0; border-bottom: 1px solid #c8e1ff;">
+                    <h5>
+                      <span class="octicon octicon-book"></span>
+                      {% if title %}{{ title }}{% else %}{{ filename }}{% endif %}
+                    </h5>
+                  </div>
+                {% endif %}
+              <div id="readme" class="Box-body readme blob instapaper_body js-code-block-container">
+                <article id="grip-content" class="markdown-body entry-content p-3 p-md-6" itemprop="text">
+                  {{ content|safe }}
+                </article>
+              </div>
             </div>
           </div>
         </div>
