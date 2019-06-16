@@ -11,4 +11,4 @@ install:
   - pip install -e .[tests]
 script:
   - flake8
-  - py.test -m "not assumption"
+  - pytest -m "not assumption"
