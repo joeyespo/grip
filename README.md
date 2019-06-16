@@ -7,7 +7,7 @@ Grip -- GitHub Readme Instant Preview
 Render local readme files before sending off to GitHub.
 
 Grip is a command-line server application written in Python that uses the
-[GitHub markdown REST API][markdown] to render a local readme file. The styles
+[GitHub markdown API][markdown] to render a local readme file. The styles
 and rendering come directly from GitHub, so you'll know exactly how it will appear.
 Changes you make to the Readme will be instantly reflected in the browser without
 requiring a page refresh.
