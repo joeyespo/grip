@@ -9,6 +9,7 @@
     /* Page tweaks */
     .preview-page {
       margin-top: 64px;
+      margin-bottom: 21px;
     }
     /* User-content tweaks */
     .timeline-comment-wrapper > .timeline-comment:after,
@@ -24,21 +25,24 @@
 <body>
   <div class="page">
     <div id="preview-page" class="preview-page" data-autorefresh-url="/__/grip/refresh/">
+    <main id="js-repo-pjax-container">
+      <div class="container new-discussion-timeline experiment-repo-nav">
+        <div class="repository-content">
 
-    
+          
 
-      <div role="main" class="main-content">
-        <div class="container new-discussion-timeline experiment-repo-nav">
-          <div class="repository-content">
-            <div id="readme" class="readme boxed-group clearfix announce instapaper_body md">
+            <div id="readme" class="Box Box--condensed instapaper_body md js-code-block-container">
               
-                <h3>
-                  <span class="octicon octicon-book"></span>
-                  gfm-test.md
-                </h3>
+                <div class="Box-header d-flex flex-items-center flex-justify-between px-2">
+                  <h3 class="Box-title pr-3">
+                    <span class="octicon octicon-book"></span>
+                    gfm-test.md
+                  </h3>
+                </div>
               
-              <article class="markdown-body entry-content" itemprop="text" id="grip-content">
-                <h1>
+              <div class="Box-body">
+                <article id="grip-content" class="markdown-body entry-content p-5" itemprop="text">
+                  <h1>
 <a id="user-content-github-flavored-markdown-test" class="anchor" href="#github-flavored-markdown-test" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>GitHub Flavored Markdown Test</h1>
 <p>This Markdown file contains all the features of <strong>GitHub Flavored Markdown</strong> for
 testing a renderer with.</p>
@@ -63,11 +67,11 @@ in a Markdown paragraph, list item, or header. If you want, you can even use HTM
 of Markdown formatting; e.g. if you’d prefer to use HTML &lt;a&gt; or &lt;img&gt; tags instead
 of Markdown’s link or image syntax, go right ahead.</p>
 <h4>
-<a id="user-content-testing-span-cite-and-del-tags" class="anchor" href="#testing-span-cite-and-del-tags" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Testing span, cite, and <del>del</del> tags</h4>
-<p>Testing span, cite, and <del>del</del> tags in a paragraph.</p>
+<a id="user-content-testing-span-cite-and-del-tags" class="anchor" href="#testing-span-cite-and-del-tags" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Testing <span>span</span>, cite, and <del>del</del> tags</h4>
+<p>Testing <span>span</span>, cite, and <del>del</del> tags in a paragraph.</p>
 <p>And each element in its own list item:</p>
 <ul>
-<li>This is within a span tag.</li>
+<li><span>This is within a span tag.</span></li>
 <li>This is within a cite tag.</li>
 <li><del>This is within a del tag.</del></li>
 </ul>
@@ -577,16 +581,16 @@ Violets are Blue</p>
 <li>User/Repository#Num: joeyespo/grip#135</li>
 </ul>
 
-              </article>
+                </article>
+              </div>
             </div>
-          </div>
+
+          
+
         </div>
       </div>
-
-    
-
+    </main>
   </div>
-  <div>&nbsp;</div>
   </div><script>
     function showCanonicalImages() {
       var images = document.getElementsByTagName('img');
