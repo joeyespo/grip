@@ -12,10 +12,13 @@ env
 *.py[cod]
 settings_local.py
 
+# Test files
+.pytest_cache
+
 # OS-specific files
 .DS_Store
 Desktop.ini
 Thumbs.db
 
-# Tests
-.pytest_cache
+# IDE-specific files
+.idea
