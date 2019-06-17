@@ -222,9 +222,7 @@ class DirectoryReader(ReadmeReader):
         Gets whether the specified subpath is a supported binary file.
         """
         mimetype = self.mimetype_for(subpath)
-        if mimetype and mimetype.startswith('text/'):
-            return False
-        return True
+        return mimetype and not mimetype.startswith('text/')
 
     def last_updated(self, subpath=None):
         """
