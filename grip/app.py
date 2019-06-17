@@ -10,6 +10,7 @@ import socket
 import sys
 import threading
 import time
+import errno
 from traceback import format_exc
 try:
     from urlparse import urlparse
@@ -71,9 +72,15 @@ class Grip(Flask):
             __name__, static_url_path=static_url_path,
             instance_path=instance_path, **kwargs)
         self.config.from_object('grip.settings')
-        self.config.from_pyfile('settings_local.py', silent=True)
-        self.config.from_pyfile(
-            os.path.join(instance_path, 'settings.py'), silent=True)
+
+        try:
+            self.config.from_pyfile('settings_local.py', silent=True)
+            self.config.from_pyfile(
+                os.path.join(instance_path, 'settings.py'), silent=True)
+        except IOError as ex:
+            # Flask workaround for when ~/.grip exists but is not a directory
+            if ex.errno != errno.ENOTDIR:
+                raise
 
         # Defaults from settings
         if autorefresh is None:

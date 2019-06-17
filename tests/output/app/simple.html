@@ -9,6 +9,7 @@
     /* Page tweaks */
     .preview-page {
       margin-top: 64px;
+      margin-bottom: 21px;
     }
     /* User-content tweaks */
     .timeline-comment-wrapper > .timeline-comment:after,
@@ -24,34 +25,37 @@
 <body>
   <div class="page">
     <div id="preview-page" class="preview-page" data-autorefresh-url="/__/grip/refresh/">
+    <main id="js-repo-pjax-container">
+      <div class="container new-discussion-timeline experiment-repo-nav">
+        <div class="repository-content">
 
-    
+          
 
-      <div role="main" class="main-content">
-        <div class="container new-discussion-timeline experiment-repo-nav">
-          <div class="repository-content">
-            <div id="readme" class="readme boxed-group clearfix announce instapaper_body md">
+            <div id="readme" class="Box Box--condensed instapaper_body md js-code-block-container">
               
-                <h3>
-                  <span class="octicon octicon-book"></span>
-                  simple.md
-                </h3>
+                <div class="Box-header d-flex flex-items-center flex-justify-between px-2">
+                  <h3 class="Box-title pr-3">
+                    <span class="octicon octicon-book"></span>
+                    simple.md
+                  </h3>
+                </div>
               
-              <article class="markdown-body entry-content" itemprop="text" id="grip-content">
-                <h1>
+              <div class="Box-body">
+                <article id="grip-content" class="markdown-body entry-content p-5" itemprop="text">
+                  <h1>
 <a id="user-content-simple-test-" class="anchor" href="#simple-test-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Simple Test ✓</h1>
 <p>This is just a simple Unicode Markdown test.</p>
 
-              </article>
+                </article>
+              </div>
             </div>
-          </div>
+
+          
+
         </div>
       </div>
-
-    
-
+    </main>
   </div>
-  <div>&nbsp;</div>
   </div><script>
     function showCanonicalImages() {
       var images = document.getElementsByTagName('img');

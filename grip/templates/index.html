@@ -18,6 +18,7 @@
     /* Page tweaks */
     .preview-page {
       margin-top: 64px;
+      margin-bottom: 21px;
     }
     /* User-content tweaks */
     .timeline-comment-wrapper > .timeline-comment:after,
@@ -101,42 +102,49 @@
 
 {%- block page -%}
   <div id="preview-page" class="preview-page" data-autorefresh-url="{{ autorefresh_url if autorefresh_url }}">
+    <main id="js-repo-pjax-container">
+      <div class="container new-discussion-timeline experiment-repo-nav">
+        <div class="repository-content">
 
-    {% if not user_content %}
+          {% if not user_content %}
 
-      <div role="main" class="main-content">
-        <div class="container new-discussion-timeline experiment-repo-nav">
-          <div class="repository-content">
-            <div id="readme" class="readme boxed-group clearfix announce instapaper_body md">
-              {% if not user_content and title or filename %}
-                <h3>
-                  <span class="octicon octicon-book"></span>
-                  {% if title %}{{ title }}{% else %}{{ filename }}{% endif %}
-                </h3>
+            <div id="readme" class="Box Box--condensed instapaper_body md js-code-block-container">
+              {% if title or filename %}
+                <div class="Box-header d-flex flex-items-center flex-justify-between px-2">
+                  <h3 class="Box-title pr-3">
+                    <span class="octicon octicon-book"></span>
+                    {{ title or filename }}
+                  </h3>
+                </div>
               {% endif %}
-              <article class="markdown-body entry-content" itemprop="text" id="grip-content">
-                {{ content|safe }}
-              </article>
+              <div class="Box-body">
+                <article id="grip-content" class="markdown-body entry-content p-5" itemprop="text">
+                  {{ content|safe }}
+                </article>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-    {% else %}
+          {% else %}
 
-      <div role="main" class="main-content">
-        <div class="container new-discussion-timeline experiment-repo-nav">
-          <div class="repository-content">
-            <div class="issues-listing" data-pjax="">
-              <div id="show_issue" class="js-issues-results">
-                <div id="discussion_bucket" class="clearfix">
-                  <div class="discussion-timeline js-quote-selection-container {{ 'wide' if wide_style }}">
-                    <div class="timeline-comment-wrapper js-comment-container">
-                      <div class="comment  timeline-comment js-comment js-task-list-container is-task-list-enabled">
-                        <div class="comment-content">
-                          <div class="edit-comment-hide">
-                            <div class="comment-body markdown-body markdown-format js-comment-body" id="grip-content">
-                              {{ content|safe }}
+            <div class="js-check-all-container">
+              <div class="clearfix js-issues-results">
+                <div class="clearfix pull-request-tab-content is-visible js-socket-channel js-updatable-content">
+                  <div class="discussion-timeline pull-discussion-timeline js-pull-discussion-timeline js-quote-selection-container js-review-state-classes">
+                    <div class="js-discussion js-socket-channel">
+                      <div class="timeline-comment-wrapper js-comment-container mt-0 js-socket-channel">
+                        <div class="timeline-comment-group js-minimizable-comment-group js-targetable-comment">
+                          <div class="unminimized-comment editable-comment comment previewable-edit js-comment js-task-list-container timeline-comment reorderable-task-lists">
+                            {% if title %}
+                              <div class="timeline-comment-header clearfix">
+                                <h3 class="timeline-comment-header-text f5 text-normal">
+                                  <strong class="css-truncate expandable"><span class="author text-inherit css-truncate-target">{{ title }}</span></strong>
+                                </h3>
+                              </div>
+                            {% endif %}
+                            <div class="edit-comment-hide">
+                              <div class="d-block comment-body markdown-body js-comment-body" id="grip-content">
+                                {{ content|safe }}
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -146,12 +154,11 @@
                 </div>
               </div>
             </div>
-          </div>
+
+          {% endif %}
+
         </div>
       </div>
-
-    {% endif %}
-
+    </main>
   </div>
-  <div>&nbsp;</div>
 {%- endblock -%}

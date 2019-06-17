@@ -8,8 +8,8 @@ Render local readme files before sending off to GitHub.
 
 Grip is a command-line server application written in Python that uses the
 [GitHub markdown API][markdown] to render a local readme file. The styles
-come directly from GitHub, so you'll know exactly how it will appear. Changes
-you make to the Readme will be instantly reflected in the browser without
+and rendering come directly from GitHub, so you'll know exactly how it will appear.
+Changes you make to the Readme will be instantly reflected in the browser without
 requiring a page refresh.
 
 
@@ -718,7 +718,7 @@ $ pip install -e .[tests]
 Run tests with [pytest][]:
 
 ```console
-$ py.test
+$ pytest
 ```
 
 Or to re-run tests as you make changes, use [pytest-watch][]:
@@ -734,7 +734,7 @@ If you're experiencing a problem with Grip, it's likely that an assumption made
 about the GitHub API has been broken. To verify this, run:
 
 ```console
-$ py.test -m assumption
+$ pytest -m assumption
 ```
 
 Since the external assumptions rely on an internet connection, you may want to skip
@@ -742,7 +742,7 @@ them when developing locally. Tighten the cycle even further by stopping on the
 first failure with `-x`:
 
 ```console
-$ py.test -xm "not assumption"
+$ pytest -xm "not assumption"
 ```
 
 Or with [pytest-watch][]:

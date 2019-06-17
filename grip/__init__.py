@@ -4,16 +4,16 @@ Grip
 
 Render local readme files before sending off to GitHub.
 
-:copyright: (c) 2014-2016 by Joe Esposito.
+:copyright: (c) 2014-2019 by Joe Esposito.
 :license: MIT, see LICENSE for more details.
 """
 
-__version__ = '4.5.2'
+__version__ = '4.5.2'  # noqa
 
 import sys
 
 # Patch for Flask 11.0+ on Python 3 (pypy3)
-if not hasattr(sys, 'exc_clear'):
+if not hasattr(sys, 'exc_clear'):  # noqa
     sys.exc_clear = lambda: None
 
 from .api import (

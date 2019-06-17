@@ -9,6 +9,7 @@
     /* Page tweaks */
     .preview-page {
       margin-top: 64px;
+      margin-bottom: 21px;
     }
     /* User-content tweaks */
     .timeline-comment-wrapper > .timeline-comment:after,
@@ -24,23 +25,26 @@
 <body>
   <div class="page">
     <div id="preview-page" class="preview-page" data-autorefresh-url="/__/grip/refresh/">
+    <main id="js-repo-pjax-container">
+      <div class="container new-discussion-timeline experiment-repo-nav">
+        <div class="repository-content">
 
-    
+          
 
-      <div role="main" class="main-content">
-        <div class="container new-discussion-timeline experiment-repo-nav">
-          <div class="repository-content">
-            <div class="issues-listing" data-pjax="">
-              <div id="show_issue" class="js-issues-results">
-                <div id="discussion_bucket" class="clearfix">
-                  <div class="discussion-timeline js-quote-selection-container ">
-                    <div class="timeline-comment-wrapper js-comment-container">
-                      <div class="comment  timeline-comment js-comment js-task-list-container is-task-list-enabled">
-                        <div class="comment-content">
-                          <div class="edit-comment-hide">
-                            <div class="comment-body markdown-body markdown-format js-comment-body" id="grip-content">
-                              <h1>Simple Test ✓</h1>
+            <div class="js-check-all-container">
+              <div class="clearfix js-issues-results">
+                <div class="clearfix pull-request-tab-content is-visible js-socket-channel js-updatable-content">
+                  <div class="discussion-timeline pull-discussion-timeline js-pull-discussion-timeline js-quote-selection-container js-review-state-classes">
+                    <div class="js-discussion js-socket-channel">
+                      <div class="timeline-comment-wrapper js-comment-container mt-0 js-socket-channel">
+                        <div class="timeline-comment-group js-minimizable-comment-group js-targetable-comment">
+                          <div class="unminimized-comment editable-comment comment previewable-edit js-comment js-task-list-container timeline-comment reorderable-task-lists">
+                            
+                            <div class="edit-comment-hide">
+                              <div class="d-block comment-body markdown-body js-comment-body" id="grip-content">
+                                <h1>Simple Test ✓</h1>
 <p>This is just a simple Unicode Markdown test.</p>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -50,14 +54,13 @@
                 </div>
               </div>
             </div>
-          </div>
+
+          
+
         </div>
       </div>
-
-    
-
+    </main>
   </div>
-  <div>&nbsp;</div>
   </div><script>
     function showCanonicalImages() {
       var images = document.getElementsByTagName('img');
