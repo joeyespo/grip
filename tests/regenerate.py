@@ -8,12 +8,12 @@ import sys
 import io
 import os
 
-DIRNAME = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(1, os.path.dirname(DIRNAME))
-
 from grip import Grip, GitHubRenderer, TextReader
 from helpers import USER_CONTEXT, input_file, input_filename
 from mocks import GripMock
+
+DIRNAME = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(1, os.path.dirname(DIRNAME))
 
 
 # Use auth from user settings
