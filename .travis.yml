@@ -8,5 +8,7 @@ python:
   - "pypy"
   - "pypy3"
 install:
-  - "pip install -e .[tests]"
-script: py.test -m "not assumption"
+  - pip install -e .[tests]
+script:
+  - flake8
+  - py.test -m "not assumption"
