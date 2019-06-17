@@ -20,21 +20,17 @@ from mocks import (
     GitHubAssetManagerMock, GripMock, GitHubRequestsMock, StdinReaderMock)
 
 from grip import (
-    DEFAULT_API_URL, DEFAULT_FILENAMES, DEFAULT_FILENAME, DEFAULT_GRIPHOME,
-    DEFAULT_GRIPURL, STYLE_ASSET_URLS_INLINE_FORMAT, STYLE_ASSET_URLS_RE,
-    STYLE_ASSET_URLS_SUB_FORMAT, STYLE_URLS_RES, STYLE_URLS_SOURCE,
-    SUPPORTED_EXTENSIONS, SUPPORTED_TITLES, AlreadyRunningError,
-    DirectoryReader, GitHubAssetManager, GitHubRenderer, Grip, OfflineRenderer,
-    ReadmeAssetManager, ReadmeNotFoundError, ReadmeReader, ReadmeRenderer,
-    TextReader, clear_cache, create_app, export, main, render_content,
-    render_page, serve)
+    DEFAULT_FILENAME, DirectoryReader, GitHubAssetManager, GitHubRenderer,
+    Grip, ReadmeNotFoundError, ReadmeReader, ReadmeRenderer, TextReader,
+    create_app)
 
 
 # TODO: Test DEFAULT_API_URL, DEFAULT_FILENAMES, DEFAULT_GRIPHOME,
-#       DEFAULT_GRIPURL, DEFAULT_GRIPURL, STYLE_ASSET_URLS_RE,
+#       DEFAULT_GRIPURL, STYLE_ASSET_URLS_INLINE_FORMAT, STYLE_ASSET_URLS_RE,
 #       STYLE_ASSET_URLS_SUB_FORMAT, STYLE_URLS_RES, STYLE_URLS_SOURCE,
 #       SUPPORTED_EXTENSIONS, SUPPORTED_TITLES, ReadmeAssetManager,
-#       clear_cache, export, main, render_content, render_page, serve
+#       OfflineRenderer, clear_cache, create_app, export, main, render_content,
+#       render_page, serve
 
 
 DIRNAME = os.path.dirname(os.path.abspath(__file__))
