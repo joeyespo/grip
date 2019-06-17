@@ -5,6 +5,7 @@ import sys
 from abc import ABCMeta, abstractmethod
 
 import requests
+
 try:
     import markdown
     from .vendor.mdx_urlize import UrlizeExtension
