@@ -78,13 +78,9 @@ class Grip(Flask):
             self.config.from_pyfile(
                 os.path.join(instance_path, 'settings.py'), silent=True)
         except IOError as ex:
-            # workaround for pre-existing ~/.grip regular file from
-            # the cd-rom tool, and flask not silently ignoring those
-            if ex.errno in (errno.ENOTDIR,):
-                pass
-            else:
+            # Flask workaround for when ~/.grip exists but is not a directory
+            if ex.errno != errno.ENOTDIR:
                 raise
-
 
         # Defaults from settings
         if autorefresh is None:
