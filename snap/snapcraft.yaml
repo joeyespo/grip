@@ -1,0 +1,29 @@
+name: grip
+base: core18 # the base snap is the execution environment for this snap
+version: 4.5.2
+summary: GitHub Readme Instant Preview
+description: |
+  Render local readme files before sending off to GitHub.
+
+  Grip is a command-line server application written in Python that uses the
+  GitHub markdown API to render a local readme file. The styles and
+  rendering come directly from GitHub, so you'll know exactly how it will
+  appear. Changes you make to the Readme will be instantly reflected in the
+  browser without requiring a page refresh.
+
+grade: stable # must be 'stable' to release into candidate/stable channels
+confinement: strict # use 'strict' once you have the right plugs and slots
+
+parts:
+  grip:
+    # See 'snapcraft plugins'
+    plugin: python
+    source: .
+    python-version: python3
+
+apps:
+  grip:
+    command: bin/grip
+    plugs:
+      - home
+      - network-bind
