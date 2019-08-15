@@ -27,3 +27,4 @@ apps:
     plugs:
       - home
       - network-bind
+      - desktop # so can launch browser
