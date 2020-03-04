@@ -31,7 +31,7 @@ To install grip, simply:
 $ pip install grip
 ```
 
-On OS X, you can also install with Homebrew:
+On OS X (or linux), you can also install with Homebrew:
 
 ```console
 $ brew install grip
