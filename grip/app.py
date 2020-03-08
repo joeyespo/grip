@@ -277,7 +277,7 @@ class Grip(Flask):
 
     def _download(self, url, binary=False):
         if urlparse(url).netloc:
-            r = requests.get(url)
+            r = requests.get(url, verify=False)
             return r.content if binary else r.text
 
         with self.test_client() as c:
