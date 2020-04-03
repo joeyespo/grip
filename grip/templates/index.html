@@ -29,6 +29,18 @@
     .discussion-timeline.wide {
       width: 920px;
     }
+    /* Print styles */
+     @media print {
+       .preview-page,
+       .markdown-body.entry-content {
+         margin: 0;
+         border: 0;
+         padding: 0;
+       }
+       .repository-content > div > h3 {
+         display: none;
+       }
+     }
   </style>
 {%- endblock -%}
 
