@@ -767,7 +767,7 @@ Use this software often? <a href="https://saythanks.io/to/joeyespo" target="_bla
 
 
 [pypi]: http://pypi.python.org/pypi/grip/
-[markdown]: http://developer.github.com/v3/markdown
+[markdown]: https://docs.github.com/v3/markdown/
 [rdd]: http://tom.preston-werner.com/2010/08/23/readme-driven-development.html
 [authors.md]: AUTHORS.md
 [offline-renderer]: http://github.com/joeyespo/grip/tree/offline-renderer
