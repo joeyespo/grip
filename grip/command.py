@@ -69,6 +69,7 @@ def main(argv=None, force_utf8=True, patch_svg=True):
         sys.setdefaultencoding('utf-8')
     if patch_svg and sys.version_info[0] == 2 and sys.version_info[1] <= 6:
         mimetypes.add_type('image/svg+xml', '.svg')
+    mimetypes.add_type('image/webp', '.webp')
 
     if argv is None:
         argv = sys.argv[1:]
