@@ -20,6 +20,11 @@
       margin-top: 64px;
       margin-bottom: 21px;
     }
+    #grip-readme-header {
+      position: relative;
+      top: -1em;
+      color: #666;
+    }
     /* User-content tweaks */
     .timeline-comment-wrapper > .timeline-comment:after,
     .timeline-comment-wrapper > .timeline-comment:before {
@@ -108,20 +113,17 @@
 
           {% if not user_content %}
 
-            <div id="readme" class="Box Box--condensed instapaper_body md js-code-block-container">
-              {% if title or filename %}
-                <div class="Box-header d-flex flex-items-center flex-justify-between px-2">
-                  <h3 class="Box-title pr-3">
-                    <span class="octicon octicon-book"></span>
-                    {{ title or filename }}
-                  </h3>
-                </div>
-              {% endif %}
-              <div class="Box-body">
-                <article id="grip-content" class="markdown-body entry-content p-5" itemprop="text">
-                  {{ content|safe }}
-                </article>
-              </div>
+            {% if title or filename %}
+                <h3 id="grip-readme-header" class="Box-title px-5">
+                  <span class="octicon octicon-book"></span>
+                  {{ title or filename }}
+                </h3>
+            {% endif %}
+
+            <div id="readme" class="instapaper_body md js-code-block-container">
+              <article id="grip-content" class="markdown-body entry-content p-5" itemprop="text">
+                {{ content|safe }}
+              </article>
             </div>
 
           {% else %}
