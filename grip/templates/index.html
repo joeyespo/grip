@@ -81,7 +81,7 @@
       }
 
       source.onerror = function(e) {
-        if (e.readyState === EventSource.CLOSED && isRendering) {
+        if (isRendering) {
           isRendering = false;
           document.title = initialTitle;
         }
