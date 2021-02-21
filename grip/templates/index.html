@@ -25,6 +25,38 @@
       top: -1em;
       color: #666;
     }
+    #grip-status-indicator.grip-floating-indicator {
+      position: relative;
+      top: calc(0.75em + 15px);
+      right: 15px;
+      color: #666;
+    }
+    #grip-status-indicator {
+      float: right;
+      text-transform: uppercase;
+      cursor: default;
+      -webkit-user-select: none;
+      user-select: none;
+      font-weight: bold;
+      --yellow: #FFDC00;
+      --red: #FF4136;
+      --green: #2ECC40;
+    }
+    #grip-status-indicator::after {
+      content: "";
+      display: inline-block;
+      width: 0.85em;
+      height: 0.85em;
+      background: var(--color);
+      border-radius: 50%;
+      vertical-align: middle;
+      position: relative;
+      bottom: 1.5px;
+      margin-left: 0.5em;
+    }
+    #grip-status-indicator + #grip-content > :first-child {
+      margin-top: 0;
+    }
     /* User-content tweaks */
     .timeline-comment-wrapper {
       padding-left: 0;
@@ -73,13 +105,27 @@
       var source = new EventSource(eventSourceUrl);
       var isRendering = false;
 
+      var statusElement = document.getElementById('grip-status-indicator');
+      statusElement.hidden = false;
+      statusElement.textContent = 'Connecting';
+      statusElement.style.setProperty('--color', 'var(--yellow)');
+
+      source.onopen = function() {
+        statusElement.textContent = 'Connected';
+        statusElement.style.setProperty('--color', 'var(--green)');
+      }
+
       source.onmessage = function(ev) {
         var msg = JSON.parse(ev.data);
         if (msg.updating) {
           isRendering = true;
+          statusElement.textContent = 'Updating';
+          statusElement.style.setProperty('--color', 'var(--yellow)');
           document.title = '(Rendering) ' + document.title;
         } else {
           isRendering = false;
+          statusElement.textContent = 'Connected';
+          statusElement.style.setProperty('--color', 'var(--green)');
           document.title = initialTitle;
           contentElement.innerHTML = msg.content;
           showCanonicalImages();
@@ -91,6 +137,8 @@
           isRendering = false;
           document.title = initialTitle;
         }
+        statusElement.textContent = 'Disconnected';
+        statusElement.style.setProperty('--color', 'var(--red)');
       }
     }
 
@@ -123,6 +171,7 @@
                 <h3 id="grip-readme-header" class="Box-title px-5">
                   <span class="octicon octicon-book"></span>
                   {{ title or filename }}
+                  <span id="grip-status-indicator" hidden style="--color: var(--yellow)">Connecting</span>
                 </h3>
             {% endif %}
 
@@ -146,10 +195,14 @@
                               <div class="timeline-comment-header clearfix">
                                 <h3 class="timeline-comment-header-text f5 text-normal">
                                   <strong class="css-truncate expandable"><span class="author text-inherit css-truncate-target">{{ title }}</span></strong>
+                                  <span id="grip-status-indicator" hidden style="--color: var(--yellow)">Connecting</span>
                                 </h3>
                               </div>
                             {% endif %}
                             <div class="edit-comment-hide">
+                              {% if not title %}
+                                <span id="grip-status-indicator" class="grip-floating-indicator" hidden style="--color: var(--yellow)">Connecting</span>
+                              {% endif %}
                               <div class="d-block comment-body markdown-body js-comment-body" id="grip-content">
                                 {{ content|safe }}
                               </div>
