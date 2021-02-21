@@ -229,6 +229,7 @@ class Grip(Flask):
 
         def gen():
             last_updated = self.reader.last_updated(subpath)
+            yield ': started\r\n\r\n'
             try:
                 while not shutdown_event.is_set():
                     time.sleep(0.3)
