@@ -37,7 +37,8 @@ Options:
                     The default is the filename.
   --norefresh       Do not automatically refresh the Readme content when
                     the file changes.
-  --quiet           Do not print to the terminal.
+  --theme=<theme>   The theme to use ('light', 'dark', 'dark_dimmed').
+  --quiet           Do not print to the terminal (except error messages).
 """
 
 from __future__ import print_function
@@ -107,7 +108,7 @@ def main(argv=None, force_utf8=True, patch_svg=True):
             export(args['<path>'], args['--user-content'], args['--context'],
                    args['--user'], password, False, args['--wide'],
                    not args['--no-inline'], args['<address>'],
-                   args['--api-url'], args['--title'], args['--quiet'])
+                   args['--api-url'], args['--title'], args['--quiet'], args['--theme'])
             return 0
         except ReadmeNotFoundError as ex:
             print('Error:', ex)
@@ -126,7 +127,7 @@ def main(argv=None, force_utf8=True, patch_svg=True):
         serve(path, host, port, args['--user-content'], args['--context'],
               args['--user'], password, False, args['--wide'], False,
               args['--api-url'], args['--title'], not args['--norefresh'],
-              args['--browser'], args['--quiet'], None)
+              args['--browser'], args['--quiet'], args['--theme'], None)
         return 0
     except ReadmeNotFoundError as ex:
         print('Error:', ex)

@@ -182,6 +182,23 @@ Grip always accesses GitHub over HTTPS,
 so your README and credentials are protected.
 
 
+Theming
+-------
+
+Grip supports the three standard GitHub themes: `Light`, `Dark`, and `Dark dimmed`.
+By default Grip uses the `Light` theme. You can change the theme in several ways;
+note that the valid theme values are `light`, `dark`, and `dark_dimmed` (all lowercase).
+
+- **Configuration** — You can change the default theme in the [config file](#configuration)
+  by setting the `THEME` variable.
+
+- **CLI** — You can set the theme by running `grip --theme=<theme>` on the command line.
+
+- **Live** — You can dynamically set the theme of non-user content within the generated web page.
+At the right of the title banner at the top is a “Theme” menu which can be used to
+change the theme.
+
+
 Tips
 ----
 
@@ -246,8 +263,9 @@ To customize Grip, create `~/.grip/settings.py`, then add one or more of the fol
 - `API_URL`: Base URL for the github API, for example that of a Github Enterprise instance. `https://api.github.com` by default
 - `CACHE_DIRECTORY`: The directory, relative to `~/.grip`, to place cached assets (this gets run through the following filter: `CACHE_DIRECTORY.format(version=__version__)`), `'cache-{version}'` by default
 - `AUTOREFRESH`: Whether to automatically refresh the Readme content when the file changes, `True` by default
-- `QUIET`: Do not print extended information, `False` by default
 - `STYLE_URLS`: Additional URLs that will be added to the rendered page, `[]` by default
+- `QUIET`: Do not print extended information, `False` by default
+- `THEME`: The theme to use, `'light'` by default. Valid values are `'light'`, `'dark'` and `'dark_dimmed'`.
 - `USERNAME`: The username to use when not provided as a CLI argument, `None` by default
 - `PASSWORD`: The password or [personal access token][] to use when not provided as a CLI argument (*Please don't save your passwords here.* Instead, use an access token or drop in this code [grab your password from a password manager][keychain-access]), `None` by default
 
@@ -316,7 +334,7 @@ Runs a local server and renders the Readme file located
 at `path` when visited in the browser.
 
 ```python
-serve(path=None, host=None, port=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, autorefresh=True, browser=False, grip_class=None)
+serve(path=None, host=None, port=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, autorefresh=True, browser=False, quiet=None, theme=None, grip_class=None)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
@@ -333,7 +351,9 @@ serve(path=None, host=None, port=None, user_content=False, context=None, usernam
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `title`: The page title, derived from `path` by default
 - `autorefresh`: Automatically update the rendered content when the Readme file changes, `True` by default
-- `browser`: Open a tab in the browser after the server starts., `False` by default
+- `browser`: Open a tab in the browser after the server starts, `False` by default
+- `quiet`: Suppress logging to the terminal (except error messages), `False` by default
+- `theme`: The theme to use, `'light'` by default
 - `grip_class`: Use a custom [Grip class](#class-gripflask)
 
 
@@ -342,7 +362,7 @@ serve(path=None, host=None, port=None, user_content=False, context=None, usernam
 Writes the specified Readme file to an HTML file with styles and assets inlined.
 
 ```python
-export(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=True, out_filename=None, api_url=None, title=None, quiet=None, grip_class=None)
+export(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=True, out_filename=None, api_url=None, title=None, quiet=False, theme=None, grip_class=None)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
@@ -357,7 +377,8 @@ export(path=None, user_content=False, context=None, username=None, password=None
 - `out_filename`: The filename to write to, `<in_filename>.html` by default
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `title`: The page title, derived from `path` by default
-- `quiet`: Do not print to the terminal
+- `quiet`: Suppress logging to the terminal (except error messages), `False` by default
+- `theme`: The theme to use, `'light'` by default
 - `grip_class`: Use a custom [Grip class](#class-gripflask)
 
 
@@ -368,7 +389,7 @@ This is the same app used by `serve` and `export` and initializes the cache,
 using the cached styles when available.
 
 ```python
-create_app(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None, grip_class=None)
+create_app(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None, quiet=False, theme=None, grip_class=None)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
@@ -383,6 +404,8 @@ create_app(path=None, user_content=False, context=None, username=None, password=
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `title`: The page title, derived from `path` by default
 - `text`: A string or stream of Markdown text to render instead of being loaded from `path` (Note: `path` can be used to set the page title)
+- `quiet`: Suppress logging to the terminal (except error messages), `False` by default
+- `theme`: The theme to use, `'light'` by default
 - `grip_class`: Use a custom [Grip class](#class-gripflask)
 
 
@@ -424,7 +447,7 @@ Renders the markdown from the specified path or text, without caching,
 and returns an HTML page that resembles the GitHub Readme view.
 
 ```python
-render_page(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None, quiet=None, grip_class=None)
+render_page(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None, quiet=None, theme=None, grip_class=None)
 ```
 
 - `path`: The path to use for the page title, rendering `'README.md'` if None
@@ -439,7 +462,8 @@ render_page(path=None, user_content=False, context=None, username=None, password
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `title`: The page title, derived from `path` by default
 - `text`: A string or stream of Markdown text to render instead of being loaded from `path` (Note: `path` can be used to set the page title)
-- `quiet`: Do not print to the terminal
+- `quiet`: Suppress logging to the terminal (except error messages), `False` by default
+- `theme`: The theme to use, `'light'` by default
 - `grip_class`: Use a custom [Grip class](#class-gripflask)
 
 

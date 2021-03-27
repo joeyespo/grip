@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-color-mode="auto" data-light-theme="light" data-dark-theme="light">
 <head>
   <meta charset="utf-8" />
   <title>simple.md - Grip</title>
@@ -38,6 +38,14 @@
                     <span class="octicon octicon-book"></span>
                     simple.md
                   </h3>
+                  <div class="text-small">
+                    <label for="theme">Theme </label>
+                    <select id="theme" class="ml-1">
+                      <option value="light">Light</option>
+                      <option value="dark">Dark</option>
+                      <option value="dark_dimmed">Dark dimmed</option>
+                    </select>
+                  </div>
                 </div>
               
               <div class="Box-body">
@@ -58,12 +66,12 @@
   </div>
   </div><script>
     function showCanonicalImages() {
-      var images = document.getElementsByTagName('img');
+      const images = document.getElementsByTagName('img');
       if (!images) {
         return;
       }
-      for (var index = 0; index < images.length; index++) {
-        var image = images[index];
+      for (let index = 0; index < images.length; index++) {
+        const image = images[index];
         if (image.getAttribute('data-canonical-src') && image.src !== image.getAttribute('data-canonical-src')) {
           image.src = image.getAttribute('data-canonical-src');
         }
@@ -72,7 +80,7 @@
 
     function scrollToHash() {
       if (location.hash && !document.querySelector(':target')) {
-        var element = document.getElementById('user-content-' + location.hash.slice(1));
+        const element = document.getElementById('user-content-' + location.hash.slice(1));
         if (element) {
            element.scrollIntoView();
         }
@@ -80,13 +88,13 @@
     }
 
     function autorefreshContent(eventSourceUrl) {
-      var initialTitle = document.title;
-      var contentElement = document.getElementById('grip-content');
-      var source = new EventSource(eventSourceUrl);
-      var isRendering = false;
+      const initialTitle = document.title;
+      const contentElement = document.getElementById('grip-content');
+      const source = new EventSource(eventSourceUrl);
+      let isRendering = false;
 
       source.onmessage = function(ev) {
-        var msg = JSON.parse(ev.data);
+        const msg = JSON.parse(ev.data);
         if (msg.updating) {
           isRendering = true;
           document.title = '(Rendering) ' + document.title;
@@ -106,17 +114,38 @@
       }
     }
 
+    function onThemeChange(event) {
+      ['light', 'dark'].forEach((color) => {
+        document.documentElement.attributes[`data-${color}-theme`].value = event.target.value;
+      });
+    }
+
+    function initThemeSelect() {
+      const documentAttributes = document.documentElement.attributes;
+      let theme = documentAttributes['data-light-theme'].value;
+      const select = document.getElementById('theme');
+      select.onchange = onThemeChange;
+
+      for (let i = 0; i < select.options.length; i++) {
+        if (select.options[i].value == theme) {
+          select.selectedIndex = i;
+          break;
+        }
+      }
+    }
+
     window.onhashchange = function() {
       scrollToHash();
     }
 
     window.onload = function() {
       scrollToHash();
+      initThemeSelect();
     }
 
     showCanonicalImages();
 
-    var autorefreshUrl = document.getElementById('preview-page').getAttribute('data-autorefresh-url');
+    const autorefreshUrl = document.getElementById('preview-page').getAttribute('data-autorefresh-url');
     if (autorefreshUrl) {
       autorefreshContent(autorefreshUrl);
     }
