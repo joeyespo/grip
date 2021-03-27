@@ -626,7 +626,7 @@ Violets are Blue</p>
       const initialTitle = document.title;
       const contentElement = document.getElementById('grip-content');
       const source = new EventSource(eventSourceUrl);
-      const isRendering = false;
+      let isRendering = false;
 
       source.onmessage = function(ev) {
         const msg = JSON.parse(ev.data);
