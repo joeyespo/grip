@@ -83,12 +83,33 @@
       }
     }
 
+    function onThemeChange(event) {
+      ['light', 'dark'].forEach((color) => {
+        document.documentElement.attributes[`data-${color}-theme`].value = event.target.value;
+      });
+    }
+
+    function initThemeSelect() {
+      const documentAttributes = document.documentElement.attributes;
+      let theme = documentAttributes['data-light-theme'].value;
+      const select = document.getElementById('theme');
+      select.onchange = onThemeChange;
+
+      for (let i = 0; i < select.options.length; i++) {
+        if (select.options[i].value == theme) {
+          select.selectedIndex = i;
+          break;
+        }
+      }
+    }
+
     window.onhashchange = function() {
       scrollToHash();
     }
 
     window.onload = function() {
       scrollToHash();
+      initThemeSelect();
     }
 
     showCanonicalImages();
@@ -115,6 +136,14 @@
                     <span class="octicon octicon-book"></span>
                     {{ title or filename }}
                   </h3>
+                  <div class="text-small">
+                    <label for="theme">Theme </label>
+                    <select id="theme" class="ml-1">
+                      <option value="light">Light</option>
+                      <option value="dark">Dark</option>
+                      <option value="dark_dimmed">Dark dimmed</option>
+                    </select>
+                  </div>
                 </div>
               {% endif %}
               <div class="Box-body">

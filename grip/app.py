@@ -43,8 +43,12 @@ class Grip(Flask):
     """
     def __init__(self, source=None, auth=None, renderer=None,
                  assets=None, render_wide=None, render_inline=None, title=None,
-                 autorefresh=None, quiet=None, grip_url=None,
+                 autorefresh=None, quiet=None, theme=None, grip_url=None,
                  static_url_path=None, instance_path=None, **kwargs):
+
+        import logging
+        log = logging.getLogger('werkzeug')
+
         # Defaults
         if source is None or isinstance(source, str_type):
             source = DirectoryReader(source)
@@ -92,6 +96,8 @@ class Grip(Flask):
             password = self.config['PASSWORD']
             if username or password:
                 auth = (username or '', password or '')
+        if theme is None:
+            theme = self.config['THEME']
 
         # Thread-safe event to signal to the polling threads to exit
         self._run_mutex = threading.Lock()
@@ -108,9 +114,14 @@ class Grip(Flask):
         self.title = title
         self.quiet = quiet
         if self.quiet:
-            import logging
-            log = logging.getLogger('werkzeug')
             log.setLevel(logging.ERROR)
+        self.theme = theme
+
+        if theme not in ['light', 'dark', 'dark_dimmed']:
+            log.error(
+                " * Invalid setting: THEME = '{0}'. Valid values are 'light', 'dark', 'dark_dimmed'."
+                .format(theme)
+            )
 
         # Overridable attributes
         if self.renderer is None:
@@ -208,7 +219,9 @@ class Grip(Flask):
             title=self.title, content=content, favicon=favicon,
             user_content=self.renderer.user_content,
             wide_style=self.render_wide, style_urls=self.assets.style_urls,
-            styles=self.assets.styles, autorefresh_url=autorefresh_url)
+            styles=self.assets.styles, autorefresh_url=autorefresh_url,
+            theme=self.theme
+        )
 
     def _render_refresh(self, subpath=None):
         if not self.autorefresh:

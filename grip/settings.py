@@ -29,3 +29,7 @@ API_URL = None
 
 # Custom styles
 STYLE_URLS = []
+
+
+# Valid values: 'light', 'dark', 'dark_dimmed'
+THEME = 'light'
