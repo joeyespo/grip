@@ -119,7 +119,7 @@ class Grip(Flask):
 
         if theme not in ['light', 'dark', 'dark_dimmed']:
             log.error(
-                " * Invalid setting: THEME = '{0}'. Valid values are 'light', 'dark', 'dark_dimmed'."
+                " * Invalid theme: '{0}'. Valid values are 'light', 'dark', 'dark_dimmed'."
                 .format(theme)
             )
 
