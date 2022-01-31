@@ -4,7 +4,7 @@ Grip
 
 Render local readme files before sending off to GitHub.
 
-:copyright: (c) 2014-2019 by Joe Esposito.
+:copyright: (c) 2014-2022 by Joe Esposito.
 :license: MIT, see LICENSE for more details.
 """
 

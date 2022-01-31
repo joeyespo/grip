@@ -2,12 +2,42 @@ Grip Changelog
 --------------
 
 
-#### Development
+#### Version 4.6.0 (2022-02-01)
 
-- **Breaking change**: Drop Python 2.6 support
-- **Breaking change**: Drop Python 3.3 support
+##### Notable changes
 
-- Tests: Add Python 3.6 support
+- Update output and **fix style issues**
+- Add support for **Python 3.7, 3.8, 3.9, 3.10**
+- Improve handling of PDFs and other binary files
+- Fix deprecation warnings from newer dependency versions
+
+##### Deprecations
+
+- End-of-life [Python versions](https://devguide.python.org/#status-of-python-branches) no longer intentionally supported
+  - Python 2.6, 2.7 (Python 2 compatibility will be removed entirely in the next major release)
+  - Python 3.0, 3.1, 3.2, 3.3 ([#275](https://github.com/joeyespo/grip/pull/275) - thanks, [@svisser][]!), 3.4, 3.5, 3.6
+- Current [dependency versions](requirements.txt) (more recent versions will be required in the next major release)
+
+##### Bugs fixed
+
+- Fix typo in error message ([#266](https://github.com/joeyespo/grip/pull/266) - thanks, [@Godron629][]!)
+- Update HTML/CSS scaffold to match GitHub ([#297](https://github.com/joeyespo/grip/pull/297) - thanks, [@phyllisstein][]!)
+- Fix tests by adding a missing `USER_CONTEXT` argument to one of the `GitHubRenderer` calls
+- Serve non-`text/` MIME types as raw files for better handling of, e.g. PDF files ([#234](https://github.com/joeyespo/grip/pull/234) - thanks, [@wvspee][]!)
+- Fix style parsing, which caused some styles to be missing ([#347](https://github.com/joeyespo/grip/issues/347))
+
+##### Other changes
+
+- Readme: Update to correct `--no-inline` option ([#267](https://github.com/joeyespo/grip/issues/267) - thanks, [@TomDLT][]!)
+- Readme: Fix links to Grip class ([#276](https://github.com/joeyespo/grip/issues/276) - thanks, [@jacebrowning][]!)
+- Readme: Clarify that this sends your markdown to GitHub ([#251](https://github.com/joeyespo/grip/issues/251) - thanks, [@courajs][]!)
+- Update `pytest` usages (see [pytest 3.0.0 changelog](https://github.com/pytest-dev/pytest/blob/master/CHANGELOG.rst#300-2016-08-18))
+- Add `.pytest_cache` to `.gitignore` ([#287](https://github.com/joeyespo/grip/pull/287) - thanks, [@svisser][]!)
+- Add `.venv` and `.idea` to `.gitignore` and clean up
+- Add `flake8` test dependency and fix linting errors ([#299](https://github.com/joeyespo/grip/pull/299))
+- Add `pytest` test dependency ([#294](https://github.com/joeyespo/grip/pull/294) - thanks, [@Methacrylon][]!)
+- License: Distribute LICENSE file ([#274](https://github.com/joeyespo/grip/pull/274) - thanks, [@synapticarbors][]!)
+- License: Update year
 
 
 ###### Version 4.5.2 (2018-03-18)
@@ -346,3 +376,12 @@ Grip Changelog
 [@4ndrej]: https://github.com/4ndrej
 [@erikrtn]: https://github.com/erikrtn
 [@kagof]: https://github.com/kagof
+[@Godron629]: https://github.com/Godron629
+[@TomDLT]: https://github.com/TomDLT
+[@synapticarbors]: https://github.com/synapticarbors
+[@svisser]: https://github.com/svisser
+[@jacebrowning]: https://github.com/jacebrowning
+[@phyllisstein]: https://github.com/phyllisstein
+[@courajs]: https://github.com/courajs
+[@wvspee]: https://github.com/wvspee
+[@Methacrylon]: https://github.com/Methacrylon
