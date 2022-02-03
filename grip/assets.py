@@ -13,7 +13,8 @@ except ImportError:
     from urllib.parse import urljoin
 
 import requests
-from werkzeug.utils import safe_join
+
+from ._compat import safe_join
 
 from .constants import (
     STYLE_URLS_SOURCE, STYLE_URLS_RES, STYLE_ASSET_URLS_RE,
