@@ -13,7 +13,7 @@ except ImportError:
     from urllib.parse import urljoin
 
 import requests
-from flask import safe_join
+from werkzeug.utils import safe_join
 
 from .constants import (
     STYLE_URLS_SOURCE, STYLE_URLS_RES, STYLE_ASSET_URLS_RE,
