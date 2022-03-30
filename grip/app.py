@@ -152,6 +152,15 @@ class Grip(Flask):
                           self._render_rate_limit_page)
         self.errorhandler(403)(self._render_rate_limit_page)
 
+    def _redirect_to_subpath(self, subpath=None):
+        """
+        Redirects to the specified subpath, which is the relative path
+        part of the root location (i.e. the current working directory
+        or the path part of a URL excluding the initial '/').
+        """
+        route = posixpath.normpath('/' + (subpath or '').lstrip('/'))
+        return redirect(route)
+
     def _render_asset(self, subpath):
         """
         Renders the specified cache file.
@@ -163,7 +172,7 @@ class Grip(Flask):
         # Normalize the subpath
         normalized = self.reader.normalize_subpath(subpath)
         if normalized != subpath:
-            return redirect(normalized)
+            return self._redirect_to_subpath(normalized)
 
         # Read the Readme text or asset
         try:
@@ -217,7 +226,7 @@ class Grip(Flask):
         # Normalize the subpath
         normalized = self.reader.normalize_subpath(subpath)
         if normalized != subpath:
-            return redirect(normalized)
+            return self._redirect_to_subpath(normalized)
 
         # Get the full filename for display
         filename = self.reader.filename_for(subpath)
