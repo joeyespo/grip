@@ -41,6 +41,7 @@ along with the following contributors:
 - Aaron Sikes ([@courajs](https://github.com/courajs))
 - Winsley ([@wvspee](https://github.com/wvspee))
 - Methacrylon ([@Methacrylon](https://github.com/Methacrylon))
+- Bryce Carson ([@Methacrylon](https://github.com/bryce-carson))
 
 
 [home]: README.md

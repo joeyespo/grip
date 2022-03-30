@@ -2,6 +2,13 @@ Grip Changelog
 --------------
 
 
+#### Version 4.6.1 (2022-03-30)
+
+##### Bugs fixed
+
+- Fix "ImportError: cannot import name 'safe_join' from 'flask'" when using Flask 2.1.0+ ([#360](https://github.com/joeyespo/grip/pull/360) - thanks, [@bryce-carson][]!)
+
+
 #### Version 4.6.0 (2022-02-01)
 
 ##### Notable changes
@@ -385,3 +392,4 @@ Grip Changelog
 [@courajs]: https://github.com/courajs
 [@wvspee]: https://github.com/wvspee
 [@Methacrylon]: https://github.com/Methacrylon
+[@bryce-carson]: https://github.com/bryce-carson
