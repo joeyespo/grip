@@ -11,6 +11,7 @@ import sys
 import threading
 import time
 import errno
+import contextlib
 from traceback import format_exc
 try:
     from urlparse import urlparse
@@ -109,8 +110,10 @@ class Grip(Flask):
         self.quiet = quiet
         if self.quiet:
             import logging
+            # Disable werkzeug and flask logging
+            self.logger.setLevel(logging.CRITICAL)
             log = logging.getLogger('werkzeug')
-            log.setLevel(logging.ERROR)
+            log.setLevel(logging.CRITICAL)
 
         # Overridable attributes
         if self.renderer is None:
@@ -443,10 +446,19 @@ class Grip(Flask):
             start_browser_when_ready(host, port, self._shutdown_event)
             if open_browser else None)
 
-        # Run local server
-        super(Grip, self).run(host, port, debug=debug,
-                              use_reloader=use_reloader,
-                              threaded=True)
+        # Redirect stdout if requred
+        output_file = sys.stdout
+        if self.quiet:
+            output_file = open(os.devnull, 'w')
+
+        with contextlib.redirect_stdout(output_file):
+            # Run local server
+            super(Grip, self).run(host, port, debug=debug,
+                                  use_reloader=use_reloader,
+                                  threaded=True)
+
+        if output_file != sys.stdout:
+            output_file.close()
 
         # Signal to the polling and browser threads that they should exit
         if not self.quiet:
