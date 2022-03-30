@@ -37,6 +37,11 @@ On OS X, you can also install with Homebrew:
 $ brew install grip
 ```
 
+To install on Debian, Ubuntu, Linux Mint, etc:
+
+```console
+$ sudo apt install grip
+```
 
 Usage
 -----
