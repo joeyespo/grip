@@ -8,7 +8,7 @@ import posixpath
 import sys
 from abc import ABCMeta, abstractmethod
 
-from flask import safe_join
+from ._compat import safe_join
 
 from .constants import DEFAULT_FILENAMES, DEFAULT_FILENAME
 from .exceptions import ReadmeNotFoundError

@@ -4,3 +4,4 @@ Markdown>=2.5.1
 path-and-address>=2.0.1
 Pygments>=1.6
 requests>=2.4.1
+Werkzeug>=0.7
