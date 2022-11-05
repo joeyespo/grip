@@ -22,6 +22,8 @@ DEFAULT_GRIPURL = '/__/grip'
 # The public GitHub API
 DEFAULT_API_URL = 'https://api.github.com'
 
+DEFAULT_MATH_JAX_CDN_URL = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js'
+
 
 # Style parsing
 STYLE_URLS_SOURCE = 'https://github.com/joeyespo/grip'

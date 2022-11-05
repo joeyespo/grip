@@ -30,7 +30,8 @@ from . import __version__
 from .assets import GitHubAssetManager, ReadmeAssetManager
 from .browser import start_browser_when_ready
 from .constants import (
-    DEFAULT_GRIPHOME, DEFAULT_GRIPURL, STYLE_ASSET_URLS_INLINE_FORMAT)
+    DEFAULT_GRIPHOME, DEFAULT_GRIPURL, STYLE_ASSET_URLS_INLINE_FORMAT,
+    DEFAULT_MATH_JAX_CDN_URL)
 from .exceptions import AlreadyRunningError, ReadmeNotFoundError
 from .readers import DirectoryReader
 from .renderers import GitHubRenderer, ReadmeRenderer
@@ -43,7 +44,7 @@ class Grip(Flask):
     """
     def __init__(self, source=None, auth=None, renderer=None,
                  assets=None, render_wide=None, render_inline=None, title=None,
-                 autorefresh=None, quiet=None, grip_url=None,
+                 autorefresh=None, render_math=None, quiet=None, grip_url=None,
                  static_url_path=None, instance_path=None, **kwargs):
         # Defaults
         if source is None or isinstance(source, str_type):
@@ -52,6 +53,8 @@ class Grip(Flask):
             render_wide = False
         if render_inline is None:
             render_inline = False
+        if render_math is None:
+            render_math = False
 
         # Defaults from ENV
         if grip_url is None:
@@ -104,6 +107,7 @@ class Grip(Flask):
         self.renderer = renderer
         self.assets = assets
         self.render_wide = render_wide
+        self.render_math = render_math
         self.render_inline = render_inline
         self.title = title
         self.quiet = quiet
@@ -217,7 +221,8 @@ class Grip(Flask):
             title=self.title, content=content, favicon=favicon,
             user_content=self.renderer.user_content,
             wide_style=self.render_wide, style_urls=self.assets.style_urls,
-            styles=self.assets.styles, autorefresh_url=autorefresh_url)
+            styles=self.assets.styles, autorefresh_url=autorefresh_url,
+            render_math=self.render_math, math_jax_cdn_url=DEFAULT_MATH_JAX_CDN_URL)
 
     def _render_refresh(self, subpath=None):
         if not self.autorefresh:

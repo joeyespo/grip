@@ -24,6 +24,7 @@ Options:
   --pass=<password> A GitHub password or auth token for API auth.
   --wide            Renders wide, i.e. when the side nav is collapsed.
                     This only takes effect when --user-content is used.
+  --render-math     Renders LaTex equations with MathJax.
   --clear           Clears the cached styles and assets and exits.
   --export          Exports to <path>.html or README.md instead of
                     serving, optionally using [<address>] as the out
@@ -107,7 +108,8 @@ def main(argv=None, force_utf8=True, patch_svg=True):
             export(args['<path>'], args['--user-content'], args['--context'],
                    args['--user'], password, False, args['--wide'],
                    not args['--no-inline'], args['<address>'],
-                   args['--api-url'], args['--title'], args['--quiet'])
+                   args['--api-url'], args['--title'], args['--render-math'],
+                   args['--quiet'])
             return 0
         except ReadmeNotFoundError as ex:
             print('Error:', ex)
@@ -126,7 +128,7 @@ def main(argv=None, force_utf8=True, patch_svg=True):
         serve(path, host, port, args['--user-content'], args['--context'],
               args['--user'], password, False, args['--wide'], False,
               args['--api-url'], args['--title'], not args['--norefresh'],
-              args['--browser'], args['--quiet'], None)
+              args['--browser'], args['--render-math'], args['--quiet'], None)
         return 0
     except ReadmeNotFoundError as ex:
         print('Error:', ex)
