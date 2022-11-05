@@ -33,6 +33,19 @@
 {%- endblock -%}
 
 {%- block scripts -%}
+{%- if render_math %}
+<script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$']],
+        displayMath: [['$$', '$$']]
+      }
+    };
+</script>
+<script type="text/javascript" id="MathJax-script"
+  src="{{ math_jax_cdn_url }}">
+</script>
+{%- endif %}
   <script>
     function showCanonicalImages() {
       var images = document.getElementsByTagName('img');
@@ -56,6 +69,26 @@
       }
     }
 
+{%- if render_math %}
+    function typesetMath() {
+      var preElements = document.getElementsByTagName('pre');
+      for (let p of preElements) {
+        if (p.lang==="math") {
+          p.style.backgroundColor = "white";
+          p.classList.add("mathjax_process");
+          let codeElements = p.getElementsByTagName('code');
+          if (codeElements.length===1) {
+            let c = codeElements[0];
+            c.classList.add("mathjax_process");
+            c.innerHTML.replace("$$", "\$$");
+            c.innerHTML = "$$"+c.innerHTML+"$$";
+          }
+        }
+      }
+      MathJax.typeset();
+    }
+{%- endif %}
+
     function autorefreshContent(eventSourceUrl) {
       var initialTitle = document.title;
       var contentElement = document.getElementById('grip-content');
@@ -72,6 +105,9 @@
           document.title = initialTitle;
           contentElement.innerHTML = msg.content;
           showCanonicalImages();
+{%- if render_math %}
+          typesetMath();
+{%- endif %}
         }
       }
 
@@ -88,6 +124,9 @@
     }
 
     window.onload = function() {
+{%- if render_math %}
+      typesetMath();
+{%- endif %}
       scrollToHash();
     }
 
