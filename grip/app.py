@@ -31,7 +31,7 @@ from .assets import GitHubAssetManager, ReadmeAssetManager
 from .browser import start_browser_when_ready
 from .constants import (
     DEFAULT_GRIPHOME, DEFAULT_GRIPURL, STYLE_ASSET_URLS_INLINE_FORMAT,
-    DEFAULT_MATH_JAX_CDN_URL)
+    DEFAULT_MATH_JAX_URL)
 from .exceptions import AlreadyRunningError, ReadmeNotFoundError
 from .readers import DirectoryReader
 from .renderers import GitHubRenderer, ReadmeRenderer
@@ -42,9 +42,9 @@ class Grip(Flask):
     A Flask application that can serve the specified file or directory
     containing a README.
     """
-    def __init__(self, source=None, auth=None, renderer=None,
-                 assets=None, render_wide=None, render_inline=None, title=None,
-                 autorefresh=None, render_math=None, quiet=None, grip_url=None,
+    def __init__(self, source=None, auth=None, renderer=None, assets=None,
+                 render_wide=None, render_inline=None, render_math=None,
+                 title=None, autorefresh=None, quiet=None, grip_url=None,
                  static_url_path=None, instance_path=None, **kwargs):
         # Defaults
         if source is None or isinstance(source, str_type):
@@ -222,7 +222,7 @@ class Grip(Flask):
             user_content=self.renderer.user_content,
             wide_style=self.render_wide, style_urls=self.assets.style_urls,
             styles=self.assets.styles, autorefresh_url=autorefresh_url,
-            render_math=self.render_math, math_jax_cdn_url=DEFAULT_MATH_JAX_CDN_URL)
+            render_math=self.render_math, math_jax_url=DEFAULT_MATH_JAX_URL)
 
     def _render_refresh(self, subpath=None):
         if not self.autorefresh:

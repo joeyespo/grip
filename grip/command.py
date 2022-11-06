@@ -107,9 +107,8 @@ def main(argv=None, force_utf8=True, patch_svg=True):
         try:
             export(args['<path>'], args['--user-content'], args['--context'],
                    args['--user'], password, False, args['--wide'],
-                   not args['--no-inline'], args['<address>'],
-                   args['--api-url'], args['--title'], args['--render-math'],
-                   args['--quiet'])
+                   not args['--no-inline'], args['--render-math'], args['<address>'],
+                   args['--api-url'], args['--title'], args['--quiet'])
             return 0
         except ReadmeNotFoundError as ex:
             print('Error:', ex)
@@ -127,8 +126,8 @@ def main(argv=None, force_utf8=True, patch_svg=True):
     try:
         serve(path, host, port, args['--user-content'], args['--context'],
               args['--user'], password, False, args['--wide'], False,
-              args['--api-url'], args['--title'], not args['--norefresh'],
-              args['--browser'], args['--render-math'], args['--quiet'], None)
+              args['--render-math'], args['--api-url'], args['--title'],
+              not args['--norefresh'], args['--browser'], args['--quiet'], None)
         return 0
     except ReadmeNotFoundError as ex:
         print('Error:', ex)
