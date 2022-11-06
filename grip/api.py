@@ -13,8 +13,8 @@ from .renderers import GitHubRenderer, OfflineRenderer
 def create_app(path=None, user_content=False, context=None, username=None,
                password=None, render_offline=False, render_wide=False,
                render_inline=False, render_math=False, api_url=None,
-               title=None, text=None, autorefresh=None, quiet=None,
-               grip_class=None):
+               math_jax_url=None, title=None, text=None, autorefresh=None,
+               quiet=None, grip_class=None):
     """
     Creates a Grip application with the specified overrides.
     """
@@ -44,20 +44,20 @@ def create_app(path=None, user_content=False, context=None, username=None,
 
     # Create the customized app with default asset manager
     return grip_class(source, auth, renderer, None, render_wide,
-                      render_inline, render_math, title, autorefresh, quiet)
+                      render_inline, render_math, math_jax_url, title, autorefresh, quiet)
 
 
 def serve(path=None, host=None, port=None, user_content=False, context=None,
           username=None, password=None, render_offline=False, render_wide=False,
-          render_inline=False, render_math=False, api_url=None, title=None,
-          autorefresh=True, browser=False, quiet=None, grip_class=None):
+          render_inline=False, render_math=False, api_url=None, math_jax_url=None,
+          title=None, autorefresh=True, browser=False, quiet=None, grip_class=None):
     """
     Starts a server to render the specified file or directory containing
     a README.
     """
     app = create_app(path, user_content, context, username, password,
                      render_offline, render_wide, render_inline, render_math,
-                     api_url, title, None, autorefresh, quiet, grip_class)
+                     api_url, math_jax_url, title, None, autorefresh, quiet, grip_class)
     app.run(host, port, open_browser=browser)
 
 
@@ -73,18 +73,18 @@ def clear_cache(grip_class=None):
 def render_page(path=None, user_content=False, context=None,
                 username=None, password=None,
                 render_offline=False, render_wide=False, render_inline=False,
-                render_math=False, api_url=None, title=None, text=None, quiet=None,
-                grip_class=None):
+                render_math=False, api_url=None, math_jax_url=None, title=None, text=None,
+                quiet=None, grip_class=None):
     """
     Renders the specified markup text to an HTML page and returns it.
     """
     return create_app(path, user_content, context, username, password,
                       render_offline, render_wide, render_inline, render_math,
-                      api_url, title, text, False, quiet, grip_class).render()
+                      api_url, math_jax_url, title, text, False, quiet, grip_class).render()
 
 
 def render_content(text, user_content=False, context=None, username=None,
-                   password=None, render_offline=False, api_url=None):
+                   password=None, render_offline=False, api_url=None, math_jax_url=None):
     """
     Renders the specified markup and returns the result.
     """
@@ -98,7 +98,7 @@ def render_content(text, user_content=False, context=None, username=None,
 def export(path=None, user_content=False, context=None,
            username=None, password=None, render_offline=False,
            render_wide=False, render_inline=True, render_math=False,
-           out_filename=None, api_url=None, title=None, quiet=False,
+           out_filename=None, api_url=None, math_jax_url=None, title=None, quiet=False,
            grip_class=None):
     """
     Exports the rendered HTML to a file.
@@ -117,7 +117,7 @@ def export(path=None, user_content=False, context=None,
 
     page = render_page(path, user_content, context, username, password,
                        render_offline, render_wide, render_inline, render_math,
-                       api_url, title, None, quiet, grip_class)
+                       api_url, math_jax_url, title, None, quiet, grip_class)
 
     if export_to_stdout:
         try:

@@ -27,5 +27,9 @@ PASSWORD = None
 API_URL = None
 
 
+# Custom MathJax URL
+MATH_JAX_URL = None
+
+
 # Custom styles
 STYLE_URLS = []

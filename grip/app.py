@@ -44,8 +44,8 @@ class Grip(Flask):
     """
     def __init__(self, source=None, auth=None, renderer=None, assets=None,
                  render_wide=None, render_inline=None, render_math=None,
-                 title=None, autorefresh=None, quiet=None, grip_url=None,
-                 static_url_path=None, instance_path=None, **kwargs):
+                 math_jax_url = None, title=None, autorefresh=None, quiet=None,
+                 grip_url=None, static_url_path=None, instance_path=None, **kwargs):
         # Defaults
         if source is None or isinstance(source, str_type):
             source = DirectoryReader(source)
@@ -75,6 +75,12 @@ class Grip(Flask):
             __name__, static_url_path=static_url_path,
             instance_path=instance_path, **kwargs)
         self.config.from_object('grip.settings')
+
+        if math_jax_url is None:
+            math_jax_url = self.config['MATH_JAX_URL']
+            if math_jax_url is None:
+               math_jax_url = DEFAULT_MATH_JAX_URL
+        self.math_jax_url = math_jax_url
 
         try:
             self.config.from_pyfile('settings_local.py', silent=True)
@@ -222,7 +228,7 @@ class Grip(Flask):
             user_content=self.renderer.user_content,
             wide_style=self.render_wide, style_urls=self.assets.style_urls,
             styles=self.assets.styles, autorefresh_url=autorefresh_url,
-            render_math=self.render_math, math_jax_url=DEFAULT_MATH_JAX_URL)
+            render_math=self.render_math, math_jax_url=self.math_jax_url)
 
     def _render_refresh(self, subpath=None):
         if not self.autorefresh:
