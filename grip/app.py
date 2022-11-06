@@ -76,12 +76,6 @@ class Grip(Flask):
             instance_path=instance_path, **kwargs)
         self.config.from_object('grip.settings')
 
-        if math_jax_url is None:
-            math_jax_url = self.config['MATH_JAX_URL']
-            if math_jax_url is None:
-               math_jax_url = DEFAULT_MATH_JAX_URL
-        self.math_jax_url = math_jax_url
-
         try:
             self.config.from_pyfile('settings_local.py', silent=True)
             self.config.from_pyfile(
@@ -90,6 +84,12 @@ class Grip(Flask):
             # Flask workaround for when ~/.grip exists but is not a directory
             if ex.errno != errno.ENOTDIR:
                 raise
+
+        if math_jax_url is None:
+            math_jax_url = self.config['MATH_JAX_URL']
+            if math_jax_url is None:
+               math_jax_url = DEFAULT_MATH_JAX_URL
+        self.math_jax_url = math_jax_url
 
         # Defaults from settings
         if autorefresh is None:
