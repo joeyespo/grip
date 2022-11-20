@@ -36,9 +36,23 @@
 {%- if render_math %}
 <script>
     MathJax = {
+      loader: {load: ['ui/safe']},
       tex: {
         inlineMath: [['$', '$']],
-        displayMath: [['$$', '$$']]
+        displayMath: [['$$', '$$']],
+        packages: {
+          "[-]": ["html", "newcommand", "require"]
+        }
+      },
+      options: {
+        safeOptions: {
+           allow: {
+             URLs: 'none',
+             classes: 'none',
+             cssIDs: 'none',
+             styles: 'none'
+           }
+        }
       }
     };
 </script>
