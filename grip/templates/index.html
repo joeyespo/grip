@@ -80,7 +80,10 @@
           if (codeElements.length===1) {
             let c = codeElements[0];
             c.classList.add("mathjax_process");
-            c.innerHTML.replace("$$", "\$$");
+            let index = c.innerHTML.indexOf("$$");
+            if (index>=0) {
+               c.innerHTML = c.innerHTML.substring(0, index);
+            }
             c.innerHTML = "$$"+c.innerHTML+"$$";
           }
         }
