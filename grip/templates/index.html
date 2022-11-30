@@ -33,8 +33,8 @@
 {%- endblock -%}
 
 {%- block scripts -%}
-{%- if render_math %}
-<script>
+  {%- if render_math %}
+  <script>
     MathJax = {
       loader: {load: ['ui/safe']},
       tex: {
@@ -55,11 +55,14 @@
         }
       }
     };
-</script>
-<script type="text/javascript" id="MathJax-script"
-  src="{{ math_jax_url }}">
-</script>
-{%- endif %}
+  </script>
+  <script type="text/javascript" id="MathJax-script"
+    src="{{ math_jax_url }}">
+  </script>
+  {%- endif %}
+  {%- for script_url in script_urls %}
+  <script crossorigin="anonymous" defer="defer" src="{{ script_url }}"></script>
+  {%- endfor %}
   <script>
     function showCanonicalImages() {
       var images = document.getElementsByTagName('img');
@@ -71,6 +74,13 @@
         if (image.getAttribute('data-canonical-src') && image.src !== image.getAttribute('data-canonical-src')) {
           image.src = image.getAttribute('data-canonical-src');
         }
+      }
+    }
+
+    function updateMathRendererStaticUrl () {
+      let mathRendererElements = document.getElementsByTagName('math-renderer');
+      for (let mathRenderer of mathRendererElements) {
+        mathRenderer.setAttribute("data-static-url", window.location.href+"__/grip/asset/math_renderer");
       }
     }
 
@@ -122,6 +132,7 @@
           document.title = initialTitle;
           contentElement.innerHTML = msg.content;
           showCanonicalImages();
+          updateMathRendererStaticUrl();
 {%- if render_math %}
           typesetMath();
 {%- endif %}
@@ -148,12 +159,14 @@
     }
 
     showCanonicalImages();
+    updateMathRendererStaticUrl();
 
     var autorefreshUrl = document.getElementById('preview-page').getAttribute('data-autorefresh-url');
     if (autorefreshUrl) {
       autorefreshContent(autorefreshUrl);
     }
   </script>
+
 {%- endblock -%}
 
 {%- block page -%}

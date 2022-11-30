@@ -151,7 +151,11 @@ class Grip(Flask):
 
         # Initialize views
         self._styles_retrieved = False
+        self._scripts_retrieved = False
         self.before_request(self._retrieve_styles)
+        if self.renderer.user_content and self.render_math:
+            self.before_request(self._retrieve_assets)
+            self.render_math = False
         self.add_url_rule(asset_route, 'asset', self._render_asset)
         self.add_url_rule(asset_subpath, 'asset', self._render_asset)
         self.add_url_rule('/', 'render', self._render_page)
@@ -228,7 +232,8 @@ class Grip(Flask):
             user_content=self.renderer.user_content,
             wide_style=self.render_wide, style_urls=self.assets.style_urls,
             styles=self.assets.styles, autorefresh_url=autorefresh_url,
-            render_math=self.render_math, math_jax_url=self.math_jax_url)
+            render_math=self.render_math, math_jax_url=self.math_jax_url,
+            script_urls=self.assets.script_urls)
 
     def _render_refresh(self, subpath=None):
         if not self.autorefresh:
@@ -361,6 +366,30 @@ class Grip(Flask):
                       file=sys.stderr)
         if self.render_inline:
             self._inline_styles()
+
+    def _retrieve_assets(self):
+        """
+        Retrieves the scripts URLs from the source and caches them. This
+        is called before the first request is dispatched.
+        """
+        asset_url_path = url_for('asset')
+        if (request.path.startswith(asset_url_path) and
+            request.path.endswith(".js") or request.path.endswith(".woff")):
+            path_start_index = len(request.url_root)+len(asset_url_path)-1
+            self.assets.cache_asset(request.url[path_start_index:])
+
+        if self._scripts_retrieved:
+            return
+        self._scripts_retrieved = True
+
+        try:
+            self.assets.retrieve_scripts(url_for('asset'))
+        except Exception as ex:
+            if self.debug:
+                print(format_exc(), file=sys.stderr)
+            else:
+                print(' * Error: could not retrieve scripts:', ex,
+                      file=sys.stderr)
 
     def default_renderer(self):
         """
