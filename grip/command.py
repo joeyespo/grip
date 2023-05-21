@@ -38,9 +38,11 @@ Options:
   --norefresh       Do not automatically refresh the Readme content when
                     the file changes.
   --quiet           Do not print to the terminal.
+  --theme=<theme>           Valid options ("light", "dark"). Default: "light"
 """
 
 from __future__ import print_function
+from enum import Enum
 
 import sys
 import mimetypes
@@ -59,6 +61,9 @@ from .exceptions import ReadmeNotFoundError
 usage = '\n\n\n'.join(__doc__.split('\n\n\n')[1:])
 version = 'Grip ' + __version__
 
+class ThemeArgumentOption(Enum):
+    dark = 'dark'
+    light = 'light'
 
 def main(argv=None, force_utf8=True, patch_svg=True):
     """
@@ -113,6 +118,16 @@ def main(argv=None, force_utf8=True, patch_svg=True):
             print('Error:', ex)
             return 1
 
+    # Parse theme argument
+    if args['--theme']:
+        if args['--theme'] in [e.value for e in ThemeArgumentOption]:
+            theme: str = args['--theme']
+        else:
+            print('Error: valid options for theme argument are "light", "dark"')
+            return 1
+    else:
+        theme = ThemeArgumentOption.light.value
+
     # Parse arguments
     path, address = resolve(args['<path>'], args['<address>'])
     host, port = split_address(address)
@@ -126,7 +141,7 @@ def main(argv=None, force_utf8=True, patch_svg=True):
         serve(path, host, port, args['--user-content'], args['--context'],
               args['--user'], password, False, args['--wide'], False,
               args['--api-url'], args['--title'], not args['--norefresh'],
-              args['--browser'], args['--quiet'], None)
+              args['--browser'], args['--quiet'], theme, None)
         return 0
     except ReadmeNotFoundError as ex:
         print('Error:', ex)

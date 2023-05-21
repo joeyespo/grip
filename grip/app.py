@@ -43,7 +43,7 @@ class Grip(Flask):
     """
     def __init__(self, source=None, auth=None, renderer=None,
                  assets=None, render_wide=None, render_inline=None, title=None,
-                 autorefresh=None, quiet=None, grip_url=None,
+                 autorefresh=None, quiet=None, theme='light', grip_url=None,
                  static_url_path=None, instance_path=None, **kwargs):
         # Defaults
         if source is None or isinstance(source, str_type):
@@ -217,7 +217,8 @@ class Grip(Flask):
             title=self.title, content=content, favicon=favicon,
             user_content=self.renderer.user_content,
             wide_style=self.render_wide, style_urls=self.assets.style_urls,
-            styles=self.assets.styles, autorefresh_url=autorefresh_url)
+            styles=self.assets.styles, autorefresh_url=autorefresh_url,
+            data_color_mode='dark', data_light_theme='light', data_dark_theme='dark')
 
     def _render_refresh(self, subpath=None):
         if not self.autorefresh:
