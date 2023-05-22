@@ -72,14 +72,14 @@ def clear_cache(grip_class=None):
 def render_page(path=None, user_content=False, context=None,
                 username=None, password=None,
                 render_offline=False, render_wide=False, render_inline=False,
-                api_url=None, title=None, text=None, quiet=None,
+                api_url=None, title=None, text=None, quiet=None, theme='light',
                 grip_class=None):
     """
     Renders the specified markup text to an HTML page and returns it.
     """
     return create_app(path, user_content, context, username, password,
                       render_offline, render_wide, render_inline, api_url,
-                      title, text, False, quiet, grip_class).render()
+                      title, text, False, quiet, theme, grip_class).render()
 
 
 def render_content(text, user_content=False, context=None, username=None,
@@ -97,7 +97,7 @@ def render_content(text, user_content=False, context=None, username=None,
 def export(path=None, user_content=False, context=None,
            username=None, password=None, render_offline=False,
            render_wide=False, render_inline=True, out_filename=None,
-           api_url=None, title=None, quiet=False, grip_class=None):
+           api_url=None, title=None, quiet=False, theme='light', grip_class=None):
     """
     Exports the rendered HTML to a file.
     """
@@ -115,7 +115,7 @@ def export(path=None, user_content=False, context=None,
 
     page = render_page(path, user_content, context, username, password,
                        render_offline, render_wide, render_inline, api_url,
-                       title, None, quiet, grip_class)
+                       title, None, quiet, theme, grip_class)
 
     if export_to_stdout:
         try:

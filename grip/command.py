@@ -105,18 +105,6 @@ def main(argv=None, force_utf8=True, patch_svg=True):
     if args['--user'] and not password:
         password = getpass()
 
-    # Export to a file instead of running a server
-    if args['--export']:
-        try:
-            export(args['<path>'], args['--user-content'], args['--context'],
-                   args['--user'], password, False, args['--wide'],
-                   not args['--no-inline'], args['<address>'],
-                   args['--api-url'], args['--title'], args['--quiet'])
-            return 0
-        except ReadmeNotFoundError as ex:
-            print('Error:', ex)
-            return 1
-
     # Parse theme argument
     if args['--theme']:
         if args['--theme'] in VALID_THEME_OPTIONS:
@@ -126,6 +114,18 @@ def main(argv=None, force_utf8=True, patch_svg=True):
             return 1
     else:
         theme = 'light'
+
+    # Export to a file instead of running a server
+    if args['--export']:
+        try:
+            export(args['<path>'], args['--user-content'], args['--context'],
+                   args['--user'], password, False, args['--wide'],
+                   not args['--no-inline'], args['<address>'],
+                   args['--api-url'], args['--title'], args['--quiet'], theme)
+            return 0
+        except ReadmeNotFoundError as ex:
+            print('Error:', ex)
+            return 1
 
     # Parse arguments
     path, address = resolve(args['<path>'], args['<address>'])
