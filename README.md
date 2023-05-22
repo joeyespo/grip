@@ -358,7 +358,7 @@ export(path=None, user_content=False, context=None, username=None, password=None
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `title`: The page title, derived from `path` by default
 - `quiet`: Do not print to the terminal
-- `theme`: Theme to view markdown file (light mode or dark mode)
+- `theme`: Theme to view markdown file (light mode or dark mode). Valid options ("light", "dark"). Default: "light".
 - `grip_class`: Use a custom [Grip class](#class-gripflask)
 
 
@@ -441,7 +441,7 @@ render_page(path=None, user_content=False, context=None, username=None, password
 - `title`: The page title, derived from `path` by default
 - `text`: A string or stream of Markdown text to render instead of being loaded from `path` (Note: `path` can be used to set the page title)
 - `quiet`: Do not print to the terminal
-- `theme`: Theme to view markdown file (light mode or dark mode)
+- `theme`: Theme to view markdown file (light mode or dark mode). Valid options ("light", "dark"). Default: "light".
 - `grip_class`: Use a custom [Grip class](#class-gripflask)
 
 
