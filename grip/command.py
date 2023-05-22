@@ -38,11 +38,11 @@ Options:
   --norefresh       Do not automatically refresh the Readme content when
                     the file changes.
   --quiet           Do not print to the terminal.
-  --theme=<theme>           Valid options ("light", "dark"). Default: "light"
+  --theme=<theme>   Theme to view markdown file (light mode or dark mode).
+                    Valid options ("light", "dark"). Default: "light"
 """
 
 from __future__ import print_function
-from enum import Enum
 
 import sys
 import mimetypes
@@ -61,9 +61,8 @@ from .exceptions import ReadmeNotFoundError
 usage = '\n\n\n'.join(__doc__.split('\n\n\n')[1:])
 version = 'Grip ' + __version__
 
-class ThemeArgumentOption(Enum):
-    dark = 'dark'
-    light = 'light'
+# Note: GitHub supports more than light mode and dark mode (exp: light-high-constrast, dark-high-constrast).
+VALID_THEME_OPTIONS = ['light', 'dark']
 
 def main(argv=None, force_utf8=True, patch_svg=True):
     """
@@ -120,13 +119,13 @@ def main(argv=None, force_utf8=True, patch_svg=True):
 
     # Parse theme argument
     if args['--theme']:
-        if args['--theme'] in [e.value for e in ThemeArgumentOption]:
+        if args['--theme'] in VALID_THEME_OPTIONS:
             theme: str = args['--theme']
         else:
             print('Error: valid options for theme argument are "light", "dark"')
             return 1
     else:
-        theme = ThemeArgumentOption.light.value
+        theme = 'light'
 
     # Parse arguments
     path, address = resolve(args['<path>'], args['<address>'])
