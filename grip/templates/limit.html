@@ -43,14 +43,6 @@
 
 {%- block scripts -%}
   <script>
-    function scrollToHash() {
-      if (location.hash && !document.querySelector(":target")) {
-        var elements = document.getElementsByName('user-content-' + location.hash.slice(1));
-        if (elements.length > 0) {
-          elements[elements.length - 1].scrollIntoView();
-        }
-      }
-    }
     window.onhashchange = function() {
       scrollToHash();
     }

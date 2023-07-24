@@ -10,6 +10,16 @@
   <div class="page">
     {% block page %}{% endblock %}
   </div>
-  {%- block scripts %}{% endblock %}
+  {%- block scripts %}{% endblock -%}
+  <script>
+    function scrollToHash() {
+      if (location.hash && !document.querySelector(":target")) {
+        var elements = document.getElementsByName('user-content-' + location.hash.slice(1));
+        if (elements.length > 0) {
+          elements[elements.length - 1].scrollIntoView();
+        }
+      }
+    }
+  </script>
 </body>
 </html>
