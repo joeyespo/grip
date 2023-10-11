@@ -397,7 +397,7 @@ class Grip(Flask):
             route = '/'
         with self.test_client() as c:
             response = c.get(route, follow_redirects=True)
-            encoding = response.charset
+            encoding = getattr(response, 'charset', 'utf-8')
             return response.data.decode(encoding)
 
     def run(self, host=None, port=None, debug=None, use_reloader=None,
