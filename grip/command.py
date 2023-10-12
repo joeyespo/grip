@@ -30,6 +30,9 @@ Options:
                     file (- for stdout).
   --no-inline       Link to styles instead inlining when using --export.
   -b --browser      Open a tab in the browser after the server starts.
+  --renderer=<backend>
+                    Render backend to use (github, gitlab)
+                    [default: github]
   --api-url=<url>   Specify a different base URL for the github API,
                     for example that of a Github Enterprise instance.
                     Default is the public API: https://api.github.com
@@ -105,7 +108,7 @@ def main(argv=None, force_utf8=True, patch_svg=True):
     if args['--export']:
         try:
             export(args['<path>'], args['--user-content'], args['--context'],
-                   args['--user'], password, False, args['--wide'],
+                   args['--user'], password, args['--renderer'], args['--wide'],
                    not args['--no-inline'], args['<address>'],
                    args['--api-url'], args['--title'], args['--quiet'])
             return 0
@@ -124,9 +127,10 @@ def main(argv=None, force_utf8=True, patch_svg=True):
     # Run server
     try:
         serve(path, host, port, args['--user-content'], args['--context'],
-              args['--user'], password, False, args['--wide'], False,
-              args['--api-url'], args['--title'], not args['--norefresh'],
-              args['--browser'], args['--quiet'], None)
+              args['--user'], password, args['--renderer'], args['--wide'],
+              False, args['--api-url'], args['--title'],
+              not args['--norefresh'], args['--browser'], args['--quiet'],
+              None)
         return 0
     except ReadmeNotFoundError as ex:
         print('Error:', ex)

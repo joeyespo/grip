@@ -13,7 +13,7 @@ except ImportError:
     markdown = None
     UrlizeExtension = None
 
-from .constants import DEFAULT_API_URL
+from .constants import DEFAULT_API_URL, DEFAULT_GITLAB_API_URL
 from .patcher import patch
 from .vendor.six import add_metaclass
 
@@ -82,6 +82,44 @@ class GitHubRenderer(ReadmeRenderer):
         r.encoding = 'utf-8'
 
         return r.text if self.raw else patch(r.text)
+
+
+class GitLabRenderer(ReadmeRenderer):
+    """
+    Renders the specified Readme using the GitLab Markdown API.
+    """
+    def __init__(self, user_content=None, context=None, api_url=None):
+        if api_url is None:
+            api_url = DEFAULT_GITLAB_API_URL
+        super(GitLabRenderer, self).__init__(user_content, context)
+        self.api_url = api_url
+
+    def render(self, text, auth=None):
+        """
+        Renders the specified markdown content and embedded styles.
+
+        Raises TypeError if text is not a Unicode string.
+        Raises requests.HTTPError if the request fails.
+        """
+        # Ensure text is Unicode
+        expected = str if sys.version_info[0] >= 3 else unicode  # noqa
+        if not isinstance(text, expected):
+            raise TypeError(
+                'Expected a Unicode string, got {!r}.'.format(text))
+
+        url = '{0}/api/v4/markdown'.format(self.api_url)
+        data = {'text': text}
+        if self.user_content:
+            data['gfm'] = True
+            if self.context:
+                data['project'] = self.context
+        data = json.dumps(data, ensure_ascii=False).encode('utf-8')
+        headers = {'content-type': 'application/json; charset=UTF-8'}
+
+        r = requests.post(url, headers=headers, data=data, auth=auth)
+        r.raise_for_status()
+
+        return r.json()['html']
 
 
 class OfflineRenderer(ReadmeRenderer):

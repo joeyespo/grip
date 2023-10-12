@@ -22,6 +22,9 @@ DEFAULT_GRIPURL = '/__/grip'
 # The public GitHub API
 DEFAULT_API_URL = 'https://api.github.com'
 
+# The public GitLab API
+DEFAULT_GITLAB_API_URL = 'https://gitlab.com'
+
 
 # Style parsing
 STYLE_URLS_SOURCE = 'https://github.com/joeyespo/grip'
