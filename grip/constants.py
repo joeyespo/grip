@@ -23,6 +23,20 @@ DEFAULT_GRIPURL = '/__/grip'
 DEFAULT_API_URL = 'https://api.github.com'
 
 
+# default URL for loading MathJax
+DEFAULT_MATH_JAX_URL = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js'
+
+# script tag parsing
+SCRIPT_URLS_SOURCE = 'https://github.com/joeyespo/grip'
+SCRIPT_FILENAMES_RES = [
+   r'''/wp-runtime-[0-9a-zA-Z]*\.js$''',
+   r'''/element-registry-[0-9a-zA-Z]*\.js$'''
+]
+SCRIPT_URLS_RES = [
+    r'''\"(https://github.githubassets.com/assets/wp-runtime-[0-9a-zA-Z]*\.js)\"''',
+    r'''\"(https://github.githubassets.com/assets/element-registry-[0-9a-zA-Z]*\.js)\"'''
+]
+
 # Style parsing
 STYLE_URLS_SOURCE = 'https://github.com/joeyespo/grip'
 # Note: Using a list in case the implementation limitation is a problem

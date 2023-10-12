@@ -244,6 +244,7 @@ To customize Grip, create `~/.grip/settings.py`, then add one or more of the fol
 - `DEBUG`: Whether to use Flask's debugger when an error happens, `False` by default
 - `DEBUG_GRIP`: Prints extended information when an error happens, `False` by default
 - `API_URL`: Base URL for the github API, for example that of a Github Enterprise instance. `https://api.github.com` by default
+- `MATH_JAX_URL`: URL used for loading the MathJax library. `https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js` by default
 - `CACHE_DIRECTORY`: The directory, relative to `~/.grip`, to place cached assets (this gets run through the following filter: `CACHE_DIRECTORY.format(version=__version__)`), `'cache-{version}'` by default
 - `AUTOREFRESH`: Whether to automatically refresh the Readme content when the file changes, `True` by default
 - `QUIET`: Do not print extended information, `False` by default
@@ -316,7 +317,7 @@ Runs a local server and renders the Readme file located
 at `path` when visited in the browser.
 
 ```python
-serve(path=None, host=None, port=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, autorefresh=True, browser=False, grip_class=None)
+serve(path=None, host=None, port=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, render_math=False, api_url=None, math_jax_url=None, title=None, autorefresh=True, browser=False, grip_class=None)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
@@ -330,7 +331,9 @@ serve(path=None, host=None, port=None, user_content=False, context=None, usernam
 - `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
 - `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `user_content`)
 - `render_inline`: Whether to inline the styles within the HTML file
+- `render_math`: Whether to render mathematical equations with MathJax, `False` by default
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
+- `math_jax_url`: A different URL for loading the MathJax library.
 - `title`: The page title, derived from `path` by default
 - `autorefresh`: Automatically update the rendered content when the Readme file changes, `True` by default
 - `browser`: Open a tab in the browser after the server starts., `False` by default
@@ -342,7 +345,7 @@ serve(path=None, host=None, port=None, user_content=False, context=None, usernam
 Writes the specified Readme file to an HTML file with styles and assets inlined.
 
 ```python
-export(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=True, out_filename=None, api_url=None, title=None, quiet=None, grip_class=None)
+export(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=True, render_math=False, out_filename=None, api_url=None, math_jax_url=None, title=None, quiet=None, grip_class=None)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
@@ -354,8 +357,10 @@ export(path=None, user_content=False, context=None, username=None, password=None
 - `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
 - `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `user_content`)
 - `render_inline`: Whether to inline the styles within the HTML file (Note: unlike the other API functions, this defaults to `True`)
+- `render_math`: Whether to render mathematical equations with MathJax, `False` by default
 - `out_filename`: The filename to write to, `<in_filename>.html` by default
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
+- `math_jax_url`: A different URL for loading the MathJax library.
 - `title`: The page title, derived from `path` by default
 - `quiet`: Do not print to the terminal
 - `grip_class`: Use a custom [Grip class](#class-gripflask)
@@ -368,7 +373,7 @@ This is the same app used by `serve` and `export` and initializes the cache,
 using the cached styles when available.
 
 ```python
-create_app(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None, grip_class=None)
+create_app(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, render_math=False, api_url=None, math_jax_url=None, title=None, text=None, grip_class=None)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
@@ -380,7 +385,9 @@ create_app(path=None, user_content=False, context=None, username=None, password=
 - `render_offline`: Whether to render locally using [Python-Markdown][] (Note: this is a work in progress)
 - `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `user_content`)
 - `render_inline`: Whether to inline the styles within the HTML file
+- `render_math`: Whether to render mathematical equations with MathJax, `False` by default
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
+- `math_jax_url`: A different URL for loading the MathJax library.
 - `title`: The page title, derived from `path` by default
 - `text`: A string or stream of Markdown text to render instead of being loaded from `path` (Note: `path` can be used to set the page title)
 - `grip_class`: Use a custom [Grip class](#class-gripflask)
@@ -424,7 +431,7 @@ Renders the markdown from the specified path or text, without caching,
 and returns an HTML page that resembles the GitHub Readme view.
 
 ```python
-render_page(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None, quiet=None, grip_class=None)
+render_page(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, render_math=False, api_url=None, math_jax_url=None, title=None, text=None, quiet=None, grip_class=None)
 ```
 
 - `path`: The path to use for the page title, rendering `'README.md'` if None
@@ -436,7 +443,9 @@ render_page(path=None, user_content=False, context=None, username=None, password
 - `render_offline`: Whether to render offline using [Python-Markdown][] (Note: this is a work in progress)
 - `render_wide`: Whether to render a wide page, `False` by default (this has no effect when used with `user_content`)
 - `render_inline`: Whether to inline the styles within the HTML file
+- `render_math`: Whether to render mathematical equations with MathJax, `False` by default
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
+- `math_jax_url`: A different URL for loading the MathJax library.
 - `title`: The page title, derived from `path` by default
 - `text`: A string or stream of Markdown text to render instead of being loaded from `path` (Note: `path` can be used to set the page title)
 - `quiet`: Do not print to the terminal
@@ -470,7 +479,7 @@ main(argv=None, force_utf8=True)
 A Flask application that can serve a file or directory containing a README.
 
 ```python
-Grip(source=None, auth=None, renderer=None, assets=None, render_wide=None, render_inline=None, title=None, autorefresh=None, quiet=None, grip_url=None, static_url_path=None, instance_path=None, **kwargs)
+Grip(source=None, auth=None, renderer=None, assets=None, render_wide=None, render_inline=None, render_math=None, math_jax_url=None, title=None, autorefresh=None, quiet=None, grip_url=None, static_url_path=None, instance_path=None, **kwargs)
 ```
 
 ##### default_renderer
@@ -703,6 +712,14 @@ The default app_url value:
 
 ```python
 DEFAULT_API_URL = 'https://api.github.com'
+```
+
+#### DEFAULT_MATH_JAX_URL
+
+The default math\_jax\_url value:
+
+```python
+DEFAULT_MATH_JAX_URL = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js'
 ```
 
 

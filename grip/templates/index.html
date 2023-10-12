@@ -33,6 +33,36 @@
 {%- endblock -%}
 
 {%- block scripts -%}
+  {%- if render_math %}
+  <script>
+    MathJax = {
+      loader: {load: ['ui/safe']},
+      tex: {
+        inlineMath: [['$', '$']],
+        displayMath: [['$$', '$$']],
+        packages: {
+          "[-]": ["html", "newcommand", "require"]
+        }
+      },
+      options: {
+        safeOptions: {
+           allow: {
+             URLs: 'none',
+             classes: 'none',
+             cssIDs: 'none',
+             styles: 'none'
+           }
+        }
+      }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script"
+    src="{{ math_jax_url }}">
+  </script>
+  {%- endif %}
+  {%- for script_url in script_urls %}
+  <script crossorigin="anonymous" defer="defer" src="{{ script_url }}"></script>
+  {%- endfor %}
   <script>
     function showCanonicalImages() {
       var images = document.getElementsByTagName('img');
@@ -47,6 +77,13 @@
       }
     }
 
+    function updateMathRendererStaticUrl () {
+      let mathRendererElements = document.getElementsByTagName('math-renderer');
+      for (let mathRenderer of mathRendererElements) {
+        mathRenderer.setAttribute("data-static-url", window.location.href+"__/grip/asset/math_renderer");
+      }
+    }
+
     function scrollToHash() {
       if (location.hash && !document.querySelector(':target')) {
         var element = document.getElementById('user-content-' + location.hash.slice(1));
@@ -55,6 +92,29 @@
         }
       }
     }
+
+{%- if render_math %}
+    function typesetMath() {
+      var preElements = document.getElementsByTagName('pre');
+      for (let p of preElements) {
+        if (p.lang==="math") {
+          p.style.backgroundColor = "white";
+          p.classList.add("mathjax_process");
+          let codeElements = p.getElementsByTagName('code');
+          if (codeElements.length===1) {
+            let c = codeElements[0];
+            c.classList.add("mathjax_process");
+            let index = c.innerHTML.indexOf("$$");
+            if (index>=0) {
+               c.innerHTML = c.innerHTML.substring(0, index);
+            }
+            c.innerHTML = "$$"+c.innerHTML+"$$";
+          }
+        }
+      }
+      MathJax.typeset();
+    }
+{%- endif %}
 
     function autorefreshContent(eventSourceUrl) {
       var initialTitle = document.title;
@@ -72,6 +132,10 @@
           document.title = initialTitle;
           contentElement.innerHTML = msg.content;
           showCanonicalImages();
+          updateMathRendererStaticUrl();
+{%- if render_math %}
+          typesetMath();
+{%- endif %}
         }
       }
 
@@ -88,16 +152,21 @@
     }
 
     window.onload = function() {
+{%- if render_math %}
+      typesetMath();
+{%- endif %}
       scrollToHash();
     }
 
     showCanonicalImages();
+    updateMathRendererStaticUrl();
 
     var autorefreshUrl = document.getElementById('preview-page').getAttribute('data-autorefresh-url');
     if (autorefreshUrl) {
       autorefreshContent(autorefreshUrl);
     }
   </script>
+
 {%- endblock -%}
 
 {%- block page -%}
