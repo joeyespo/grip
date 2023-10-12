@@ -8,7 +8,7 @@ Render local readme files before sending off to GitHub.
 :license: MIT, see LICENSE for more details.
 """
 
-__version__ = '4.6.1'  # noqa
+__version__ = '4.6.2'  # noqa
 
 import sys
 

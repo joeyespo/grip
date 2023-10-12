@@ -2,6 +2,13 @@ Grip Changelog
 --------------
 
 
+#### Version 4.6.2 (2023-10-12)
+
+##### Bugs fixed
+
+- Support Werkzeug 3 by using a default encoding of UTF-8 ([#377](https://github.com/joeyespo/grip/ issues/377) - thanks, [@daniel-eichinger-bl][]!)
+
+
 #### Version 4.6.1 (2022-03-30)
 
 ##### Bugs fixed
@@ -393,3 +400,4 @@ Grip Changelog
 [@wvspee]: https://github.com/wvspee
 [@Methacrylon]: https://github.com/Methacrylon
 [@bryce-carson]: https://github.com/bryce-carson
+[@daniel-eichinger-bl]: https://github.com/daniel-eichinger-bl
