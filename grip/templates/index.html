@@ -49,9 +49,9 @@
 
     function scrollToHash() {
       if (location.hash && !document.querySelector(':target')) {
-        var element = document.getElementById('user-content-' + location.hash.slice(1));
-        if (element) {
-           element.scrollIntoView();
+        var elements = document.getElementsByName('user-content-' + location.hash.slice(1));
+        if (elements.length) {
+           elements[0].scrollIntoView();
         }
       }
     }
