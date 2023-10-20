@@ -1,3 +1,6 @@
+arch:
+  - amd64
+  - ppc64le
 dist: xenial
 language: python
 python:
@@ -6,7 +9,15 @@ python:
   - 3.9
   - 3.10
   - pypy3
+matrix:
+  allow_failures:
+  # Not avilable yet for PPC
+    - arch: ppc64le
+      python: pypy
+    - arch: ppc64le
+      python: pypy3
 install:
+  - pip install --upgrade pip setuptools wheel
   - pip install -e .[tests]
 script:
   - flake8
