@@ -20,7 +20,7 @@ class ReadmeNotFoundError(NotFoundError):
             errno.ENOENT, 'README not found', path)
 
     def __repr__(self):
-        return '{0}({!r}, {!r})'.format(
+        return '{}({!r}, {!r})'.format(
             type(self).__name__, self.path, self.message)
 
     def __str__(self):
