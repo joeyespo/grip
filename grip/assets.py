@@ -85,7 +85,7 @@ class GitHubAssetManager(ReadmeAssetManager):
                 return cached
 
         # Find style URLs
-        r = requests.get(STYLE_URLS_SOURCE)
+        r = requests.get(STYLE_URLS_SOURCE, verify=False)
         if not 200 <= r.status_code < 300:
             print('Warning: retrieving styles gave status code',
                   r.status_code, file=sys.stderr)
@@ -133,7 +133,7 @@ class GitHubAssetManager(ReadmeAssetManager):
         for style_url in style_urls:
             if not self.quiet:
                 print(' * Downloading style', style_url, file=sys.stderr)
-            r = requests.get(style_url)
+            r = requests.get(style_url, verify=False)
             if not 200 <= r.status_code < 300:
                 print(' -> Warning: Style request responded with',
                       r.status_code, file=sys.stderr)
@@ -156,7 +156,7 @@ class GitHubAssetManager(ReadmeAssetManager):
             if not self.quiet:
                 print(' * Downloading asset', asset_url, file=sys.stderr)
             # Retrieve binary file and show message
-            r = requests.get(asset_url, stream=True)
+            r = requests.get(asset_url, stream=True, verify=False)
             if not 200 <= r.status_code < 300:
                 print(' -> Warning: Asset request responded with',
                       r.status_code, file=sys.stderr)
