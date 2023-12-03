@@ -32,6 +32,16 @@ along with the following contributors:
 - JasonThomasData ([@JasonThomasData](https://github.com/JasonThomasData))
 - Andrej ([@4ndrej](https://github.com/4ndrej))
 - Karl Goffin ([@kagof](https://github.com/kagof))
+- Gideon Richter ([@Godron629](https://github.com/Godron629))
+- Tom Dupré la Tour ([@TomDLT](https://github.com/TomDLT))
+- Joshua Adelman ([@synapticarbors](https://github.com/synapticarbors))
+- Simeon Visser ([@svisser](https://github.com/svisser))
+- Jace Browning ([@jacebrowning](https://github.com/jacebrowning))
+- Daniel Shannon ([@phyllisstein](https://github.com/phyllisstein))
+- Aaron Sikes ([@courajs](https://github.com/courajs))
+- Winsley ([@wvspee](https://github.com/wvspee))
+- Methacrylon ([@Methacrylon](https://github.com/Methacrylon))
+- Bryce Carson ([@Methacrylon](https://github.com/bryce-carson))
 
 
 [home]: README.md

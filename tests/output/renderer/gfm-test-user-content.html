@@ -5,7 +5,7 @@ testing a renderer with.</p>
 and <a href="https://help.github.com/articles/github-flavored-markdown/">GitHub Flavored Markdown</a>,<br>
 followed by a list of one-offs.</p>
 <h2>Inline HTML</h2>
-<table>
+<table role="table">
   <tbody><tr>
     <td>Foo</td>
   </tr>
@@ -292,10 +292,10 @@ This is [an example] <a href="http://joeyespo.com/" title="Optional Title Here" 
 </ul>
 <h2>Images</h2>
 <ul>
-<li><a target="_blank" rel="noopener noreferrer" href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" alt="Alt text" style="max-width:100%;"></a></li>
-<li><a target="_blank" rel="noopener noreferrer" href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" alt="Alt text" title="Optional title" style="max-width:100%;"></a></li>
-<li><a target="_blank" rel="noopener noreferrer" href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" alt="Alt text" title="Optional title attribute" style="max-width:100%;"></a></li>
-<li><a target="_blank" rel="noopener noreferrer" href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" width="32" height="32" style="max-width:100%;"></a>   ← bigger &amp; blurrier</li>
+<li><a target="_blank" rel="noopener noreferrer" href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" alt="Alt text" style="max-width: 100%;"></a></li>
+<li><a target="_blank" rel="noopener noreferrer" href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" alt="Alt text" title="Optional title" style="max-width: 100%;"></a></li>
+<li><a target="_blank" rel="noopener noreferrer" href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" alt="Alt text" title="Optional title attribute" style="max-width: 100%;"></a></li>
+<li><a target="_blank" rel="noopener noreferrer" href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" width="32" height="32" style="max-width: 100%;"></a>   ← bigger &amp; blurrier</li>
 </ul>
 <h2>Automatic links</h2>
 <ul>
@@ -334,14 +334,14 @@ This is [an example] <a href="http://joeyespo.com/" title="Optional Title Here" 
 }
 </code></pre>
 <h4>Syntax highlighting</h4>
-<div class="highlight highlight-source-python"><pre><span class="pl-c1">print</span>(<span class="pl-s"><span class="pl-pds">'</span>Hello!<span class="pl-pds">'</span></span>)</pre></div>
-<div class="highlight highlight-source-js"><pre><span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>JavaScript!<span class="pl-pds">'</span></span>);</pre></div>
-<div class="highlight highlight-source-js"><pre><span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>JavaScript (with js)!<span class="pl-pds">'</span></span>);</pre></div>
+<div class="highlight highlight-source-python"><pre><span class="pl-en">print</span>(<span class="pl-s">'Hello!'</span>)</pre></div>
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'JavaScript!'</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'JavaScript (with js)!'</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
 <pre lang="unmatched_language"><code>console.log('No matching language, but looks like JavaScript.');
 </code></pre>
 <h4>Tables</h4>
 <p>Simple:</p>
-<table>
+<table role="table">
 <thead>
 <tr>
 <th>First Header</th>
@@ -360,7 +360,7 @@ This is [an example] <a href="http://joeyespo.com/" title="Optional Title Here" 
 </tbody>
 </table>
 <p>Pipes:</p>
-<table>
+<table role="table">
 <thead>
 <tr>
 <th>First Header</th>
@@ -379,7 +379,7 @@ This is [an example] <a href="http://joeyespo.com/" title="Optional Title Here" 
 </tbody>
 </table>
 <p>Unmatched:</p>
-<table>
+<table role="table">
 <thead>
 <tr>
 <th>Name</th>
@@ -398,7 +398,7 @@ This is [an example] <a href="http://joeyespo.com/" title="Optional Title Here" 
 </tbody>
 </table>
 <p>Inner Markdown:</p>
-<table>
+<table role="table">
 <thead>
 <tr>
 <th>Name</th>
@@ -417,7 +417,7 @@ This is [an example] <a href="http://joeyespo.com/" title="Optional Title Here" 
 </tbody>
 </table>
 <p>Alignment:</p>
-<table>
+<table role="table">
 <thead>
 <tr>
 <th align="left">Left-Aligned</th>
@@ -481,5 +481,5 @@ Violets are Blue</p>
 <li>#Num: #135</li>
 <li>GH-Num: GH-135</li>
 <li>User#Num: joeyespo#135</li>
-<li>User/Repository#Num: <a class="issue-link js-issue-link" data-error-text="Failed to load issue title" data-id="93030887" data-permission-text="Issue title is private" data-url="https://github.com/joeyespo/grip/issues/135" data-hovercard-type="pull_request" data-hovercard-url="/joeyespo/grip/pull/135/hovercard" href="https://github.com/joeyespo/grip/pull/135">joeyespo/grip#135</a></li>
+<li>User/Repository#Num: <a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="93030887" data-permission-text="Title is private" data-url="https://github.com/joeyespo/grip/issues/135" data-hovercard-type="pull_request" data-hovercard-url="/joeyespo/grip/pull/135/hovercard" href="https://github.com/joeyespo/grip/pull/135">joeyespo/grip#135</a></li>
 </ul>

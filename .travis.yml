@@ -1,12 +1,10 @@
 dist: xenial
 language: python
 python:
-  - 2.7
-  - 3.4
-  - 3.5
-  - 3.6
   - 3.7
-  - pypy
+  - 3.8
+  - 3.9
+  - 3.10
   - pypy3
 install:
   - pip install -e .[tests]

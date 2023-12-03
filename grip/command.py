@@ -38,6 +38,8 @@ Options:
   --norefresh       Do not automatically refresh the Readme content when
                     the file changes.
   --quiet           Do not print to the terminal.
+  --theme=<theme>   Theme to view markdown file (light mode or dark mode).
+                    Valid options ("light", "dark"). Default: "light"
 """
 
 from __future__ import print_function
@@ -59,6 +61,8 @@ from .exceptions import ReadmeNotFoundError
 usage = '\n\n\n'.join(__doc__.split('\n\n\n')[1:])
 version = 'Grip ' + __version__
 
+# Note: GitHub supports more than light mode and dark mode (exp: light-high-constrast, dark-high-constrast).
+VALID_THEME_OPTIONS = ['light', 'dark']
 
 def main(argv=None, force_utf8=True, patch_svg=True):
     """
@@ -101,13 +105,23 @@ def main(argv=None, force_utf8=True, patch_svg=True):
     if args['--user'] and not password:
         password = getpass()
 
+    # Parse theme argument
+    if args['--theme']:
+        if args['--theme'] in VALID_THEME_OPTIONS:
+            theme: str = args['--theme']
+        else:
+            print('Error: valid options for theme argument are "light", "dark"')
+            return 1
+    else:
+        theme = 'light'
+
     # Export to a file instead of running a server
     if args['--export']:
         try:
             export(args['<path>'], args['--user-content'], args['--context'],
                    args['--user'], password, False, args['--wide'],
                    not args['--no-inline'], args['<address>'],
-                   args['--api-url'], args['--title'], args['--quiet'])
+                   args['--api-url'], args['--title'], args['--quiet'], theme)
             return 0
         except ReadmeNotFoundError as ex:
             print('Error:', ex)
@@ -126,7 +140,7 @@ def main(argv=None, force_utf8=True, patch_svg=True):
         serve(path, host, port, args['--user-content'], args['--context'],
               args['--user'], password, False, args['--wide'], False,
               args['--api-url'], args['--title'], not args['--norefresh'],
-              args['--browser'], args['--quiet'], None)
+              args['--browser'], args['--quiet'], theme, None)
         return 0
     except ReadmeNotFoundError as ex:
         print('Error:', ex)

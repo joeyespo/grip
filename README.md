@@ -342,7 +342,7 @@ serve(path=None, host=None, port=None, user_content=False, context=None, usernam
 Writes the specified Readme file to an HTML file with styles and assets inlined.
 
 ```python
-export(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=True, out_filename=None, api_url=None, title=None, quiet=None, grip_class=None)
+export(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=True, out_filename=None, api_url=None, title=None, quiet=None, theme='light', grip_class=None)
 ```
 
 - `path`: The filename to render, or the directory containing your Readme file, defaulting to the current working directory
@@ -358,6 +358,7 @@ export(path=None, user_content=False, context=None, username=None, password=None
 - `api_url`: A different base URL for the github API, for example that of a Github Enterprise instance. The default is the public API https://api.github.com.
 - `title`: The page title, derived from `path` by default
 - `quiet`: Do not print to the terminal
+- `theme`: Theme to view markdown file (light mode or dark mode). Valid options ("light", "dark"). Default: "light".
 - `grip_class`: Use a custom [Grip class](#class-gripflask)
 
 
@@ -424,7 +425,7 @@ Renders the markdown from the specified path or text, without caching,
 and returns an HTML page that resembles the GitHub Readme view.
 
 ```python
-render_page(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None, quiet=None, grip_class=None)
+render_page(path=None, user_content=False, context=None, username=None, password=None, render_offline=False, render_wide=False, render_inline=False, api_url=None, title=None, text=None, quiet=None, theme='light', grip_class=None)
 ```
 
 - `path`: The path to use for the page title, rendering `'README.md'` if None
@@ -440,6 +441,7 @@ render_page(path=None, user_content=False, context=None, username=None, password
 - `title`: The page title, derived from `path` by default
 - `text`: A string or stream of Markdown text to render instead of being loaded from `path` (Note: `path` can be used to set the page title)
 - `quiet`: Do not print to the terminal
+- `theme`: Theme to view markdown file (light mode or dark mode). Valid options ("light", "dark"). Default: "light".
 - `grip_class`: Use a custom [Grip class](#class-gripflask)
 
 
@@ -470,7 +472,7 @@ main(argv=None, force_utf8=True)
 A Flask application that can serve a file or directory containing a README.
 
 ```python
-Grip(source=None, auth=None, renderer=None, assets=None, render_wide=None, render_inline=None, title=None, autorefresh=None, quiet=None, grip_url=None, static_url_path=None, instance_path=None, **kwargs)
+Grip(source=None, auth=None, renderer=None, assets=None, render_wide=None, render_inline=None, title=None, autorefresh=None, quiet=None, theme='light', grip_url=None, static_url_path=None, instance_path=None, **kwargs)
 ```
 
 ##### default_renderer

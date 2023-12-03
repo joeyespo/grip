@@ -194,7 +194,7 @@ def test_github_renderer():
                 output_file('renderer', 'simple.html'))
         assert (GitHubRenderer(True).render(simple_input) ==
                 output_file('renderer', 'simple-user-content.html'))
-        assert (GitHubRenderer(True).render(simple_input) ==
+        assert (GitHubRenderer(True, USER_CONTEXT).render(simple_input) ==
                 output_file('renderer', 'simple-user-context.html'))
         assert len(responses.calls) == 3
 

@@ -28,8 +28,8 @@ STYLE_URLS_SOURCE = 'https://github.com/joeyespo/grip'
 # Note: Using a list in case the implementation limitation is a problem
 # https://docs.python.org/3/library/re.html#re.findall
 STYLE_URLS_RES = [
-    r'''<link.+href=['"]?([^'" >]+)['"]?.+rel=['"]?stylesheet['"]?.+/>''',
-    r'''<link.+rel=['"]?stylesheet['"]?.+href=['"]?([^'" >]+)['"]?.+/>''',
+    r'''<link\b[^>]+\bhref=['"]?([^'" >]+)['"]?\brel=['"]?stylesheet['"]?[^>]+[^>]*(?=>)''',
+    r'''<link\b[^>]+\brel=['"]?stylesheet['"]?[^>]+\bhref=['"]?([^'" >]+)['"]?[^>]*(?=>)''',
 ]
 STYLE_ASSET_URLS_RE = (
     r'''url\(['"]?(/static/fonts/octicons/[^'" \)]+)['"]?\)''')

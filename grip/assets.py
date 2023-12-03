@@ -13,7 +13,8 @@ except ImportError:
     from urllib.parse import urljoin
 
 import requests
-from flask import safe_join
+
+from ._compat import safe_join
 
 from .constants import (
     STYLE_URLS_SOURCE, STYLE_URLS_RES, STYLE_ASSET_URLS_RE,
@@ -89,8 +90,10 @@ class GitHubAssetManager(ReadmeAssetManager):
             print('Warning: retrieving styles gave status code',
                   r.status_code, file=sys.stderr)
         urls = []
+        content = r.text
         for style_urls_re in STYLE_URLS_RES:
-            urls.extend(re.findall(style_urls_re, r.text))
+            print(re.findall(style_urls_re, content))
+            urls.extend(re.findall(style_urls_re, content))
         if not urls:
             print('Warning: no styles found - see https://github.com/joeyespo/'
                   'grip/issues/265', file=sys.stderr)
