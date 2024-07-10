@@ -33,7 +33,8 @@
 {%- endblock -%}
 
 {%- block scripts -%}
-  <script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
     function showCanonicalImages() {
       var images = document.getElementsByTagName('img');
       if (!images) {
@@ -56,6 +57,22 @@
       }
     }
 
+    function enableMermaidSupport() {
+      const elements = document.querySelectorAll('.highlight-source-mermaid pre')
+      if (elements.length === 0) {
+        return;
+      }
+      // There is no way to tell the github API to not highlight mermaid. So we need
+      // to reverse what they've done in terms of highlighting.
+      elements.forEach(function(pre) {
+        pre.innerHTML = pre.innerText;
+      });
+
+      mermaid.run({
+        querySelector: '.highlight-source-mermaid pre',
+      });
+    }
+
     function autorefreshContent(eventSourceUrl) {
       var initialTitle = document.title;
       var contentElement = document.getElementById('grip-content');
@@ -72,6 +89,7 @@
           document.title = initialTitle;
           contentElement.innerHTML = msg.content;
           showCanonicalImages();
+          enableMermaidSupport();
         }
       }
 
@@ -89,9 +107,11 @@
 
     window.onload = function() {
       scrollToHash();
+
     }
 
     showCanonicalImages();
+    enableMermaidSupport();
 
     var autorefreshUrl = document.getElementById('preview-page').getAttribute('data-autorefresh-url');
     if (autorefreshUrl) {
