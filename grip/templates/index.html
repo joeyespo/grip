@@ -49,7 +49,8 @@
 
     function scrollToHash() {
       if (location.hash && !document.querySelector(':target')) {
-        var element = document.getElementById('user-content-' + location.hash.slice(1));
+        var elementId = 'user-content-' + decodeURIComponent(location.hash.slice(1));
+        var element = document.getElementById(elementId);
         if (element) {
            element.scrollIntoView();
         }
