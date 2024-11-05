@@ -29,3 +29,6 @@ API_URL = None
 
 # Custom styles
 STYLE_URLS = []
+
+# Custome theme
+THEME = 'light'

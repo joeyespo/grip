@@ -248,6 +248,7 @@ To customize Grip, create `~/.grip/settings.py`, then add one or more of the fol
 - `AUTOREFRESH`: Whether to automatically refresh the Readme content when the file changes, `True` by default
 - `QUIET`: Do not print extended information, `False` by default
 - `STYLE_URLS`: Additional URLs that will be added to the rendered page, `[]` by default
+- `THEME`: The theme to use when not provided as a CLI argument, `light` by default
 - `USERNAME`: The username to use when not provided as a CLI argument, `None` by default
 - `PASSWORD`: The password or [personal access token][] to use when not provided as a CLI argument (*Please don't save your passwords here.* Instead, use an access token or drop in this code [grab your password from a password manager][keychain-access]), `None` by default
 

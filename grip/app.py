@@ -112,6 +112,9 @@ class Grip(Flask):
             log = logging.getLogger('werkzeug')
             log.setLevel(logging.ERROR)
         self.theme = theme
+        localtheme = self.config['THEME']
+        if localtheme:
+            self.theme = localtheme
 
         # Overridable attributes
         if self.renderer is None:
