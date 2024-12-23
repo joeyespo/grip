@@ -13,7 +13,7 @@ from .renderers import GitHubRenderer, OfflineRenderer
 def create_app(path=None, user_content=False, context=None, username=None,
                password=None, render_offline=False, render_wide=False,
                render_inline=False, api_url=None, title=None, text=None,
-               autorefresh=None, quiet=None, theme='light', grip_class=None):
+               autorefresh=None, quiet=None, theme=None, grip_class=None):
     """
     Creates a Grip application with the specified overrides.
     """
@@ -49,7 +49,7 @@ def create_app(path=None, user_content=False, context=None, username=None,
 def serve(path=None, host=None, port=None, user_content=False, context=None,
           username=None, password=None, render_offline=False,
           render_wide=False, render_inline=False, api_url=None, title=None,
-          autorefresh=True, browser=False, quiet=None, theme='light', grip_class=None):
+          autorefresh=True, browser=False, quiet=None, theme=None, grip_class=None):
     """
     Starts a server to render the specified file or directory containing
     a README.
@@ -72,7 +72,7 @@ def clear_cache(grip_class=None):
 def render_page(path=None, user_content=False, context=None,
                 username=None, password=None,
                 render_offline=False, render_wide=False, render_inline=False,
-                api_url=None, title=None, text=None, quiet=None, theme='light',
+                api_url=None, title=None, text=None, quiet=None, theme=None,
                 grip_class=None):
     """
     Renders the specified markup text to an HTML page and returns it.
@@ -97,7 +97,7 @@ def render_content(text, user_content=False, context=None, username=None,
 def export(path=None, user_content=False, context=None,
            username=None, password=None, render_offline=False,
            render_wide=False, render_inline=True, out_filename=None,
-           api_url=None, title=None, quiet=False, theme='light', grip_class=None):
+           api_url=None, title=None, quiet=False, theme=None, grip_class=None):
     """
     Exports the rendered HTML to a file.
     """

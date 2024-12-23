@@ -39,30 +39,44 @@ Options:
                     the file changes.
   --quiet           Do not print to the terminal.
   --theme=<theme>   Theme to view markdown file (light mode or dark mode).
-                    Valid options ("light", "dark"). Default: "light"
+                    Default: "auto" Valid options: (as of writing)
+                        - `auto` -- defaults to `light`
+                        - `light`
+                        - `dark`
+                        - `dark_colorblind`
+                        - `dark_dimmed`
+                        - `dark_high_contrast`
+                        - `dark_tritanopia`
+                        - `light_colorblind`
+                        - `light_high_contrast`
+                        - `light_tritanopia`
 """
 
+from __future__ import annotations
 from __future__ import print_function
 
-import sys
+import errno
 import mimetypes
 import socket
-import errno
+import sys
+from getpass import getpass
 
 from docopt import docopt
-from getpass import getpass
-from path_and_address import resolve, split_address
+from path_and_address import resolve
+from path_and_address import split_address
 
 from . import __version__
-from .api import clear_cache, export, serve
+from .api import clear_cache
+from .api import export
+from .api import serve
 from .exceptions import ReadmeNotFoundError
-
 
 usage = '\n\n\n'.join(__doc__.split('\n\n\n')[1:])
 version = 'Grip ' + __version__
 
 # Note: GitHub supports more than light mode and dark mode (exp: light-high-constrast, dark-high-constrast).
-VALID_THEME_OPTIONS = ['light', 'dark']
+VALID_THEME_PREFIXES = ['auto', 'light', 'dark']
+
 
 def main(argv=None, force_utf8=True, patch_svg=True):
     """
@@ -106,14 +120,14 @@ def main(argv=None, force_utf8=True, patch_svg=True):
         password = getpass()
 
     # Parse theme argument
-    if args['--theme']:
-        if args['--theme'] in VALID_THEME_OPTIONS:
-            theme: str = args['--theme']
+    theme: str | None = args["--theme"]
+    if theme:
+        for prefix in VALID_THEME_PREFIXES:
+            if theme.startswith(prefix):
+                break
         else:
-            print('Error: valid options for theme argument are "light", "dark"')
+            print('Error: invalid value for theme: %r', theme)
             return 1
-    else:
-        theme = 'light'
 
     # Export to a file instead of running a server
     if args['--export']:

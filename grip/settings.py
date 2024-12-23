@@ -14,6 +14,7 @@ DEBUG_GRIP = False
 CACHE_DIRECTORY = 'cache-{version}'
 AUTOREFRESH = True
 QUIET = False
+THEME = 'auto'
 
 
 # Note: For security concerns, please don't save your GitHub password in your

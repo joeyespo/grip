@@ -1,0 +1,29 @@
+name: Python Tests
+
+on:
+  push:
+    branches:
+      - "**" # This will trigger on any branch push
+  pull_request:
+    branches:
+      - "**" # This will trigger on PRs targeting any branch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x" # This will use the latest stable Python 3
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements-test.txt
+
+      - name: Run tests
+        run: |
+          pytest -vv

@@ -31,7 +31,7 @@ from .assets import GitHubAssetManager, ReadmeAssetManager
 from .browser import start_browser_when_ready
 from .constants import (
     DEFAULT_GRIPHOME, DEFAULT_GRIPURL, STYLE_ASSET_URLS_INLINE_FORMAT)
-from .exceptions import AlreadyRunningError, ReadmeNotFoundError
+from .exceptions import AlreadyRunningError, ConfigurationError, ReadmeNotFoundError
 from .readers import DirectoryReader
 from .renderers import GitHubRenderer, ReadmeRenderer
 
@@ -43,7 +43,7 @@ class Grip(Flask):
     """
     def __init__(self, source=None, auth=None, renderer=None,
                  assets=None, render_wide=None, render_inline=None, title=None,
-                 autorefresh=None, quiet=None, theme='light', grip_url=None,
+                 autorefresh=None, quiet=None, theme=None, grip_url=None,
                  static_url_path=None, instance_path=None, **kwargs):
         # Defaults
         if source is None or isinstance(source, str_type):
@@ -92,6 +92,8 @@ class Grip(Flask):
             password = self.config['PASSWORD']
             if username or password:
                 auth = (username or '', password or '')
+        if theme is None:
+            theme = self.config['THEME']
 
         # Thread-safe event to signal to the polling threads to exit
         self._run_mutex = threading.Lock()
@@ -213,14 +215,22 @@ class Grip(Flask):
                            if self.autorefresh
                            else None)
 
-        if self.theme == 'dark':
+        # the default values
+        data_color_mode = 'auto'
+        data_light_theme = 'light'
+        data_dark_theme = 'dark'
+
+        if self.theme.startswith('dark'):
             data_color_mode = 'dark'
-            data_light_theme = 'light'
-            data_dark_theme = 'dark'
-        else:
+            data_dark_theme = self.theme
+        elif self.theme.startswith('light'):
             data_color_mode = 'light'
-            data_light_theme = 'light'
-            data_dark_theme = 'dark'
+            data_light_theme = self.theme
+        elif self.theme == 'auto':
+            data_color_mode = self.theme
+        else:
+            raise ConfigurationError("unexpected theme: %r" % self.theme)
+
 
         return render_template(
             'index.html', filename=self.reader.filename_for(subpath),

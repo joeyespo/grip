@@ -10,6 +10,7 @@ external calls, use `py.test -m "not assumption"`
 from __future__ import print_function, unicode_literals
 
 import os
+from pathlib import Path
 
 import pytest
 import requests
@@ -67,16 +68,13 @@ def test_github_user_context(input_markdown, output_user_context):
 
 
 @pytest.mark.assumption
-def test_styles_exist(tmpdir):
-    GitHubAssetManager(str(tmpdir)).retrieve_styles('http://dummy/')
-    assert len(tmpdir.listdir()) > 2
+def test_styles_exist(tmp_path: Path):
+    GitHubAssetManager(tmp_path).retrieve_styles("http://dummy/")
 
-    files = list(map(lambda f: os.path.basename(str(f)), tmpdir.listdir()))
-    assert any(f.startswith('github-') and f.endswith('.css') for f in files)
-    assert any(
-        f.startswith('frameworks-') and f.endswith('.css') for f in files)
-
-    # TODO: Test that style retrieval actually parsed CSS with regex
+    files = set(tmp_path.iterdir())
+    assert len(files) > 2
+    assert any(f.name.startswith("github-") and f.name.endswith(".css") for f in files)
+    assert any(f.name.startswith("primer-react.") and f.name.endswith(".module.css") for f in files)
 
 
 # TODO: Test that local images show up in the browser

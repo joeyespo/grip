@@ -241,6 +241,16 @@ To customize Grip, create `~/.grip/settings.py`, then add one or more of the fol
 
 - `HOST`: The host to use when not provided as a CLI argument, `localhost` by default
 - `PORT`: The port to use when not provided as a CLI argument, `6419` by default
+- `THEME`: The github theme to use for styling. Choose one of:
+  - `light` -- the default
+  - `dark`
+  - `dark_colorblind`
+  - `dark_dimmed`
+  - `dark_high_contrast`
+  - `dark_tritanopia`
+  - `light_colorblind`
+  - `light_high_contrast`
+  - `light_tritanopia`
 - `DEBUG`: Whether to use Flask's debugger when an error happens, `False` by default
 - `DEBUG_GRIP`: Prints extended information when an error happens, `False` by default
 - `API_URL`: Base URL for the github API, for example that of a Github Enterprise instance. `https://api.github.com` by default

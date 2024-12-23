@@ -5,7 +5,7 @@ testing a renderer with.</p>
 and <a href="https://help.github.com/articles/github-flavored-markdown/">GitHub Flavored Markdown</a>,<br>
 followed by a list of one-offs.</p>
 <h2 dir="auto">Inline HTML</h2>
-<table role="table">
+<markdown-accessiblity-table><table role="table">
   <tbody><tr>
     <td>Foo</td>
   </tr>
@@ -15,7 +15,7 @@ followed by a list of one-offs.</p>
       E.g., you can’t use Markdown-style *emphasis* inside an HTML block.
     </td>
   </tr>
-</tbody></table>
+</tbody></table></markdown-accessiblity-table>
 <p dir="auto">Span-level HTML tags — e.g. &lt;span&gt;, &lt;cite&gt;, or &lt;del&gt; — can be used anywhere<br>
 in a Markdown paragraph, list item, or header. If you want, you can even use HTML tags instead<br>
 of Markdown formatting; e.g. if you’d prefer to use HTML &lt;a&gt; or &lt;img&gt; tags instead<br>
@@ -35,7 +35,7 @@ of Markdown’s link or image syntax, go right ahead.</p>
 <li>4 &lt; 5 should render the same as 4 &lt; 5</li>
 </ul>
 <p dir="auto">Note that GitHub Flavored Markdown has URL autolinking, which will <em>not</em><br>
-convert <code>&amp;amp;</code>. So these two should yield different links:</p>
+convert <code class="notranslate">&amp;amp;</code>. So these two should yield different links:</p>
 <ul dir="auto">
 <li><a href="http://images.google.com/images?num=30&amp;q=larry+bird" rel="nofollow">http://images.google.com/images?num=30&amp;q=larry+bird</a></li>
 <li><a href="http://images.google.com/images?num=30&amp;amp;q=larry+bird" rel="nofollow">http://images.google.com/images?num=30&amp;amp;q=larry+bird</a></li>
@@ -44,11 +44,11 @@ convert <code>&amp;amp;</code>. So these two should yield different links:</p>
 <p dir="auto">This is a normal paragraph.</p>
 <p dir="auto">This and the next sentence is separated by a single newline.<br>
 This should be on the same line.</p>
-<p dir="auto">This and the next sentence is joined by a single <code>&lt;br /&gt;</code>. <br><br>
+<p dir="auto">This and the next sentence is joined by a single <code class="notranslate">&lt;br /&gt;</code>. <br><br>
 This should be on a new line, directly below.</p>
-<p dir="auto">These two sentences are separated by two <code>&lt;br /&gt;</code> tags. <br><br><br>
+<p dir="auto">These two sentences are separated by two <code class="notranslate">&lt;br /&gt;</code> tags. <br><br><br>
 This should be two lines below.</p>
-<p dir="auto">These two paragraphs are separated by two <code>&lt;br /&gt;</code> tags. <br><br></p>
+<p dir="auto">These two paragraphs are separated by two <code class="notranslate">&lt;br /&gt;</code> tags. <br><br></p>
 <p dir="auto">This should be three lines below.</p>
 <h2 dir="auto">Headers</h2>
 <p dir="auto">Here are some headers followed by <a href="https://en.wikipedia.org/wiki/Lorem_ipsum" rel="nofollow">Lorem Ipsum</a>.</p>
@@ -104,7 +104,7 @@ id sem consectetuer libero luctus adipiscing.</p>
 <li>This is the second list item.</li>
 </ol>
 <p dir="auto">Here's some example code:</p>
-<pre><code>return shell_exec("echo $input | $markdown_script");
+<pre class="notranslate"><code class="notranslate">return shell_exec("echo $input | $markdown_script");
 </code></pre>
 </blockquote>
 <h2 dir="auto">Lists</h2>
@@ -218,7 +218,7 @@ inside a list item.</p>
 <ul dir="auto">
 <li>
 <p dir="auto">A list item with a code block:</p>
-<pre><code>&lt;code goes here&gt;
+<pre class="notranslate"><code class="notranslate">&lt;code goes here&gt;
 </code></pre>
 </li>
 </ul>
@@ -229,15 +229,15 @@ inside a list item.</p>
 <p dir="auto">1986. What a great season. (<em>whew!</em> there we go)</p>
 <h2 dir="auto">Code blocks</h2>
 <p dir="auto">This is a normal paragraph:</p>
-<pre><code>This is a code block.
+<pre class="notranslate"><code class="notranslate">This is a code block.
 </code></pre>
 <p dir="auto">Here is an example of AppleScript:</p>
-<pre><code>tell application "Foo"
+<pre class="notranslate"><code class="notranslate">tell application "Foo"
     beep
 end tell
 </code></pre>
 <p dir="auto">Markdown will handle the hassle of encoding the ampersands and angle brackets:</p>
-<pre><code>&lt;div class="footer"&gt;
+<pre class="notranslate"><code class="notranslate">&lt;div class="footer"&gt;
     &amp;copy; 2004 Foo Corporation
 &lt;/div&gt;
 
@@ -246,10 +246,10 @@ def this_is
   puts "some #{4-space-indent} code"
 end
 </code></pre>
-<code>
+<code class="notranslate">
 print('Code block')
 </code>
-<pre>print('Pre block')
+<pre class="notranslate">print('Pre block')
 </pre>
 <h2 dir="auto">Horizontal rules</h2>
 <hr>
@@ -283,19 +283,19 @@ This is [an example] <a href="http://joeyespo.com/" title="Optional Title Here" 
 </ul>
 <h2 dir="auto">Code</h2>
 <ul dir="auto">
-<li>Use the <code>printf()</code> function.</li>
-<li><code>There is a literal backtick (`) here.</code></li>
-<li>A single backtick in a code span: <code>`</code></li>
-<li>A backtick-delimited string in a code span: <code>`foo`</code></li>
-<li>Please don't use any <code>&lt;blink&gt;</code> tags.</li>
-<li><code>&amp;#8212;</code> is the decimal-encoded equivalent of <code>&amp;mdash;</code></li>
+<li>Use the <code class="notranslate">printf()</code> function.</li>
+<li><code class="notranslate">There is a literal backtick (`) here.</code></li>
+<li>A single backtick in a code span: <code class="notranslate">`</code></li>
+<li>A backtick-delimited string in a code span: <code class="notranslate">`foo`</code></li>
+<li>Please don't use any <code class="notranslate">&lt;blink&gt;</code> tags.</li>
+<li><code class="notranslate">&amp;#8212;</code> is the decimal-encoded equivalent of <code class="notranslate">&amp;mdash;</code></li>
 </ul>
 <h2 dir="auto">Images</h2>
 <ul dir="auto">
-<li><a target="_blank" rel="noopener noreferrer" href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" alt="Alt text" style="max-width: 100%;"></a></li>
-<li><a target="_blank" rel="noopener noreferrer" href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" alt="Alt text" title="Optional title" style="max-width: 100%;"></a></li>
-<li><a target="_blank" rel="noopener noreferrer" href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" alt="Alt text" title="Optional title attribute" style="max-width: 100%;"></a></li>
-<li><a target="_blank" rel="noopener noreferrer" href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" width="32" height="32" style="max-width: 100%;"></a>   ← bigger &amp; blurrier</li>
+<li><a target="_blank" rel="noopener noreferrer nofollow" href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" alt="Alt text" style="max-width: 100%;"></a></li>
+<li><a target="_blank" rel="noopener noreferrer nofollow" href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" alt="Alt text" title="Optional title" style="max-width: 100%;"></a></li>
+<li><a target="_blank" rel="noopener noreferrer nofollow" href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" alt="Alt text" title="Optional title attribute" style="max-width: 100%;"></a></li>
+<li><a target="_blank" rel="noopener noreferrer nofollow" href="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico"><img src="https://raw.githubusercontent.com/joeyespo/grip/master/artwork/favicon.ico" width="32" height="32" style="max-width: 100%;"></a>   ← bigger &amp; blurrier</li>
 </ul>
 <h2 dir="auto">Automatic links</h2>
 <ul dir="auto">
@@ -329,19 +329,19 @@ This is [an example] <a href="http://joeyespo.com/" title="Optional Title Here" 
 <h4 dir="auto">Strikethrough</h4>
 <p dir="auto"><del>Mistaken text.</del></p>
 <h4 dir="auto">Fenced code blocks</h4>
-<pre><code>function test() {
+<pre class="notranslate"><code class="notranslate">function test() {
   console.log("notice the blank line before this function?");
 }
 </code></pre>
 <h4 dir="auto">Syntax highlighting</h4>
-<div class="highlight highlight-source-python"><pre><span class="pl-en">print</span>(<span class="pl-s">'Hello!'</span>)</pre></div>
-<div class="highlight highlight-source-js"><pre><span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'JavaScript!'</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
-<div class="highlight highlight-source-js"><pre><span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'JavaScript (with js)!'</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
-<pre lang="unmatched_language"><code>console.log('No matching language, but looks like JavaScript.');
+<div class="highlight highlight-source-python" dir="auto"><pre class="notranslate"><span class="pl-en">print</span>(<span class="pl-s">'Hello!'</span>)</pre></div>
+<div class="highlight highlight-source-js" dir="auto"><pre class="notranslate"><span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'JavaScript!'</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<div class="highlight highlight-source-js" dir="auto"><pre class="notranslate"><span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">'JavaScript (with js)!'</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<pre lang="unmatched_language" class="notranslate"><code class="notranslate">console.log('No matching language, but looks like JavaScript.');
 </code></pre>
 <h4 dir="auto">Tables</h4>
 <p dir="auto">Simple:</p>
-<table role="table">
+<markdown-accessiblity-table><table role="table">
 <thead>
 <tr>
 <th>First Header</th>
@@ -358,9 +358,9 @@ This is [an example] <a href="http://joeyespo.com/" title="Optional Title Here" 
 <td>Content Cell</td>
 </tr>
 </tbody>
-</table>
+</table></markdown-accessiblity-table>
 <p dir="auto">Pipes:</p>
-<table role="table">
+<markdown-accessiblity-table><table role="table">
 <thead>
 <tr>
 <th>First Header</th>
@@ -377,9 +377,9 @@ This is [an example] <a href="http://joeyespo.com/" title="Optional Title Here" 
 <td>Content Cell</td>
 </tr>
 </tbody>
-</table>
+</table></markdown-accessiblity-table>
 <p dir="auto">Unmatched:</p>
-<table role="table">
+<markdown-accessiblity-table><table role="table">
 <thead>
 <tr>
 <th>Name</th>
@@ -396,9 +396,9 @@ This is [an example] <a href="http://joeyespo.com/" title="Optional Title Here" 
 <td>Closes a window</td>
 </tr>
 </tbody>
-</table>
+</table></markdown-accessiblity-table>
 <p dir="auto">Inner Markdown:</p>
-<table role="table">
+<markdown-accessiblity-table><table role="table">
 <thead>
 <tr>
 <th>Name</th>
@@ -415,9 +415,9 @@ This is [an example] <a href="http://joeyespo.com/" title="Optional Title Here" 
 <td><em>Closes</em> a window</td>
 </tr>
 </tbody>
-</table>
+</table></markdown-accessiblity-table>
 <p dir="auto">Alignment:</p>
-<table role="table">
+<markdown-accessiblity-table><table role="table">
 <thead>
 <tr>
 <th align="left">Left-Aligned</th>
@@ -447,7 +447,7 @@ This is [an example] <a href="http://joeyespo.com/" title="Optional Title Here" 
 <td align="right"></td>
 </tr>
 </tbody>
-</table>
+</table></markdown-accessiblity-table>
 <h4 dir="auto">HTML</h4>
 <p dir="auto"><em>TODO: Test all allowed HTML tags.</em></p>
 <h2 dir="auto">Writing on GitHub</h2>

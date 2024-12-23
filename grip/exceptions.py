@@ -31,3 +31,6 @@ class ReadmeNotFoundError(NotFoundError):
             return 'No README found at {0}'.format(self.path)
 
         return self.strerror
+
+class ConfigurationError(ValueError):
+    pass
