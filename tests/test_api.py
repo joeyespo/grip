@@ -288,3 +288,29 @@ def test_command():
     # TODO: Test autorefresh by mimicking the browser with a manually GET
     # TODO: Test browser opening using monkey patching?
     pass
+
+
+def test_wikilinks():
+    from grip.renderers import preprocess_wikilinks
+
+    # Images
+    assert preprocess_wikilinks('[[images/reference/main.png]]') == '![](images/reference/main.png)'
+    assert preprocess_wikilinks('[[images/reference/main.png|Alt Text]]') == '![Alt Text](images/reference/main.png)'
+    assert preprocess_wikilinks('[[images/my logo.png]]') == '![](images/my%20logo.png)'
+
+    # Links
+    assert preprocess_wikilinks('[[Page Name]]') == '[Page Name](Page-Name)'
+    assert preprocess_wikilinks('[[Page Name|Custom Label]]') == '[Custom Label](Page-Name)'
+    assert preprocess_wikilinks('[[https://example.com/page]]') == '[https://example.com/page](https://example.com/page)'
+    assert preprocess_wikilinks('[[https://example.com/page|External Page]]') == '[External Page](https://example.com/page)'
+
+    # Escaping / Code blocks (should not be replaced)
+    assert preprocess_wikilinks('`[[images/ref.png]]`') == '`[[images/ref.png]]`'
+    assert preprocess_wikilinks('``[[images/ref.png]]``') == '``[[images/ref.png]]``'
+    assert preprocess_wikilinks('```\n[[images/ref.png]]\n```') == '```\n[[images/ref.png]]\n```'
+    assert preprocess_wikilinks('~~~\n[[images/ref.png]]\n~~~') == '~~~\n[[images/ref.png]]\n~~~'
+
+    # Empty target
+    assert preprocess_wikilinks('[[]]') == '[[]]'
+    assert preprocess_wikilinks('[[|]]') == '[[|]]'
+

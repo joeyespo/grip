@@ -1,6 +1,7 @@
 from __future__ import print_function, unicode_literals
 
 import json
+import re
 import sys
 from abc import ABCMeta, abstractmethod
 
@@ -16,6 +17,63 @@ except ImportError:
 from .constants import DEFAULT_API_URL
 from .patcher import patch
 from .vendor.six import add_metaclass
+
+
+# Regular expression to match code blocks and inline code so that
+# wikilinks inside them are not converted.
+CODE_BLOCK_RE = re.compile(r'(?s)(```.*?```|~~~.*?~~~|``.*?``|`[^`\n]+`)')
+
+# Matches wikilinks: [[target]] or [[target|label]]
+WIKILINK_RE = re.compile(r'\[\[([^\]|]+)(?:\|([^\]]+))?\]\]')
+
+# List of typical image extensions
+IMAGE_EXTS = ('.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.bmp', '.ico', '.tiff')
+
+
+def preprocess_wikilinks(text):
+    """
+    Finds wikilinks like [[Page Name]] or [[images/photo.png|Alt text]] in text
+    and converts them to standard markdown image/link equivalents,
+    ignoring any wikilinks inside code blocks or code spans.
+    """
+    expected = str if sys.version_info[0] >= 3 else unicode  # noqa
+    if not isinstance(text, expected):
+        return text
+
+    def replace_wikilink(match):
+        target = match.group(1).strip()
+        if not target:
+            return match.group(0)
+
+        label = match.group(2).strip() if match.group(2) is not None else None
+
+        # Check if the target is an image based on its extension
+        # (ignoring query parameters or anchors if any)
+        clean_target = target.split('?')[0].split('#')[0]
+        is_image = clean_target.lower().endswith(IMAGE_EXTS)
+
+        if is_image:
+            url = target.replace(' ', '%20')
+            if label is not None:
+                return '![{0}]({1})'.format(label, url)
+            else:
+                return '![]({0})'.format(url)
+        else:
+            if '://' not in target:
+                slug = target.replace(' ', '-')
+            else:
+                slug = target
+
+            if label is not None:
+                return '[{0}]({1})'.format(label, slug)
+            else:
+                return '[{0}]({1})'.format(target, slug)
+
+    parts = CODE_BLOCK_RE.split(text)
+    for i in range(0, len(parts), 2):
+        parts[i] = WIKILINK_RE.sub(replace_wikilink, parts[i])
+
+    return ''.join(parts)
 
 
 @add_metaclass(ABCMeta)
@@ -63,6 +121,8 @@ class GitHubRenderer(ReadmeRenderer):
             raise TypeError(
                 'Expected a Unicode string, got {!r}.'.format(text))
 
+        text = preprocess_wikilinks(text)
+
         if self.user_content:
             url = '{0}/markdown'.format(self.api_url)
             data = {'text': text, 'mode': 'gfm'}
@@ -97,6 +157,14 @@ class OfflineRenderer(ReadmeRenderer):
         """
         Renders the specified markdown content and embedded styles.
         """
+        # Ensure text is Unicode
+        expected = str if sys.version_info[0] >= 3 else unicode  # noqa
+        if not isinstance(text, expected):
+            raise TypeError(
+                'Expected a Unicode string, got {!r}.'.format(text))
+
+        text = preprocess_wikilinks(text)
+
         if markdown is None:
             import markdown
         if UrlizeExtension is None:
